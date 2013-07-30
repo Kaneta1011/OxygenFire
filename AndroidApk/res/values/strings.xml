@@ -23,7 +23,7 @@
 
 <resources>
     <!-- Simple strings. -->
-    <string name="app_name">OxygenFire</string>
+    <string name="oxygenfire_activity">oxygenfire</string>
 
 </resources>
 
