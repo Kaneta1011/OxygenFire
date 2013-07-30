@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Android">
+      <Configuration>Release</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{76A9DFE4-478C-40C2-B583-7CFF04441880}</ProjectGuid>
+    <RootNamespace>hellogl2</RootNamespace>
+    <ProjectName>OxygenFire</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <AndroidAPILevel>android-9</AndroidAPILevel>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\AndroidApk</AntBuildPath>
+      <JVMHeapInitial>
+      </JVMHeapInitial>
+      <JVMHeapMaximum>
+      </JVMHeapMaximum>
+    </AntBuild>
+    <Link>
+      <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
+      <AndroidSystemLibs>c;m;log;gcc;android;OpenSLES</AndroidSystemLibs>
+    </Link>
+    <ClCompile>
+      <Warnings>AllWarnings</Warnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\AndroidApk</AntBuildPath>
+      <JVMHeapInitial>
+      </JVMHeapInitial>
+      <JVMHeapMaximum>
+      </JVMHeapMaximum>
+    </AntBuild>
+    <Link>
+      <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
+      <AndroidSystemLibs>c;m;log;gcc;android;OpenSLES</AndroidSystemLibs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CppSource\AssetsLoader.cpp" />
+    <ClCompile Include="CppSource\Common.cpp" />
+    <ClCompile Include="CppSource\gl_code.cpp" />
+    <ClCompile Include="CppSource\mlSound.cpp" />
+    <ClCompile Include="CppSource\WaveLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AndroidApk\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AndroidApk\build.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AndroidApk\project.properties" />
+    <None Include="AndroidApk\res\values\strings.xml" />
+    <None Include="AndroidApk\src\com\android\gl2jni\GL2JNIActivity.java" />
+    <None Include="AndroidApk\src\com\android\gl2jni\GL2JNILib.java" />
+    <None Include="AndroidApk\src\com\android\gl2jni\GL2JNIView.java" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CppSource\AssetsLoader.h" />
+    <ClInclude Include="CppSource\Common.h" />
+    <ClInclude Include="CppSource\mlSound.h" />
+    <ClInclude Include="CppSource\WaveLoader.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

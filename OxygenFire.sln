@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OxygenFire", "OxygenFire.vcxproj", "{76A9DFE4-478C-40C2-B583-7CFF04441880}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Android = Debug|Android
+		Release|Android = Release|Android
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76A9DFE4-478C-40C2-B583-7CFF04441880}.Debug|Android.ActiveCfg = Debug|Android
+		{76A9DFE4-478C-40C2-B583-7CFF04441880}.Debug|Android.Build.0 = Debug|Android
+		{76A9DFE4-478C-40C2-B583-7CFF04441880}.Debug|Android.Deploy.0 = Debug|Android
+		{76A9DFE4-478C-40C2-B583-7CFF04441880}.Release|Android.ActiveCfg = Release|Android
+		{76A9DFE4-478C-40C2-B583-7CFF04441880}.Release|Android.Build.0 = Release|Android
+		{76A9DFE4-478C-40C2-B583-7CFF04441880}.Release|Android.Deploy.0 = Release|Android
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
