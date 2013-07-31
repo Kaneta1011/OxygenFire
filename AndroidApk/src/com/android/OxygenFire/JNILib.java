@@ -17,6 +17,7 @@
 package com.android.OxygenFire;
 
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 
 // Wrapper for native library
 
@@ -36,4 +37,6 @@ public class JNILib {
      public static native void step();
      
      public static native void fileTest(AssetManager  assets, String path);
+     public static native void zlibTest();
+     public static native void RenderBitmap(Bitmap bitmap);
 }

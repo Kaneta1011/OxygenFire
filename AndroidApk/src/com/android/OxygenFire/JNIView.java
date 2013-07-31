@@ -324,8 +324,13 @@ class JNIView extends GLSurfaceView {
     }
 
     private static class Renderer implements GLSurfaceView.Renderer {
+    	long oldTime = 0;
         public void onDrawFrame(GL10 gl) {
             JNILib.step();
+            long time = System.nanoTime();
+            
+            //Log.i("hoge","frame="+((time-oldTime)/1000000)+"ms");
+            oldTime = time;
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {

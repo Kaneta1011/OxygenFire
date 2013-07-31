@@ -16,6 +16,9 @@
     <Filter Include="CppSource\File">
       <UniqueIdentifier>{97c8851e-fe5f-4fd8-a7e3-cefb92aa84ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CppSource\png">
+      <UniqueIdentifier>{ab68c303-c95f-42a9-b11a-ae767dda73dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\gl_code.cpp">
@@ -32,6 +35,51 @@
     </ClCompile>
     <ClCompile Include="CppSource\AssetsLoader.cpp">
       <Filter>CppSource\File</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\png.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngerror.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngget.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngmem.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngpread.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngread.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngrio.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngrtran.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngrutil.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngset.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngtrans.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngwio.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngwrite.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngwtran.c">
+      <Filter>CppSource\png</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\png\pngwutil.c">
+      <Filter>CppSource\png</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +117,30 @@
     </ClInclude>
     <ClInclude Include="CppSource\AssetsLoader.h">
       <Filter>CppSource\File</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\png.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\pngconf.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\pngdebug.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\pnginfo.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\pngpriv.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\pngstruct.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\png\pnglibconf.h">
+      <Filter>CppSource\png</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Png.h">
+      <Filter>CppSource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

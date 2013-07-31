@@ -34,7 +34,7 @@
     </AntBuild>
     <Link>
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
-      <AndroidSystemLibs>c;m;log;gcc;android;OpenSLES</AndroidSystemLibs>
+      <AndroidSystemLibs>c;m;log;gcc;android;OpenSLES;z;jnigraphics;</AndroidSystemLibs>
     </Link>
     <ClCompile>
       <Warnings>AllWarnings</Warnings>
@@ -50,7 +50,7 @@
     </AntBuild>
     <Link>
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
-      <AndroidSystemLibs>c;m;log;gcc;android;OpenSLES</AndroidSystemLibs>
+      <AndroidSystemLibs>c;m;log;gcc;android;OpenSLES;z;jnigraphics;</AndroidSystemLibs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -58,6 +58,21 @@
     <ClCompile Include="CppSource\Common.cpp" />
     <ClCompile Include="CppSource\gl_code.cpp" />
     <ClCompile Include="CppSource\mlSound.cpp" />
+    <ClCompile Include="CppSource\png\png.c" />
+    <ClCompile Include="CppSource\png\pngerror.c" />
+    <ClCompile Include="CppSource\png\pngget.c" />
+    <ClCompile Include="CppSource\png\pngmem.c" />
+    <ClCompile Include="CppSource\png\pngpread.c" />
+    <ClCompile Include="CppSource\png\pngread.c" />
+    <ClCompile Include="CppSource\png\pngrio.c" />
+    <ClCompile Include="CppSource\png\pngrtran.c" />
+    <ClCompile Include="CppSource\png\pngrutil.c" />
+    <ClCompile Include="CppSource\png\pngset.c" />
+    <ClCompile Include="CppSource\png\pngtrans.c" />
+    <ClCompile Include="CppSource\png\pngwio.c" />
+    <ClCompile Include="CppSource\png\pngwrite.c" />
+    <ClCompile Include="CppSource\png\pngwtran.c" />
+    <ClCompile Include="CppSource\png\pngwutil.c" />
     <ClCompile Include="CppSource\WaveLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +92,14 @@
     <ClInclude Include="CppSource\AssetsLoader.h" />
     <ClInclude Include="CppSource\Common.h" />
     <ClInclude Include="CppSource\mlSound.h" />
+    <ClInclude Include="CppSource\Png.h" />
+    <ClInclude Include="CppSource\png\png.h" />
+    <ClInclude Include="CppSource\png\pngconf.h" />
+    <ClInclude Include="CppSource\png\pngdebug.h" />
+    <ClInclude Include="CppSource\png\pnginfo.h" />
+    <ClInclude Include="CppSource\png\pnglibconf.h" />
+    <ClInclude Include="CppSource\png\pngpriv.h" />
+    <ClInclude Include="CppSource\png\pngstruct.h" />
     <ClInclude Include="CppSource\WaveLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

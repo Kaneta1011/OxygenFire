@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
         mView = new JNIView(getApplication());
         setContentView(mView);
         testFile();
+        JNILib.zlibTest();
     }
 
     @Override protected void onPause() {
