@@ -16,8 +16,16 @@
     <Filter Include="CppSource\File">
       <UniqueIdentifier>{97c8851e-fe5f-4fd8-a7e3-cefb92aa84ff}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="CppSource\png">
       <UniqueIdentifier>{ab68c303-c95f-42a9-b11a-ae767dda73dc}</UniqueIdentifier>
+=======
+    <Filter Include="CppSource\RenderLib">
+      <UniqueIdentifier>{a1e9e058-3718-4646-808b-d03742785b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CppSource\RenderLib\cpp">
+      <UniqueIdentifier>{d514ff30-9db6-4820-9274-4370d704d192}</UniqueIdentifier>
+>>>>>>> f822836a60eebc6f0eee5841e883d8b635e03834
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +44,7 @@
     <ClCompile Include="CppSource\AssetsLoader.cpp">
       <Filter>CppSource\File</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="CppSource\png\png.c">
       <Filter>CppSource\png</Filter>
     </ClCompile>
@@ -80,6 +89,10 @@
     </ClCompile>
     <ClCompile Include="CppSource\png\pngwutil.c">
       <Filter>CppSource\png</Filter>
+=======
+    <ClCompile Include="CppSource\RenderLib\RenderLib.cpp">
+      <Filter>CppSource\RenderLib\cpp</Filter>
+>>>>>>> f822836a60eebc6f0eee5841e883d8b635e03834
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +131,7 @@
     <ClInclude Include="CppSource\AssetsLoader.h">
       <Filter>CppSource\File</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="CppSource\png\png.h">
       <Filter>CppSource\png</Filter>
     </ClInclude>
@@ -141,6 +155,10 @@
     </ClInclude>
     <ClInclude Include="CppSource\Png.h">
       <Filter>CppSource</Filter>
+=======
+    <ClInclude Include="CppSource\RenderLib\RenderState.h">
+      <Filter>CppSource\RenderLib</Filter>
+>>>>>>> f822836a60eebc6f0eee5841e883d8b635e03834
     </ClInclude>
   </ItemGroup>
 </Project>
