@@ -12,6 +12,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp" />
+    <ClCompile Include="CppSource\math\Class\Matrix\Matrix.cpp" />
+    <ClCompile Include="CppSource\math\Class\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="CppSource\math\Class\Vector\Vector2.cpp" />
+    <ClCompile Include="CppSource\math\Class\Vector\Vector3.cpp" />
+    <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CppSource\defines.h" />
+    <ClInclude Include="CppSource\math\Class\Matrix\Matrix.h" />
+    <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
+    <ClInclude Include="CppSource\math\Class\Vector\Vector.h" />
+    <ClInclude Include="CppSource\math\kmathf.h" />
+    <ClInclude Include="CppSource\types.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A99D29C-A422-4C77-8D46-1D3EC70730A9}</ProjectGuid>

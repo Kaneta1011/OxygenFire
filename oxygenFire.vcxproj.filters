@@ -4,10 +4,60 @@
     <Filter Include="source">
       <UniqueIdentifier>{e9a6dca3-090a-454b-b579-b30b34ff5c2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Math">
+      <UniqueIdentifier>{9a7cffb2-e04a-4bdb-8011-cc43d7bb304a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Math\Class">
+      <UniqueIdentifier>{1c6912e3-1bb4-4cca-be1d-6d0a8c27bacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Math\Class\Vector">
+      <UniqueIdentifier>{d4730515-426e-4a22-93ab-728a82dad442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Math\Class\Matrix">
+      <UniqueIdentifier>{29184f83-a90e-4f64-8ec6-ce92b5fd4008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Math\Class\Quaternion">
+      <UniqueIdentifier>{38492400-d58e-42c2-a105-c90ef6ffe176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\math\Class\Matrix\Matrix.cpp">
+      <Filter>source\Math\Class\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\math\Class\Quaternion\Quaternion.cpp">
+      <Filter>source\Math\Class\Quaternion</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\math\Class\Vector\Vector2.cpp">
+      <Filter>source\Math\Class\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\math\Class\Vector\Vector3.cpp">
+      <Filter>source\Math\Class\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp">
+      <Filter>source\Math\Class\Vector</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CppSource\math\kmathf.h">
+      <Filter>source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\math\Class\Matrix\Matrix.h">
+      <Filter>source\Math\Class\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h">
+      <Filter>source\Math\Class\Quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\math\Class\Vector\Vector.h">
+      <Filter>source\Math\Class\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\defines.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\types.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

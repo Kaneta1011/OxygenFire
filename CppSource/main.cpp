@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include "../CppSource/math/kmathf.h"
 
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
@@ -51,7 +51,7 @@ static const char gVertexShader[] =
 static const char gFragmentShader[] = 
     "precision mediump float;\n"
     "void main() {\n"
-    "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
+    "  gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);\n"
     "}\n";
 
 GLuint loadShader(GLenum shaderType, const char* pSource) {
@@ -180,5 +180,9 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj)
 {
+	klib::math::Matrix mat;
+	mat.identity();
+	mat.setRXYZ(K_PI,0,0);
+	mat.inverse();
     renderFrame();
 }
