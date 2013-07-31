@@ -16,6 +16,12 @@
     <Filter Include="CppSource\File">
       <UniqueIdentifier>{97c8851e-fe5f-4fd8-a7e3-cefb92aa84ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CppSource\RenderLib">
+      <UniqueIdentifier>{a1e9e058-3718-4646-808b-d03742785b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CppSource\RenderLib\cpp">
+      <UniqueIdentifier>{d514ff30-9db6-4820-9274-4370d704d192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\gl_code.cpp">
@@ -32,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\AssetsLoader.cpp">
       <Filter>CppSource\File</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\RenderLib\RenderLib.cpp">
+      <Filter>CppSource\RenderLib\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\AssetsLoader.h">
       <Filter>CppSource\File</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\RenderLib\RenderState.h">
+      <Filter>CppSource\RenderLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

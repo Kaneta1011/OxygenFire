@@ -23,7 +23,10 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\AndroidApk</AntBuildPath>
@@ -58,6 +61,7 @@
     <ClCompile Include="CppSource\Common.cpp" />
     <ClCompile Include="CppSource\gl_code.cpp" />
     <ClCompile Include="CppSource\mlSound.cpp" />
+    <ClCompile Include="CppSource\RenderLib\RenderLib.cpp" />
     <ClCompile Include="CppSource\WaveLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +81,7 @@
     <ClInclude Include="CppSource\AssetsLoader.h" />
     <ClInclude Include="CppSource\Common.h" />
     <ClInclude Include="CppSource\mlSound.h" />
+    <ClInclude Include="CppSource\RenderLib\RenderState.h" />
     <ClInclude Include="CppSource\WaveLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
