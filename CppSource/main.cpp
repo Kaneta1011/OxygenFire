@@ -170,7 +170,7 @@ void renderFrame() {
 
 extern "C" {
     JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height);
-    JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_step(JNIEnv * env, jobject obj);
+    JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj);
 };
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
@@ -178,7 +178,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_step(JNIEnv * env, jobject obj)
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj)
 {
     renderFrame();
 }

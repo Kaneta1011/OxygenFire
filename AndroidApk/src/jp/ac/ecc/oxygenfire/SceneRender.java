@@ -14,7 +14,7 @@ public class SceneRender implements Renderer{
 	@Override
 	public void onDrawFrame(GL10 arg0) {
 		// TODO Auto-generated method stub
-		GL2JNILib.step();
+		GL2JNILib.update();
 	}
 
 	@Override
