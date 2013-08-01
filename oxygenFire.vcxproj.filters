@@ -19,17 +19,29 @@
     <Filter Include="source\Math\Class\Quaternion">
       <UniqueIdentifier>{38492400-d58e-42c2-a105-c90ef6ffe176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Sound">
-      <UniqueIdentifier>{6326b486-665f-4c2d-a94c-0d1ce30d87e7}</UniqueIdentifier>
+    <Filter Include="source\RenderLib">
+      <UniqueIdentifier>{4b84f73f-8cd9-4443-87a1-9bcf041421d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Sound\don%27tUse">
-      <UniqueIdentifier>{bcfac68f-4187-48cd-89e2-1e4429f177c8}</UniqueIdentifier>
+    <Filter Include="source\RenderLib\Shader">
+      <UniqueIdentifier>{c7a85384-ade5-424b-9932-b1f45cb20323}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Utility">
-      <UniqueIdentifier>{e1b3c7b7-07ec-4e1e-854c-178ee81ba23a}</UniqueIdentifier>
+    <Filter Include="source\RenderLib\cpp">
+      <UniqueIdentifier>{b8c1b43e-a1b0-4a97-a8a6-aa69bcdda4b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Utility\Assets">
-      <UniqueIdentifier>{ba3126e7-bac7-484a-83c7-34e857039ace}</UniqueIdentifier>
+    <Filter Include="source\ShaderLib">
+      <UniqueIdentifier>{0e29c7bd-3e0e-426e-b726-3a9a71744331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\ShaderLib\DATA">
+      <UniqueIdentifier>{9e750979-08b8-4b9b-90b2-edb88f0b68ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\StandardLib">
+      <UniqueIdentifier>{f5e6182c-e589-40f9-a4a5-10cbce5f8c47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\ShaderLib\cpp">
+      <UniqueIdentifier>{4a603dd1-350d-46f5-b133-f7f224f28155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\RenderLib\Object3D">
+      <UniqueIdentifier>{f8e02f7c-20de-44c4-bf41-01f426fdd960}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,20 +63,20 @@
     <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp">
       <Filter>source\Math\Class\Vector</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\utility\utility.cpp">
-      <Filter>source\Utility</Filter>
+    <ClCompile Include="CppSource\RenderLib\cpp\RenderLib.cpp">
+      <Filter>source\RenderLib\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\sound\WaveLoader.cpp">
-      <Filter>source\Sound\don%27tUse</Filter>
+    <ClCompile Include="CppSource\RenderLib\cpp\Shader.cpp">
+      <Filter>source\RenderLib\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\sound\mlSound.cpp">
-      <Filter>source\Sound\don%27tUse</Filter>
+    <ClCompile Include="CppSource\ShaderLib\ShaderManager.cpp">
+      <Filter>source\ShaderLib\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\sound\OpenSLES.cpp">
-      <Filter>source\Sound\don%27tUse</Filter>
+    <ClCompile Include="CppSource\RenderLib\Object3D\Object3D.cpp">
+      <Filter>source\RenderLib\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\utility\assetsLoader.cpp">
-      <Filter>source\Utility\Assets</Filter>
+    <ClCompile Include="CppSource\RenderLib\cpp\Mesh.cpp">
+      <Filter>source\RenderLib\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,20 +98,34 @@
     <ClInclude Include="CppSource\types.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\sound\mlSound.h">
-      <Filter>source\Sound</Filter>
+    <ClInclude Include="CppSource\RenderLib\RenderState.h">
+      <Filter>source\RenderLib</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\utility\utility.h">
-      <Filter>source\Utility</Filter>
+    <ClInclude Include="CppSource\RenderLib\Shader\Shader.h">
+      <Filter>source\RenderLib\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\sound\WaveLoader.h">
-      <Filter>source\Sound\don%27tUse</Filter>
+    <ClInclude Include="CppSource\StandardLib\SmartPointer.h">
+      <Filter>source\StandardLib</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\sound\OpenSLES.h">
-      <Filter>source\Sound\don%27tUse</Filter>
+    <ClInclude Include="CppSource\ShaderLib\ShaderManager.h">
+      <Filter>source\ShaderLib</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\utility\assetsLoader.h">
-      <Filter>source\Utility\Assets</Filter>
+    <ClInclude Include="CppSource\StandardLib\Singleton.h">
+      <Filter>source\StandardLib</Filter>
     </ClInclude>
+    <ClInclude Include="CppSource\RenderLib\Object3D\Object3D.h">
+      <Filter>source\RenderLib\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\RenderLib\Object3D\Mesh.h">
+      <Filter>source\RenderLib\Object3D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CppSource\ShaderLib\DATA\Simple.fs">
+      <Filter>source\ShaderLib\DATA</Filter>
+    </None>
+    <None Include="CppSource\ShaderLib\DATA\Simple.vs">
+      <Filter>source\ShaderLib\DATA</Filter>
+    </None>
   </ItemGroup>
 </Project>
