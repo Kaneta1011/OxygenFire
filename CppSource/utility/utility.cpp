@@ -1,4 +1,4 @@
-#include "Common.h"
+#include "utility.h"
 
 //void printGLString(const char *name, GLenum s) {
 //    const char *v = (const char *) glGetString(s);

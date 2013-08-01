@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+
+//
+//	音利用のサンプルを一番下に書いておきます。(7/31 植田)
+//
+#include "sound\mlsound.h"
+
 // OpenGL ES 2.0 code
 
 #include <jni.h>
@@ -176,6 +182,7 @@ extern "C" {
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
 {
     setupGraphics(width, height);
+
 }
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj)
@@ -186,3 +193,28 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	mat.inverse();
     renderFrame();
 }
+
+
+//---------------------------------------------------------------------------
+//		音利用のサンプル
+//{
+//	mlSound::Base g_base;
+//	g_base.init();	//初期化
+//	g_base.clear();	//破棄
+//
+//	{//ファイルの読み込みと削除
+//		g_base.add(
+//			0,	//追加する番号/*0～(mlSound::Base::PLAYER_MAX-1)の間*/,
+//			env,//JNIEnvクラス。JNIの引数に必ずついてるはず。
+//			assetsManager,	//JavaからAssetsManagerクラスを持ってくる。
+//			"sound/bgm1.mp3",	//assetsのパス。例ではassetsフォルダーのsoundフォルダーの中にあるbgm1.mp3を読み込む
+//		);
+//		g_base.del(0/*使用する番号*/);//削除
+//	}
+//	{//再生関連のコード
+//		g_base.play(  /*使用する番号*/, true/*ループフラグ*/);
+//		g_base.pause( /*使用する番号*/);//一時停止
+//		g_base.stop(  /*使用する番号*/);//再生終了
+//		g_base.volume(/*使用する番号*/, volume/*0～1の範囲*/);
+//	}
+//}

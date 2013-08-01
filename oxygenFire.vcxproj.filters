@@ -19,6 +19,18 @@
     <Filter Include="source\Math\Class\Quaternion">
       <UniqueIdentifier>{38492400-d58e-42c2-a105-c90ef6ffe176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Sound">
+      <UniqueIdentifier>{6326b486-665f-4c2d-a94c-0d1ce30d87e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Sound\don%27tUse">
+      <UniqueIdentifier>{bcfac68f-4187-48cd-89e2-1e4429f177c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Utility">
+      <UniqueIdentifier>{e1b3c7b7-07ec-4e1e-854c-178ee81ba23a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Utility\Assets">
+      <UniqueIdentifier>{ba3126e7-bac7-484a-83c7-34e857039ace}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -39,6 +51,21 @@
     <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp">
       <Filter>source\Math\Class\Vector</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\utility\utility.cpp">
+      <Filter>source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\sound\WaveLoader.cpp">
+      <Filter>source\Sound\don%27tUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\sound\mlSound.cpp">
+      <Filter>source\Sound\don%27tUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\sound\OpenSLES.cpp">
+      <Filter>source\Sound\don%27tUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\utility\assetsLoader.cpp">
+      <Filter>source\Utility\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -58,6 +85,21 @@
     </ClInclude>
     <ClInclude Include="CppSource\types.h">
       <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\sound\mlSound.h">
+      <Filter>source\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\utility.h">
+      <Filter>source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\sound\WaveLoader.h">
+      <Filter>source\Sound\don%27tUse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\sound\OpenSLES.h">
+      <Filter>source\Sound\don%27tUse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\assetsLoader.h">
+      <Filter>source\Utility\Assets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

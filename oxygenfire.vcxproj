@@ -17,6 +17,11 @@
     <ClCompile Include="CppSource\math\Class\Vector\Vector2.cpp" />
     <ClCompile Include="CppSource\math\Class\Vector\Vector3.cpp" />
     <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp" />
+    <ClCompile Include="CppSource\sound\mlSound.cpp" />
+    <ClCompile Include="CppSource\sound\OpenSLES.cpp" />
+    <ClCompile Include="CppSource\sound\WaveLoader.cpp" />
+    <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
+    <ClCompile Include="CppSource\utility\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\defines.h" />
@@ -24,7 +29,12 @@
     <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
     <ClInclude Include="CppSource\math\Class\Vector\Vector.h" />
     <ClInclude Include="CppSource\math\kmathf.h" />
+    <ClInclude Include="CppSource\sound\OpenSLES.h" />
+    <ClInclude Include="CppSource\sound\mlSound.h" />
+    <ClInclude Include="CppSource\sound\WaveLoader.h" />
     <ClInclude Include="CppSource\types.h" />
+    <ClInclude Include="CppSource\utility\assetsLoader.h" />
+    <ClInclude Include="CppSource\utility\utility.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A99D29C-A422-4C77-8D46-1D3EC70730A9}</ProjectGuid>
@@ -43,6 +53,7 @@
     </AntBuild>
     <Link>
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
+      <AndroidSystemLibs>c;m;log;gcc;OpenSLES;android;</AndroidSystemLibs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -51,6 +62,7 @@
     </AntBuild>
     <Link>
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
+      <AndroidSystemLibs>c;m;log;gcc;OpenSLES;android;</AndroidSystemLibs>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
