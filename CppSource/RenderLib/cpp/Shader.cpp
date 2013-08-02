@@ -5,6 +5,7 @@
 #include	<GLES2/gl2.h>
 #include	<GLES2/gl2ext.h>
 #include	"RenderLib\\RenderState.h"
+#include	"RenderLib\\Object3D\\Mesh.h"
 //	use namespace
 using namespace RenderLib;
 
@@ -42,13 +43,14 @@ void Shader::Init(const char* VS,const char* FS)
 	glAttachShader(m_Program,fragmentShader);
 
 	//	Bind
-	glBindAttribLocation(m_Program,0,"vPosition");
+	glBindAttribLocation(m_Program,VERTEX_INDEX_POS,"VPosition");
+	glBindAttribLocation(m_Program,VERTEX_INDEX_COLOR,"VColor");
 
 	glLinkProgram(m_Program);
 
 
-	glGetProgramiv(
-		m_Program,GL_LINK_STATUS,&linked);
+	//glGetProgramiv(
+	//	m_Program,GL_LINK_STATUS,&linked);
 }
 
 void Shader::Begin()

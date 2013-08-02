@@ -15,20 +15,24 @@ void ShaderManager::Init()
 
 //	テキスト読み込みでおうやったか忘れたからこれで
 const char vs[] = 
-  "attribute vec4 vPosition;								\n"
+  "attribute vec4 VPosition;								\n"
+	"attribute vec4 VColor;										\n"
+	"varying vec4 io_Color;										\n"
 	"																					\n"
 	"uniform mat4 WVP;												\n"
 	"																					\n"
   "void main() {														\n"
-	"	vec4 opos = WVP * vPosition;						\n"
+	"	io_Color = VColor;											\n"
+	"	vec4 opos = WVP * VPosition;						\n"
 	"	opos.z=2.0*opos.z-opos.w;								\n"
-  " gl_Position = opos;								\n"
+  " gl_Position = opos;											\n"
   "}																			  \n";
 const char fs[] = 
-  "precision mediump float;\n"
-  "void main() {\n"
-  "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
-  "}\n";
+  "precision mediump float;									\n"
+	"varying vec4 io_Color;										\n"
+  "void main() {                            \n"
+  "  gl_FragColor = io_Color;								\n"
+  "}                                        \n";
 
 	m_spSimple->Init(vs,fs );
 }

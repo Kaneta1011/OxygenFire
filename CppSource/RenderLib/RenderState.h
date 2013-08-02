@@ -25,6 +25,7 @@ public:
 	static void Setting_Viewport(float X,float Y,float Widh,float Height);
 	static void Setting_ViewMatrix(const Vector3& Pos,const Vector3& TargetPos,const Vector3& UpPos);
 	static void Setting_PerspectiveMatrix(float FovY,float Aspect,float Near, float Far);
+	static void Setting_PolygonBathSides(bool Flag);//—¼–Ê•`‰æ‚·‚é‚©
 	//	set
 	static void setScreenWidth(int Value){s_ScreenWidth=Value;}
 	static void setScreenHeight(int Value){s_ScreenHeight=Value;}

@@ -107,3 +107,14 @@ void RenderState::Setting_PerspectiveMatrix(
 	s_mProjection._43 = (-Near*Far) / (Far-Near);
 	s_mProjection._44 = 0;
 }
+
+void RenderState::Setting_PolygonBathSides(bool Flag)
+{
+	if( true == Flag )
+	{
+		glDisable(GL_CULL_FACE);
+	}else{
+		glEnable(GL_CULL_FACE); 
+		glCullFace(GL_BACK);
+	}
+}
