@@ -16,6 +16,9 @@
 
 package jp.ac.ecc.oxygenfire;
 
+import android.content.res.AssetManager;
+import android.util.Log;
+
 // Wrapper for native library
 
 public class GL2JNILib {
@@ -28,6 +31,16 @@ public class GL2JNILib {
      * @param width the current view width
      * @param height the current view height
      */
-     public static native void init(int width, int height);
+     public static native void init(int width, int height, JNICallMethod methods);
      public static native void update();
+     
+     /**
+      * @param asset : native側に送るAssetManager
+      * @Assetなどのｃ＋＋側のグラフィック以外の初期化を行う
+      */
+     public static native void systemInit(AssetManager asset);
+     
+     public static native void onPause();
+     public static native void onResume();
+     public static native void onDestory();   
 }

@@ -3,49 +3,119 @@
 #include <android\asset_manager_jni.h>
 
 #include <assert.h>
+#include <android\bitmap.h>
 
-AssetsLoader::AssetsLoader():
-mSize(0),
-mBuf(NULL)
-{
+#include <stdlib.h>
+#include <math.h>
+
+#include "utility.h"
+
+static void printGLString(const char *name, GLenum s) {
+    const char *v = (const char *) glGetString(s);
+    LOGI("GL %s = %s\n", name, v);
 }
 
-AssetsLoader::~AssetsLoader()
-{
-	clear();
+static void checkGlError(const char* op) {
+    for (GLint error = glGetError(); error; error
+            = glGetError()) {
+        LOGI("after %s() glError (0x%x)\n", op, error);
+    }
 }
 
-void AssetsLoader::clear()
+AAssetManager* AssetsLoader::sAssetMng = NULL;
+jclass		   AssetsLoader::sJNICallMethod = NULL;
+
+static const char* TAG = "AssetsLoader";
+
+void AssetsLoader::sInit(JNIEnv* env, jobject asset)
 {
-	if( this->mBuf ){ delete[] this->mBuf; this->mBuf = NULL; }
+	sAssetMng = AAssetManager_fromJava(env, asset);
+
+	jclass clazz = env->FindClass("jp/ac/ecc/oxygenfire/JNICallMethod");
+	if( clazz == NULL ){
+		LOGE(TAG, "file:%s | line:%d | Failure search JNICallMethod class...", __LINE__, __FILE__);
+		abort();
+	}
+	AssetsLoader::sJNICallMethod = (jclass)env->NewGlobalRef(clazz);
 }
 
-bool AssetsLoader::load(JNIEnv * env, jobject assetsManager, jstring fileName)
+void AssetsLoader::sClear(JNIEnv* env)
 {
-	clear();
+	sAssetMng = NULL;
+	if( sJNICallMethod != NULL ){ env->DeleteGlobalRef(sJNICallMethod); sJNICallMethod = NULL;}
+}
+
+bool AssetsLoader::load(char** out, int* outSize, const char* fileName)
+{
+	assert(NULL != sAssetMng && "AssetsLoader::load | Failure Get AssetsManager...");
+
 	bool isOK = false;
-
-	AAssetManager* mgr = AAssetManager_fromJava(env, assetsManager);
-    assert(NULL != mgr && "AssetsLoader::load | Failure Get AssetsManager...");
-
-	const char* filePath = env->GetStringUTFChars(fileName, NULL);
-	AAsset* asset = AAssetManager_open(mgr, filePath, AASSET_MODE_UNKNOWN);
-	env->ReleaseStringUTFChars(fileName, filePath);
-
+	int size = 0;
+	AAsset* asset = AAssetManager_open(sAssetMng, fileName, AASSET_MODE_UNKNOWN);
 	if( asset )
 	{
-		this->mSize = AAsset_getLength(asset);
-		if( this->mSize > 0 )
+		size = AAsset_getLength(asset);
+		if( size > 0 )
 		{
-			this->mBuf = new char[this->mSize+1];
-			AAsset_read(asset, this->mBuf, this->mSize);
-			this->mBuf[this->mSize] = '\0';
+			*out = new char[size+1];
+			AAsset_read(asset, *out, size);
+			(*out)[size] = '\0';
+			//LOGI(TAG, "Complete load \"%s\" | size = %d ", fileName, size);
 			isOK = true;
 		}
-
 		AAsset_close(asset);
 	}
-
+	*outSize = size;
 	return isOK;
 }
 
+bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv* env, GLint format, GLenum type)
+{
+	bool isOK = false;
+
+	//java側の関数を使う
+	jmethodID loadImageId = env->GetStaticMethodID(sJNICallMethod, "loadImage", "(Ljava/lang/String;)Landroid/graphics/Bitmap;");
+	if( loadImageId != NULL )
+	{
+	//テクスチャIDの取得
+		glGenTextures(1, outTexture);
+		glBindTexture(GL_TEXTURE_2D, *outTexture);
+
+	//Java側からBitmapクラスを取得
+		jstring name = env->NewStringUTF(fileName);
+		jobject bitmap = env->CallStaticObjectMethod(sJNICallMethod, loadImageId, name );
+		env->DeleteLocalRef(name);
+	//読み込んだBitmapから画像サイズ、ピクセル情報を取り出す
+		AndroidBitmapInfo info;
+		int ret;
+		if( (ret = AndroidBitmap_getInfo(env, bitmap, &info)) < 0 )
+		{
+			LOGE(TAG, "Failure Get Bitmap Info...");
+			abort();
+		}
+		LOGI(TAG, "width = %d | height = %d", info.width, info.height);
+
+	//LockをかけないとBitmapからピクセル情報を取り出せない
+		char* pixels = 0;
+		if( (ret = AndroidBitmap_lockPixels(env, bitmap, (void**)&pixels) ) < 0 )
+		{
+			LOGE(TAG, "Failure Lock Bitmap...");
+			abort();
+		}
+	//GPUにピクセルデータを転送
+		glTexImage2D( GL_TEXTURE_2D, 0,
+				format, info.width, info.height, 0,
+				format, type, pixels );
+		checkGlError("glTexImage2D");
+	//Unlockを忘れずに
+		AndroidBitmap_unlockPixels(env, bitmap);
+	//正常終了
+		isOK = true;
+	}
+	else
+	{//if( loadImageId == NULL ) エラー処理
+		LOGE(TAG, "file:%s | line:%d | Failure get MethodID from JNICallMethod class...", __LINE__, __FILE__);
+		abort();
+	}
+	return isOK;
+}

@@ -35,17 +35,31 @@ public class Oxygenfire_Activity extends Activity {
 		graphic = new GL2JNIView(this);
 		graphic.setRenderer(new SceneRender(this));
 		setContentView(graphic);
+		
+		JNICallMethod.assets = getAssets();
+		
+		GL2JNILib.systemInit(getAssets());
+		
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		graphic.onPause();
+		GL2JNILib.onPause();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		graphic.onResume();
+		GL2JNILib.onResume();
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		GL2JNILib.onDestory();
+	}
+	
 }

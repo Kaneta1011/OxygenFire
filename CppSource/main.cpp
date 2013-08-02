@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-
 //
 //	音利用のサンプルを一番下に書いておきます。(7/31 植田)
 //
 #include "sound\mlsound.h"
+#include "utility\assetsLoader.h"
+
 
 // OpenGL ES 2.0 code
 
 #include <jni.h>
 #include <android/log.h>
+#include <android/bitmap.h>
 
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
@@ -35,6 +37,44 @@
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+
+//=======================================================================================================
+//
+//	JNIEnvが必要になったとき引数にないとき、下のコード参考にしてください。
+//	主に、スレッドが走っているときにAssetsからファイルを読み込むときに必要になると思います。
+//
+//	#include "utility.h"
+//
+//	JNIEnv* env;
+//	getJNIEnv(&env);//<- getJNIEnv()はutility.hで宣言している
+//
+//	参考HP　：　http://blog.nekobako.net/post/36/　解決方法という見出しの下あたりにコードあり。
+//
+//=======================================================================================================
+JavaVM* g_VM;	//getJNIEnv関数を使うときとマルチスレッドを作るとき必要になる。
+
+//
+//	ライブラリがロードされたときに自動的に呼ばれる関数
+//
+JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
+{
+	LOGI("Passage JNI_OnLoad.");
+	g_VM = vm;
+
+	return USE_JNI_VERSION;
+}
+
+//
+//	ライブラリがアンロードされたときに自動的に呼ばれる関数
+//
+JNIEXPORT void JNI_UnLoad(JavaVM* vm, void* reserved)
+{
+	LOGI("Passage JNI_UnLoad.");
+
+}
+
+//=======================================================================================================
+
 
 static void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
@@ -57,7 +97,7 @@ static const char gVertexShader[] =
 static const char gFragmentShader[] = 
     "precision mediump float;\n"
     "void main() {\n"
-    "  gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);\n"
+	"  gl_FragColor = vec4(0,1,0,1);\n"
     "}\n";
 
 GLuint loadShader(GLenum shaderType, const char* pSource) {
@@ -127,7 +167,7 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
 GLuint gProgram;
 GLuint gvPositionHandle;
 
-bool setupGraphics(int w, int h) {
+bool setupGraphics(int w, int h, JNIEnv* env) {
     printGLString("Version", GL_VERSION);
     printGLString("Vendor", GL_VENDOR);
     printGLString("Renderer", GL_RENDERER);
@@ -146,11 +186,14 @@ bool setupGraphics(int w, int h) {
 
     glViewport(0, 0, w, h);
     checkGlError("glViewport");
+
     return true;
 }
 
 const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
         0.5f, -0.5f };
+
+const GLfloat gTexCoords[] = {0.5f, 0.0f, 0.f, 1.f, 1.f, 1.f };
 
 void renderFrame() {
     static float grey;
@@ -170,19 +213,34 @@ void renderFrame() {
     checkGlError("glVertexAttribPointer");
     glEnableVertexAttribArray(gvPositionHandle);
     checkGlError("glEnableVertexAttribArray");
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glDrawArrays(GL_TRIANGLES, 0, 3);
     checkGlError("glDrawArrays");
 }
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height);
-    JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj);
+
+	//グラフィック以外の処理
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset);
+
+	//
+	//	Activityのライフサイクルにあわせてよびだされる関数
+	//	Activityのライフサイクルの参考HP	http://www.javadrive.jp/android/activity/index2.html
+	//
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env, jobject obj);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env, jobject obj);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * env, jobject obj);
+
 };
 
-JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
+//
+//		グラフィックの初期化
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods)
 {
-    setupGraphics(width, height);
-
+    setupGraphics(width, height, env);
 }
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj)
@@ -194,6 +252,50 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
     renderFrame();
 }
 
+/*
+	グラフィック以外の初期化
+*/
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset)
+{
+	LOGI("Passage systemInit.");
+	
+	AssetsLoader::sInit(env, asset);
+
+	LOGI("Complete systemInit.");
+}
+
+//
+//		Oxygenfire_Activity非表示になったとき呼び出される
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env, jobject obj)
+{
+	LOGI("Passage onPause.");
+	
+
+	LOGI("Complete onPause.");
+}
+
+//
+//		APIがPause状態から再び再開されるときに呼び出される
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env, jobject obj)
+{
+	LOGI("Passage onResume.");
+	
+
+	LOGI("Complete onResume.");
+}
+
+//
+//		APIが破棄されるときに呼び出される
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * env, jobject obj)
+{
+	LOGI("Passage onDestory.");
+	
+
+	LOGI("Complete onDestory.");
+}
 
 //---------------------------------------------------------------------------
 //		音利用のサンプル
@@ -218,3 +320,4 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 //		g_base.volume(/*使用する番号*/, volume/*0～1の範囲*/);
 //	}
 //}
+//---------------------------------------------------------------------------

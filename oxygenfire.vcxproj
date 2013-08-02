@@ -53,7 +53,7 @@
     </AntBuild>
     <Link>
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
-      <AndroidSystemLibs>c;m;log;gcc;OpenSLES;android;</AndroidSystemLibs>
+      <AndroidSystemLibs>c;m;log;gcc;OpenSLES;android;jnigraphics;</AndroidSystemLibs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -62,7 +62,7 @@
     </AntBuild>
     <Link>
       <AdditionalOptions>-lGLESv2 %(AdditionalOptions)</AdditionalOptions>
-      <AndroidSystemLibs>c;m;log;gcc;OpenSLES;android;</AndroidSystemLibs>
+      <AndroidSystemLibs>c;m;log;gcc;OpenSLES;android;jnigraphics;</AndroidSystemLibs>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

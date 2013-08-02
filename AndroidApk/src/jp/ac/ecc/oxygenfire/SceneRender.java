@@ -20,7 +20,8 @@ public class SceneRender implements Renderer{
 	@Override
 	public void onSurfaceChanged(GL10 arg0, int w, int h) {
 		// TODO Auto-generated method stub
-		GL2JNILib.init(w, h);
+		JNICallMethod method = new JNICallMethod();
+		GL2JNILib.init(w, h, method);
 	}
 
 	@Override

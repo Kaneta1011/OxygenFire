@@ -52,7 +52,9 @@ bool WaveLoader::load(JNIEnv * env, jobject assetsManager, jstring fileName)
 	bool isOK;
 
 	AssetsLoader loader;
-	if( loader.load(env, assetsManager, fileName) )
+	char* data;
+	int size = 0;
+	if( AssetsLoader::load(&data, &size, "hoge") )
 	{
 
 		isOK = true;
