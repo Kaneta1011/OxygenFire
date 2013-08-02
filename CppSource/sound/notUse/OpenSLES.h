@@ -3,7 +3,7 @@
 
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
-#include "../utility/utility.h"
+#include "../../utility/utility.h"
 #include <assert.h>
 #include <sys/types.h>
 

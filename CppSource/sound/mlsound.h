@@ -9,7 +9,7 @@
 #define USE_SOUND_LIB OPENSLES
 
 #if USE_SOUND_LIB == OPENSLES
-#include "OpenSLES.h"
+#include "notUse/OpenSLES.h"
 #endif
 
 //
