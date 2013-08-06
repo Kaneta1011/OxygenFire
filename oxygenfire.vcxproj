@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CppSource\input\notUse\Input.cpp" />
     <ClCompile Include="CppSource\main.cpp" />
     <ClCompile Include="CppSource\math\Class\Matrix\Matrix.cpp" />
     <ClCompile Include="CppSource\math\Class\Quaternion\Quaternion.cpp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\defines.h" />
+    <ClInclude Include="CppSource\input\Input.h" />
     <ClInclude Include="CppSource\math\Class\Matrix\Matrix.h" />
     <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
     <ClInclude Include="CppSource\math\Class\Vector\Vector.h" />

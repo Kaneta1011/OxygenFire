@@ -52,6 +52,12 @@
     <Filter Include="source\Sound\notUse">
       <UniqueIdentifier>{36801e36-9479-4b44-9846-05f7c065e7a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Input">
+      <UniqueIdentifier>{0eca3799-2cb3-4dce-85b5-8f7f92035920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Input\notUse">
+      <UniqueIdentifier>{2f9eb760-7b3e-439d-95ce-ab703df0f30f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -101,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\sound\notUse\waveLoader.cpp">
       <Filter>source\Sound\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\input\notUse\Input.cpp">
+      <Filter>source\Input\notUse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\sound\notUse\OpenSLES.h">
       <Filter>source\Sound\notUse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\input\Input.h">
+      <Filter>source\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,16 +5,19 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
+import android.util.Log;
 
 public class SceneRender implements Renderer{
 
 	SceneRender(Context context){
 		super();
 	}
+	private long time = 0;
 	@Override
 	public void onDrawFrame(GL10 arg0) {
 		// TODO Auto-generated method stub
-		GL2JNILib.update();
+		time = System.nanoTime() - time;
+		GL2JNILib.update((float)time/1000000.0f);
 	}
 
 	@Override

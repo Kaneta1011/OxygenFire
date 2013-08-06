@@ -19,7 +19,7 @@
 //
 #include "sound\mlsound.h"
 #include "utility\assetsLoader.h"
-
+#include "input\Input.h"
 
 // OpenGL ES 2.0 code
 
@@ -151,8 +151,14 @@ void Delete()
 //----------------------------------------------------------------------
 bool Update()
 {
+	static Vector3 inputOffset(0,0,0);
+	if( mlInput::key() != mlInput::FREE )
+	{
+		inputOffset.x = (mlInput::getX()/(float)RenderState::getScreenWidth()*2.f - 1.f) * 10.f;
+		inputOffset.y = (mlInput::getY()/(float)RenderState::getScreenHeight()*2.f - 1.f) * 10.f;
+	}
 	//	Matrix設定
-	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,0,0),Vector3(0,1,0));
+	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,0,0) + inputOffset,Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix((float)K_PI/4, 
 		(float)RenderState::getScreenWidth()/(float)RenderState::getScreenHeight(),
 		0.1f, 100.0f );
@@ -176,11 +182,9 @@ bool Update()
 void Render() 
 {
 	glClearColor(0.3f,0.3f,0.3f,1.0f);
-  RenderState::Clear_Buffer(CLEAR_BUFFER_COLOR);
+	RenderState::Clear_Buffer(CLEAR_BUFFER_COLOR);
 	RenderState::Clear_Buffer(CLEAR_BUFFER_DEPTH);
 	RenderState::Setting_Viewport(0,0,RenderState::getScreenWidth(),RenderState::getScreenHeight());
-
-
 
 
 	for(int n=0;n<TEST_MAX;n++)
@@ -199,10 +203,11 @@ void Render()
 //----------------------------------------------------------------------
 extern "C" {
 	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods);
-	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt);
 
 	//グラフィック以外の処理
-	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset, jint input_maxPoint);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jintArray arrayID, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con);
 
 	//
 	//	Activityのライフサイクルにあわせてよびだされる関数
@@ -226,7 +231,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	Initialize();
 }
  
-JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj)
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
 {
 	if(Update()){Render();}
 }
@@ -234,13 +239,24 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 /*
 	グラフィック以外の初期化
 */
-JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset)
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset, jint input_maxPoint)
 {
 	LOGI("Passage systemInit.");
 	
 	AssetsLoader::sInit(env, asset);
+	mlInput::init(input_maxPoint);
 
 	LOGI("Complete systemInit.");
+}
+
+#include <android\input.h>
+
+//
+//		タッチイベントの受信
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jintArray arrayID, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con)
+{
+	mlInput::update(env, count, arrayID, pointsX, pointsY, arrayPressure, id, con );
 }
 
 //
@@ -272,6 +288,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 {
 	LOGI("Passage onDestory.");
 	
+	mlInput::clear();
 
 	LOGI("Complete onDestory.");
 }

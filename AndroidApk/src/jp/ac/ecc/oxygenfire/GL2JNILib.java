@@ -32,15 +32,16 @@ public class GL2JNILib {
      * @param height the current view height
      */
      public static native void init(int width, int height, JNICallMethod methods);
-     public static native void update();
+     public static native void update(float dt);
      
      /**
       * @param asset : native側に送るAssetManager
       * @Assetなどのｃ＋＋側のグラフィック以外の初期化を行う
       */
-     public static native void systemInit(AssetManager asset);
+     public static native void systemInit(AssetManager asset, int input_maxPoint);
+     public static native void sendTouchEvent(int count, int[] arrayID, float[] pointsX, float[] pointsY, float[] arrayPressure, int id, int con);
      
      public static native void onPause();
      public static native void onResume();
-     public static native void onDestory();   
+     public static native void onDestory();
 }
