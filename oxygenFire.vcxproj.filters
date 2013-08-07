@@ -111,6 +111,9 @@
     <ClCompile Include="CppSource\input\notUse\Input.cpp">
       <Filter>source\Input\notUse</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\utility\textLoader.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\input\Input.h">
       <Filter>source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\textLoader.h">
+      <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

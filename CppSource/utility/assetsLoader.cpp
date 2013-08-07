@@ -48,7 +48,6 @@ void AssetsLoader::sClear(JNIEnv* env)
 bool AssetsLoader::load(char** out, int* outSize, const char* fileName)
 {
 	assert(NULL != sAssetMng && "AssetsLoader::load | Failure Get AssetsManager...");
-
 	bool isOK = false;
 	int size = 0;
 	AAsset* asset = AAssetManager_open(sAssetMng, fileName, AASSET_MODE_UNKNOWN);

@@ -27,6 +27,7 @@
     <ClCompile Include="CppSource\sound\notUse\OpenSLES.cpp" />
     <ClCompile Include="CppSource\sound\notUse\waveLoader.cpp" />
     <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
+    <ClCompile Include="CppSource\utility\textLoader.cpp" />
     <ClCompile Include="CppSource\utility\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +49,7 @@
     <ClInclude Include="CppSource\StandardLib\SmartPointer.h" />
     <ClInclude Include="CppSource\types.h" />
     <ClInclude Include="CppSource\utility\assetsLoader.h" />
+    <ClInclude Include="CppSource\utility\textLoader.h" />
     <ClInclude Include="CppSource\utility\utility.h" />
   </ItemGroup>
   <ItemGroup>

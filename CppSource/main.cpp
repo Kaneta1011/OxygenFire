@@ -236,6 +236,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	if(Update()){Render();}
 }
 
+#include "utility\textLoader.h"
 /*
 	グラフィック以外の初期化
 */
