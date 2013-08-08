@@ -217,9 +217,6 @@ SLboolean	OutputMix::init(Device& device, SLboolean isAsync)
 {
 	const SLInterfaceID ids[] = {
 		SL_IID_OUTPUTMIX,
-		SL_IID_ENVIRONMENTALREVERB,
-		SL_IID_EQUALIZER,
-		SL_IID_VIRTUALIZER,
 	};
 	int num = sizeof(ids)/sizeof(ids[0]);
 
@@ -227,9 +224,6 @@ SLboolean	OutputMix::init(Device& device, SLboolean isAsync)
 	assert( !Device::isError(result, "Failure initialize mlSound::OutputMix...") ) ;
 //各インターフェイスの設定
 	assert( !Device::isError(M(this->mObject)->GetInterface(this->mObject, ids[0], &this->mOutputMix),		"Failure Get Interface OutputMix..") );
-	assert( !Device::isError(M(this->mObject)->GetInterface(this->mObject, ids[1], &this->mEnvReverb),	"Failure Get Interface EnvironmentalReverb..") );
-	assert( !Device::isError(M(this->mObject)->GetInterface(this->mObject, ids[2], &this->mEqualizer ),		"Failure Get Interface Equalizer...") );
-	assert( !Device::isError(M(this->mObject)->GetInterface(this->mObject, ids[3], &this->mVirtualizer ),	"Failure Get Interface Virtualizer...") );
 	return SL_BOOLEAN_TRUE;
 }
 
