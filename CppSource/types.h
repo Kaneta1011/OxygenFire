@@ -1,4 +1,5 @@
 #pragma once
+//#include <tchar.h>
 namespace klib
 {
 	///@brief	符号付整数1バイト型

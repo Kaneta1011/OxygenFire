@@ -1,0 +1,32 @@
+#pragma once
+/**
+* @file スレッドミューテックス
+*/
+#include "../../../kdefines.h"
+#include "../../../KTL/pImpl.h"
+
+namespace klib
+{
+	namespace thread
+	{
+		/**
+		* @class ミューテックスオブジェクトクラス
+		* brief WIN32とAndroidで実装ファイルを分けているので注意
+		*/
+		class kMutex
+		{
+		private:
+			///@brief 実装クラス
+			class Impl;
+			ktl::pImpl<Impl> m_Impl;
+		public:
+			kMutex();
+			~kMutex();
+			///@brief ミューテックスをロックする
+			void lock();
+			///@brief ミューテックスを解除する
+			void unLock();
+		};
+
+	}
+}
