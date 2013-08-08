@@ -24,7 +24,7 @@
     <!-- MODIFY_AUDIO_SETTINGS is needed to use audio effects such as environmental reverb -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"></uses-permission>
     <uses-feature android:glEsVersion="0x00020000"/>
-    <uses-sdk android:minSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="10"/>
     
     <application
             android:label="@string/oxygenfire_activity">
