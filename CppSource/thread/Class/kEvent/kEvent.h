@@ -2,8 +2,8 @@
 /**
 * @file スレッドイベント
 */
-#include "../../../kdefines.h"
-#include "../../../KTL/pImpl.h"
+#include "../../../defines.h"
+#include "../../../templateLib/pImpl.h"
 
 namespace klib
 {

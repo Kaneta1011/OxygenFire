@@ -26,6 +26,19 @@
     <ClCompile Include="CppSource\sound\notUse\mlsound.cpp" />
     <ClCompile Include="CppSource\sound\notUse\OpenSLES.cpp" />
     <ClCompile Include="CppSource\sound\notUse\waveLoader.cpp" />
+    <ClCompile Include="CppSource\Thread\Class\kEvent\kEventUNIX.cpp" />
+    <ClCompile Include="CppSource\Thread\Class\kEvent\kEventWIN32.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kMutex\kMutexUNIX.cpp" />
+    <ClCompile Include="CppSource\Thread\Class\kMutex\kMutexWIN32.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadPool.cpp" />
+    <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerUNIX.cpp" />
+    <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerWIN32.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
     <ClCompile Include="CppSource\utility\debugMessageMng.cpp" />
     <ClCompile Include="CppSource\utility\textLoader.cpp" />
@@ -48,6 +61,15 @@
     <ClInclude Include="CppSource\sound\waveLoader.h" />
     <ClInclude Include="CppSource\StandardLib\Singleton.h" />
     <ClInclude Include="CppSource\StandardLib\SmartPointer.h" />
+    <ClInclude Include="CppSource\templateLib\kFuncHolder.h" />
+    <ClInclude Include="CppSource\templateLib\kFuncHolderDecl.h" />
+    <ClInclude Include="CppSource\templateLib\kQueue.h" />
+    <ClInclude Include="CppSource\templateLib\pImpl.h" />
+    <ClInclude Include="CppSource\templateLib\smartptr.h" />
+    <ClInclude Include="CppSource\Thread\Class\kEvent\kEvent.h" />
+    <ClInclude Include="CppSource\Thread\Class\kMutex\kMutex.h" />
+    <ClInclude Include="CppSource\Thread\Class\kThreadPool\kThreadPool.h" />
+    <ClInclude Include="CppSource\Thread\Class\kThread\kThread.h" />
     <ClInclude Include="CppSource\types.h" />
     <ClInclude Include="CppSource\utility\assetsLoader.h" />
     <ClInclude Include="CppSource\utility\debugMessageMng.h" />

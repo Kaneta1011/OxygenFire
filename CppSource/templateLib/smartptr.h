@@ -53,7 +53,7 @@
 
 #pragma once
 
-#include "kdefines.h"
+#include "defines.h"
 
 namespace klib {
 	namespace ktl{

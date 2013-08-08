@@ -3,8 +3,8 @@
 */
 #pragma once
 #include "../kThreadPool/kThreadPool.h"
-#include "../../../KTL/kFuncHolder.h"
-#include "../../../kdefines.h"
+#include "../../../templateLib/kFuncHolder.h"
+#include "../../../defines.h"
 
 /**
 * @namespace かねたライブラリ
@@ -16,7 +16,7 @@ namespace klib
 	*/
 	namespace thread
 	{
-		typedef ktl::kFuncHolder<void*> kThreadHolder;
+		typedef ktl::kFuncHolder<void> kThreadHolder;
 
 		/**
 		* @class スレッド関数実行クラス
@@ -40,10 +40,10 @@ namespace klib
 			/**
 			* @brief 関数または関数オブジェクトの実行
 			*/
-			void* run()
+			void run()
 			{
 				//LOGI("IkThreadFunc run");
-				return (*m_Func)(); 
+				(*m_Func)(); 
 				//LOGI("IkThreadFunc return");
 			}
 			/**

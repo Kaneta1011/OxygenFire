@@ -2,7 +2,7 @@
 * @file 簡易関数ホルダークラス群
 */
 #pragma once
-#include "../kdefines.h"
+#include "../defines.h"
 #include "pImpl.h"
 
 /**

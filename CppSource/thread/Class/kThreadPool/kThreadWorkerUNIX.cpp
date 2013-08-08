@@ -42,12 +42,10 @@ namespace klib
 					//処理をアンロックする
 					m_Mutex.unLock();
 					//実行
-					int* ret=(int*)func->run();
-					dprintf("ThreadID:%d Run %d\n",threadInst->getID(),*ret);
-					delete ret;
-					//func->run();
+					dprintf("ThreadID:%d Run\n",threadInst->getID());
+					func->run();
 					//終了
-					//dprintf("ThreadID:%d End\n",threadInst->getID());
+					dprintf("ThreadID:%d End\n",threadInst->getID());
 					func->end();
 				}
 

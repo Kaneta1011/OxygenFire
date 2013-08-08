@@ -2,10 +2,10 @@
 * @file スレッドプール
 */
 #pragma once
-#include "../../../KTL/kQueue.h"
+#include "../../../templateLib/kQueue.h"
 #include "../kMutex/kMutex.h"
 #include "../kEvent/kEvent.h"
-#include "../../../KTL/pImpl.h"
+#include "../../../templateLib/pImpl.h"
 /**
 * @namespace かねたライブラリ
 */

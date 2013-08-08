@@ -58,6 +58,27 @@
     <Filter Include="source\Input\notUse">
       <UniqueIdentifier>{2f9eb760-7b3e-439d-95ce-ab703df0f30f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Thread">
+      <UniqueIdentifier>{a928b7e0-ef9d-4ef2-b430-501d1fd6ed99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Thread\Class">
+      <UniqueIdentifier>{fd361aa0-fc2c-42d0-a3d1-60d15226486e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Thread\Class\kEvent">
+      <UniqueIdentifier>{af38c085-0b06-4014-b682-53dae1a50d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Thread\Class\kMutex">
+      <UniqueIdentifier>{a78a9cb9-b573-4bde-879b-e4b921946f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Thread\Class\kThread">
+      <UniqueIdentifier>{05949c53-b40e-48d6-9ae4-877a1764877f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Thread\Class\kThreadPool">
+      <UniqueIdentifier>{af089f41-5308-4e63-a5db-7ea37609ffa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\templateLib">
+      <UniqueIdentifier>{64cedbf7-318f-409b-8b97-39acfe36e002}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -116,6 +137,27 @@
     </ClCompile>
     <ClCompile Include="CppSource\utility\debugMessageMng.cpp">
       <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kEvent\kEventUNIX.cpp">
+      <Filter>source\Thread\Class\kEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kEvent\kEventWIN32.cpp">
+      <Filter>source\Thread\Class\kEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kMutex\kMutexUNIX.cpp">
+      <Filter>source\Thread\Class\kMutex</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kMutex\kMutexWIN32.cpp">
+      <Filter>source\Thread\Class\kMutex</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadPool.cpp">
+      <Filter>source\Thread\Class\kThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerUNIX.cpp">
+      <Filter>source\Thread\Class\kThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerWIN32.cpp">
+      <Filter>source\Thread\Class\kThreadPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +223,33 @@
     </ClInclude>
     <ClInclude Include="CppSource\utility\debugMessageMng.h">
       <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Thread\Class\kEvent\kEvent.h">
+      <Filter>source\Thread\Class\kEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Thread\Class\kMutex\kMutex.h">
+      <Filter>source\Thread\Class\kMutex</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Thread\Class\kThread\kThread.h">
+      <Filter>source\Thread\Class\kThread</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Thread\Class\kThreadPool\kThreadPool.h">
+      <Filter>source\Thread\Class\kThreadPool</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kFuncHolder.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kFuncHolderDecl.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kQueue.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\pImpl.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\smartptr.h">
+      <Filter>source\templateLib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
-#include "../KThread/Class/kMutex/kMutex.h"
+#include "../Thread/Class/kMutex/kMutex.h"
 namespace klib
 {
 	namespace ktl
