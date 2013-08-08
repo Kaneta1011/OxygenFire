@@ -20,12 +20,12 @@
 #include "sound\mlsound.h"
 #include "utility\assetsLoader.h"
 #include "input\Input.h"
+#include "utility\debugMessageMng.h"//デバッグ用の文字列表示のためのヘッダー
 
 // OpenGL ES 2.0 code
 
 #include <jni.h>
 #include <android/log.h>
-#include <android/bitmap.h>
 
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
@@ -46,7 +46,6 @@ using namespace klib::math;
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-
 
 //=======================================================================================================
 //
@@ -152,11 +151,10 @@ void Delete()
 bool Update()
 {
 	static Vector3 inputOffset(0,0,0);
-	if( mlInput::key() != mlInput::FREE )
-	{
-		inputOffset.x = (mlInput::getX()/(float)RenderState::getScreenWidth()*2.f - 1.f) * 10.f;
-		inputOffset.y = (mlInput::getY()/(float)RenderState::getScreenHeight()*2.f - 1.f) * 10.f;
-	}
+	float rate = (mlInput::isFlick)?0.1f:0.01f;
+	inputOffset.x += mlInput::getMoveX() * rate;
+	inputOffset.y += mlInput::getMoveY() * rate;
+
 	//	Matrix設定
 	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,0,0) + inputOffset,Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix((float)K_PI/4, 
@@ -217,6 +215,12 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env, jobject obj);
 	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * env, jobject obj);
 
+	//
+	//	デバッグ用
+	//
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugInit(JNIEnv * env, jobject obj, jobject activity);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugDelete(JNIEnv * env, jobject obj);
+
 };
 
 //
@@ -227,16 +231,57 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	RenderState::setScreenWidth(width);
 	RenderState::setScreenHeight(height);
 	RenderState::Setting_PolygonBathSides(false);
-	 
 	Initialize();
 }
  
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
 {
+//===========================================================================================
+//	デバッグ用の文字列表示のサンプル
+//	・可変長引数に対応できなかったので数値とか表示したいなら自前で用意してください。
+//	あと、dtの値は適当です
+	char msg[128];
+	sprintf(msg, "dt = %.2f\t[ms]", dt);
+	DEBUG_MSG(msg);
+	DEBUG_MSG("touch infomation");
+	sprintf(msg, "now touchNum = %d", mlInput::getNowTouchCount() );
+	DEBUG_MSG(msg);
+	sprintf(msg, "pinch len = %.2f", mlInput::getPointLength() );
+	DEBUG_MSG(msg);
+	sprintf(msg, "pinch move len = %.2f", mlInput::getPointMoveLength() );
+	DEBUG_MSG(msg);
+
+	for( int i=0; i<1; i++ )
+	{
+		sprintf(msg, "id = %d", i );
+		DEBUG_MSG(msg);
+		switch(mlInput::key(i))
+		{
+		case mlInput::DOWN:		DEBUG_MSG("DOWN");	break;
+		case mlInput::UP:		DEBUG_MSG("UP");	break;
+		case mlInput::MOVE:		DEBUG_MSG("MOVE");	break;
+		case mlInput::FREE:		DEBUG_MSG("FREE");	break;
+		}
+		sprintf(msg, "x = %.2f\ty = %.2f", mlInput::getX(i), mlInput::getY(i) );
+		DEBUG_MSG(msg);
+		if( mlInput::isFlick() )
+		{
+			DEBUG_MSG("Flick!!");
+		}
+		else
+		{
+			DEBUG_MSG("Non flick..");
+		}
+	}
+//===========================================================================================
+
 	if(Update()){Render();}
+	
+	mlInput::update(dt);
+
+	DEBUG_FLUSH_MSG();//ここでデバッグ用の文字列をTextViewに設定しているので、消さないで!!
 }
 
-#include "utility\textLoader.h"
 /*
 	グラフィック以外の初期化
 */
@@ -246,11 +291,10 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * e
 	
 	AssetsLoader::sInit(env, asset);
 	mlInput::init(input_maxPoint);
+	Sound::init();
 
 	LOGI("Complete systemInit.");
 }
-
-#include <android\input.h>
 
 //
 //		タッチイベントの受信
@@ -261,13 +305,12 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv
 }
 
 //
-//		Oxygenfire_Activity非表示になったとき呼び出される
+//		Activityが非表示になったとき呼び出される
 //
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env, jobject obj)
 {
 	LOGI("Passage onPause.");
 	
-
 	LOGI("Complete onPause.");
 }
 
@@ -290,31 +333,44 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	LOGI("Passage onDestory.");
 	
 	mlInput::clear();
+	Sound::clear();
 
 	LOGI("Complete onDestory.");
 }
 
+//
+//	デバッグ用
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugInit(JNIEnv * env, jobject obj, jobject activity)
+{
+	DEBUG_MSG_INIT(env,activity);
+
+}
+
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugDelete(JNIEnv * env, jobject obj)
+{
+	DEBUG_MSG_CLEAR(env);
+}
+
 //---------------------------------------------------------------------------
-//		音利用のサンプル
+//		音利用のサンプル(8/7 static関数へ変更)
 //{
-//	mlSound::Base g_base;
-//	g_base.init();	//初期化
-//	g_base.clear();	//破棄
+//	Sound::init();	//初期化
+//	Sound::clear();	//破棄
 //
 //	{//ファイルの読み込みと削除
-//		g_base.add(
+//		Sound::add(
 //			0,	//追加する番号/*0～(mlSound::Base::PLAYER_MAX-1)の間*/,
 //			env,//JNIEnvクラス。JNIの引数に必ずついてるはず。
-//			assetsManager,	//JavaからAssetsManagerクラスを持ってくる。
 //			"sound/bgm1.mp3",	//assetsのパス。例ではassetsフォルダーのsoundフォルダーの中にあるbgm1.mp3を読み込む
 //		);
-//		g_base.del(0/*使用する番号*/);//削除
+//		Sound::del(0/*使用する番号*/);//削除
 //	}
 //	{//再生関連のコード
-//		g_base.play(  /*使用する番号*/, true/*ループフラグ*/);
-//		g_base.pause( /*使用する番号*/);//一時停止
-//		g_base.stop(  /*使用する番号*/);//再生終了
-//		g_base.volume(/*使用する番号*/, volume/*0～1の範囲*/);
+//		Sound::play(  No/*使用する番号*/, true/*ループフラグ*/);
+//		Sound::pause( No/*使用する番号*/);//一時停止
+//		Sound::stop(  No/*使用する番号*/);//再生終了
+//		Sound::volume(No/*使用する番号*/, volume/*0～1の範囲*/);
 //	}
 //}
 //---------------------------------------------------------------------------

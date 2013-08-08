@@ -20,22 +20,49 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.TextView.BufferType;
 
-public class Oxygenfire_Activity extends Activity {
-
+public class Debug_Oxygenfire_Activity extends Activity {
 	GL2JNIView graphic = null;
+	DebugMessageView debugMsg = null;
+	
+	StringBuffer msg = new StringBuffer(1024);
 	
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		graphic = new GL2JNIView(this);
 		graphic.setRenderer(new SceneRender(this));
-		setContentView(graphic);
+		
+		debugMsg = new DebugMessageView(this);
+		
+		FrameLayout ll_frame = new FrameLayout(this);
+		ll_frame.addView(graphic);
+		ll_frame.addView(debugMsg);
+		setContentView(ll_frame);
 		
 		JNICallMethod.assets = getAssets();
-		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());	
+		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
+		GL2JNILib.debugInit(this);
 	}
 
+	protected void addMsg(String msg)
+	{
+		//Log.i("debug",this.msg);
+		this.msg.insert(this.msg.length(), msg);
+		this.msg.insert(this.msg.length(), "\n");
+	}
+	
+	protected void flush()
+	{
+		debugMsg.msg.delete(0, debugMsg.msg.length());
+		debugMsg.msg.append(this.msg);
+		this.msg.delete(0, this.msg.length());
+		//Log.i("",debugMsg.msg.toString());
+	}
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -50,10 +77,12 @@ public class Oxygenfire_Activity extends Activity {
 		GL2JNILib.onResume();
 	}
 
+	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		GL2JNILib.onDestory();
+		GL2JNILib.debugDelete();
 	}
 
 	@Override

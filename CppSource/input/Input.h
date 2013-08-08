@@ -37,11 +37,23 @@ public://よく使う関数
 	/*
 	押している座標のX成分を返す
 	*/
-	static int getX(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].x; }
+	static float getX(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].x; }
 	/*
 	押している座標のY成分を返す
 	*/
-	static int getY(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].y; }
+	static float getY(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].y; }
+	/*
+	前フレームからの移動量のX成分を返す
+	*/
+	static float getMoveX(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].mx; }
+	/*
+	前フレームからの移動量のY成分を返す
+	*/
+	static float getMoveY(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].my; }
+	/*
+	フリックしたか？
+	*/
+	static bool isFlick(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].isFlick; }
 	/*
 	タッチしてからの経過時間を返す
 	タッチしていなければ０を返す
@@ -54,11 +66,35 @@ public://よく使う関数
 	*/
 	static float getPressure(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].pressure; }
 
+	/*
+	現在のタッチ数を返す
+	*/
+	static int getNowTouchCount(){return mNowTouchCount;}
+
+	/*
+	id=0と1のポイントの距離を返す
+	*/
+	static float getPointLength(){return mPointLength;}
+
+	/*
+	id=0と1のポイントの距離の変化量を返す
+	*/
+	static float getPointMoveLength(){return mPointLength-mPrevPointLength;}
+
 public://ゲッター
 	/*
 	検出するタッチ数の最大数を返す
 	*/
 	static int	getMaxPoint(){return M_POINT_MAX;}
+
+	/*
+	フリック感度を設定する
+	*/
+	static void  setFlickSensitivity(float sensitivity){ mFlickSensitivity = sensitivity; }
+	/*
+	現在のフリック感度を返す
+	*/
+	static float getFlickSensitivity(){ return mFlickSensitivity; }
 
 protected:
 	struct Info
@@ -66,22 +102,31 @@ protected:
 		bool isUpdate;
 		int condition;
 		float x, y;
+		float mx, my;//前フレームからの移動量
+		float nextX, nextY;
 		float pressure;
 		float time;
+		bool isFlick;
 
 		void init(){
 			this->isUpdate = false;
 			this->condition = FREE;
-			this->x = -1;
-			this->y = -1;
+			this->x = this->y = -1;
+			this->mx = this->my = 0;
+			this->nextX = nextY = -1;
 			this->pressure = 0.f;
 			this->time = 0.f;
+			this->isFlick = false;
 		}
 	};
 
 protected:
 	static int		M_POINT_MAX;
 	static Info*	mpInfos;
+	static float	mFlickSensitivity;	//フリック感度
+	static int		mNowTouchCount;
+	static float	mPointLength;
+	static float	mPrevPointLength;
 
 private:
 	static const char* TAG;

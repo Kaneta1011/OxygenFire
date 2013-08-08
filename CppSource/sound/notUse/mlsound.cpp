@@ -3,53 +3,51 @@
 #include <android\asset_manager.h>
 #include <android/asset_manager_jni.h>
 
+#include "../../utility/assetsLoader.h"
+
 using namespace mlSound;
 
 #if USE_SOUND_LIB == OPENSLES
 //
-//		OpenSLES使用バージョンBase
+//		OpenSLES使用バージョンSound
 //
-Base::Base():
-mIsAsync(false)
-{
-}
 
-Base::~Base()
-{
-	clear();
-}
+bool					Sound::mIsAsync = false;
+mlSound::Device			Sound::mDevice;
+mlSound::OutputMix		Sound::mOutputMix;
+mlSound::Player			Sound::mPlayer[Sound::PLAYER_MAX];
 
-void Base::init(bool isAsync)
+void Sound::init(bool isAsync)
 {
 	clear();
-	this->mIsAsync = isAsync;
-	this->mDevice.init(isAsync);
-	this->mOutputMix.init(this->mDevice, isAsync);
+	mIsAsync = isAsync;
+	mDevice.init(isAsync);
+	mOutputMix.init(mDevice, isAsync);
 }
 
-void Base::clear()
+void Sound::clear()
 {
 	for( int i=0; i<PLAYER_MAX; i++ )
 	{
-		this->mPlayer[i].clear();
+		mPlayer[i].clear();
 	}
 }
 
-bool Base::add(int No, JNIEnv* env, jobject assetsManager, jstring fileName, bool isStream)
+bool Sound::add(int No, JNIEnv* env, jstring fileName)
 {
 	bool isOK = true;
 	assert( 0 <= No && No < PLAYER_MAX );
 
-	Player& player = this->mPlayer[No];
+	Player& player = mPlayer[No];
 
     // use asset manager to open asset by filename
-	AAssetManager* mgr = AAssetManager_fromJava(env, assetsManager);
+	AAssetManager* mgr = AssetsLoader::getAssetManager();
     assert(NULL != mgr);
 
     // convert Java string to UTF-8
     const char* name = (env)->GetStringUTFChars(fileName, NULL);
     assert(NULL != name);
-	isOK = (bool)player.load(this->mDevice, mgr, name, AASSET_MODE_UNKNOWN, this->mOutputMix, this->mIsAsync);
+	isOK = (bool)player.load(mDevice, mgr, name, AASSET_MODE_UNKNOWN, mOutputMix, mIsAsync);
 
 	// release the Java string and UTF-8
     (env)->ReleaseStringUTFChars(fileName, name);
@@ -57,39 +55,39 @@ bool Base::add(int No, JNIEnv* env, jobject assetsManager, jstring fileName, boo
 	return isOK;
 }
 
-void Base::del(int No)
+void Sound::del(int No)
 {
 	assert( 0 <= No && No < PLAYER_MAX );
-	this->mPlayer[No].clear();
+	mPlayer[No].clear();
 }
 
 
-void Base::play(int No, bool isLoop)
+void Sound::play(int No, bool isLoop)
 {
 	assert( 0 <= No && No < PLAYER_MAX );
 	if( isLoop )
 	{
-		this->mPlayer[No].setLoop(isLoop);
+		mPlayer[No].setLoop(isLoop);
 	}
-	this->mPlayer[No].play();
+	mPlayer[No].play();
 }
 
-void Base::stop(int No)
+void Sound::stop(int No)
 {
 	assert( 0 <= No && No < PLAYER_MAX );
-	this->mPlayer[No].stop();
+	mPlayer[No].stop();
 }
 
-void Base::pause(int No)
+void Sound::pause(int No)
 {
 	assert( 0 <= No && No < PLAYER_MAX );
-	this->mPlayer[No].pause();
+	mPlayer[No].pause();
 }
 
-void Base::volume(int No, float per/*per:0～1の間*/)
+void Sound::volume(int No, float per/*per:0～1の間*/)
 {
 	assert( 0 <= No && No < PLAYER_MAX );
-	this->mPlayer[No].setVolume(per);
+	mPlayer[No].setVolume(per);
 }
 
 

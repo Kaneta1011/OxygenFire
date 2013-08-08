@@ -1,8 +1,8 @@
-#include "WaveLoader.h"
+#include "../WaveLoader.h"
 
 #ifdef JNI
-#include "../utility/assetsLoader.h"
-#include "../utility/utility.h"
+#include "../../utility/assetsLoader.h"
+#include "../../utility/utility.h"
 #endif
 
 #include <stdio.h>

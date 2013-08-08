@@ -81,6 +81,8 @@ public:
 	*/
 	static bool loadTexture(GLuint* outTexture, const char* fileName, JNIEnv* env, GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE);
 
+	static AAssetManager* getAssetManager(){return sAssetMng;}
+
 protected:
 	static AAssetManager* sAssetMng;
 	static jclass		  sJNICallMethod;

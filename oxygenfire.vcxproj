@@ -27,6 +27,7 @@
     <ClCompile Include="CppSource\sound\notUse\OpenSLES.cpp" />
     <ClCompile Include="CppSource\sound\notUse\waveLoader.cpp" />
     <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
+    <ClCompile Include="CppSource\utility\debugMessageMng.cpp" />
     <ClCompile Include="CppSource\utility\textLoader.cpp" />
     <ClCompile Include="CppSource\utility\utility.cpp" />
   </ItemGroup>
@@ -49,6 +50,7 @@
     <ClInclude Include="CppSource\StandardLib\SmartPointer.h" />
     <ClInclude Include="CppSource\types.h" />
     <ClInclude Include="CppSource\utility\assetsLoader.h" />
+    <ClInclude Include="CppSource\utility\debugMessageMng.h" />
     <ClInclude Include="CppSource\utility\textLoader.h" />
     <ClInclude Include="CppSource\utility\utility.h" />
   </ItemGroup>
@@ -66,7 +68,12 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\AndroidApk</AntBuildPath>
@@ -77,6 +84,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>./CppSource/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">

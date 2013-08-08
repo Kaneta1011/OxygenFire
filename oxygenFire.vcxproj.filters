@@ -114,6 +114,9 @@
     <ClCompile Include="CppSource\utility\textLoader.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\utility\debugMessageMng.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -174,6 +177,9 @@
       <Filter>source\Input</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\utility\textLoader.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\debugMessageMng.h">
       <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>

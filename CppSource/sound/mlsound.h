@@ -12,37 +12,37 @@
 #include "notUse/OpenSLES.h"
 #endif
 
-//
-//		‰¹ˆ—‚ğg‚¢‚½‚¢‚È‚çmlSound::Base‚ğ—˜—p‚µ‚Ä‚­‚¾‚³‚¢B
-//
-namespace mlSound
+class Sound
 {
-	class Base
-	{
-	public:
-		static const int PLAYER_MAX = 20;
-	public:
-		Base();
-		~Base();
+public:
+	static const int PLAYER_MAX = 20;
+public:
 
-		void init(bool isAsync = false);
-		void clear();
 
-		bool add(int No, JNIEnv* env, jobject assetsManager, jstring fileName, bool isStream=false);
-		void del(int No);
+	static void init(bool isAsync = false);
+	static void clear();
 
-		void play(int No, bool isLoop);
-		void stop(int No);
-		void pause(int No);
-		void volume(int No, float per/*per:0`1‚ÌŠÔ*/);
+	static bool add(int No, JNIEnv* env, jstring fileName);
+	static void del(int No);
 
-	private:
-		bool mIsAsync;
-		Device	mDevice;
-		OutputMix mOutputMix;
+	static void play(int No, bool isLoop);
+	static void stop(int No);
+	static void pause(int No);
+	static void volume(int No, float per/*per:0`1‚ÌŠÔ*/);
 
-		Player mPlayer[PLAYER_MAX];
-	};
-}
+private:
+	static bool mIsAsync;
+	static mlSound::Device	mDevice;
+	static mlSound::OutputMix mOutputMix;
+
+	static mlSound::Player mPlayer[PLAYER_MAX];
+
+private:
+	Sound(){}
+	Sound(Sound&){}
+	void operator=(Sound&){}
+	~Sound(){}
+
+};
 
 #endif

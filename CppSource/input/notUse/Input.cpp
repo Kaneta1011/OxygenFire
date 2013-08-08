@@ -1,6 +1,8 @@
 #include "../Input.h"
 #include "../../utility/utility.h"
 
+#include <cmath>
+
 #ifndef NULL
 #define NULL 0
 #endif
@@ -8,6 +10,11 @@
 const char* mlInput::TAG = "mlInput";
 int		mlInput::M_POINT_MAX = 0;
 mlInput::Info*	mlInput::mpInfos = NULL;
+float	mlInput::mFlickSensitivity = 50.f;
+int		mlInput::mNowTouchCount = 0;
+
+float	mlInput::mPointLength = 0.f;
+float	mlInput::mPrevPointLength = 0.f;
 
 void mlInput::init(int maxPoint)
 {
@@ -47,8 +54,8 @@ void mlInput::update(
 	{
 		int index = ids[i];
 		Info& info = mpInfos[index];
-		info.x = x[index];
-		info.y = y[index];
+		info.nextX = x[index];
+		info.nextY = y[index];
 		info.pressure = pressures[index];
 	}
 
@@ -76,7 +83,7 @@ void mlInput::update(float dt)
 		MOVE, //MOVE,
 		FREE, //FREE
 	};
-
+	mNowTouchCount = 0;
 	for( int i=0; i<M_POINT_MAX; i++ )
 	{
 		Info& info = mpInfos[i];
@@ -84,11 +91,47 @@ void mlInput::update(float dt)
 		{
 			info.condition = nextCondition[info.condition];
 		}
+
+		if( info.condition == DOWN )
+		{
+			info.mx = 0;
+			info.my = 0;
+		}
+		else
+		{
+			info.mx = info.nextX - info.x;
+			info.my = info.nextY - info.y;
+		}
+		info.isFlick = ( info.mx*info.mx + info.my*info.my > mFlickSensitivity*mFlickSensitivity );
+
+		info.x = info.nextX;
+		info.y = info.nextY;
+
 		info.time += dt;
 		if( info.condition == FREE ){
 			info.time = 0.f;
+			info.mx = 0;
+			info.my = 0;
+		}
+		else
+		{
+			mNowTouchCount++;
 		}
 
 		info.isUpdate = false;
+	}
+
+	if( key(1) == MOVE && key(0) == MOVE )
+	{
+		mPrevPointLength = mPointLength;
+
+		float difX = getX(1) - getX(0);
+		float difY = getY(1) - getY(0);
+
+		mPointLength = sqrt( difX*difX + difY*difY );
+	}
+	else
+	{
+		mPointLength = mPrevPointLength = 0.f;
 	}
 }

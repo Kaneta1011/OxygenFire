@@ -44,4 +44,11 @@ public class GL2JNILib {
      public static native void onPause();
      public static native void onResume();
      public static native void onDestory();
+     
+     /*
+      * デバッグ用
+      */
+     public static native void debugInit(Debug_Oxygenfire_Activity activity);
+     public static native void debugDelete();
+
 }
