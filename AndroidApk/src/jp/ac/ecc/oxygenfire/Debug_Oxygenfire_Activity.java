@@ -59,6 +59,7 @@ public class Debug_Oxygenfire_Activity extends Activity {
 	{
 		debugMsg.msg.delete(0, debugMsg.msg.length());
 		debugMsg.msg.append(this.msg);
+		debugMsg.isUpdate = true;
 		this.msg.delete(0, this.msg.length());
 		//Log.i("",debugMsg.msg.toString());
 	}

@@ -9,6 +9,7 @@ import android.widget.TextView.BufferType;
 
 public class DebugMessageView extends TextView {
 
+	public boolean isUpdate = false;
 	public StringBuffer msg = new StringBuffer(1024);
 	public DebugMessageView(Context context) {
 		super(context);
@@ -16,7 +17,11 @@ public class DebugMessageView extends TextView {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		setText(msg);
+		if( isUpdate )
+		{
+			setText(msg);
+			isUpdate = false;
+		}
 		super.onDraw(canvas);
 	}
 }

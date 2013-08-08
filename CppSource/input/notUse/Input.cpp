@@ -26,6 +26,7 @@ void mlInput::init(int maxPoint)
 		Info& info = mpInfos[i];
 		info.init();
 	}
+	LOGI(TAG,"Complete init");
 }
 
 void mlInput::clear()

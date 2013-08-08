@@ -4,6 +4,7 @@
 #include <android/asset_manager_jni.h>
 
 #include "../../utility/assetsLoader.h"
+#include "../../utility/utility.h"
 
 using namespace mlSound;
 
@@ -12,6 +13,7 @@ using namespace mlSound;
 //		OpenSLES使用バージョンSound
 //
 
+static char* TAG = "mlSound";
 bool					Sound::mIsAsync = false;
 mlSound::Device			Sound::mDevice;
 mlSound::OutputMix		Sound::mOutputMix;
@@ -23,6 +25,7 @@ void Sound::init(bool isAsync)
 	mIsAsync = isAsync;
 	mDevice.init(isAsync);
 	mOutputMix.init(mDevice, isAsync);
+	LOGI(TAG,"Complete init");
 }
 
 void Sound::clear()
@@ -31,6 +34,9 @@ void Sound::clear()
 	{
 		mPlayer[i].clear();
 	}
+	mOutputMix.clear();
+	mDevice.clear();
+	LOGI(TAG,"Complete init");
 }
 
 bool Sound::add(int No, JNIEnv* env, jstring fileName)

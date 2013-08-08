@@ -15,11 +15,6 @@
  */
 
 //
-//	定義ヘッダとtypedefヘッダです(8/8吉原)
-//
-#include "defines.h"
-
-//
 //	音利用のサンプルを一番下に書いておきます。(7/31 植田)
 //
 #include "sound\mlsound.h"
@@ -43,13 +38,10 @@
 #include	"RenderLib\\Object3D\\Mesh.h"
 #include	<assert.h>
 
-#include "Thread\Class\kThread\kThread.h"
-
 //	use namespace
 using namespace ShaderLib;
 using namespace RenderLib;
 using namespace klib::math;
-using namespace klib::thread;
 
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
@@ -118,10 +110,9 @@ float getRandomNumberFloat( float Min, float Max )
 //----------------------------------------------------------------------
 bool Initialize() 
 {
-	
 	ShaderManager::Init();
 
-	
+
 
 	//LOGI("%d\n%s",__LINE__,__FILE__);
 	//assert(!""); 
@@ -154,12 +145,6 @@ void Delete()
 	delete spMesh; spMesh=NULL;
 }
 
-void testFunc(int a)
-{
-	dprintf("%d\n",a);
-	usleep(1000);
-}
-
 //----------------------------------------------------------------------
 //	Update
 //----------------------------------------------------------------------
@@ -183,10 +168,6 @@ bool Update()
 	workX += 0.01f;
 	workY += 0.01f;
 	workZ += 0.01f;
-
-	{
-		kThread thread(new kThreadHolder(testFunc,10));
-	}
 
 	spMesh->setAngle(Vector3(workX,workY,workZ));
 	//spMesh->Update();
@@ -307,11 +288,9 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset, jint input_maxPoint)
 {
 	LOGI("Passage systemInit.");
-
-	kThreadPool::create(16);
+	
 	AssetsLoader::sInit(env, asset);
 	mlInput::init(input_maxPoint);
-	Sound::init();
 
 	LOGI("Complete systemInit.");
 }
@@ -331,6 +310,8 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env,
 {
 	LOGI("Passage onPause.");
 	
+	Sound::clear();
+
 	LOGI("Complete onPause.");
 }
 
@@ -341,6 +322,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env
 {
 	LOGI("Passage onResume.");
 	
+	Sound::init();
 
 	LOGI("Complete onResume.");
 }
@@ -353,8 +335,6 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	LOGI("Passage onDestory.");
 	
 	mlInput::clear();
-	Sound::clear();
-	Delete();
 
 	LOGI("Complete onDestory.");
 }
