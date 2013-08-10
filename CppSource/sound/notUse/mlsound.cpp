@@ -25,7 +25,7 @@ void Sound::init(bool isAsync)
 	mIsAsync = isAsync;
 	mDevice.init(isAsync);
 	mOutputMix.init(mDevice, isAsync);
-	LOGI(TAG,"Complete init");
+	LOGI(TAG,"OK Sound init");
 }
 
 void Sound::clear()
@@ -36,7 +36,7 @@ void Sound::clear()
 	}
 	mOutputMix.clear();
 	mDevice.clear();
-	LOGI(TAG,"Complete init");
+	LOGI(TAG,"OK Sound clear");
 }
 
 bool Sound::add(int No, JNIEnv* env, jstring fileName)

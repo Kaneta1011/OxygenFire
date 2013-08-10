@@ -18,6 +18,9 @@ package jp.ac.ecc.oxygenfire;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
@@ -29,10 +32,11 @@ public class Debug_Oxygenfire_Activity extends Activity {
 	DebugMessageView debugMsg = null;
 	
 	StringBuffer msg = new StringBuffer(1024);
-	
+	Handler mHandler = new Handler();;
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		//Viewの設定
 		graphic = new GL2JNIView(this);
 		graphic.setRenderer(new SceneRender(this));
 		
@@ -43,6 +47,7 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		ll_frame.addView(debugMsg);
 		setContentView(ll_frame);
 		
+		//C++側の初期化など
 		JNICallMethod.assets = getAssets();
 		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
 		GL2JNILib.debugInit(this);
@@ -50,7 +55,6 @@ public class Debug_Oxygenfire_Activity extends Activity {
 
 	protected void addMsg(String msg)
 	{
-		//Log.i("debug",this.msg);
 		this.msg.insert(this.msg.length(), msg);
 		this.msg.insert(this.msg.length(), "\n");
 	}
@@ -59,25 +63,34 @@ public class Debug_Oxygenfire_Activity extends Activity {
 	{
 		debugMsg.msg.delete(0, debugMsg.msg.length());
 		debugMsg.msg.append(this.msg);
-		debugMsg.isUpdate = true;
-		this.msg.delete(0, this.msg.length());
-		//Log.i("",debugMsg.msg.toString());
+		msg.delete(0, msg.length());
+		//UIのマルチスレッド対応版
+		this.mHandler.post(new Runnable(){
+			@Override
+			public void run() {
+				debugMsg.setText(debugMsg.msg);
+			}
+		});
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		graphic.onPause();
-		GL2JNILib.onPause();
+		graphic.queueEvent(new Runnable(){
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				GL2JNILib.onPause();
+			}
+		});
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		graphic.onResume();
 		GL2JNILib.onResume();
+		msg.delete(0, msg.length());
 	}
-
 	
 	@Override
 	protected void onDestroy() {

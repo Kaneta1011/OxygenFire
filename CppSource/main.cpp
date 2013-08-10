@@ -89,7 +89,7 @@ static void printGLString(const char *name, GLenum s) {
     LOGI("GL %s = %s\n", name, v);
 }
 
-Mesh* spMesh;
+Mesh* spMesh = NULL;
 
 
 #define TEST_MAX 100
@@ -111,13 +111,9 @@ float getRandomNumberFloat( float Min, float Max )
 bool Initialize() 
 {
 	ShaderManager::Init();
-
-
-
 	//LOGI("%d\n%s",__LINE__,__FILE__);
 	//assert(!""); 
 	
-
 	spMesh = new Mesh;
 	spMesh->Init();
 	spMesh->Create_Box(0.5f,0.5f,0.5f);
@@ -140,9 +136,10 @@ bool Initialize()
 //----------------------------------------------------------------------
 void Delete()
 {
+	LOGI("Passage Delete");
 	ShaderManager::Delete();
-
-	delete spMesh; spMesh=NULL;
+	if( spMesh ) { delete spMesh; spMesh=NULL; }
+	LOGI("Complete Delete");
 }
 
 //----------------------------------------------------------------------
@@ -170,7 +167,7 @@ bool Update()
 	workZ += 0.01f;
 
 	spMesh->setAngle(Vector3(workX,workY,workZ));
-	//spMesh->Update();
+	spMesh->Update();
 
 	return true;
 }
@@ -184,6 +181,7 @@ void Render()
 	RenderState::Clear_Buffer(CLEAR_BUFFER_DEPTH);
 	RenderState::Setting_Viewport(0,0,RenderState::getScreenWidth(),RenderState::getScreenHeight());
 
+	//return ;
 
 	for(int n=0;n<TEST_MAX;n++)
 	{
@@ -228,10 +226,12 @@ extern "C" {
 //
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods)
 {
+	LOGI("Passage graphic init");
 	RenderState::setScreenWidth(width);
 	RenderState::setScreenHeight(height);
 	RenderState::Setting_PolygonBathSides(false);
 	Initialize();
+	LOGI("Complete graphic init");
 }
  
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
@@ -240,45 +240,41 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 //	デバッグ用の文字列表示のサンプル
 //	・可変長引数に対応できなかったので数値とか表示したいなら自前で用意してください。
 //	あと、dtの値は適当です
-	char msg[128];
-	sprintf(msg, "dt = %.2f\t[ms]", dt);
-	DEBUG_MSG(msg);
-	DEBUG_MSG("touch infomation");
-	sprintf(msg, "now touchNum = %d", mlInput::getNowTouchCount() );
-	DEBUG_MSG(msg);
-	sprintf(msg, "pinch len = %.2f", mlInput::getPointLength() );
-	DEBUG_MSG(msg);
-	sprintf(msg, "pinch move len = %.2f", mlInput::getPointMoveLength() );
-	DEBUG_MSG(msg);
+	DEBUG_MSG_NON_ARAG("touch infomation");
+	DEBUG_MSG("now touchNum = %d", mlInput::getNowTouchCount());
+	//sprintf(msg, "pinch len = %.2f", mlInput::getPointLength() );
+	//DEBUG_MSG(msg);
+	//sprintf(msg, "pinch move len = %.2f", mlInput::getPointMoveLength() );
+	//DEBUG_MSG(msg);
 
-	for( int i=0; i<1; i++ )
-	{
-		sprintf(msg, "id = %d", i );
-		DEBUG_MSG(msg);
-		switch(mlInput::key(i))
-		{
-		case mlInput::DOWN:		DEBUG_MSG("DOWN");	break;
-		case mlInput::UP:		DEBUG_MSG("UP");	break;
-		case mlInput::MOVE:		DEBUG_MSG("MOVE");	break;
-		case mlInput::FREE:		DEBUG_MSG("FREE");	break;
-		}
-		sprintf(msg, "x = %.2f\ty = %.2f", mlInput::getX(i), mlInput::getY(i) );
-		DEBUG_MSG(msg);
-		if( mlInput::isFlick() )
-		{
-			DEBUG_MSG("Flick!!");
-		}
-		else
-		{
-			DEBUG_MSG("Non flick..");
-		}
-	}
+	//for( int i=0; i<1; i++ )
+	//{
+	//	sprintf(msg, "id = %d", i );
+	//	DEBUG_MSG(msg);
+	//	switch(mlInput::key(i))
+	//	{
+	//	case mlInput::DOWN:		DEBUG_MSG("DOWN");	break;
+	//	case mlInput::UP:		DEBUG_MSG("UP");	break;
+	//	case mlInput::MOVE:		DEBUG_MSG("MOVE");	break;
+	//	case mlInput::FREE:		DEBUG_MSG("FREE");	break;
+	//	}
+	//	sprintf(msg, "x = %.2f\ty = %.2f", mlInput::getX(i), mlInput::getY(i) );
+	//	DEBUG_MSG(msg);
+	//	if( mlInput::isFlick() )
+	//	{
+	//		DEBUG_MSG("Flick!!");
+	//	}
+	//	else
+	//	{
+	//		DEBUG_MSG("Non flick..");
+	//	}
+	//}
 //===========================================================================================
 
 	if(Update()){Render();}
 	
 	mlInput::update(dt);
-
+	
 	DEBUG_FLUSH_MSG();//ここでデバッグ用の文字列をTextViewに設定しているので、消さないで!!
 }
 
@@ -304,19 +300,21 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv
 }
 
 //
-//		Activityが非表示になったとき呼び出される
+//		Activityが非表示になったとき呼び出される(Pause状態と勝手に命名)
 //
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env, jobject obj)
 {
 	LOGI("Passage onPause.");
 	
+	Delete();
 	Sound::clear();
 
 	LOGI("Complete onPause.");
 }
 
 //
-//		APIがPause状態から再び再開されるときに呼び出される
+//		API開始時またはPause状態から再び再開されるときに呼び出される
+//		グラフィック関連はJava_jp_ac_ecc_oxygenfire_GL2JNILib_init関数で必ず行ってください	APIが落ちます
 //
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env, jobject obj)
 {
@@ -345,7 +343,6 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugInit(JNIEnv * env, jobject obj, jobject activity)
 {
 	DEBUG_MSG_INIT(env,activity);
-
 }
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugDelete(JNIEnv * env, jobject obj)

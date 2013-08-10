@@ -7,12 +7,15 @@
 #define NULL 0
 #endif
 
+#ifdef _DEBUG
+
 jstring NewStringMS932(JNIEnv *env, const char *sjis);
 const char* GetStringMS932Chars(JNIEnv *env, jstring strj, int *pLen);
 void ReleaseStringMS932Chars(JNIEnv *env, jstring strj, const char *sjis);
 
 jclass stringClass = NULL;
 
+char	DebugMessageMng::sBuffer[BUFFER_SIZE]={'\0'};
 jobject DebugMessageMng::debugInst = NULL;
 jclass	DebugMessageMng::debugClass = NULL;
 jmethodID DebugMessageMng::idAddMsg = NULL;
@@ -176,3 +179,5 @@ void ReleaseStringMS932Chars(JNIEnv *env, jstring strj, const char *sjis)
 {
 	free((void*)sjis);
 }
+
+#endif

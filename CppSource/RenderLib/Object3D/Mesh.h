@@ -33,7 +33,7 @@ public:
 	void Update();
 	void Render(Shader* spShader);
 	void Create_Box(float Width,float Height,float Depth);
-	virtual ~Mesh(){void Destroy();}void Destroy();
+	virtual ~Mesh(){Destroy();}void Destroy();
 protected:
 	int				m_VertexMax;
 	Vector3*	m_VertexPos;

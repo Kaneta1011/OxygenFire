@@ -39,14 +39,18 @@ public class Oxygenfire_Activity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		graphic.onPause();
-		GL2JNILib.onPause();
+		graphic.queueEvent(new Runnable(){
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				GL2JNILib.onPause();
+			}
+		});
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		graphic.onResume();
 		GL2JNILib.onResume();
 	}
 

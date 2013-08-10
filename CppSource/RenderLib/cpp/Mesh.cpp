@@ -9,7 +9,6 @@
 using namespace RenderLib;
 using namespace klib::math;
 
-
 void Transform_WorldMatrix_XYZ( 
 	Matrix *Mat,
 	const Vector3& Pos,
@@ -202,7 +201,6 @@ void Mesh::Create_Box(float w,float h,float d)
 	glVertexAttribPointer(VERTEX_INDEX_COLOR,VERTEX_SIZE_COLOR,GL_FLOAT,GL_FALSE,0,m_VertexColor);
 
 	glGenBuffers(VERTEX_INDEX_MAX,m_VBO);
-
 	//	頂点属性データ用のバッファオブジェクトをバインドする
 	glBindBuffer(GL_ARRAY_BUFFER,m_VBO[VERTEX_INDEX_POS]);
 	glBufferData(GL_ARRAY_BUFFER,m_VertexMax*sizeof(Vector3),m_VertexPos,GL_STATIC_DRAW);
@@ -210,6 +208,5 @@ void Mesh::Create_Box(float w,float h,float d)
 	//	要素インデックス用のバッファオブジェクトをバインドする
 	glBindBuffer(GL_ARRAY_BUFFER,m_VBO[VERTEX_INDEX_COLOR]);
 	glBufferData(GL_ARRAY_BUFFER,m_VertexMax*sizeof(Vector4),m_VertexColor,GL_STATIC_DRAW);
-
 
 }

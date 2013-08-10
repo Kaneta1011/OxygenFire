@@ -19,7 +19,6 @@ public class SceneRender implements Renderer{
 		time = System.nanoTime() - time;
 		float dt = (float)time / 1000.f;
 		dt /= 1000.f;
-		dt /= 1000.f;
 		GL2JNILib.update(dt);
 	}
 
