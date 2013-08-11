@@ -26,7 +26,7 @@ void Shader::Load(GLuint* Shader,GLenum Type,const char* Filename)
   glCompileShader(*Shader);
 }
 
-void Shader::Init(const char* VS,const char* FS)
+void Shader::Init(char* VS,char* FS)
 {
 	GLuint vertexShader;
 	GLuint fragmentShader;

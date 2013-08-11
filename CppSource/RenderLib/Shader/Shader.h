@@ -16,7 +16,7 @@ public:
 	//	Load
 	void Load(GLuint* Shader,GLenum Type,const char* Filename);
 	//	Init
-	void Init(const char* VS,const char* FS);
+	void Init(char* VS,char* FS);
 	//	Begin_End
 	void Begin();
 	void End();

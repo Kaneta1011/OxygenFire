@@ -253,10 +253,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CppSource\ShaderLib\DATA\Simple.fs">
+    <None Include="AndroidApk\assets\simple.fs">
       <Filter>source\ShaderLib\DATA</Filter>
     </None>
-    <None Include="CppSource\ShaderLib\DATA\Simple.vs">
+    <None Include="AndroidApk\assets\simple.vs">
       <Filter>source\ShaderLib\DATA</Filter>
     </None>
   </ItemGroup>

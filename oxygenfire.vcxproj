@@ -77,8 +77,8 @@
     <ClInclude Include="CppSource\utility\utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CppSource\ShaderLib\DATA\Simple.fs" />
-    <None Include="CppSource\ShaderLib\DATA\Simple.vs" />
+    <None Include="AndroidApk\assets\simple.fs" />
+    <None Include="AndroidApk\assets\simple.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A99D29C-A422-4C77-8D46-1D3EC70730A9}</ProjectGuid>
