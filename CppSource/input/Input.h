@@ -4,6 +4,18 @@
 #include <jni.h>
 #include <assert.h>
 
+/*
+	・画面タッチと仮想ボタンを管理するクラス
+	・画面タッチの機能として
+		----複数タッチの管理	->	getNowTouchCount()
+		----座標と前フレームからの移動量	-> getX() getY() getMoveX() getMoveY()
+		----押した時間		->　getTime()
+		----圧力			->	getPressure()
+		----フリック関連	->	isFlick() (フリック方向がほしいときはgetMove?()を利用してください)
+		----ピンチ関連		->	isPinch() getPinchLength() getPinchMoveLength()
+	などを用意しています
+	・仮想ボタンはまだです
+*/
 class mlInput
 {
 public:
@@ -20,9 +32,20 @@ public:
 		maxPoint : タッチを検出する最大数. ハード側の最大検出個数は大体4個超えるぐらいなのでそれを超える値を渡してもメモリの無駄になります.
 	*/
 	static void init(int maxPoint);
+	/*
+	開放処理
+	*/
 	static void clear();
 
-	static void update(JNIEnv* env, jint count, jintArray arrayID, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, int id, int con);
+	/*
+	Javaからタッチデータを取ってくる関数
+	Javaから呼び出される
+	*/
+	static void update(JNIEnv* env, jint count, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, int id, int con);
+
+	/*
+	次のフレームのための処理を行う
+	*/
 	static void update(float dt);
 
 public://よく使う関数
@@ -31,9 +54,9 @@ public://よく使う関数
 	DOWN : 押されたとき
 	UP   : 離されたとき
 	MOVE : 押し続けているとき
-	FREE : 指が離れているとき(押していないとき)
+	FREE : 指が離れているとき(押していないとき) この状態だとその他(座標やフリック関係など)の全ぶの値は無意味なものなので使わないで
 	*/
-	static int key(int id=0){ assert(id<M_POINT_MAX); return mpInfos[id].condition; }
+	static int key(int id=0){ assert(id<M_POINT_MAX); return mpInfos[id].action; }
 	/*
 	押している座標のX成分を返す
 	*/
@@ -50,10 +73,12 @@ public://よく使う関数
 	前フレームからの移動量のY成分を返す
 	*/
 	static float getMoveY(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].my; }
+
 	/*
 	フリックしたか？
 	*/
 	static bool isFlick(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].isFlick; }
+
 	/*
 	タッチしてからの経過時間を返す
 	タッチしていなければ０を返す
@@ -72,14 +97,18 @@ public://よく使う関数
 	static int getNowTouchCount(){return mNowTouchCount;}
 
 	/*
+	ピンチ状態か？
+	*/
+	static bool isPinch(){return mIsPinch;}
+	/*
 	id=0と1のポイントの距離を返す
 	*/
-	static float getPointLength(){return mPointLength;}
+	static float getPinchLength(){return mPinchLength;}
 
 	/*
 	id=0と1のポイントの距離の変化量を返す
 	*/
-	static float getPointMoveLength(){return mPointLength-mPrevPointLength;}
+	static float getPinchMoveLength(){return mPinchLength-mPrevPinchLength;}
 
 public://ゲッター
 	/*
@@ -96,24 +125,27 @@ public://ゲッター
 	*/
 	static float getFlickSensitivity(){ return mFlickSensitivity; }
 
+public://デバッグ用
+	static void debugMseeage();
+
 protected:
 	struct Info
 	{
 		bool isUpdate;
-		int condition;
+		int action;
 		float x, y;
 		float mx, my;//前フレームからの移動量
-		float nextX, nextY;
+		float prevX, prevY;
 		float pressure;
 		float time;
 		bool isFlick;
 
 		void init(){
 			this->isUpdate = false;
-			this->condition = FREE;
+			this->action = FREE;
 			this->x = this->y = -1;
 			this->mx = this->my = 0;
-			this->nextX = nextY = -1;
+			this->prevX = prevY = -1;
 			this->pressure = 0.f;
 			this->time = 0.f;
 			this->isFlick = false;
@@ -121,12 +153,18 @@ protected:
 	};
 
 protected:
+	static void updatePinck();
+
+protected:
 	static int		M_POINT_MAX;
+	static bool		mIsUpdate;
 	static Info*	mpInfos;
 	static float	mFlickSensitivity;	//フリック感度
 	static int		mNowTouchCount;
-	static float	mPointLength;
-	static float	mPrevPointLength;
+
+	static bool		mIsPinch;
+	static float	mPinchLength;
+	static float	mPrevPinchLength;
 
 private:
 	static const char* TAG;

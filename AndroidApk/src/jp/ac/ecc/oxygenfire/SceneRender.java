@@ -16,10 +16,10 @@ public class SceneRender implements Renderer{
 	@Override
 	public void onDrawFrame(GL10 arg0) {
 		// TODO Auto-generated method stub
-		time = System.nanoTime() - time;
-		float dt = (float)time / 1000.f;
-		dt /= 1000.f;
+		long nowTime = System.nanoTime();
+		float dt = (float)(nowTime - time) / 1000000.f;
 		GL2JNILib.update(dt);
+		time = nowTime;
 	}
 
 	@Override

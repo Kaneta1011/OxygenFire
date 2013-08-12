@@ -2,6 +2,7 @@
 #define _DEBUG_MESSAGE_MNG_
 
 #include <jni.h>
+#include <stdio.h>
 
 #ifdef _DEBUG
 

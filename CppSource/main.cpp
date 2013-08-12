@@ -148,12 +148,27 @@ void Delete()
 bool Update()
 {
 	static Vector3 inputOffset(0,0,0);
+//------------------------------------------------------
+//タッチ機能のテスト
 	float rate = (mlInput::isFlick)?0.1f:0.01f;
-	inputOffset.x += mlInput::getMoveX() * rate;
-	inputOffset.y += mlInput::getMoveY() * rate;
+	if( mlInput::key() == mlInput::MOVE )
+	{
+		inputOffset.x += mlInput::getMoveX() * 0.02f;
+		inputOffset.y += mlInput::getMoveY() * 0.02f;
+	}
+	static float z = 0.f;
+	if( mlInput::isPinch() ){
+		z += mlInput::getPinchMoveLength() * 0.02f;
+	}
+
+	if( mlInput::getNowTouchCount() == 3 ){
+		inputOffset.x = inputOffset.y = 0.f;
+		z = 0.f;
+	}
+//-------------------------------------------------------
 
 	//	Matrix設定
-	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,0,0) + inputOffset,Vector3(0,1,0));
+	RenderState::Setting_ViewMatrix(Vector3(20,20,20+z),Vector3(0,0,0) + inputOffset,Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix((float)K_PI/4, 
 		(float)RenderState::getScreenWidth()/(float)RenderState::getScreenHeight(),
 		0.1f, 100.0f );
@@ -203,7 +218,7 @@ extern "C" {
 
 	//グラフィック以外の処理
 	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * env, jobject obj, jobject asset, jint input_maxPoint);
-	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jintArray arrayID, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con);
 
 	//
 	//	Activityのライフサイクルにあわせてよびだされる関数
@@ -236,45 +251,16 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
  
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
 {
+	
 //===========================================================================================
 //	デバッグ用の文字列表示のサンプル
-//	・可変長引数に対応できなかったので数値とか表示したいなら自前で用意してください。
-//	あと、dtの値は適当です
-	DEBUG_MSG_NON_ARAG("touch infomation");
-	DEBUG_MSG("now touchNum = %d", mlInput::getNowTouchCount());
-	//sprintf(msg, "pinch len = %.2f", mlInput::getPointLength() );
-	//DEBUG_MSG(msg);
-	//sprintf(msg, "pinch move len = %.2f", mlInput::getPointMoveLength() );
-	//DEBUG_MSG(msg);
+//	あと、dtの値は適当です(8/12植田　直しました。)
+	DEBUG_MSG("dt=%.3f[ms]", dt);
+	mlInput::debugMseeage();
 
-	//for( int i=0; i<1; i++ )
-	//{
-	//	sprintf(msg, "id = %d", i );
-	//	DEBUG_MSG(msg);
-	//	switch(mlInput::key(i))
-	//	{
-	//	case mlInput::DOWN:		DEBUG_MSG("DOWN");	break;
-	//	case mlInput::UP:		DEBUG_MSG("UP");	break;
-	//	case mlInput::MOVE:		DEBUG_MSG("MOVE");	break;
-	//	case mlInput::FREE:		DEBUG_MSG("FREE");	break;
-	//	}
-	//	sprintf(msg, "x = %.2f\ty = %.2f", mlInput::getX(i), mlInput::getY(i) );
-	//	DEBUG_MSG(msg);
-	//	if( mlInput::isFlick() )
-	//	{
-	//		DEBUG_MSG("Flick!!");
-	//	}
-	//	else
-	//	{
-	//		DEBUG_MSG("Non flick..");
-	//	}
-	//}
 //===========================================================================================
-
 	if(Update()){Render();}
-	
 	mlInput::update(dt);
-	
 	DEBUG_FLUSH_MSG();//ここでデバッグ用の文字列をTextViewに設定しているので、消さないで!!
 }
 
@@ -294,9 +280,9 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * e
 //
 //		タッチイベントの受信
 //
-JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jintArray arrayID, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con)
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con)
 {
-	mlInput::update(env, count, arrayID, pointsX, pointsY, arrayPressure, id, con );
+	mlInput::update(env, count, pointsX, pointsY, arrayPressure, id, con );
 }
 
 //

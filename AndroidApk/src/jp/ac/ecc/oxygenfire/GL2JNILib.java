@@ -39,7 +39,7 @@ public class GL2JNILib {
       * @Assetなどのｃ＋＋側のグラフィック以外の初期化を行う
       */
      public static native void systemInit(AssetManager asset, int input_maxPoint);
-     public static native void sendTouchEvent(int count, int[] arrayID, float[] pointsX, float[] pointsY, float[] arrayPressure, int id, int con);
+     public static native void sendTouchEvent(int count, float[] pointsX, float[] pointsY, float[] arrayPressure, int id, int con);
      
      public static native void onPause();
      public static native void onResume();
