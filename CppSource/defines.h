@@ -12,6 +12,8 @@
 #include <process.h>
 #include <crtdbg.h>// デバッグ版の場合、メモリリーク場所を特定するマクロ
 #else
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
 #include <jni.h>
 #include <pthread.h>
 #include <android\log.h>
@@ -25,10 +27,11 @@ namespace klib
 		//		プラットフォーム固有定義
 		//
 		//*****************************************************************************
+
+#ifdef WIN32
 		//*****************************************************************************
 		//		WIN32
 		//*****************************************************************************
-#ifdef WIN32
 	//リーク特定可能new
 	// メモリリーク発生時にデバッガに出力する内容をわかりやすくする
 #if (defined(DEBUG) || defined(_DEBUG))
@@ -62,10 +65,11 @@ namespace klib
 #define eprintf( ... ) // 空実装
 #endif
 #endif
+#else
 		//*****************************************************************************
 		//		Android
 		//*****************************************************************************
-#else
+#define MAX_PATH          260
 	//リーク特定可能new(Android版は通常new)
 #define NEW new
 	//デバッグ出力
@@ -214,4 +218,5 @@ namespace klib
 #define DYNAMIC_ASSERT_LIMIT(val,mi,ma,...)
 #endif
 #endif
+
 }

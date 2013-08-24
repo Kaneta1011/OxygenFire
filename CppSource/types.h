@@ -31,6 +31,14 @@ namespace klib
 	///@brief unicode、マルチバイト文字型
 	//typedef TCHAR						tchar;
 
+	///@brief	符号無し整数2バイト型
+	typedef unsigned short			WORD;
+	///@brief	符号無し整数4バイト型
+	typedef unsigned long				DWORD;
+
+	typedef WORD* LPWORD;
+	typedef DWORD* LPDWORD;
+
 	struct float2
 	{
 		union {
@@ -106,4 +114,6 @@ namespace klib
 		//inline operator f32*(){return (f32*)m;}
 		//inline operator const f32*()const{return (const f32*)m;}
 	};
+
+
 };

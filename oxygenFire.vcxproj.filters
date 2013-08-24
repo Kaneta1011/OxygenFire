@@ -79,6 +79,51 @@
     <Filter Include="source\templateLib">
       <UniqueIdentifier>{64cedbf7-318f-409b-8b97-39acfe36e002}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\GraphicsLib">
+      <UniqueIdentifier>{7f484bd3-685b-4e30-92e2-46dfa2390e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class">
+      <UniqueIdentifier>{cd872f34-c3e5-45f4-9001-343ac16c6ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kDevice">
+      <UniqueIdentifier>{290abc7d-b954-4b8e-b56a-a6705f179ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kGraphicsPipline">
+      <UniqueIdentifier>{58c5be43-435c-44de-8ac1-b679f31435a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kInputLayout">
+      <UniqueIdentifier>{de195816-c505-4e21-9eb7-1ed73a4ded2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kMesh">
+      <UniqueIdentifier>{00dfacf1-39d4-4435-ae18-0798cef9edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kObjectBuffer">
+      <UniqueIdentifier>{9febb3bb-33d3-43b3-90a2-ce57bb9a305c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kShader">
+      <UniqueIdentifier>{a648c2bb-c4f8-4739-bf95-75354cbc9d99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\utility\Class">
+      <UniqueIdentifier>{ce6e62ad-7303-40ec-acec-f754817b27b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\utility\Class\kBufferAnalyze">
+      <UniqueIdentifier>{f39e7c65-aca7-4e5e-a47e-64c037a6d514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\utility\Class\kTextAnalyze">
+      <UniqueIdentifier>{ea9eabe9-9a78-4328-be1e-c614a8e9da69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FrameWork">
+      <UniqueIdentifier>{0142e54e-17e5-49f6-9dfa-2bc108117b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FrameWork\Class">
+      <UniqueIdentifier>{98973f78-dafd-4109-aac6-abaf41d5b842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FrameWork\Class\IScene">
+      <UniqueIdentifier>{f5b81245-4a45-4d0d-8358-a03da7f2626e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\FrameWork\Class\kFrameWork">
+      <UniqueIdentifier>{6b5a6673-1260-4bd1-8dc0-62870930d350}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -159,6 +204,18 @@
     <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerWIN32.cpp">
       <Filter>source\Thread\Class\kThreadPool</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp">
+      <Filter>source\GraphicsLib\Class\kGraphicsPipline</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.cpp">
+      <Filter>source\utility\Class\kBufferAnalyze</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.cpp">
+      <Filter>source\utility\Class\kTextAnalyze</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -236,13 +293,40 @@
     <ClInclude Include="CppSource\Thread\Class\kThreadPool\kThreadPool.h">
       <Filter>source\Thread\Class\kThreadPool</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\templateLib\kFuncHolder.h">
-      <Filter>source\templateLib</Filter>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h">
+      <Filter>source\GraphicsLib\Class\kDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h">
+      <Filter>source\GraphicsLib\Class\kGraphicsPipline</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kInputLayout\kInputLayout.h">
+      <Filter>source\GraphicsLib\Class\kInputLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMesh.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadDelegate.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshRenderDelegate.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kObjectBuffer\kObjectBuffer.h">
+      <Filter>source\GraphicsLib\Class\kObjectBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kShader\kShader.h">
+      <Filter>source\GraphicsLib\Class\kShader</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\templateLib\kFuncHolderDecl.h">
       <Filter>source\templateLib</Filter>
     </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kHash.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
     <ClInclude Include="CppSource\templateLib\kQueue.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kVector.h">
       <Filter>source\templateLib</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\templateLib\pImpl.h">
@@ -250,6 +334,27 @@
     </ClInclude>
     <ClInclude Include="CppSource\templateLib\smartptr.h">
       <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kFuncHolder.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.h">
+      <Filter>source\utility\Class\kBufferAnalyze</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.h">
+      <Filter>source\utility\Class\kTextAnalyze</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\kutility.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kSingleton.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h">
+      <Filter>source\FrameWork\Class\IScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h">
+      <Filter>source\FrameWork\Class\kFrameWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

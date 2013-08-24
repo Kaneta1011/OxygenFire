@@ -1,0 +1,16 @@
+attribute vec4 VPosition;
+attribute vec4 VColor;
+varying vec4 io_Color;
+varying vec4 io_Pos;
+uniform mat4 WVP;
+
+void main()
+{
+	io_Color = VColor;
+	
+	vec4 opos = WVP * VPosition;
+	opos.z=2.0*opos.z-opos.w;
+	
+	io_Pos = VPosition;
+	gl_Position = opos;
+}

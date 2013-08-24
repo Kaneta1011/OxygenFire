@@ -38,6 +38,10 @@
 #include	"RenderLib\\Object3D\\Mesh.h"
 #include	<assert.h>
 
+#include "FrameWork\Class\kFrameWork\kFrameWork.h"
+#include "GraphicsLib\Class\kDevice\kDevice.h"
+#include "GraphicsLib\Class\kMesh\kMesh.h"
+
 //	use namespace
 using namespace ShaderLib;
 using namespace RenderLib;
