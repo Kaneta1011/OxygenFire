@@ -51,7 +51,7 @@ using namespace RenderLib;
 using namespace klib::math;
 
 static const char* TAG = "main.cpp";
-//klib::kFrameWork	framework;
+klib::kFrameWork	framework;
 
 //=======================================================================================================
 //
