@@ -1,41 +1,16 @@
 #pragma once
-#include "kMesh.h"
-#include "defines.h"
-#include "ShaderLib\ShaderManager.h"
-#include "../kDevice/kDevice.h"
+#include "IMeshRenderDelegate.h"
 
 namespace klib
 {
-	struct MeshData
-	{
-		math::Vector3 m_Pos;
-		math::Vector4 m_Color;
-	};
-	class IMeshRenderDelegate
-	{
-	protected:
-		const kMesh* m_Mesh;
-
-	public:
-		IMeshRenderDelegate():m_Mesh(NULL){}
-		virtual ~IMeshRenderDelegate(){}
-		virtual void Initialize(const kMesh* data)
-		{
-			m_Mesh=data;
-		}
-		virtual bool CreateBuffer(const kMesh* data){m_Mesh=data;}
-		virtual void Render()=0;
-		virtual void Render(const char* name)=0;
-		virtual void Render(const math::Matrix& mat,kGraphicsPipline* shader)=0;
-	};
-	class kMeshGLES20Render2:public IMeshRenderDelegate
+	class kMeshGLES20Render:public IMeshRenderDelegate
 	{
 	protected:
 		kObjectBuffer* mp_VBO;
 		kObjectBuffer* mp_IBO;
 	public:
-		kMeshGLES20Render2(){}
-		virtual ~kMeshGLES20Render2()
+		kMeshGLES20Render(){}
+		virtual ~kMeshGLES20Render()
 		{
 			delete mp_VBO;
 			delete mp_IBO;
