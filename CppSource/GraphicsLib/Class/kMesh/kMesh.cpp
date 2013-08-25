@@ -1,6 +1,6 @@
 #include "kMesh.h"
-#include "kMeshLoadDelegate.h"
-#include "kMeshRenderDelegate.h"
+#include "IMeshLoadDelegate.h"
+#include "IMeshRenderDelegate.h"
 
 namespace klib
 {

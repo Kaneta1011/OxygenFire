@@ -207,9 +207,6 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp">
       <Filter>source\GraphicsLib\Class\kGraphicsPipline</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp">
-      <Filter>source\GraphicsLib\Class\kMesh</Filter>
-    </ClCompile>
     <ClCompile Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.cpp">
       <Filter>source\utility\Class\kBufferAnalyze</Filter>
     </ClCompile>
@@ -220,7 +217,11 @@
       <Filter>source\Sound\notUse</Filter>
     </ClCompile>
     <ClCompile Include="CppSource\sound\notUse\StreamingSource.cpp">
-      <Filter>source\Sound\notUse</Filter>
+      <Filter>source\Sound\notUse</Filter>    </ClCompile>    <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp">
+      <Filter>source\GraphicsLib\Class\kDevice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,23 +300,11 @@
     <ClInclude Include="CppSource\Thread\Class\kThreadPool\kThreadPool.h">
       <Filter>source\Thread\Class\kThreadPool</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h">
-      <Filter>source\GraphicsLib\Class\kDevice</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h">
       <Filter>source\GraphicsLib\Class\kGraphicsPipline</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kInputLayout\kInputLayout.h">
       <Filter>source\GraphicsLib\Class\kInputLayout</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMesh.h">
-      <Filter>source\GraphicsLib\Class\kMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadDelegate.h">
-      <Filter>source\GraphicsLib\Class\kMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshRenderDelegate.h">
-      <Filter>source\GraphicsLib\Class\kMesh</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kObjectBuffer\kObjectBuffer.h">
       <Filter>source\GraphicsLib\Class\kObjectBuffer</Filter>
@@ -376,6 +365,26 @@
     </ClInclude>
     <ClInclude Include="CppSource\main.h">
       <Filter>source</Filter>
+    </ClInclude>    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshLoadDelegate.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshRenderDelegate.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMesh.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshGLES20Render.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIEM.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIMO.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h">
+      <Filter>source\GraphicsLib\Class\kDevice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

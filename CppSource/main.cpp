@@ -44,6 +44,7 @@
 #include "GraphicsLib\Class\kDevice\kDevice.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
 
+
 //	use namespace
 using namespace ShaderLib;
 using namespace RenderLib;

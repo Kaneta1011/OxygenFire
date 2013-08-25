@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp" />
     <ClCompile Include="CppSource\input\notUse\Input.cpp" />
@@ -57,9 +58,12 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kInputLayout\kInputLayout.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshLoadDelegate.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshRenderDelegate.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMesh.h" />
-    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadDelegate.h" />
-    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshRenderDelegate.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshGLES20Render.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIEM.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIMO.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kObjectBuffer\kObjectBuffer.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kShader\kShader.h" />
     <ClInclude Include="CppSource\input\Input.h" />
