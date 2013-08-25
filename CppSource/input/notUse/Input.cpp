@@ -109,9 +109,9 @@ void mlInput::update(float dt)
 	{
 		Info& info = mpInfos[i];
 		info.time += dt;
-		if( info.isUpdate ){
+		//if( info.isUpdate ){
 			info.action = nextAction[info.action];
-		}
+		//}
 		info.isUpdate = true;
 
 		if( info.action == FIN_UP )
@@ -219,3 +219,16 @@ void mlInput::debugMseeage()
 		}
 	}
 }
+
+extern "C" {
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con);
+}
+
+//
+//		タッチイベントの受信
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_sendTouchEvent(JNIEnv * env, jobject obj, jint count, jfloatArray pointsX, jfloatArray pointsY, jfloatArray arrayPressure, jint id, jint con)
+{
+	mlInput::update(env, count, pointsX, pointsY, arrayPressure, id, con );
+};
+

@@ -13,11 +13,12 @@ using namespace mlSound;
 //		OpenSLES使用バージョンSound
 //
 
-static char* TAG = "mlSound";
+static const char* TAG = "mlSound";
 bool					Sound::mIsAsync = false;
 mlSound::Device			Sound::mDevice;
 mlSound::OutputMix		Sound::mOutputMix;
 mlSound::Player			Sound::mPlayer[Sound::PLAYER_MAX];
+mlSound::StreamingPlayer	Sound::mStreaming;
 
 void Sound::init(bool isAsync)
 {
@@ -25,11 +26,13 @@ void Sound::init(bool isAsync)
 	mIsAsync = isAsync;
 	mDevice.init(isAsync);
 	mOutputMix.init(mDevice, isAsync);
+	mStreaming.init(mDevice, mOutputMix, isAsync );
 	LOGI(TAG,"OK Sound init");
 }
 
 void Sound::clear()
 {
+	mStreaming.clear();
 	for( int i=0; i<PLAYER_MAX; i++ )
 	{
 		mPlayer[i].clear();

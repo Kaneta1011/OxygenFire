@@ -278,16 +278,16 @@ namespace mlSound
 	public:
 		enum PLAY_STATE
 		{
-			STATE_PLAY			= SL_PLAYSTATE_PLAYING,
+			STATE_PLAY		= SL_PLAYSTATE_PLAYING,
 			STATE_PAUSE		= SL_PLAYSTATE_PAUSED,
 			STATE_STOP		= SL_PLAYSTATE_STOPPED,
 		};
 		//コールバック関数が呼び出されるタイミングを決めるもの
 		enum PLAY_EVENT_MASK
 		{
-			CALL_EVENT_END								= SL_PLAYEVENT_HEADATEND,
+			CALL_EVENT_END					= SL_PLAYEVENT_HEADATEND,
 			CALL_EVENT_HEAD_AT_MARKER		= SL_PLAYEVENT_HEADATMARKER,
-			CALL_EVENT_HEAD_AT_NEW_POS	= SL_PLAYEVENT_HEADATNEWPOS,
+			CALL_EVENT_HEAD_AT_NEW_POS		= SL_PLAYEVENT_HEADATNEWPOS,
 			CALL_EVENT_HEAD_BEGIN_MOVING	= SL_PLAYEVENT_HEADMOVING,
 			CALL_EVENT_HEAD_STALLED			= SL_PLAYEVENT_HEADSTALLED,
 		};
@@ -300,7 +300,6 @@ namespace mlSound
 		enum INTERFACE_TYPE
 		{
 			TYPE_BUFFER_QUEUE,
-			TYPE_EFFECT_SEND,
 			TYPE_VOLUME,
 			INTERFACE_TYPE_NUM
 		};
@@ -309,11 +308,7 @@ namespace mlSound
 		~PCMPlayer();
 
 		void clear();
-		SLboolean init(Device& soundDevice, OutputMix& outputMix, CHANNEL_TYPE numChannel, int maxQueue=4, bool isAsync=false);
-
-	//インターフェイス関連
-		void		onInterface(INTERFACE_TYPE type, SLboolean isON){ this->mReq[type] = isON; }
-		SLboolean	isOnInterface(INTERFACE_TYPE type){	return this->mReq[type]; }
+		SLboolean init(Device& soundDevice, OutputMix& outputMix, CHANNEL_TYPE numChannel, slAndroidSimpleBufferQueueCallback callback, void* pContext, SLuint32 sampleRate=SL_SAMPLINGRATE_8, SLuint32 bitPerSample=SL_PCMSAMPLEFORMAT_FIXED_16, int maxQueue=4, bool isAsync=false);
 
 	public:
 		void				enqueue(const void* buffer, SLuint32 size);
@@ -332,11 +327,10 @@ namespace mlSound
 		SLboolean		setCallbackEventMask(SLuint32 mask);
 		SLboolean		getCallbackEventMask(SLuint32* pout);
 
-		SLint32				getQueueCount();
+		SLint32			getQueueCount();
 
 	public:
 		Volume&		getVolume(){return this->mVolume;}
-		EffectSend& getEffectSend(){return this->mEffectSend;}
 
 	protected:
 		void	resetRequest();
@@ -348,7 +342,6 @@ namespace mlSound
 		SLAndroidSimpleBufferQueueItf mQueue;
 
 		Volume			mVolume;
-		EffectSend		mEffectSend;
 
 		int				mMaxQueue;
 	};

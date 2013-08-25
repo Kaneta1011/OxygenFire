@@ -1,4 +1,5 @@
 #include "utility.h"
+#include "../main.h"
 
 jint getJNIEnv(JNIEnv** env)
 {

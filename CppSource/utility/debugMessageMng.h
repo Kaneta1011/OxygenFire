@@ -41,7 +41,7 @@ public:
 	画面に表示する文字列を送る
 	「可変長には対応していない」ので数値とかを表示したいときは自前で用意してください
 	*/
-	static void addMsg(char* msg);
+	static void addMsg(const char* msg);
 
 	/*
 	TextViewに送ったテキスト設定する

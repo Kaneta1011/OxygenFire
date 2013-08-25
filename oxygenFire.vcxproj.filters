@@ -216,6 +216,12 @@
     <ClCompile Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.cpp">
       <Filter>source\utility\Class\kTextAnalyze</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\sound\notUse\mlSoundStream.cpp">
+      <Filter>source\Sound\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\sound\notUse\StreamingSource.cpp">
+      <Filter>source\Sound\notUse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -355,6 +361,21 @@
     </ClInclude>
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h">
       <Filter>source\FrameWork\Class\kFrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\sound\notUse\mlSoundDefine.h">
+      <Filter>source\Sound\notUse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\sound\notUse\mlSoundStream.h">
+      <Filter>source\Sound\notUse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\sound\StreamingSource.h">
+      <Filter>source\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\SinglyLinkedList.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\main.h">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

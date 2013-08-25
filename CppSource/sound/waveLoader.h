@@ -7,6 +7,8 @@
 #include <android\asset_manager.h>
 #endif
 
+#include "notUse/mlSoundDefine.h"
+
 class WaveLoader
 {
 public:
@@ -47,10 +49,14 @@ public:
 
 	void clear();
 	bool load(const char* filePath);
-#ifdef JNI
-	bool load(JNIEnv * env, jobject assetsManager, jstring fileName);
-#endif
 	
+public://ゲッター・セッター
+	long					getSize()const{return this->mData.size;}
+	const unsigned char*	getData()const{return this->mData.datas;}
+	unsigned int			getBitPerSample()const{return this->mFormat.bitsPerSample;}
+	unsigned int			getChannelCount()const{return this->mFormat.channels;}
+	unsigned int			getSamplePerSecond()const{return this->mFormat.samplesPerSecond;}
+
 private:
 	enum TAG_TYPE{
 		TAG_FORMAT,

@@ -893,7 +893,7 @@ void PCMPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
 	LOGI("mlSound", "passage buffer queue callback.");
 }
 
-SLboolean PCMPlayer::init(Device& soundBase, OutputMix& outputMix, CHANNEL_TYPE numChannel, int maxQueue, bool isAsync)
+SLboolean PCMPlayer::init(Device& soundBase, OutputMix& outputMix, CHANNEL_TYPE numChannel, slAndroidSimpleBufferQueueCallback callback, void* pContext, SLuint32 sampleRate, SLuint32 bitPerSample, int maxQueue, bool isAsync)
 {
 	clear();
 	{//ベースとなるオブジェクトを作成
@@ -916,9 +916,9 @@ SLboolean PCMPlayer::init(Device& soundBase, OutputMix& outputMix, CHANNEL_TYPE 
 		}
 
 		pcmFormat.formatType = SL_DATAFORMAT_PCM;
-		pcmFormat.samplesPerSec = SL_SAMPLINGRATE_8;
-		pcmFormat.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
-		pcmFormat.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
+		pcmFormat.samplesPerSec = sampleRate;
+		pcmFormat.bitsPerSample = bitPerSample;
+		pcmFormat.containerSize = bitPerSample;
 		pcmFormat.endianness = SL_BYTEORDER_LITTLEENDIAN;
 
 		SLDataSource audioSrc = {&loc_bufq, &pcmFormat};
@@ -930,7 +930,6 @@ SLboolean PCMPlayer::init(Device& soundBase, OutputMix& outputMix, CHANNEL_TYPE 
 		// create audio player
 		const SLInterfaceID ids[] = {
 			SL_IID_BUFFERQUEUE,
-			SL_IID_EFFECTSEND,
 			SL_IID_VOLUME,
 		};
 		int num = sizeof(ids)/sizeof(ids[0]);
@@ -940,10 +939,9 @@ SLboolean PCMPlayer::init(Device& soundBase, OutputMix& outputMix, CHANNEL_TYPE 
 		assert( ! Device::isError(M(this->mObject)->GetInterface(this->mObject, SL_IID_PLAY, &this->mPlayer), "Failure get interface SLPlay at PCMPlayer...") );
 		assert( ! Device::isError(M(this->mObject)->GetInterface(this->mObject, SL_IID_BUFFERQUEUE, &this->mQueue), "Failure get interface SLBufferQueue at PCMPlayer...") );
 		this->mVolume.init(this->mObject);
-		this->mEffectSend.init(this->mObject);
 		//this->mGroup.init(this->mObject);
 
-		M(this->mQueue)->RegisterCallback(this->mQueue, PCMPlayerCallback, NULL);
+		M(this->mQueue)->RegisterCallback(this->mQueue, callback, pContext);
 		play();
 	}
 	LOGI("mlSound", "Complete PCMPlayer::init.");
@@ -953,14 +951,25 @@ SLboolean PCMPlayer::init(Device& soundBase, OutputMix& outputMix, CHANNEL_TYPE 
 //========================================
 //		よく使う機能
 //========================================
-void		PCMPlayer::enqueue(const void* buffer, SLuint32 size)
+void	PCMPlayer::enqueue(const void* buffer, SLuint32 size)
 {
 	if( isOK() )
 	{
 		if( getQueueCount() < this->mMaxQueue )
 		{
-			SLresult result = M(this->mQueue)->Enqueue(this->mQueue, buffer, size);
+			SLresult result;
+			result = M(this->mQueue)->Enqueue(this->mQueue, buffer, size);
+
+			if( result == SL_RESULT_PARAMETER_INVALID )
+			{
+				LOGE("PCMPlayer::enqueue", "parameter invalid");
+			}
+			else if( result == SL_RESULT_BUFFER_INSUFFICIENT )
+			{
+				LOGE("PCMPlayer::enqueue", "buffer insufficient");
+			}
 			assert( !Device::isError(result, "Failure enqueue..."));
+			LOGI("PCMPlayer::enqueue", "fin enqueue");
 		}
 		else
 		{

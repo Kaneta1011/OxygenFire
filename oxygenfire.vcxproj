@@ -26,7 +26,9 @@
     <ClCompile Include="CppSource\RenderLib\Object3D\Object3D.cpp" />
     <ClCompile Include="CppSource\ShaderLib\ShaderManager.cpp" />
     <ClCompile Include="CppSource\sound\notUse\mlsound.cpp" />
+    <ClCompile Include="CppSource\sound\notUse\mlSoundStream.cpp" />
     <ClCompile Include="CppSource\sound\notUse\OpenSLES.cpp" />
+    <ClCompile Include="CppSource\sound\notUse\StreamingSource.cpp" />
     <ClCompile Include="CppSource\sound\notUse\waveLoader.cpp" />
     <ClCompile Include="CppSource\Thread\Class\kEvent\kEventUNIX.cpp" />
     <ClCompile Include="CppSource\Thread\Class\kEvent\kEventWIN32.cpp">
@@ -61,6 +63,7 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kObjectBuffer\kObjectBuffer.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kShader\kShader.h" />
     <ClInclude Include="CppSource\input\Input.h" />
+    <ClInclude Include="CppSource\main.h" />
     <ClInclude Include="CppSource\math\Class\Matrix\Matrix.h" />
     <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
     <ClInclude Include="CppSource\math\Class\Vector\Vector.h" />
@@ -71,7 +74,10 @@
     <ClInclude Include="CppSource\RenderLib\Shader\Shader.h" />
     <ClInclude Include="CppSource\ShaderLib\ShaderManager.h" />
     <ClInclude Include="CppSource\sound\mlsound.h" />
+    <ClInclude Include="CppSource\sound\notUse\mlSoundDefine.h" />
+    <ClInclude Include="CppSource\sound\notUse\mlSoundStream.h" />
     <ClInclude Include="CppSource\sound\notUse\OpenSLES.h" />
+    <ClInclude Include="CppSource\sound\StreamingSource.h" />
     <ClInclude Include="CppSource\sound\waveLoader.h" />
     <ClInclude Include="CppSource\StandardLib\Singleton.h" />
     <ClInclude Include="CppSource\StandardLib\SmartPointer.h" />
@@ -93,6 +99,7 @@
     <ClInclude Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.h" />
     <ClInclude Include="CppSource\utility\debugMessageMng.h" />
     <ClInclude Include="CppSource\utility\kutility.h" />
+    <ClInclude Include="CppSource\utility\SinglyLinkedList.h" />
     <ClInclude Include="CppSource\utility\textLoader.h" />
     <ClInclude Include="CppSource\utility\utility.h" />
   </ItemGroup>

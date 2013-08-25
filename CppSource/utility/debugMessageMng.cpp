@@ -47,7 +47,7 @@ void DebugMessageMng::clear(JNIEnv* env)
 	LOGI(TAG,"Complete debugDelete");
 }
 
-void DebugMessageMng::addMsg(char* msg)
+void DebugMessageMng::addMsg(const char* msg)
 {
 	if( debugInst == NULL ) return;
 
@@ -181,3 +181,24 @@ void ReleaseStringMS932Chars(JNIEnv *env, jstring strj, const char *sjis)
 }
 
 #endif
+
+extern "C" {
+	//
+	//	デバッグ用
+	//
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugInit(JNIEnv * env, jobject obj, jobject activity);
+	JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugDelete(JNIEnv * env, jobject obj);
+};
+
+//
+//	デバッグ用
+//
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugInit(JNIEnv * env, jobject obj, jobject activity)
+{
+	DEBUG_MSG_INIT(env,activity);
+}
+
+JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_debugDelete(JNIEnv * env, jobject obj)
+{
+	DEBUG_MSG_CLEAR(env);
+}

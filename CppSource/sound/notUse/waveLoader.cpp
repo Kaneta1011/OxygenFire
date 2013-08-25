@@ -23,6 +23,26 @@ void WaveLoader::clear()
 	this->mData.clear();
 }
 
+#ifdef JNI
+
+bool WaveLoader::load(const char* filePath)
+{
+	bool isOK = false;
+
+	AssetsLoader loader;
+	char* data;
+	int size = 0;
+	if( AssetsLoader::load(&data, &size, filePath) )
+	{
+		init(data, size);
+		delete[] data;
+		isOK = true;
+	}
+	return isOK;
+}
+
+#else
+
 bool WaveLoader::load(const char* filePath)
 {
 	bool isOK = false;
@@ -46,21 +66,6 @@ bool WaveLoader::load(const char* filePath)
 	return isOK;
 }
 
-#ifdef JNI
-bool WaveLoader::load(JNIEnv * env, jobject assetsManager, jstring fileName)
-{
-	bool isOK;
-
-	AssetsLoader loader;
-	char* data;
-	int size = 0;
-	if( AssetsLoader::load(&data, &size, "hoge") )
-	{
-
-		isOK = true;
-	}
-	return isOK;
-}
 #endif
 
 
