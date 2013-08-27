@@ -61,6 +61,7 @@ namespace klib
 		}
 		/**
 		* @brief シーンをポップする
+		* ポップする際はポインタアクセス違反に注意すること
 		*/
 		bool scenePop()
 		{
@@ -73,6 +74,7 @@ namespace klib
 		}
 		/**
 		* @brief シーンを変更する
+		* シーンを割り当ててスタックに詰まっているシーンをすべて終了させる
 		* @param[in] 変更するシーン
 		*/
 		void sceneChange(IScene*scene)
@@ -80,7 +82,7 @@ namespace klib
 			sceneClear();
 			mp_Scene=scene;
 			//シーンの開始処理
-			mp_Scene->entry();
+			if(mp_Scene)mp_Scene->entry();
 		}
 
 		bool sceneUpdate()

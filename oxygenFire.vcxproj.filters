@@ -217,7 +217,9 @@
       <Filter>source\Sound\notUse</Filter>
     </ClCompile>
     <ClCompile Include="CppSource\sound\notUse\StreamingSource.cpp">
-      <Filter>source\Sound\notUse</Filter>    </ClCompile>    <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp">
+      <Filter>source\Sound\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp">
       <Filter>source\GraphicsLib\Class\kMesh</Filter>
     </ClCompile>
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp">
@@ -365,7 +367,8 @@
     </ClInclude>
     <ClInclude Include="CppSource\main.h">
       <Filter>source</Filter>
-    </ClInclude>    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshLoadDelegate.h">
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshLoadDelegate.h">
       <Filter>source\GraphicsLib\Class\kMesh</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshRenderDelegate.h">
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h">
       <Filter>source\GraphicsLib\Class\kDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\testScene.h">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

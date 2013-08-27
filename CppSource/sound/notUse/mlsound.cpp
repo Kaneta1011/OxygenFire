@@ -26,7 +26,7 @@ void Sound::init(bool isAsync)
 	mIsAsync = isAsync;
 	mDevice.init(isAsync);
 	mOutputMix.init(mDevice, isAsync);
-	mStreaming.init(mDevice, mOutputMix, isAsync );
+	//mStreaming.init(mDevice, mOutputMix, isAsync );
 	LOGI(TAG,"OK Sound init");
 }
 
@@ -57,6 +57,7 @@ bool Sound::add(int No, JNIEnv* env, jstring fileName)
     const char* name = (env)->GetStringUTFChars(fileName, NULL);
     assert(NULL != name);
 	isOK = (bool)player.load(mDevice, mgr, name, AASSET_MODE_UNKNOWN, mOutputMix, mIsAsync);
+	
 
 	// release the Java string and UTF-8
     (env)->ReleaseStringUTFChars(fileName, name);

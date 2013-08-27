@@ -34,15 +34,18 @@
     <ClCompile Include="CppSource\Thread\Class\kEvent\kEventUNIX.cpp" />
     <ClCompile Include="CppSource\Thread\Class\kEvent\kEventWIN32.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Android'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CppSource\Thread\Class\kMutex\kMutexUNIX.cpp" />
     <ClCompile Include="CppSource\Thread\Class\kMutex\kMutexWIN32.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Android'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadPool.cpp" />
     <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerUNIX.cpp" />
     <ClCompile Include="CppSource\Thread\Class\kThreadPool\kThreadWorkerWIN32.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Android'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
     <ClCompile Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.cpp" />
@@ -93,6 +96,7 @@
     <ClInclude Include="CppSource\templateLib\kVector.h" />
     <ClInclude Include="CppSource\templateLib\pImpl.h" />
     <ClInclude Include="CppSource\templateLib\smartptr.h" />
+    <ClInclude Include="CppSource\testScene.h" />
     <ClInclude Include="CppSource\Thread\Class\kEvent\kEvent.h" />
     <ClInclude Include="CppSource\Thread\Class\kMutex\kMutex.h" />
     <ClInclude Include="CppSource\Thread\Class\kThreadPool\kThreadPool.h" />

@@ -41,14 +41,15 @@
 #include	<assert.h>
 
 #include "FrameWork\Class\kFrameWork\kFrameWork.h"
-#include "GraphicsLib\Class\kDevice\kDevice.h"
-#include "GraphicsLib\Class\kMesh\kMesh.h"
+
+#include "testScene.h"
 
 
 //	use namespace
 using namespace ShaderLib;
 using namespace RenderLib;
-using namespace klib::math;
+using namespace klib;
+using namespace math;
 
 static const char* TAG = "main.cpp";
 klib::kFrameWork	framework;
@@ -101,16 +102,27 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env
 //
 //		グラフィックの初期化
 //
+
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods)
 {
 	LOGI(TAG, "Execute graphic init");
+	//レンダーステート初期化
 	RenderState::setScreenWidth(width);
 	RenderState::setScreenHeight(height);
 	RenderState::Setting_PolygonBathSides(false);
+	RenderState::Setting_Viewport(.0f,.0f,width,height);
+	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,0,0),Vector3(0,1,0));
+	RenderState::Setting_PerspectiveMatrix(K_PI/4,(float)width/(float)height,.1f,100.0f);
 
-	//framework.sceneChange();
+	dprintf("Screen Size Initialize w=%d h=%d",width,height);
+
+	//シーン作成
+	testScene::_create();
+	//シーン割り当て
+	framework.sceneChange(testScene::_getInstancePtr());
 
 	LOGI(TAG, "Complete graphic init");
+
 }
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
@@ -121,6 +133,13 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	DEBUG_MSG("dt=%.3f[ms]", dt);
 	//mlInput::debugMseeage();
 //===========================================================================================
+	//深度テスト(うまくいかない？)
+	glEnable(GL_DEPTH_TEST);
+	RenderState::Clear_Color(.5,.5,.5,1);
+	RenderState::Clear_Buffer(CLEAR_BUFFER_COLOR);
+	RenderState::Clear_Buffer(CLEAR_BUFFER_DEPTH);
+
+	//シーン更新
 	if(framework.sceneUpdate()){framework.sceneRender();}
 
 	mlInput::update(dt);
@@ -147,6 +166,10 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	LOGI(TAG, "Execute onDestory.");
 	
 	mlInput::clear();
+	//フレームワーククリア
+	framework.sceneClear();
+	//シーン破壊
+	testScene::_destroy();
 
 	LOGI(TAG, "Complete onDestory.");
 }
