@@ -1,6 +1,6 @@
 #pragma once
 #include "kDevice.h"
-
+#include "../kMesh/kMesh.h"
 namespace klib
 {
 	const kInputLayout* kDevice::m_IAInputLayout;
@@ -78,11 +78,13 @@ namespace klib
 			dprintf("	AttribLocation=%u\n",out->mp_Desc[i].m_Location);
 			dprintf("	SemanticSize=%u\n",out->mp_Desc[i].m_Types.size);
 			dprintf("	SemanticOffset=%u\n",out->m_VertexSize);
+			out->mp_Desc[i].m_Types.size/=8;
 			out->m_VertexSize+=out->mp_Desc[i].m_Types.size;
 		}
 		//bit単位をbyte単位に変換
-		out->m_VertexSize/=8;
+		//out->m_VertexSize/=8;
 		dprintf("InputLayoutSize=%ubyte\n",out->m_VertexSize);
+		dprintf("%u",sizeof(kMeshVertex));
 		return true;
 	}
 
@@ -197,10 +199,10 @@ namespace klib
 		{
 			glEnableVertexAttribArray(desc[i].m_Location);
 			glVertexAttribPointer(desc[i].m_Location, desc[i].m_Types.component, desc[i].m_Types.dxgi_format, desc[i].m_Types.normalize, in->m_VertexSize, (GLvoid*)offset);
-			//dprintf("Location %u\n",desc[i].m_Location);
-			//dprintf("Component %u\n",desc[i].m_Types.component);
-			//dprintf("VertexSize %u\n",in->m_VertexSize);
-			//dprintf("Offset %u\n",offset);
+			dprintf("Location %u\n",desc[i].m_Location);
+			dprintf("Component %u\n",desc[i].m_Types.component);
+			dprintf("VertexSize %u\n",in->m_VertexSize);
+			dprintf("Offset %u\n",offset);
 			offset+=desc[i].m_Types.size;
 		}
 		return true;
@@ -254,7 +256,7 @@ namespace klib
 	bool kDevice::drawIndexed(u32 indexnum)
 	{
 		//ポリゴン描画方式を決めてインデックスバッファで描画
-		glDrawElements( m_RasterizerState->m_Desc.FillMode, indexnum, GL_UNSIGNED_INT, NULL );
+		glDrawElements( m_RasterizerState->m_Desc.FillMode, indexnum, GL_UNSIGNED_SHORT, NULL );
 	}
 
 }

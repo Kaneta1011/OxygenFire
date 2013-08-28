@@ -13,7 +13,7 @@ uniform float array[3];
 void main()
 {
 	//io_Color = vec4(array[0],array[1],array[2],val);
-	io_Color = vec4(NORMAL,val);
+	io_Color = vec4(NORMAL,val+COLOR.x+TEXCOORD.x);
 	
 	vec4 opos = WVP * POSITION;
 	opos.z=2.0*opos.z-opos.w;

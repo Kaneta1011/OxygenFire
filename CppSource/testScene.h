@@ -35,7 +35,7 @@ namespace klib
 			pipline->createPixelShader("pixel.txt");
 			pipline->createBlendState(k_BLEND_NONE);
 			pipline->createDepthStencilState(true,eLESS_EQUAL);
-			pipline->createRasterizerState(eWIRE,eFRONT,false);
+			pipline->createRasterizerState(eSOLID,eFRONT,false);
 			pipline->complete(desc,descnum);
 
 			float ary[3]={0.25f,0.5f,1.0f};

@@ -38,13 +38,13 @@ namespace klib
 				if(m_MeshData->m_Info.MaterialNumFace[i]==0)continue;
 
 				mp_IBO[i]=new kObjectBuffer();
-				u32* work=new u32[m_MeshData->m_Info.MaterialNumFace[i]*3];
+				u16* work=new u16[m_MeshData->m_Info.MaterialNumFace[i]*3];
 				dprintf("Index Num %u",m_MeshData->m_Info.MaterialNumFace[i]*3);
 				for(int j=0;j<m_MeshData->m_Info.MaterialNumFace[i]*3;j++)
 				{
-					work[j]=m_MeshData->m_Info.MaterialIndex[i][j];
+					work[j]=(u16)m_MeshData->m_Info.MaterialIndex[i][j];
 				}
-				kDevice::createIndexBuffer(mp_IBO[i],m_MeshData->m_Info.Index,sizeof(u32)*m_MeshData->m_Info.MaterialNumFace[i]*3,GL_STATIC_DRAW);
+				kDevice::createIndexBuffer(mp_IBO[i],work,sizeof(u16)*m_MeshData->m_Info.MaterialNumFace[i]*3,GL_STATIC_DRAW);
 				delete[] work;
 			}
 		}
