@@ -1,5 +1,8 @@
-attribute vec4 VPosition;
-attribute vec4 VColor;
+attribute vec4 POSITION;
+attribute vec4 COLOR;
+attribute vec3 NORMAL;
+attribute vec2 TEXCOORD;
+
 varying vec4 io_Color;
 varying vec4 io_Pos;
 uniform mat4 WVP;

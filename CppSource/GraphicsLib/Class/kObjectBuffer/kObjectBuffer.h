@@ -15,6 +15,7 @@ namespace klib
 		kObjectBuffer():m_BO(0),m_BufferSize(0),m_BufferType(0){}
 		~kObjectBuffer()
 		{
+			dprintf("kObjectBuffer Delete\n");
 			GLuint buffer[1]={m_BO};
 			glDeleteBuffers(1,buffer);
 			

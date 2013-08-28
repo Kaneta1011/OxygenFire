@@ -6,12 +6,16 @@
 #include "GraphicsLib\Class\kMesh\kMeshLoadIEM.h"
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 
+
+
 namespace klib
 {
 	kInputElementDesc desc[]=
 	{
-		{"VPosition",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-		{"VColor",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0}
+		{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+		{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
+		{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+		{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
 	};
 	u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
 	class testScene:public IScene,public ktl::kSingleton<testScene>
@@ -19,18 +23,27 @@ namespace klib
 		friend class ktl::kSingleton<testScene>;
 	private:
 		kSkin* mesh;
-		kGraphicsPipline* shader;
+		kGraphicsPipline* pipline;
+
 	public:
 		//エントリー処理
 		void entry()
 		{
-			shader=new kGraphicsPipline();
-			shader->createVertexShader("vertex.txt");
-			shader->createPixelShader("pixel.txt");
-			shader->complete(desc,descnum);
+
+			pipline=new kGraphicsPipline();
+			pipline->createVertexShader("vertex.txt");
+			pipline->createPixelShader("pixel.txt");
+			pipline->createBlendState(k_BLEND_NONE);
+			pipline->createDepthStencilState(true,eLESS_EQUAL);
+			pipline->createRasterizerState(eWIRE,eFRONT,false);
+			pipline->complete(desc,descnum);
+
+			float ary[3]={0.25f,0.5f,1.0f};
+			pipline->setShaderValue("val",0.8f);
+			pipline->setShaderValue("array",ary,3);
 
 			mesh=new kSkin("kman.IEM",new kMeshLoadIEM(),new kMeshGLES20Render());
-			mesh->setScale(0.01f);
+			mesh->setScale(0.05f);
 			mesh->setPosition(0,0,0);
 			mesh->Update();
 		}
@@ -47,13 +60,13 @@ namespace klib
 		void render()
 		{
 
-			mesh->Render(shader);
+			mesh->Render(pipline);
 		}
 		//終了処理
 		void exit()
 		{
 			delete mesh;
-			delete shader;
+			delete pipline;
 		}
 	};
 }

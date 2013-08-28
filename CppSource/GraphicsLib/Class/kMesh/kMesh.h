@@ -42,14 +42,14 @@ namespace klib
 		}
 		~kMeshInfo()
 		{
-			SAFE_DELETE(Index);
-			SAFE_DELETE(Material);
+			//SAFE_DELETE(Index);
+			//SAFE_DELETE(Material);
 			//	テクスチャ解放
 			for( u32 i=0 ; i<MaterialCount ; i++ ){
-				SAFE_DELETE(MaterialIndex[i]);
+				//SAFE_DELETE(MaterialIndex[i]);
 			}
-			SAFE_DELETE_ARRAY(MaterialNumFace);
-			SAFE_DELETE_ARRAY(MaterialIndex);
+			//SAFE_DELETE_ARRAY(MaterialNumFace);
+			//SAFE_DELETE_ARRAY(MaterialIndex);
 		}
 	};
 
@@ -57,10 +57,6 @@ namespace klib
 	{
 		math::Vector3 m_Pos;
 		math::Vector4 m_Color;
-	};
-
-	struct kMeshVertex2:public	kMeshVertex
-	{
 		math::Vector3	m_Normal;
 		math::Vector2	m_TexCoord;
 	};

@@ -88,7 +88,7 @@ namespace klib
 			data->m_Info.NumFace = lpIem->NumFace;
 
 			//頂点コピー
-			data->mp_Vertex=new kMeshVertex2[lpIem->NumVertex];
+			data->mp_Vertex=new kMeshVertex[lpIem->NumVertex];
 
 			//バージョンによって読み込みを変える
 			if( lpIem->version < 4 )
@@ -96,20 +96,20 @@ namespace klib
 				for(s32 i=0;i<(s32)lpIem->NumVertex;i++)
 				{
 					MESHVERTEX* work=(MESHVERTEX*)lpIem->lpVertex;
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_Pos=math::Vector3(work[i].x,work[i].y,work[i].z);
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_Normal=math::Vector3(work[i].nx,work[i].ny,work[i].nz);
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_Color=math::Vector4(1,1,1,1);
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_TexCoord=math::Vector2(work[i].tu,work[i].tv);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_Pos=math::Vector3(work[i].x,work[i].y,work[i].z);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_Normal=math::Vector3(work[i].nx,work[i].ny,work[i].nz);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_Color=math::Vector4(1,1,1,1);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_TexCoord=math::Vector2(work[i].tu,work[i].tv);
 				}
 			} else {
 				for(s32 i=0;i<(s32)lpIem->NumVertex;i++)
 				{
 					MESHVERTEX2* work=(MESHVERTEX2*)lpIem->lpVertex;
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_Pos=math::Vector3(work[i].x,work[i].y,work[i].z);
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_Normal=math::Vector3(work[i].nx,work[i].ny,work[i].nz);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_Pos=math::Vector3(work[i].x,work[i].y,work[i].z);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_Normal=math::Vector3(work[i].nx,work[i].ny,work[i].nz);
 					//data->m_Vertex[i].color=work[i].color;
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_Color=math::Vector4(1,1,1,1);
-					((kMeshVertex2*)(data->mp_Vertex))[i].m_TexCoord=math::Vector2(work[i].tu,work[i].tv);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_Color=math::Vector4(1,1,1,1);
+					((kMeshVertex*)(data->mp_Vertex))[i].m_TexCoord=math::Vector2(work[i].tu,work[i].tv);
 				}
 			}
 
@@ -142,8 +142,8 @@ namespace klib
 				{
 					if(data->m_Info.Material[j]==i)
 					{
-						dprintf("	%d,%d,%d",data->m_Info.Index[j*3+1],data->m_Info.Index[j*3+2],data->m_Info.Index[j*3+3])
-							workMI[data->m_Info.MaterialNumFace[i]*3+0]=data->m_Info.Index[j*3+0];
+						//dprintf("	%d,%d,%d",data->m_Info.Index[j*3+1],data->m_Info.Index[j*3+2],data->m_Info.Index[j*3+3]);
+						workMI[data->m_Info.MaterialNumFace[i]*3+0]=data->m_Info.Index[j*3+0];
 						workMI[data->m_Info.MaterialNumFace[i]*3+1]=data->m_Info.Index[j*3+1];
 						workMI[data->m_Info.MaterialNumFace[i]*3+2]=data->m_Info.Index[j*3+2];
 						data->m_Info.MaterialNumFace[i]++;
@@ -158,6 +158,7 @@ namespace klib
 				{
 					data->m_Info.MaterialIndex[i]=new u32[data->m_Info.MaterialNumFace[i]*3];
 					CopyMemory( data->m_Info.MaterialIndex[i], workMI, sizeof(u32)*(data->m_Info.MaterialNumFace[i]*3) );
+					dprintf("Material NumFace %u",data->m_Info.MaterialNumFace[i]);
 				}
 			}
 			delete[] workMI;
@@ -196,7 +197,7 @@ namespace klib
 
 			data->m_Info.NumBone = lpIem->NumBone;
 			data->mp_Bone=new kSkinBone[lpIem->NumBone];
-			dprintf("BoneInfo %u",data->m_Info.NumBone);
+			//dprintf("BoneInfo %u",data->m_Info.NumBone);
 
 			//合計フレーム数
 			data->m_Info.NumFrame = lpIem->MaxFrame;
@@ -224,12 +225,12 @@ namespace klib
 				data->mp_Bone[i].Influence=new f32[lpIem->lpBone[i].IndexNum];
 				CopyMemory(data->mp_Bone[i].Influence,lpIem->lpBone[i].Influence,sizeof(f32)*lpIem->lpBone[i].IndexNum);
 
-				dprintf("BoneInfo parent %u",data->mp_Bone[i].parent);
-				dprintf("BoneInfo IndexNum %u",data->mp_Bone[i].IndexNum);
+				//dprintf("BoneInfo parent %u",data->mp_Bone[i].parent);
+				//dprintf("BoneInfo IndexNum %u",data->mp_Bone[i].IndexNum);
 				for(int j=0;j<data->mp_Bone[j].IndexNum;j++)
 				{
-					dprintf("BoneInfo Index %u",data->mp_Bone[i].Index[j]);
-					dprintf("BoneInfo Influence %f",data->mp_Bone[i].Influence[j]);
+					//dprintf("BoneInfo Index %u",data->mp_Bone[i].Index[j]);
+					//dprintf("BoneInfo Influence %f",data->mp_Bone[i].Influence[j]);
 				}
 
 

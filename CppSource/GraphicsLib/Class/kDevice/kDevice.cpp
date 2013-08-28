@@ -3,23 +3,61 @@
 
 namespace klib
 {
+	const kInputLayout* kDevice::m_IAInputLayout;
+	const kObjectBuffer* kDevice::m_IAVertexBuffer;
+	const kObjectBuffer* kDevice::m_IAIndexBuffer;
+
+	const kBlendState* kDevice::m_OMBlendState;
+	const kDepthStencilState* kDevice::m_OMDepthStencilState;
+	const kRasterizerState* kDevice::m_RasterizerState;
+
+	static bool isShaderError(GLenum shaderType,GLuint shader)
+	{
+		GLint compiled = 0;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+		if (!compiled) {
+			GLint infoLen = 0;
+			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+			//if(infoLen==0)return false;
+			char* buf = new char[infoLen];
+			glGetShaderInfoLog(shader, infoLen, NULL, buf);
+			eprintf("Could not compile shader %d:\n%s\n",shaderType, buf);
+			delete[] buf;
+
+			glDeleteShader(shader);
+			shader = 0;
+		}
+		else
+		{
+			dprintf("Shader compile success\n");
+			return false;
+		}
+		return true;
+	}
 
 	bool kDevice::createVertexShaderFromMemory(kShader* out,const char* buffer,s32 length)
 	{
+		//シェーダを作成する
 		out->m_ShaderID = glCreateShader(GL_VERTEX_SHADER);
-
+		//シェーダソースをバインドする
 		glShaderSource(out->m_ShaderID, 1, &buffer, &length);
+		//バインドされたソースをコンパイルしてIDにバインドする
 		glCompileShader(out->m_ShaderID);
+		if(isShaderError(GL_VERTEX_SHADER,out->m_ShaderID))return false;
 		return true;
 	}
 
 	bool kDevice::createPixelShaderFromMemory(kShader* out,const char* buffer,s32 length)
 	{
+		//シェーダを作成する
 		out->m_ShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
+		//シェーダソースをバインドする
 		glShaderSource(out->m_ShaderID, 1, &buffer, &length);
+		//バインドされたソースをコンパイルしてIDにバインドする
 		glCompileShader(out->m_ShaderID);
+		if(isShaderError(GL_FRAGMENT_SHADER,out->m_ShaderID))return false;
 		return true;
+
 	}
 
 	bool kDevice::createInputLayout(kInputLayout* out,const kGraphicsPipline* usePipline,const kInputElementDesc* desc,u32 descsize)
@@ -36,10 +74,10 @@ namespace klib
 			out->mp_Desc[i].m_Location=glGetAttribLocation(usePipline->m_Program,desc[i].SemanticName);
 			//フォーマット情報を取得する
 			out->mp_Desc[i].m_Types.dxgi_format=PixelToFormat(desc[i].Format,&out->mp_Desc[i].m_Types.component,&out->mp_Desc[i].m_Types.size,&out->mp_Desc[i].m_Types.normalize);
-			dprintf("SemanticName=%s\n",desc[i].SemanticName);
-			dprintf("AttribLocation=%u\n",out->mp_Desc[i].m_Location);
-			dprintf("SemanticSize=%u\n",out->mp_Desc[i].m_Types.size);
-			dprintf("SemanticOffset=%u\n",out->m_VertexSize);
+			dprintf("	SemanticName=%s\n",desc[i].SemanticName);
+			dprintf("	AttribLocation=%u\n",out->mp_Desc[i].m_Location);
+			dprintf("	SemanticSize=%u\n",out->mp_Desc[i].m_Types.size);
+			dprintf("	SemanticOffset=%u\n",out->m_VertexSize);
 			out->m_VertexSize+=out->mp_Desc[i].m_Types.size;
 		}
 		//bit単位をbyte単位に変換
@@ -75,6 +113,72 @@ namespace klib
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		return true;
 	}
+	void kDevice::createBlendState( kBlendState* out,const eBlendType* BlendStateType, u32 BlendStateTypeLength )
+	{
+		DYNAMIC_ASSERT_LIMIT(BlendStateTypeLength,0,8,"CreateBlendState Error");
+
+		ZeroMemory( &out->m_Desc, sizeof( kBlendState::kBlendDesc ) );
+		//GLESでは使っていない
+		out->m_Desc.AlphaToCoverageEnable = false;
+
+		switch( BlendStateType[0] )
+		{
+			//ブレンド無し
+		case k_BLEND_NONE:
+			out->m_Desc.RenderTarget.BlendEnable=false;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ZERO;
+			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
+			break;
+			//加算合成
+		case k_BLEND_ADD:
+			out->m_Desc.RenderTarget.BlendEnable=true;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
+			break;
+		}   
+	}
+
+	void kDevice::createBlendStateAll( kBlendState* out,const eBlendType BlendStateType)
+	{
+		ZeroMemory( &out->m_Desc, sizeof( kBlendState::kBlendDesc ) );
+		//GLESでは使っていない
+		out->m_Desc.AlphaToCoverageEnable = false;
+
+		switch( BlendStateType )
+		{
+			//ブレンド無し
+		case k_BLEND_NONE:
+			out->m_Desc.RenderTarget.BlendEnable=false;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ZERO;
+			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
+			break;
+			//加算合成
+		case k_BLEND_ADD:
+			out->m_Desc.RenderTarget.BlendEnable=true;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
+			break;
+		}   
+	}
+	bool kDevice::createDepthStencilState(kDepthStencilState* out,bool enable,eDepthFunc func)
+	{
+		out->m_Desc.DepthEnable=enable;
+		out->m_Desc.DepthFunc=getDepthFunc(func);
+		return true;
+	}
+	bool kDevice::createRasterizerState(kRasterizerState* out,eFillMode fill,eCullMode cull,bool front)
+	{
+		out->m_Desc.FillMode=getFillMode(fill);
+		out->m_Desc.CullMode=getCullMode(cull);
+		//GLESでは使っていない
+		out->m_Desc.FrontCounterClockwise=front;
+		return true;
+	}
+
 
 	bool kDevice::updateSubResource(const kObjectBuffer* in,const void* data,u32 datasize)
 	{
@@ -85,11 +189,12 @@ namespace klib
 
 	bool kDevice::IAsetInputLayout(const kInputLayout* in)
 	{
+		m_IAInputLayout=in;
 		u32 offset=0;
-		const kInputLayoutDesc* desc=in->mp_Desc;
-		for(int i=0;i<in->m_TypeNum;i++)
+		const kInputLayoutDesc* desc=m_IAInputLayout->mp_Desc;
+		//セマンティクスの定義の数だけ頂点オフセットを指定する
+		for(int i=0;i<m_IAInputLayout->m_TypeNum;i++)
 		{
-			//現段階ではロケーションは0のみ
 			glEnableVertexAttribArray(desc[i].m_Location);
 			glVertexAttribPointer(desc[i].m_Location, desc[i].m_Types.component, desc[i].m_Types.dxgi_format, desc[i].m_Types.normalize, in->m_VertexSize, (GLvoid*)offset);
 			//dprintf("Location %u\n",desc[i].m_Location);
@@ -103,14 +208,53 @@ namespace klib
 
 	bool kDevice::IAsetVertexBuffer(const kObjectBuffer* in)
 	{
-		glBindBuffer( GL_ARRAY_BUFFER, in->m_BO );
+		m_IAVertexBuffer=in;
+		glBindBuffer( GL_ARRAY_BUFFER, m_IAVertexBuffer->m_BO );
 		return true;
 	}
 
 	bool kDevice::IAsetIndexBuffer(const kObjectBuffer* in)
 	{
-		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, in->m_BO );
+		m_IAIndexBuffer=in;
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_IAIndexBuffer->m_BO );
 		return true;
+	}
+
+	bool kDevice::OMsetBlendState(const kBlendState* in)
+	{
+		m_OMBlendState=in;
+		//αブレンドを有効/無効にする
+		if(m_OMBlendState->m_Desc.RenderTarget.BlendEnable)glEnable(GL_BLEND);
+		else glDisable(GL_BLEND);
+		//ブレンド計算式を指定する
+		glBlendEquation(m_OMBlendState->m_Desc.RenderTarget.BlendOp);
+		//ブレンド係数を指定する
+		glBlendFunc(m_OMBlendState->m_Desc.RenderTarget.SrcBlend,m_OMBlendState->m_Desc.RenderTarget.DstBlend);
+		return true;
+	}
+	bool kDevice::OMsetDepthStencilState(const kDepthStencilState* in)
+	{
+		m_OMDepthStencilState=in;
+		//深度テストを有効/無効にする
+		if(m_OMDepthStencilState->m_Desc.DepthEnable)glEnable(GL_DEPTH_TEST);
+		else glDisable(GL_DEPTH_TEST);
+		//深度比較関数を指定する
+		glDepthFunc(m_OMDepthStencilState->m_Desc.DepthFunc);
+		return true;
+	}
+	bool kDevice::RSsetState(const kRasterizerState* in)
+	{
+		m_RasterizerState=in;
+		//表裏カリングを有効/無効にする
+		if(m_RasterizerState->m_Desc.CullMode)glEnable(GL_CULL_FACE); 
+		else glDisable(GL_CULL_FACE); 
+		//カリング面を指定する
+		glCullFace(m_RasterizerState->m_Desc.CullMode);
+	}
+	bool kDevice::drawIndexed(u32 indexnum)
+	{
+		//ポリゴン描画方式を決めてインデックスバッファで描画
+		glDrawElements( m_RasterizerState->m_Desc.FillMode, indexnum, GL_UNSIGNED_INT, NULL );
 	}
 
 }

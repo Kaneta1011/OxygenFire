@@ -58,6 +58,8 @@
     <ClInclude Include="CppSource\defines.h" />
     <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h" />
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kBlendState\kBlendState.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kDepthStencilState\kDepthStencilState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kInputLayout\kInputLayout.h" />
@@ -68,6 +70,7 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIEM.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIMO.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kObjectBuffer\kObjectBuffer.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kRasterizerState\kRasterizerState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kShader\kShader.h" />
     <ClInclude Include="CppSource\input\Input.h" />
     <ClInclude Include="CppSource\main.h" />

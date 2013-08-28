@@ -1,16 +1,23 @@
-attribute vec4 VPosition;
-attribute vec4 VColor;
+attribute vec4 POSITION;
+attribute vec4 COLOR;
+attribute vec3 NORMAL;
+attribute vec2 TEXCOORD;
+
 varying vec4 io_Color;
 varying vec4 io_Pos;
 uniform mat4 WVP;
 
+uniform float val;
+uniform float array[3];
+
 void main()
 {
-	io_Color = VColor;
+	//io_Color = vec4(array[0],array[1],array[2],val);
+	io_Color = vec4(NORMAL,val);
 	
-	vec4 opos = WVP * VPosition;
+	vec4 opos = WVP * POSITION;
 	opos.z=2.0*opos.z-opos.w;
 	
-	io_Pos = VPosition;
+	io_Pos = POSITION;
 	gl_Position = opos;
 }

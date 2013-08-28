@@ -14,17 +14,9 @@ namespace klib
 
 		mp_UseCount=new int;
 		{
-			kMeshData retMesh;
-			readok=load->Load(filename,&retMesh);
 			mp_MeshData=new kMeshData;
-			mp_MeshData->mp_Vertex=new kMeshVertex[retMesh.m_Info.NumVertex];
-			CopyMemory(&mp_MeshData->m_Info,&retMesh.m_Info,sizeof(kMeshInfo));
+			readok=load->Load(filename,mp_MeshData);
 
-			for(s32 i=0;i<retMesh.m_Info.NumVertex;i++)
-			{
-				((kMeshVertex*)mp_MeshData->mp_Vertex)[i].m_Pos=((kMeshVertex2*)retMesh.mp_Vertex)[i].m_Pos;
-				((kMeshVertex*)mp_MeshData->mp_Vertex)[i].m_Color=Vector4(1,1,1,1);
-			}
 		}
 
 		if( !readok )
@@ -119,76 +111,17 @@ namespace klib
 
 		mp_UseCount=new int;
 		{
-			kSkinData retMesh;
-			readok=load->Load(filename,&retMesh);
-			dprintf("kSkin Load End");
+			//kSkinData retMesh;
 			mp_MeshData=new kSkinData;
-			mp_MeshData->mp_Vertex=new kMeshVertex[retMesh.m_Info.NumVertex];
-			dprintf("kSkin Load End");
-			CopyMemory(&mp_MeshData->m_Info,&retMesh.m_Info,sizeof(kMeshInfo));
-			dprintf("kSkin Load End,%u",retMesh.m_Info.NumVertex);
-	//**************************************************************************************************
-	//		頂点コピー
-	//**************************************************************************************************
-			for(s32 i=0;i<retMesh.m_Info.NumVertex;i++)
-			{
-				((kMeshVertex*)mp_MeshData->mp_Vertex)[i].m_Pos=((kMeshVertex2*)retMesh.mp_Vertex)[i].m_Pos;
-				((kMeshVertex*)mp_MeshData->mp_Vertex)[i].m_Color=Vector4(1,1,1,1);
-			}
-				((kSkinData*)mp_MeshData)->mp_Animation=new kSkinAnimation[retMesh.m_Info.NumBone];
-				((kSkinData*)mp_MeshData)->mp_Bone=new kSkinBone[retMesh.m_Info.NumBone];
-			for( int i=0 ; i<retMesh.m_Info.NumBone ; i++ ){
-	//**************************************************************************************************
-	//		モーションコピー
-	//**************************************************************************************************
-				((kSkinData*)mp_MeshData)->mp_Animation[i].rotNum = retMesh.mp_Animation[i].rotNum;
-				((kSkinData*)mp_MeshData)->mp_Animation[i].rotFrame = new u16[ retMesh.mp_Animation[i].rotNum ];
-				((kSkinData*)mp_MeshData)->mp_Animation[i].rot      = new math::Quaternion[ retMesh.mp_Animation[i].rotNum ];
+			readok=load->Load(filename,mp_MeshData);
 
-				for( int j=0 ; j<retMesh.mp_Animation[i].rotNum ; j++ ){
-					((kSkinData*)mp_MeshData)->mp_Animation[i].rotFrame[j] = retMesh.mp_Animation[i].rotFrame[j];
-					((kSkinData*)mp_MeshData)->mp_Animation[i].rot[j] = retMesh.mp_Animation[i].rot[j];
-				}
-				//	ポジションコピー
-				((kSkinData*)mp_MeshData)->mp_Animation[i].posNum   = retMesh.mp_Animation[i].posNum;
-				if( ((kSkinData*)mp_MeshData)->mp_Animation[i].posNum > 0 )
-				{
-					((kSkinData*)mp_MeshData)->mp_Animation[i].posFrame = new u16[ retMesh.mp_Animation[i].posNum ];
-					((kSkinData*)mp_MeshData)->mp_Animation[i].pos      = new math::Vector3[ retMesh.mp_Animation[i].posNum ];
-				}
-				for( int j=0 ; j<((kSkinData*)mp_MeshData)->mp_Animation[i].posNum ; j++ ){
-					((kSkinData*)mp_MeshData)->mp_Animation[i].posFrame[j] = retMesh.mp_Animation[i].posFrame[j];
-					((kSkinData*)mp_MeshData)->mp_Animation[i].pos[j] = retMesh.mp_Animation[i].pos[j];
-				}
+			dprintf("%u",((kSkinData*)mp_MeshData)->m_Info.NumBone);
 
-	//**************************************************************************************************
-	//		ボーンコピー
-	//**************************************************************************************************
-				((kSkinData*)mp_MeshData)->mp_Bone[i].parent     = retMesh.mp_Bone[i].parent;		//	親
-				((kSkinData*)mp_MeshData)->mp_Bone[i].BoneMatrix=retMesh.mp_Bone[i].BoneMatrix;	//	基準化行列
-				((kSkinData*)mp_MeshData)->mp_Bone[i].orgPos         = retMesh.mp_Bone[i].orgPos;		//	標準位置
-				((kSkinData*)mp_MeshData)->mp_Bone[i].orgPose        = retMesh.mp_Bone[i].orgPose;		//	標準姿勢
-				((kSkinData*)mp_MeshData)->mp_Bone[i].IndexNum=retMesh.mp_Bone[i].IndexNum;		//ボーン影響インデックス数
-				//ボーン影響インデックス
-				((kSkinData*)mp_MeshData)->mp_Bone[i].Index=new u32[retMesh.mp_Bone[i].IndexNum];
-				CopyMemory(((kSkinData*)mp_MeshData)->mp_Bone[i].Index,retMesh.mp_Bone[i].Index,sizeof(u32)*retMesh.mp_Bone[i].IndexNum);
-				//ボーン影響度
-				((kSkinData*)mp_MeshData)->mp_Bone[i].Influence=new f32[retMesh.mp_Bone[i].IndexNum];
-				CopyMemory(((kSkinData*)mp_MeshData)->mp_Bone[i].Influence,retMesh.mp_Bone[i].Influence,sizeof(f32)*retMesh.mp_Bone[i].IndexNum);
+			mp_Original=new kMeshVertex[mp_MeshData->m_Info.NumVertex];
+			CopyMemory(mp_Original,mp_MeshData->mp_Vertex,sizeof(kMeshVertex)*mp_MeshData->m_Info.NumVertex);
 
-			}
-
-				dprintf("%u",((kSkinData*)mp_MeshData)->m_Info.NumBone);
-				for(int i=0;i<((kSkinData*)mp_MeshData)->m_Info.NumBone;i++)
-				{
-					for(int j=0;j<((kSkinData*)mp_MeshData)->mp_Bone[i].IndexNum;j++)dprintf("%u",((kSkinData*)mp_MeshData)->mp_Bone[i].Index[j]);
-				}
-				//CopyMemory(((kSkinData*)mp_MeshData)->mp_Animation,retMesh.mp_Animation,sizeof(kSkinAnimation)*retMesh.m_Info.NumBone);
-				//CopyMemory(((kSkinData*)mp_MeshData)->mp_Bone,retMesh.mp_Bone,sizeof(kSkinBone)*retMesh.m_Info.NumBone);
-			mp_Original=new kMeshVertex[retMesh.m_Info.NumVertex];
-				CopyMemory(mp_Original,mp_MeshData->mp_Vertex,sizeof(kMeshVertex)*retMesh.m_Info.NumVertex);
 		}
-		dprintf("kSkin Load End");
+
 		if( !readok )
 		{
 			//	読み込み失敗
@@ -360,20 +293,20 @@ namespace klib
 		m_bChanged=false;
 
 		//座標更新用変数
-		const kSkinData* m_Skin=(kSkinData*)mp_MeshData;
-		ZeroMemory(mp_MeshData->mp_Vertex,sizeof(kMeshVertex)*mp_MeshData->m_Info.NumVertex);
-		for(int i=0;i<(s32)m_Skin->m_Info.NumBone;i++)
-		{
-			//頂点に影響しているボーン行列を重みをつけて掛けていく
-			for(int j=0;j<m_Skin->mp_Bone[i].IndexNum;j++)
-			{
-				math::Vector3 out;
-				//dprintf("%u",m_Skin->mp_Bone[i].Index[j]);
-				MatrixVec3TransformCoord(&out,mp_Original[m_Skin->mp_Bone[i].Index[j]].m_Pos,lpMatrix[i]);
-				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Pos+=out*m_Skin->mp_Bone[i].Influence[j];
-				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Color=math::Vector4(1,1,1,1);
-			}
-		}
+		//const kSkinData* m_Skin=(kSkinData*)mp_MeshData;
+		//ZeroMemory(mp_MeshData->mp_Vertex,sizeof(kMeshVertex)*mp_MeshData->m_Info.NumVertex);
+		//for(int i=0;i<(s32)m_Skin->m_Info.NumBone;i++)
+		//{
+		//	//頂点に影響しているボーン行列を重みをつけて掛けていく
+		//	for(int j=0;j<m_Skin->mp_Bone[i].IndexNum;j++)
+		//	{
+		//		math::Vector3 out;
+
+		//		MatrixVec3TransformCoord(&out,mp_Original[m_Skin->mp_Bone[i].Index[j]].m_Pos,lpMatrix[i]);
+		//		mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Pos+=out*m_Skin->mp_Bone[i].Influence[j];
+		//		mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Color=math::Vector4(1,1,1,1);
+		//	}
+		//}
 
 	}
 

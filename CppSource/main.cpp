@@ -44,7 +44,6 @@
 
 #include "testScene.h"
 
-
 //	use namespace
 using namespace ShaderLib;
 using namespace RenderLib;
@@ -109,13 +108,13 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	//レンダーステート初期化
 	RenderState::setScreenWidth(width);
 	RenderState::setScreenHeight(height);
-	RenderState::Setting_PolygonBathSides(false);
 	RenderState::Setting_Viewport(.0f,.0f,width,height);
-	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,0,0),Vector3(0,1,0));
+	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,10,0),Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix(K_PI/4,(float)width/(float)height,.1f,100.0f);
 
 	dprintf("Screen Size Initialize w=%d h=%d",width,height);
 
+	//glLineWidth(1.0f);
 	//シーン作成
 	testScene::_create();
 	//シーン割り当て
@@ -133,12 +132,10 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	DEBUG_MSG("dt=%.3f[ms]", dt);
 	//mlInput::debugMseeage();
 //===========================================================================================
-	//深度テスト(うまくいかない？)
-	glEnable(GL_DEPTH_TEST);
 	RenderState::Clear_Color(.5,.5,.5,1);
 	RenderState::Clear_Buffer(CLEAR_BUFFER_COLOR);
 	RenderState::Clear_Buffer(CLEAR_BUFFER_DEPTH);
-
+	
 	//シーン更新
 	if(framework.sceneUpdate()){framework.sceneRender();}
 

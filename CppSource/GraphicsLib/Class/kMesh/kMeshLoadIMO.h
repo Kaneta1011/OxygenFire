@@ -119,13 +119,13 @@ namespace klib
 			//ポリゴン数
 			m_Data->m_Info.NumFace=imo.NumFace;
 			//頂点コピー
-			m_Data->mp_Vertex=new kMeshVertex2[imo.NumVertex];
+			m_Data->mp_Vertex=new kMeshVertex[imo.NumVertex];
 			for(u32 i=0;i<imo.NumVertex;i++)
 			{
-				((kMeshVertex2*)(m_Data->mp_Vertex))[i].m_Pos=math::Vector3(workV[i].x,workV[i].y,workV[i].z);
-				((kMeshVertex2*)(m_Data->mp_Vertex))[i].m_Normal=math::Vector3(workV[i].nx,workV[i].ny,workV[i].nz);
+				((kMeshVertex*)(m_Data->mp_Vertex))[i].m_Pos=math::Vector3(workV[i].x,workV[i].y,workV[i].z);
+				((kMeshVertex*)(m_Data->mp_Vertex))[i].m_Normal=math::Vector3(workV[i].nx,workV[i].ny,workV[i].nz);
 				//Vertex[i].color=math::Vector4(workV[i].color);
-				((kMeshVertex2*)(m_Data->mp_Vertex))[i].m_TexCoord=math::Vector2(workV[i].tu,workV[i].tv);
+				((kMeshVertex*)(m_Data->mp_Vertex))[i].m_TexCoord=math::Vector2(workV[i].tu,workV[i].tv);
 			}
 			//インデックスコピー
 			m_Data->m_Info.Index=new u32[imo.NumFace*3];

@@ -44,6 +44,7 @@ public class Oxygenfire_Activity extends Activity {
 			public void run() {
 				// TODO Auto-generated method stub
 				GL2JNILib.onPause();
+				
 			}
 		});
 	}

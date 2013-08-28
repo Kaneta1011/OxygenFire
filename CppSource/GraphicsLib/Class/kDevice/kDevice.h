@@ -4,6 +4,9 @@
 #include "../kObjectBuffer/kObjectBuffer.h"
 #include "../kInputLayout/kInputLayout.h"
 #include "../kGraphicsPipline/kGraphicsPipline.h"
+#include "../kBlendState/kBlendState.h"
+#include "../kRasterizerState/kRasterizerState.h"
+#include "../kDepthStencilState/kDepthStencilState.h"
 
 namespace klib
 {
@@ -13,6 +16,13 @@ namespace klib
 	class kDevice
 	{
 	private:
+		static const kInputLayout* m_IAInputLayout;
+		static const kObjectBuffer* m_IAVertexBuffer;
+		static const kObjectBuffer* m_IAIndexBuffer;
+
+		static const kBlendState* m_OMBlendState;
+		static const kDepthStencilState* m_OMDepthStencilState;
+		static const kRasterizerState* m_RasterizerState;
 	public:
 		/**
 		* @brief 頂点シェーダーをシェーダー文字列から作成する
@@ -51,6 +61,34 @@ namespace klib
 		*/
 		static bool createIndexBuffer(kObjectBuffer* out,const void* data,u32 datasize,s32 type);
 		/**
+		* @brief ブレンドステートを作成する(Directx11を想定した関数)
+		* @param[out] out 作成したブレンドステート
+		* @param[in] BlendStateType ブレンドタイプの配列
+		* @param[in] BlendStateTypeLength 配列のサイズ
+		*/
+		static void createBlendState( kBlendState* out,const eBlendType* BlendStateType, u32 BlendStateTypeLength );
+		/**
+		* @brief ブレンドステートを作成する(Directx11を想定した関数)
+		* @param[out] out 作成したブレンドステート
+		* @param[in] BlendStateType ブレンドタイプ
+		*/
+		static void createBlendStateAll( kBlendState* out,const eBlendType BlendStateType);
+		/**
+		* @brief デプスステンシルステートを作成する
+		* @param[out] out 作成したデプスステンシルステート
+		* @param[in] enable 深度テストを使用するか
+		* @param[in] func 深度テスト比較関数
+		*/
+		static bool createDepthStencilState(kDepthStencilState* out,bool enable,eDepthFunc func);
+		/**
+		* @brief ラスタライザステートを作成する
+		* @param[out] out 作成したラスタライザステート
+		* @param[in] fill ポリゴン描画モード
+		* @param[in] cull カリング向き
+		* @param[in] front ポリゴン正面判定
+		*/
+		static bool createRasterizerState(kRasterizerState* out,eFillMode fill,eCullMode cull,bool front);
+		/**
 		* @brief バッファの内容を更新する
 		* @param[in] in 更新するバッファ
 		* @param[in] data 更新する値
@@ -72,5 +110,27 @@ namespace klib
 		* @param[in] in 頂点レイアウト
 		*/
 		static bool IAsetIndexBuffer(const kObjectBuffer* in);
+		/**
+		* @brief ブレンドステートを設定する
+		* @param[in] in ブレンドステート
+		*/
+		static bool OMsetBlendState(const kBlendState* in);
+		/**
+		* @brief デプスステンシルステートを設定する
+		* @param[in] in デプスステンシルステート
+		*/
+		static bool OMsetDepthStencilState(const kDepthStencilState* in);
+		/**
+		* @brief ラスタライザステートを設定する
+		* @param[in] in ラスタライザステート
+		*/
+		static bool RSsetState(const kRasterizerState* in);
+		/**
+		* @brief 設定しているインデックスバッファを使用して設定している頂点バッファを描画する
+		* @param[in] indexnum インデックス数
+		*/
+		static bool drawIndexed(u32 indexnum);
+
 	};
+
 }

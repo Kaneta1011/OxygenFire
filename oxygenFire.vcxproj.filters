@@ -124,6 +124,15 @@
     <Filter Include="source\FrameWork\Class\kFrameWork">
       <UniqueIdentifier>{6b5a6673-1260-4bd1-8dc0-62870930d350}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\GraphicsLib\Class\kBlendState">
+      <UniqueIdentifier>{601fb0a9-2734-4ae4-84b2-ebb6e5bbbbdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kDepthStencilState">
+      <UniqueIdentifier>{7c9e6ffe-0196-48b3-90be-001518d744ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kRasterizerState">
+      <UniqueIdentifier>{34e130b5-6759-471a-8153-345e27dbcf2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -391,6 +400,15 @@
     </ClInclude>
     <ClInclude Include="CppSource\testScene.h">
       <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kBlendState\kBlendState.h">
+      <Filter>source\GraphicsLib\Class\kBlendState</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kDepthStencilState\kDepthStencilState.h">
+      <Filter>source\GraphicsLib\Class\kDepthStencilState</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kRasterizerState\kRasterizerState.h">
+      <Filter>source\GraphicsLib\Class\kRasterizerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
