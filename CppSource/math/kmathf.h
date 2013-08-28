@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _K_MATH_F_
+#define _K_MATH_F_
+
 #include <math.h>
 #include "..\types.h"
 #include "..\defines.h"
@@ -1509,3 +1511,5 @@ namespace klib
 		}
 	};
 };
+
+#endif

@@ -9,8 +9,6 @@
 
 namespace klib
 {
-
-
 	class kGraphicsPipline
 	{
 		friend class kDevice;

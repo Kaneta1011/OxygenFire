@@ -157,7 +157,7 @@ protected:
 
 protected:
 	static int		M_POINT_MAX;
-	static bool		mIsUpdate;
+	static bool		mIsUpdating;
 	static Info*	mpInfos;
 	static float	mFlickSensitivity;	//フリック感度
 	static int		mNowTouchCount;

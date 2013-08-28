@@ -1,7 +1,7 @@
 #pragma once
 #include "kMesh.h"
 #include "defines.h"
-#include "ShaderLib\ShaderManager.h"
+#include "GraphicsLib\Class\tRenderState\RenderState.h"
 #include "../kDevice/kDevice.h"
 
 namespace klib

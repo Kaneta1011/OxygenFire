@@ -34,18 +34,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../CppSource/math/kmathf.h"
-#include	"ShaderLib\ShaderManager.h"
-#include	"RenderLib\RenderState.h"
+#include	"GraphicsLib\Class\tRenderState\RenderState.h"
 #include	"math\\kmathf.h"
-#include	"RenderLib\\Object3D\\Mesh.h"
 #include	<assert.h>
 
 #include "FrameWork\Class\kFrameWork\kFrameWork.h"
+#include "GraphicsLib\Class\r2DObj\r2DRenderer.h"
 
 #include "testScene.h"
+#include "Ueda\rTestScene.h"
 
 //	use namespace
-using namespace ShaderLib;
 using namespace RenderLib;
 using namespace klib;
 using namespace math;
@@ -112,14 +111,19 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,10,0),Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix(K_PI/4,(float)width/(float)height,.1f,100.0f);
 
+	rlib::r2DPipeline::init();
+
 	dprintf("Screen Size Initialize w=%d h=%d",width,height);
 
 	//glLineWidth(1.0f);
-	//シーン作成
-	testScene::_create();
-	//シーン割り当て
-	framework.sceneChange(testScene::_getInstancePtr());
 
+	////シーン作成
+	//testScene::_create();
+	////シーン割り当て
+	//framework.sceneChange(testScene::_getInstancePtr());
+
+	framework.sceneChange(new rTestScene() );
+	
 	LOGI(TAG, "Complete graphic init");
 
 }
@@ -151,6 +155,12 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env,
 	LOGI(TAG, "Execute onPause.");
 	
 	Sound::clear();
+	//フレームワーククリア
+	framework.sceneClear();
+	//シーン破壊
+	testScene::_destroy();
+
+	rlib::r2DPipeline::clear();
 
 	LOGI(TAG, "Complete onPause.");
 }
@@ -163,10 +173,6 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	LOGI(TAG, "Execute onDestory.");
 	
 	mlInput::clear();
-	//フレームワーククリア
-	framework.sceneClear();
-	//シーン破壊
-	testScene::_destroy();
 
 	LOGI(TAG, "Complete onDestory.");
 }

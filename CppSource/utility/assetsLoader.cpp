@@ -10,17 +10,6 @@
 
 #include "utility.h"
 
-static void printGLString(const char *name, GLenum s) {
-    const char *v = (const char *) glGetString(s);
-    LOGI("GL %s = %s\n", name, v);
-}
-
-static void checkGlError(const char* op) {
-    for (GLint error = glGetError(); error; error
-            = glGetError()) {
-        LOGI("after %s() glError (0x%x)\n", op, error);
-    }
-}
 
 AAssetManager* AssetsLoader::sAssetMng = NULL;
 jclass		   AssetsLoader::sJNICallMethod = NULL;
@@ -105,7 +94,7 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 		glTexImage2D( GL_TEXTURE_2D, 0,
 				format, info.width, info.height, 0,
 				format, type, pixels );
-		checkGlError("glTexImage2D");
+		checkGlError(TAG, "glTexImage2D");
 	//UnlockÇñYÇÍÇ∏Ç…
 		AndroidBitmap_unlockPixels(env, bitmap);
 	//ê≥èÌèIóπ

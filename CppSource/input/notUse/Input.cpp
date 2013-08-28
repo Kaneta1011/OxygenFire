@@ -10,7 +10,7 @@
 
 const char* mlInput::TAG = "mlInput";
 int		mlInput::M_POINT_MAX = 0;
-bool	mlInput::mIsUpdate = false;
+bool	mlInput::mIsUpdating = false;
 mlInput::Info*	mlInput::mpInfos = NULL;
 float	mlInput::mFlickSensitivity = 50.f;
 int		mlInput::mNowTouchCount = 0;
@@ -52,9 +52,15 @@ void mlInput::update(
 	float* y=env->GetFloatArrayElements(pointsY, NULL);
 	float* pressures = env->GetFloatArrayElements(arrayPressures, NULL);
 
+	while(mIsUpdating){}
+
+	mIsUpdating = true;
+
 	for( int i=0; i<pointNum; i++ )
 	{
 		Info& info = mpInfos[i];
+		info.prevX = info.x;
+		info.prevY = info.y;
 		info.x = x[i];
 		info.y = y[i];
 		info.pressure = pressures[i];
@@ -83,6 +89,8 @@ void mlInput::update(
 	}
 	mNowTouchCount = pointNum;
 
+	mIsUpdating = false;
+
 //メモリ開放
 	env->ReleaseFloatArrayElements(pointsX,x,0);
 	env->ReleaseFloatArrayElements(pointsY,y,0);
@@ -104,11 +112,15 @@ void mlInput::update(float dt)
 		FREE,//FREE
 	};
 
+	while(mIsUpdating){}
+	mIsUpdating = true;
+
 	int touchCount = mNowTouchCount;
 	for( int i=0; i<touchCount; i++ )
 	{
 		Info& info = mpInfos[i];
 		info.time += dt;
+		int oldAction = info.action;
 		//if( info.isUpdate ){
 			info.action = nextAction[info.action];
 		//}
@@ -127,11 +139,16 @@ void mlInput::update(float dt)
 		}
 		else
 		{
-			info.mx = info.x - info.prevX;
-			info.my = info.y - info.prevY;
+			if( oldAction != DOWN )
+			{
+				info.mx = info.x - info.prevX;
+				info.my = info.y - info.prevY;
+			}
 			info.prevX = info.x;
 			info.prevY = info.y;
 
+			//if( info.mx > 50 ) info.mx = 50;
+			//if( info.my > 50 ) info.my = 50;
 		//フリックチェック
 			info.isFlick = ( info.mx*info.mx + info.my*info.my >= mFlickSensitivity*mFlickSensitivity );
 		}
@@ -146,6 +163,8 @@ void mlInput::update(float dt)
 		Info& info = mpInfos[i];
 		info.init();
 	}
+	mIsUpdating = false;
+
 }
 
 inline float getPointLength()

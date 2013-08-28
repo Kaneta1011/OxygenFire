@@ -1,10 +1,9 @@
 #pragma once
 #include "defines.h"
 #include "math\kmathf.h"
-#include "RenderLib\Object3D\Object3D.h"
-#include "ShaderLib\ShaderManager.h"
+#include "GraphicsLib\Class\tRenderState\RenderState.h"
 #include "../kDevice/kDevice.h"
-
+#include "GraphicsLib\Class\tIObject3D\Object3D.h"
 
 //kMeshに存在するメッシュへのポインタをvoid*にして
 //ユーザーが頂点のフォーマットを指定して

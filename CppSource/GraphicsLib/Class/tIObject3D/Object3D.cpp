@@ -1,5 +1,5 @@
 //	use .h
-#include	"RenderLib\\Object3D\\Object3D.h"
+#include	"Object3D.h"
 //	use namespace
 using namespace RenderLib;
 

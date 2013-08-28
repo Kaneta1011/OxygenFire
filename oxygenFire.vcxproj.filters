@@ -19,29 +19,8 @@
     <Filter Include="source\Math\Class\Quaternion">
       <UniqueIdentifier>{38492400-d58e-42c2-a105-c90ef6ffe176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\RenderLib">
-      <UniqueIdentifier>{4b84f73f-8cd9-4443-87a1-9bcf041421d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\RenderLib\Shader">
-      <UniqueIdentifier>{c7a85384-ade5-424b-9932-b1f45cb20323}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\RenderLib\cpp">
-      <UniqueIdentifier>{b8c1b43e-a1b0-4a97-a8a6-aa69bcdda4b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\ShaderLib">
-      <UniqueIdentifier>{0e29c7bd-3e0e-426e-b726-3a9a71744331}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\ShaderLib\DATA">
-      <UniqueIdentifier>{9e750979-08b8-4b9b-90b2-edb88f0b68ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\StandardLib">
       <UniqueIdentifier>{f5e6182c-e589-40f9-a4a5-10cbce5f8c47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\ShaderLib\cpp">
-      <UniqueIdentifier>{4a603dd1-350d-46f5-b133-f7f224f28155}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\RenderLib\Object3D">
-      <UniqueIdentifier>{f8e02f7c-20de-44c4-bf41-01f426fdd960}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\Sound">
       <UniqueIdentifier>{d2aa6871-6651-4e3a-9720-c23e1e21fcf8}</UniqueIdentifier>
@@ -133,6 +112,33 @@
     <Filter Include="source\GraphicsLib\Class\kRasterizerState">
       <UniqueIdentifier>{34e130b5-6759-471a-8153-345e27dbcf2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\GraphicsLib\Class\r2DObj">
+      <UniqueIdentifier>{ba43c65e-88b4-40e9-870f-59992fc910b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\rPointSprite">
+      <UniqueIdentifier>{16fb4b89-85f2-49e4-8324-31be3e671185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\rFrameBuffer">
+      <UniqueIdentifier>{d757f001-25b6-409e-a4df-e45653dedde8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Ueda">
+      <UniqueIdentifier>{fff40339-2b5c-47fd-842e-97605bc05a8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\rTexture">
+      <UniqueIdentifier>{4b8bdc7e-eae8-4597-aeb3-0e6c1ca299c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Ueda\TmpShader">
+      <UniqueIdentifier>{11861543-75f4-4c31-91f9-dc1046ed83c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\tRenderState">
+      <UniqueIdentifier>{8c4e7f65-e61c-4868-bbd2-8ab0fa099ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\tIObject3D">
+      <UniqueIdentifier>{a2bc6a23-5d21-4d2c-af42-6f3e731eb6fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\r2DObj\notUse">
+      <UniqueIdentifier>{c7f8b7c2-ae40-48b3-8739-64193c5898a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -152,21 +158,6 @@
     </ClCompile>
     <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp">
       <Filter>source\Math\Class\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\RenderLib\cpp\RenderLib.cpp">
-      <Filter>source\RenderLib\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\RenderLib\cpp\Shader.cpp">
-      <Filter>source\RenderLib\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\ShaderLib\ShaderManager.cpp">
-      <Filter>source\ShaderLib\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\RenderLib\Object3D\Object3D.cpp">
-      <Filter>source\RenderLib\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\RenderLib\cpp\Mesh.cpp">
-      <Filter>source\RenderLib\cpp</Filter>
     </ClCompile>
     <ClCompile Include="CppSource\utility\assetsLoader.cpp">
       <Filter>source\utility</Filter>
@@ -234,6 +225,42 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp">
       <Filter>source\GraphicsLib\Class\kDevice</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\copy\CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp">
+      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\copy\CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp">
+      <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Ueda\rTestScene.cpp">
+      <Filter>source\Ueda</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\input\notUse\AnalogStick.cpp">
+      <Filter>source\Input\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\input\notUse\Button.cpp">
+      <Filter>source\Input\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\rTexture\Texture.cpp">
+      <Filter>source\GraphicsLib\Class\rTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Ueda\TmpShader\Shader.cpp">
+      <Filter>source\Ueda\TmpShader</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Ueda\TmpShader\ShaderManager.cpp">
+      <Filter>source\Ueda\TmpShader</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\tRenderState\RenderLib.cpp">
+      <Filter>source\GraphicsLib\Class\tRenderState</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\tIObject3D\Object3D.cpp">
+      <Filter>source\GraphicsLib\Class\tIObject3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DObj.cpp">
+      <Filter>source\GraphicsLib\Class\r2DObj\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DRenderer.cpp">
+      <Filter>source\GraphicsLib\Class\r2DObj\notUse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -254,26 +281,11 @@
     <ClInclude Include="CppSource\types.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\RenderLib\RenderState.h">
-      <Filter>source\RenderLib</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\RenderLib\Shader\Shader.h">
-      <Filter>source\RenderLib\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\StandardLib\SmartPointer.h">
       <Filter>source\StandardLib</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\ShaderLib\ShaderManager.h">
-      <Filter>source\ShaderLib</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\StandardLib\Singleton.h">
       <Filter>source\StandardLib</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\RenderLib\Object3D\Object3D.h">
-      <Filter>source\RenderLib\Object3D</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\RenderLib\Object3D\Mesh.h">
-      <Filter>source\RenderLib\Object3D</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\sound\mlsound.h">
       <Filter>source\Sound</Filter>
@@ -410,13 +422,44 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kRasterizerState\kRasterizerState.h">
       <Filter>source\GraphicsLib\Class\kRasterizerState</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AndroidApk\assets\simple.fs">
-      <Filter>source\ShaderLib\DATA</Filter>
-    </None>
-    <None Include="AndroidApk\assets\simple.vs">
-      <Filter>source\ShaderLib\DATA</Filter>
-    </None>
+    <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DObj.h">
+      <Filter>source\GraphicsLib\Class\r2DObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\copy\CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h">
+      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\copy\CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h">
+      <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Ueda\rTestScene.h">
+      <Filter>source\Ueda</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\input\AnalogStick.h">
+      <Filter>source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\input\Button.h">
+      <Filter>source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\input\notUse\IButton.h">
+      <Filter>source\Input\notUse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\rTexture\Texture.h">
+      <Filter>source\GraphicsLib\Class\rTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Ueda\TmpShader\Shader.h">
+      <Filter>source\Ueda\TmpShader</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Ueda\TmpShader\ShaderManager.h">
+      <Filter>source\Ueda\TmpShader</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\tRenderState\RenderState.h">
+      <Filter>source\GraphicsLib\Class\tRenderState</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\tIObject3D\Object3D.h">
+      <Filter>source\GraphicsLib\Class\tIObject3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DRenderer.h">
+      <Filter>source\GraphicsLib\Class\r2DObj</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
