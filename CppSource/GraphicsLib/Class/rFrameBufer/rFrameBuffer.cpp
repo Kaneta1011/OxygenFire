@@ -62,8 +62,18 @@ void FrameBuffer::init( int width, int height, GLenum format, GLenum bitOrder, G
 		GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this->mDepth);
 	checkGlError(TAG, "glFramebufferRenderbuffer");
 
+	initBuf();
 	LOGI(TAG, "Finish create frame buffer");
 
+}
+
+void FrameBuffer::initTexBuf()
+{
+	mTexBuf[0].x = 0.f; mTexBuf[0].y = 0.f;
+	mTexBuf[1].x = 1.f; mTexBuf[1].y = 0.f;
+	mTexBuf[2].x = 0.f; mTexBuf[2].y = 1.f;
+	mTexBuf[3].x = 1.f; mTexBuf[3].y = 1.f;
+	LOGI("frame", "initTexBuf OK");
 }
 
 void FrameBuffer::bind(float r, float g, float b, float a)
@@ -85,3 +95,8 @@ void FrameBuffer::bindColorTex(unsigned int activeIndex)
 	}
 	this->mColorTex.Setting((Texture::eACTIVE_TYPE)activeIndex);
 }
+
+ void FrameBuffer::render()
+ {
+	 innerRender(&this->mColorTex);
+ }

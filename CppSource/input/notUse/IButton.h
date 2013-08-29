@@ -2,6 +2,7 @@
 #define _INTERFACE_BUTTON_
 
 #include "math\kmathf.h"
+#include "GraphicsLib\Class\r2DObj\r2DRenderer.h"
 
 namespace rlib
 {

@@ -26,11 +26,10 @@ void r2DObj::clear()
 bool r2DObj::load(const char* filePath)
 {
 	clear();
+	initBuf();
 
 	this->mpTexture = new Texture();
 	this->mpTexture->Initilize(filePath);
-
-	initBuf();
 }
 
 void r2DObj::render()
@@ -43,6 +42,8 @@ void r2DObj::render(rlib::FrameBuffer* frameBuffer)
 	update();
 	setTexBuf(true);
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	RenderLib::Shader& shader = r2DPipeline::getShader();
 	//shader.SetValue("isFrameBuffer", -1.f);
 	shader.Begin();

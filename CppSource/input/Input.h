@@ -3,6 +3,7 @@
 
 #include <jni.h>
 #include <assert.h>
+#include "GraphicsLib\Class\r2DObj\r2DRenderer.h"
 
 /*
 	・画面タッチと仮想ボタンを管理するクラス
@@ -58,21 +59,21 @@ public://よく使う関数
 	*/
 	static int key(int id=0){ assert(id<M_POINT_MAX); return mpInfos[id].action; }
 	/*
-	押している座標のX成分を返す
+	押している座標のX成分を返す(プロジェクション座標系(-100～100の範囲))
 	*/
-	static float getX(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].x; }
+	static float getX(int id=0){assert(id<M_POINT_MAX); return rlib::r2DHelper::toUpdateCoord( rlib::r2DHelper::convertPosX( mpInfos[id].x ) ); }
 	/*
-	押している座標のY成分を返す
+	押している座標のY成分を返す(プロジェクション座標系(-100～100の範囲))
 	*/
-	static float getY(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].y; }
+	static float getY(int id=0){assert(id<M_POINT_MAX); return rlib::r2DHelper::toUpdateCoord( rlib::r2DHelper::convertPosY( mpInfos[id].y ) ); }
 	/*
-	前フレームからの移動量のX成分を返す
+	前フレームからの移動量のX成分を返す(プロジェクション座標系(-100～100の範囲))
 	*/
-	static float getMoveX(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].mx; }
+	static float getMoveX(int id=0){assert(id<M_POINT_MAX); return rlib::r2DHelper::toUpdateCoord( rlib::r2DHelper::convertMoveX( mpInfos[id].mx ) ); }
 	/*
-	前フレームからの移動量のY成分を返す
+	前フレームからの移動量のY成分を返す(プロジェクション座標系(-100～100の範囲))
 	*/
-	static float getMoveY(int id=0){assert(id<M_POINT_MAX); return mpInfos[id].my; }
+	static float getMoveY(int id=0){assert(id<M_POINT_MAX); return rlib::r2DHelper::toUpdateCoord( rlib::r2DHelper::convertMoveY( mpInfos[id].my ) ); }
 
 	/*
 	フリックしたか？
@@ -101,12 +102,12 @@ public://よく使う関数
 	*/
 	static bool isPinch(){return mIsPinch;}
 	/*
-	id=0と1のポイントの距離を返す
+	id=0と1のポイントの距離を返す(プロジェクション座標系(0～200ぐらいの範囲))
 	*/
 	static float getPinchLength(){return mPinchLength;}
 
 	/*
-	id=0と1のポイントの距離の変化量を返す
+	id=0と1のポイントの距離の変化量を返す(プロジェクション座標系(0～200ぐらいの範囲))
 	*/
 	static float getPinchMoveLength(){return mPinchLength-mPrevPinchLength;}
 

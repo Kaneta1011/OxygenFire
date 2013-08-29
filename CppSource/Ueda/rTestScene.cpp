@@ -25,6 +25,17 @@ static const char* TAG = "rTestScene";
 #include <EGL\eglext.h>
 #include <EGL\eglplatform.h>
 
+using namespace klib;
+
+kInputElementDesc desc[]=
+{
+	{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+	{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
+	{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+	{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
+};
+u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
+
 rTestScene::rTestScene():
 	mp2dObj(NULL)
 {
@@ -53,11 +64,28 @@ void rTestScene::entry()
 
 	frameBuffer = new rlib::FrameBuffer();
 	frameBuffer->init(512,512);
+
+	pipline=new kGraphicsPipline();
+	pipline->createVertexShader("vertex.txt");
+	pipline->createPixelShader("pixel.txt");
+	pipline->createBlendState(k_BLEND_NONE);
+	pipline->createDepthStencilState(true,eLESS_EQUAL);
+	pipline->createRasterizerState(eSOLID,eNONE,false);
+	pipline->complete(desc,descnum);
+
+	float ary[3]={0.25f,0.5f,1.0f};
+	pipline->setShaderValue("val",0.8f);
+	pipline->setShaderValue("array",ary,3);
+
+	mesh=new kSkin("kman.IEM",new kMeshLoadIEM(),new kMeshGLES20Render());
+	mesh->setScale(0.05f);
+	mesh->setPosition(0,0,0);
+	mesh->Update();
 }
 
 #include "input\Input.h"
 
-static bool isMRT = true;
+static int isMRT = 0;
 
 void rTestScene::update()
 {
@@ -69,20 +97,36 @@ void rTestScene::update()
 		{
 			float x = rlib::r2DHelper::convertPosX( mlInput::getX(0) );
 			float y = rlib::r2DHelper::convertPosY( mlInput::getY(0) );
-			x = rlib::r2DHelper::convertMoveX( mlInput::getMoveX() );
-			y = rlib::r2DHelper::convertMoveY( mlInput::getMoveY() );
+			x = mlInput::getMoveX();
+			y = mlInput::getMoveY();
 			this->mp2dObj->setPos(x+this->mp2dObj->getPos().x, y+this->mp2dObj->getPos().y);
 		}
-	}
-
-	mButton->update();
-
-	if( //mlInput::key(2) == mlInput::DOWN |
-		mButton->isPush() )
+	}else if( mlInput::isPinch() )
 	{
-		isMRT = !isMRT;
+		klib::math::Vector2 size = this->mp2dObj->getSize();
+		size.x += mlInput::getPinchMoveLength() * 2.f;
+		size.y += mlInput::getPinchMoveLength();
+		this->mp2dObj->setSize(size);
 	}
-	//LOGI(TAG,"OK Update");
+
+	//mButton->update();
+	DEBUG_MSG("x=%.2f, y=%.2f", this->mp2dObj->getPos().x, this->mp2dObj->getPos().y );
+	DEBUG_MSG("sx=%.2f, sy=%.2f", this->mp2dObj->getSize().x, this->mp2dObj->getSize().y );
+
+	if( mlInput::key(2) == mlInput::DOWN )
+		//mButton->isPush() )
+	{
+		isMRT ++;
+
+		isMRT %= 3;
+	}
+	LOGI(TAG,"OK Update");
+
+	static float a=0;
+	a+=.005f;
+	mesh->setAngle(a);
+	mesh->animation(1);
+	mesh->Update();
 }
 
 void rTestScene::render()
@@ -91,20 +135,34 @@ void rTestScene::render()
 	//RenderLib::RenderState::Clear_Buffer(RenderLib::CLEAR_BUFFER_COLOR );
 	//RenderLib::RenderState::Clear_Buffer(RenderLib::CLEAR_BUFFER_DEPTH );
 
-	if( isMRT ){
+	if( isMRT == 0){
 		this->frameBuffer->bind();
+		mesh->Render(pipline);
 		this->mp2dObj->render();
 
 		rlib::FrameBuffer::bindScreenBuffer();
-		this->mp2dObj->render( this->frameBuffer );
+		this->frameBuffer->setPos( this->mp2dObj->getPos() );
+		this->frameBuffer->setSize( this->mp2dObj->getSize() );
+		this->frameBuffer->render();
+	}
+	else if( isMRT  == 1 )
+	{
+		this->frameBuffer->bind();
+		mesh->Render(pipline);
 
-	}else{
 		rlib::FrameBuffer::bindScreenBuffer();
-		//this->mp2dObj->render();
+		this->frameBuffer->setPos( this->mp2dObj->getPos() );
+		this->frameBuffer->setSize( this->mp2dObj->getSize() );
+		this->frameBuffer->render();
+	}
+	else
+	{
+		rlib::FrameBuffer::bindScreenBuffer();
+		this->mp2dObj->render();
+		mesh->Render(pipline);
 	}
 
 	//mButton->render();
-
 }
 
 void rTestScene::exit()
@@ -120,8 +178,14 @@ void rTestScene::exit()
 	if( mButton ){ delete mButton; mButton = NULL; }
 	LOGI(TAG,"delete Button");
 
+
 	if( frameBuffer ){ delete frameBuffer; frameBuffer = NULL; }
 	LOGI(TAG,"delete frameBuffer");
+
+	delete mesh;
+	LOGI(TAG,"delete mesh");
+	delete pipline;
+	LOGI(TAG,"delete pipline");
 
 	LOGI(TAG, "Complete rTestScene::exit");
 }

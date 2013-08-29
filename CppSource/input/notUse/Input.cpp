@@ -169,9 +169,9 @@ void mlInput::update(float dt)
 
 inline float getPointLength()
 {
-	float workX = mlInput::getX(1) - mlInput::getX(0);
-	float workY = mlInput::getY(1) - mlInput::getY(0);
-	return sqrt(workX*workX + workY*workY);
+	float workX = rlib::r2DHelper::convertMoveX( mlInput::getX(1) - mlInput::getX(0) ) ;
+	float workY = rlib::r2DHelper::convertMoveY( mlInput::getY(1) - mlInput::getY(0) ) ;
+	return rlib::r2DHelper::toUpdateCoord( sqrt(workX*workX + workY*workY) );
 }
 
 void mlInput::updatePinck()

@@ -10,6 +10,10 @@ namespace rlib
 {
 	class Texture;
 
+	/*
+	・2D描画のための基底クラス
+	・2D描画を行いたいときはrlib::r2DObjクラスを使用してください
+	*/
 	class r2DRenderer
 	{
 	public:
@@ -22,18 +26,41 @@ namespace rlib
 	public:
 		r2DRenderer();
 
-		void initBuf();
-
-		void render(rlib::Texture* pTex);
+		virtual void	render()=0;
+		/*
+		外部からテクスチャを指定して描画する
+		*/
+		void			render(rlib::Texture* pTex);
 
 	public://セッター・ゲッター
+		/*
+		x,yがとる値の範囲は-100(左端)～100(右端)の間、0が画面中央
+		zは0～1の間
+		*/
 		void setPos(float x, float y, float z=0.f){this->mPos.x = x; this->mPos.y = y; this->mPos.z = z; this->mIsUpdate = true;}
-		void setSize(float x, float y){this->mSize.x = x; this->mSize.y = y; this->mIsUpdate = true;}
-		void setDrawCenter(DRAW_ORIGIN_TYPE type){this->mCenterType = type; this->mIsUpdate = true;}
+		/*
+		x,yがとる値の範囲は-100(左端)～100(右端)の間、0が画面中央
+		zは0～1の間
+		*/
+		void setPos(const klib::math::Vector3& pos){this->mPos = pos;			this->mIsUpdate = true;}
+		/*
+		x,yともに端から端まで表示したいなら200を設定してください。
+		値の範囲　:　0～100(画面半分)～200(画面全体)
+		*/
+		void setSize(float x, float y){this->mSize.x = x; this->mSize.y = y;	this->mIsUpdate = true;}
+		/*
+		x,yともに端から端まで表示したいなら200を設定してください。
+		値の範囲　:　0～100(画面半分)～200(画面全体)
+		*/
+		void setSize(const klib::math::Vector2& size){this->mSize = size;		this->mIsUpdate = true;}
+		/*
+		ローカル内の描画位置の設定
+		*/
+		void setDrawOrigin(DRAW_ORIGIN_TYPE type){this->mCenterType = type;		this->mIsUpdate = true;}
 
 		const klib::math::Vector3& getPos()const{return this->mPos;}
 		const klib::math::Vector2& getSize()const{return this->mSize;}
-		DRAW_ORIGIN_TYPE getDrawOriginType()const{ return this->mCenterType; }
+		DRAW_ORIGIN_TYPE getDrawOrigin()const{ return this->mCenterType; }
 
 	protected:
 		enum eS_TYPE
@@ -43,16 +70,23 @@ namespace rlib
 			S_MAX,
 		};
 
-	protected:
+	protected://仮想関数
+		//描画用バッファの初期化を行う
+		//中でinitPosBufとinitTexBufを呼び出している
+		//この関数はコンストラクタ内で呼び出されています
+		void initBuf();
+		//Posバッファの作成
 		virtual void initPosBuf();
+		//UV座標バッファの作成
 		virtual void initTexBuf();
 
 		virtual void update();
 		virtual void innerRender(rlib::Texture* pTex);
 
+	protected:
 		void getDrawOffset(float* x, float *y);
-
 		void setTexBuf(bool isFrameBuffer);
+
 	protected:
 		klib::math::Vector3		mPosBuf[4];
 		klib::math::Vector2		mTexBuf[4];
@@ -63,6 +97,10 @@ namespace rlib
 		klib::math::Vector2 mSize;
 	};
 
+	/*
+	2D描画で使用するレンダリングパイプラインを管理するクラス
+	・とりあえず、RenderLib::Shaderを利用してますが、のちのちklib::kGraphicsPiplineへ移行したいです
+	*/
 	class r2DPipeline
 	{
 	public:
@@ -77,6 +115,15 @@ namespace rlib
 		static RenderLib::Shader*		spShader;
 	};
 
+	//==================================================================
+	//
+	//		2Dにおける座標変換をサポートする
+	//		・スクリーン座標からプロジェクション座標への値に変換関数があります。
+	//		・2D描画では座標の指定はプロジェクション座標系を採用しています。
+	//			x,yともに値の範囲は-100(左,下)～100(右,上)になってます。
+	//		・mlInputクラスは各ゲッターにこのクラスの関数を使ってますので、タッチ位置などを使う際、利用者側が変換しなくていいようにしています。
+	//
+	//==================================================================
 	class r2DHelper
 	{
 	public:
@@ -134,6 +181,21 @@ namespace rlib
 		プロジェクション座標系の縦軸における1ピクセルの割合を返す
 		*/
 		static float getHeightUnit(){float rate = 1.f / RenderLib::RenderState::getScreenHeight(); return rate;}
+
+		/*
+		更新時に扱う2D座標値を描画用のものに変換する関数
+		*/
+		static float toRenderCoord(float updateCoord){
+			static const float UtoR = 0.01f;
+			return updateCoord * UtoR;
+		}
+		/*
+		描画時に扱う2D座標値を更新用のものに変換する関数
+		*/
+		static float toUpdateCoord(float renderCoord){
+			static const float RtoU = 100.f;
+			return renderCoord * RtoU;
+		}
 	};
 
 }

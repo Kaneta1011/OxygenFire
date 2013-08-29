@@ -257,6 +257,8 @@ namespace klib
 	{
 		//ポリゴン描画方式を決めてインデックスバッファで描画
 		glDrawElements( m_RasterizerState->m_Desc.FillMode, indexnum, GL_UNSIGNED_SHORT, NULL );
+		glBindBuffer( GL_ARRAY_BUFFER, 0 );
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 	}
 
 }

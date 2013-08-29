@@ -3,10 +3,15 @@
 
 #include <GLES2\gl2.h>
 #include "GraphicsLib\Class\rTexture\Texture.h"
+#include "GraphicsLib\Class\r2DObj\r2DRenderer.h"
 
 namespace rlib
 {
-	class FrameBuffer
+	/*
+	フレームバッファオブジェクトをあらわすクラス
+	出力結果を使用したいならgetColorTex()でrlib::Textureクラスをとってください
+	*/
+	class FrameBuffer : public r2DRenderer
 	{
 	public:
 		/*
@@ -36,10 +41,14 @@ namespace rlib
 		*/
 		void bind(float r=0.1f, float g=0.125f, float b=0.3f, float a=1.f);
 
-	public:
-		void bindColorTex(unsigned int activeIndex);
+		virtual void render();
 
+	public:
+		void		bindColorTex(unsigned int activeIndex);
 		Texture&	gexColorTexture(){return this->mColorTex;}
+
+	protected:
+		virtual void initTexBuf();
 
 	private:
 		int width, height;

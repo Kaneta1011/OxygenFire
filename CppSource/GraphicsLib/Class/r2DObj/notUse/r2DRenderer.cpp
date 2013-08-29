@@ -10,47 +10,33 @@ using namespace rlib;
 r2DRenderer::r2DRenderer():
 mIsUpdate(true),
 mPos(0,0,0),
-mSize(0.5f,0.5f),
+mSize(50.f,50.f),
 mCenterType(DRAW_CENTER)
 {
 }
 
 void r2DRenderer::initBuf()
 {
-	//glGenBuffers(S_MAX,this->m_VBO);
-	//-----------------------------------------------
-	//	バッファにデータを入れる
-	//-----------------------------------------------
 	initPosBuf();
 	initTexBuf();
-
-	//-----------------------------------------------
-	//	バッファを終了する
-	//-----------------------------------------------
-	//glBindBuffer( GL_ARRAY_BUFFER, 0);
-
 }
 
 void r2DRenderer::initPosBuf()
 {
 	//位置データ
-	//glBindBuffer(GL_ARRAY_BUFFER,this->m_VBO[S_POS]);
 	mPosBuf[0].x = 0.f; mPosBuf[0].y = 0.f; mPosBuf[0].z = 0.f;
 	mPosBuf[1].x = 1.f; mPosBuf[1].y = 0.f; mPosBuf[1].z = 0.f;
 	mPosBuf[2].x = 0.f; mPosBuf[2].y = 1.f; mPosBuf[2].z = 0.f;
 	mPosBuf[3].x = 1.f; mPosBuf[3].y = 1.f; mPosBuf[3].z = 0.f;
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(mPosBuf), mPosBuf, GL_STATIC_DRAW);
 }
 
 void r2DRenderer::initTexBuf()
 {
 	//UV座標
-	//glBindBuffer(GL_ARRAY_BUFFER,this->m_VBO[S_TEX]);
 	mTexBuf[0].x = 0.f; mTexBuf[0].y = 1.f;
 	mTexBuf[1].x = 1.f; mTexBuf[1].y = 1.f;
 	mTexBuf[2].x = 0.f; mTexBuf[2].y = 0.f;
 	mTexBuf[3].x = 1.f; mTexBuf[3].y = 0.f;
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(mTexBuf), mTexBuf, GL_STATIC_DRAW);
 }
 
 void r2DRenderer::render(rlib::Texture* pTex)
@@ -61,7 +47,9 @@ void r2DRenderer::render(rlib::Texture* pTex)
 void r2DRenderer::innerRender(rlib::Texture* pTex)
 {
 	update();
-	setTexBuf(false);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	RenderLib::Shader& shader = r2DPipeline::getShader();
 	//shader.SetValue("isFrameBuffer", 1.f);
@@ -88,12 +76,14 @@ void r2DRenderer::update()
 {
 	if( !this->mIsUpdate ) return ;
 
-	float x = this->mPos.x, y = this->mPos.y, z = this->mPos.z;
+	float rate = 0.01f;
+	float x = r2DHelper::toRenderCoord(this->mPos.x), y = r2DHelper::toRenderCoord(this->mPos.y), z = this->mPos.z;
+	float sx = r2DHelper::toRenderCoord(this->mSize.x), sy = r2DHelper::toRenderCoord(this->mSize.y);
 
-	this->mPosBuf[0].x = x;			this->mPosBuf[0].y = y-mSize.y;		this->mPosBuf[0].z = z;
-	this->mPosBuf[1].x = x+mSize.x;	this->mPosBuf[1].y = y-mSize.y;		this->mPosBuf[1].z = z;
-	this->mPosBuf[2].x = x;			this->mPosBuf[2].y = y;				this->mPosBuf[2].z = z;
-	this->mPosBuf[3].x = x+mSize.x;	this->mPosBuf[3].y = y;				this->mPosBuf[3].z = z;
+	this->mPosBuf[0].x = x;			this->mPosBuf[0].y = y-sy;		this->mPosBuf[0].z = z;
+	this->mPosBuf[1].x = x+sx;		this->mPosBuf[1].y = y-sy;		this->mPosBuf[1].z = z;
+	this->mPosBuf[2].x = x;			this->mPosBuf[2].y = y;			this->mPosBuf[2].z = z;
+	this->mPosBuf[3].x = x+sx;		this->mPosBuf[3].y = y;			this->mPosBuf[3].z = z;
 
 	float offsetX = 0.f;
 	float offsetY = 0.f;
@@ -134,8 +124,8 @@ void r2DRenderer::getDrawOffset(float* x, float *y)
 		{ -0.5f, 0.5f },		//DRAW_CENTER
 	};
 
-	*x = offsetRate[this->mCenterType][0] * this->mSize.x;
-	*y = offsetRate[this->mCenterType][1] * this->mSize.y;
+	*x = offsetRate[this->mCenterType][0] * r2DHelper::toRenderCoord( this->mSize.x );
+	*y = offsetRate[this->mCenterType][1] * r2DHelper::toRenderCoord( this->mSize.y );
 }
 
 
