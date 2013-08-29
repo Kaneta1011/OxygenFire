@@ -31,6 +31,7 @@ rTestScene::rTestScene():
 	Pos=NULL;
 	Tex=NULL;
 	frameBuffer = NULL;
+	mButton = NULL;
 }
 
 void rTestScene::entry()
@@ -47,13 +48,16 @@ void rTestScene::entry()
 	LOGI(TAG,"OK Tex");
 	LOGI(TAG,"sprite size = %.2f", SIZE);
 
+	mButton = new rlib::CircleButton();
+	mButton->init("testImage.png", 0, 0, 0.001f);
+
 	frameBuffer = new rlib::FrameBuffer();
 	frameBuffer->init(512,512);
 }
 
 #include "input\Input.h"
 
-static bool isMRT = true;
+static bool isMRT = false;
 
 void rTestScene::update()
 {
@@ -71,7 +75,10 @@ void rTestScene::update()
 		}
 	}
 
-	if( mlInput::key(2) == mlInput::DOWN )
+	mButton->update();
+
+	if( //mlInput::key(2) == mlInput::DOWN |
+		mButton->isPush() )
 	{
 		isMRT = !isMRT;
 	}
@@ -93,11 +100,11 @@ void rTestScene::render()
 
 	}else{
 		rlib::FrameBuffer::bindScreenBuffer();
-		this->mp2dObj->render();
+		//this->mp2dObj->render();
 	}
 
-	//rlib::PointSprite::render( Pos, SPRITE_MAX, Tex, 4.f );
-	//LOGI(TAG,"OK render");
+	mButton->render();
+
 }
 
 void rTestScene::exit()
@@ -110,6 +117,8 @@ void rTestScene::exit()
 	LOGI(TAG,"delete Tex");
 	if( Pos ){ delete[] Pos; Pos = NULL; }
 	LOGI(TAG,"delete Pos");
+	if( mButton ){ delete mButton; mButton = NULL; }
+	LOGI(TAG,"delete Button");
 
 	if( frameBuffer ){ delete frameBuffer; frameBuffer = NULL; }
 	LOGI(TAG,"delete frameBuffer");

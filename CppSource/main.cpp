@@ -177,7 +177,6 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	LOGI(TAG, "Complete onDestory.");
 }
 
-
 JavaVM* g_VM;	//getJNIEnv関数を使うときとマルチスレッドを作るとき必要になる。
 //
 //	ライブラリがロードされたときに自動的に呼ばれる関数

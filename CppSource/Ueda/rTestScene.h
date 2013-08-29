@@ -3,6 +3,7 @@
 
 #include "FrameWork\Class\IScene\IScene.h"
 #include "GraphicsLib\Class\r2DObj\r2DObj.h"
+#include "input\Button.h"
 
 namespace rlib{
 	class FrameBuffer;
@@ -21,6 +22,7 @@ private:
 	klib::math::Vector3			*Pos;
 	rlib::Texture				*Tex;
 	rlib::FrameBuffer			*frameBuffer;
+	rlib::CircleButton			*mButton;
 };
 
 #endif

@@ -3,26 +3,29 @@
 
 #include "notUse/IButton.h"
 
-typedef RULTexture SPRITE;
-
-//============================================
-//
-//	円形のボタン
-//
-//============================================
-class CircleButton : public IButton
+namespace rlib
 {
-public:
-	CircleButton();
-	~CircleButton();
+	class r2DObj;
 
-	void init(const char* imagePath, float xPosRate, float yPosRate, float range);
+	//============================================
+	//
+	//	円形のボタン
+	//
+	//============================================
+	class CircleButton : public IButton
+	{
+	public:
+		CircleButton();
+		~CircleButton();
 
-	void update();
-	void render();
+		void init(const char* imagePath, float xPosRate, float yPosRate, float range);
 
-private:
-	SPRITE *mpImage;
-};
+		void update();
+		void render();
 
+	private:
+		r2DObj*	mpImage;
+	};
+
+}
 #endif
