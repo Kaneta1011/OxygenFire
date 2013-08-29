@@ -1,7 +1,7 @@
 #include "rFrameBuffer.h"
 
-#include "../../../RenderLib/RenderState.h"
-#include "../../../utility/utility.h"
+#include "GraphicsLib\Class\tRenderState\RenderState.h"
+#include "utility/utility.h"
 
 using namespace rlib;
 
@@ -21,7 +21,6 @@ void FrameBuffer::bindScreenBuffer(float r, float g, float b, float a)
 FrameBuffer::FrameBuffer():
 width(0), height(0),
 mFB(0),
-mColor(0),
 mDepth(0)
 {
 }
@@ -34,7 +33,6 @@ FrameBuffer::~FrameBuffer()
 void FrameBuffer::clear()
 {
 	glDeleteFramebuffers(1, &this->mFB);
-	glDeleteTextures(1, &this->mColor);
 	glDeleteRenderbuffers(1, &this->mDepth);
 }
 
@@ -44,16 +42,7 @@ void FrameBuffer::init( int width, int height, GLenum format, GLenum bitOrder, G
 
 	this->width = width; this->height = height;
 	//フレームバッファオブジェクトのためのカラーテクスチャ
-	glGenTextures(1, &this->mColor);
-	glBindTexture(GL_TEXTURE_2D, this->mColor);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, bitOrder, 0);
-	checkGlError(TAG, "glTexImage2D");
+	this->mColorTex.Initilize(width, height, format, bitOrder);
 
 	//フレームバッファオブジェクトのための深度テクスチャ
 	glGenRenderbuffers(1, &this->mDepth);
@@ -66,7 +55,7 @@ void FrameBuffer::init( int width, int height, GLenum format, GLenum bitOrder, G
 	glBindFramebuffer(GL_FRAMEBUFFER, this->mFB);
 
 	//カラーと深度の関連付け
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mColor, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mColorTex.getID(), 0);
 	checkGlError(TAG, "glFramebufferTexture2D");
 	
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER,
@@ -74,6 +63,7 @@ void FrameBuffer::init( int width, int height, GLenum format, GLenum bitOrder, G
 	checkGlError(TAG, "glFramebufferRenderbuffer");
 
 	LOGI(TAG, "Finish create frame buffer");
+
 }
 
 void FrameBuffer::bind(float r, float g, float b, float a)
@@ -86,14 +76,12 @@ void FrameBuffer::bind(float r, float g, float b, float a)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void FrameBuffer::bindColorTex(GLenum activeIndex)
+void FrameBuffer::bindColorTex(unsigned int activeIndex)
 {
-	if( GL_TEXTURE0 > activeIndex || activeIndex > GL_TEXTURE31 ){
-		LOGE(TAG, "invaled index of active texture");
-		exit(0);
+	if( activeIndex < Texture::ACTIVE_0 || Texture::ACTIVE_31 < activeIndex )
+	{
+		LOGE(TAG, "Invalid index of active texture");
+		abort();
 	}
-
-	glActiveTexture(activeIndex);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, this->mColor);
+	this->mColorTex.Setting((Texture::eACTIVE_TYPE)activeIndex);
 }

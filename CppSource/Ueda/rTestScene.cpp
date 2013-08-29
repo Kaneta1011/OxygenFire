@@ -57,7 +57,7 @@ void rTestScene::entry()
 
 #include "input\Input.h"
 
-static bool isMRT = false;
+static bool isMRT = true;
 
 void rTestScene::update()
 {
@@ -103,7 +103,7 @@ void rTestScene::render()
 		//this->mp2dObj->render();
 	}
 
-	mButton->render();
+	//mButton->render();
 
 }
 

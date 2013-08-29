@@ -1,8 +1,9 @@
 #include "rPointSprite.h"
 
-#include "../../../ShaderLib/ShaderManager.h"
-#include "../../../utility/utility.h"
-#include "../../../RenderLib/RenderState.h"
+#include "GraphicsLib\Class\rTexture\Texture.h"
+
+#include "Ueda\TmpShader\ShaderManager.h"
+#include "utility/utility.h"
 
 using namespace rlib;
 
@@ -12,8 +13,7 @@ static const char* TAG = "rlib::PointSprite";
 
 void PointSprite::init()
 {
-	ShaderLib::ShaderManager::Create_Shader(&m_spSprite, "Shader/Sprite.vs","Shader/Sprite.fs");
-
+	ShaderLib::ShaderManager::Create_Shader(&m_spSprite, "Shader/rSprite.vs","Shader/rSprite.fs");
 }
 
 void PointSprite::clear()
@@ -36,9 +36,9 @@ void PointSprite::render(klib::math::Vector3* arrayDrawPos, int count, myTexture
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
-	//glEnable(GL_TEXTURE_2D);
-	//texture->Setting(RenderLib::ACTIVE_0);
-	//m_spSprite->SetValue_No_BeginEnd("uTex",0);
+	glEnable(GL_TEXTURE_2D);
+	texture->Setting(Texture::ACTIVE_0);
+	m_spSprite->SetValue_No_BeginEnd("uTex",0);
 
 	glDrawArrays(GL_POINTS,0,count);
 

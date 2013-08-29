@@ -11,13 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\copy\CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp" />
-    <ClCompile Include="..\..\copy\CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DObj.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DRenderer.cpp" />
+    <ClCompile Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp" />
+    <ClCompile Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\rTexture\Texture.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\tIObject3D\Object3D.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\tRenderState\RenderLib.cpp" />
@@ -62,8 +62,6 @@
     <ClCompile Include="CppSource\utility\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\copy\CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h" />
-    <ClInclude Include="..\..\copy\CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h" />
     <ClInclude Include="CppSource\defines.h" />
     <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h" />
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
@@ -83,6 +81,8 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kShader\kShader.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DObj.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DRenderer.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\rTexture\Texture.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\tIObject3D\Object3D.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\tRenderState\RenderState.h" />

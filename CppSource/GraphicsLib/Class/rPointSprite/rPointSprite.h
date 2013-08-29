@@ -1,14 +1,15 @@
 #ifndef _R_POINT_SPRITE_
 #define _R_POINT_SPRITE_
 
-#include "math/kmathf.h"
-#include "GraphicsLib\Class\rTexture\Texture.h"
+#include "math\kmathf.h"
+#include "GraphicsLib\Class\tRenderState\RenderState.h"
 #include "Ueda\TmpShader\Shader.h"
-
 #include <GLES2\gl2.h>
 #include <GLES2/gl2ext.h>
 
 namespace rlib{
+	class Texture;
+
 	//==============================================================================================
 	//
 	//	PointSprite class

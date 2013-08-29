@@ -225,12 +225,6 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp">
       <Filter>source\GraphicsLib\Class\kDevice</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\copy\CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp">
-      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\copy\CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp">
-      <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
-    </ClCompile>
     <ClCompile Include="CppSource\Ueda\rTestScene.cpp">
       <Filter>source\Ueda</Filter>
     </ClCompile>
@@ -260,6 +254,12 @@
     </ClCompile>
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DRenderer.cpp">
       <Filter>source\GraphicsLib\Class\r2DObj\notUse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp">
+      <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp">
+      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,12 +425,6 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DObj.h">
       <Filter>source\GraphicsLib\Class\r2DObj</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\copy\CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h">
-      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\copy\CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h">
-      <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\Ueda\rTestScene.h">
       <Filter>source\Ueda</Filter>
     </ClInclude>
@@ -460,6 +454,12 @@
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DRenderer.h">
       <Filter>source\GraphicsLib\Class\r2DObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h">
+      <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h">
+      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #define _R_FRAME_BUFFER_
 
 #include <GLES2\gl2.h>
+#include "GraphicsLib\Class\rTexture\Texture.h"
 
 namespace rlib
 {
@@ -36,13 +37,15 @@ namespace rlib
 		void bind(float r=0.1f, float g=0.125f, float b=0.3f, float a=1.f);
 
 	public:
-		void bindColorTex(GLenum activeIndex);
+		void bindColorTex(unsigned int activeIndex);
+
+		Texture&	gexColorTexture(){return this->mColorTex;}
 
 	private:
 		int width, height;
 
 		GLuint mFB;
-		GLuint mColor;
+		Texture mColorTex;
 		GLuint mDepth;
 	};
 }
