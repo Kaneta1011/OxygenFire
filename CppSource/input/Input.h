@@ -98,6 +98,11 @@ public://よく使う関数
 	static int getNowTouchCount(){return mNowTouchCount;}
 
 	/*
+	前フレームのタッチ数を返す
+	*/
+	static int getPrevTouchCount(){return mPrevTouchCount;}
+
+	/*
 	ピンチ状態か？
 	*/
 	static bool isPinch(){return mIsPinch;}
@@ -162,10 +167,13 @@ protected:
 	static Info*	mpInfos;
 	static float	mFlickSensitivity;	//フリック感度
 	static int		mNowTouchCount;
+	static int		mPrevTouchCount;
 
 	static bool		mIsPinch;
 	static float	mPinchLength;
 	static float	mPrevPinchLength;
+	static float	mPincthLengths[2];
+	static float	mPrevPinchLengths[2];
 
 private:
 	static const char* TAG;

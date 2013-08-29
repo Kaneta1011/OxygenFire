@@ -60,6 +60,9 @@ public class TouchEventManager {
 		case MotionEvent.ACTION_MOVE:
 			condition = MotionEvent.ACTION_MOVE;
 			break;
+		case MotionEvent.ACTION_CANCEL:
+			condition = 4;
+			break;
 		default:
 			condition = 3;
 		}

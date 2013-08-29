@@ -1,33 +1,44 @@
 #ifndef _ANALOG_STICK_
 #define _ANALOG_STICK_
 
-#include <Graphic\RULTexture.h>
+#include "GraphicsLib\Class\rTexture\Texture.h"
 
-#include "IButton.h"
+#include "notUse/IButton.h"
+#include "GraphicsLib\Class\r2DObj\r2DObj.h"
 
-typedef RULTexture SPRITE;
-
-class AnalogStick : public IButton
+namespace rlib
 {
-public:
-	AnalogStick();
-	~AnalogStick();
+	class AnalogStick : public IButton
+	{
+	public:
+		AnalogStick();
+		~AnalogStick();
 
-	void init(float xPosRate, float yPosRate, float range);
+		void init(float xPosRate, float yPosRate, float range);
 
-	void update();
-	void render();
+		void update();
+		void render();
 
-public:
-	float getX()const{return this->mRate.x;}
-	float getY()const{return this->mRate.y*-1.f;}
+	public:
+		/*
+		スティックのX
+		*/
+		float getX()const{return this->mRate.x;}
+		float getY()const{return this->mRate.y;}
+		/*
+		操作中か？
+		*/
+		bool enable()const{return this->mEnable;}
 
-private:
+	private:
 
-private:
-	Vector2 mRate;
+	private:
+		klib::math::Vector2 mRate;
+		int					mStartTouchCount;
+		bool mEnable;
 
-	SPRITE *mpBack, *mpStick;
-};
+		r2DObj *mpBack, *mpStick;
+	};
+}
 
 #endif

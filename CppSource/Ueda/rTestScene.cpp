@@ -60,7 +60,10 @@ void rTestScene::entry()
 	LOGI(TAG,"sprite size = %.2f", SIZE);
 
 	mButton = new rlib::CircleButton();
-	mButton->init("testImage.png", 0, 0, 0.001f);
+	mButton->init("testImage.png", 50, -50, 50.f);
+
+	mStick = new rlib::AnalogStick();
+	this->mStick->init(-60, -50, 40);
 
 	frameBuffer = new rlib::FrameBuffer();
 	frameBuffer->init(512,512);
@@ -68,7 +71,7 @@ void rTestScene::entry()
 	pipline=new kGraphicsPipline();
 	pipline->createVertexShader("vertex.txt");
 	pipline->createPixelShader("pixel.txt");
-	pipline->createBlendState(k_BLEND_ADD);
+	pipline->createBlendState(k_BLEND_NONE);
 	pipline->createDepthStencilState(true,eLESS_EQUAL);
 	pipline->createRasterizerState(eSOLID,eNONE,false);
 	pipline->complete(desc,descnum);
@@ -93,15 +96,16 @@ void rTestScene::update()
 
 	if( mlInput::getNowTouchCount() == 1 )
 	{
-		if( mlInput::key() == mlInput::MOVE )
-		{
-			float x = rlib::r2DHelper::convertPosX( mlInput::getX(0) );
-			float y = rlib::r2DHelper::convertPosY( mlInput::getY(0) );
-			x = mlInput::getMoveX();
-			y = mlInput::getMoveY();
-			this->mp2dObj->setPos(x+this->mp2dObj->getPos().x, y+this->mp2dObj->getPos().y);
-		}
-	}else if( mlInput::isPinch() )
+		//if( mlInput::key() == mlInput::MOVE )
+		//{
+		//	float x = rlib::r2DHelper::convertPosX( mlInput::getX(0) );
+		//	float y = rlib::r2DHelper::convertPosY( mlInput::getY(0) );
+		//	x = mlInput::getMoveX();
+		//	y = mlInput::getMoveY();
+		//	this->mp2dObj->setPos(x+this->mp2dObj->getPos().x, y+this->mp2dObj->getPos().y);
+		//}
+	}
+	else if( mlInput::isPinch() )
 	{
 		klib::math::Vector2 size = this->mp2dObj->getSize();
 		size.x += mlInput::getPinchMoveLength() * 2.f;
@@ -109,18 +113,31 @@ void rTestScene::update()
 		this->mp2dObj->setSize(size);
 	}
 
-	//mButton->update();
+	mStick->update();
+	mButton->update();
+
+	if( this->mStick->enable() )
+	{
+		float x = this->mStick->getX();
+		float y = this->mStick->getY();
+		this->mp2dObj->setPos(x+this->mp2dObj->getPos().x, y+this->mp2dObj->getPos().y);
+	}
 	DEBUG_MSG("x=%.2f, y=%.2f", this->mp2dObj->getPos().x, this->mp2dObj->getPos().y );
 	DEBUG_MSG("sx=%.2f, sy=%.2f", this->mp2dObj->getSize().x, this->mp2dObj->getSize().y );
+	DEBUG_MSG("button %s", this->mStick->isPush()?"push":"non push");
+	DEBUG_MSG("mode %d", this->mStick->getMode() );
+	DEBUG_MSG("enable = %d", this->mStick->enable()?1:0 );
+	DEBUG_MSG("rate.x=%.2f, rate.y=%.2f", this->mStick->getX(), this->mStick->getY() );
+	DEBUG_MSG("sx=%.2f, sy=%.2f", this->mStick->getRange().x, this->mStick->getRange().y );
 
-	if( mlInput::key(2) == mlInput::DOWN )
-		//mButton->isPush() )
+	if( //mlInput::key(2) == mlInput::DOWN )
+		mButton->getMode() == rlib::IButton::eUP )
 	{
 		isMRT ++;
 
-		isMRT %= 3;
+		isMRT %= 2;
 	}
-	LOGI(TAG,"OK Update");
+	//LOGI(TAG,"OK Update");
 
 	static float a=0;
 	a+=.005f;
@@ -131,41 +148,46 @@ void rTestScene::update()
 
 void rTestScene::render()
 {
-	//RenderLib::RenderState::Clear_Color(0.1,0.125,0.6f, 1.f );
-	//RenderLib::RenderState::Clear_Buffer(RenderLib::CLEAR_BUFFER_COLOR );
-	//RenderLib::RenderState::Clear_Buffer(RenderLib::CLEAR_BUFFER_DEPTH );
-	
-	if( isMRT == 0){
-		this->frameBuffer->bind();
-		pipline->setTexture("colorTex",0,mp2dObj);
-		mesh->Render(pipline);
-		this->mp2dObj->render();
+	rlib::FrameBuffer::bindScreenBuffer();
 
-		rlib::FrameBuffer::bindScreenBuffer();
-		this->frameBuffer->setPos( this->mp2dObj->getPos() );
-		this->frameBuffer->setSize( this->mp2dObj->getSize() );
-		this->frameBuffer->render();
+	if( isMRT == 0){
+		//this->frameBuffer->bind();
+		//mesh->Render(pipline);
+		//this->mp2dObj->render();
+
+		//rlib::FrameBuffer::bindScreenBuffer();
+		//this->frameBuffer->setPos( this->mp2dObj->getPos() );
+		//this->frameBuffer->setSize( this->mp2dObj->getSize() );
+		//this->frameBuffer->render();
+		this->mp2dObj->render();
 	}
 	else if( isMRT  == 1 )
 	{
-		this->frameBuffer->bind();
-		pipline->setTexture("colorTex",0,mp2dObj);
 		mesh->Render(pipline);
+		//this->frameBuffer->bind();
+		//mesh->Render(pipline);
 
-		rlib::FrameBuffer::bindScreenBuffer();
-		this->frameBuffer->setPos( this->mp2dObj->getPos() );
-		this->frameBuffer->setSize( this->mp2dObj->getSize() );
-		this->frameBuffer->render();
+		//rlib::FrameBuffer::bindScreenBuffer();
+		//this->frameBuffer->setPos( this->mp2dObj->getPos() );
+		//this->frameBuffer->setSize( this->mp2dObj->getSize() );
+		//this->frameBuffer->render();
 	}
 	else
 	{
-		rlib::FrameBuffer::bindScreenBuffer();
-		this->mp2dObj->render();
-		pipline->setTexture("colorTex",0,mp2dObj);
-		mesh->Render(pipline);
+		//rlib::FrameBuffer::bindScreenBuffer();
+		//this->mp2dObj->render();
+		//mesh->Render(pipline);
 	}
 
-	//mButton->render();
+	//rlib::FrameBuffer::bindScreenBuffer();
+	//for( int i=0; i<50; i++ )
+	//{
+	//	this->mp2dObj->setPos( rand()/(float)RAND_MAX * 200.f - 100.f, rand()/(float)RAND_MAX * 200.f - 100.f );
+	//	this->mp2dObj->render();
+	//}
+	mButton->render();
+	mStick->render();
+
 }
 
 void rTestScene::exit()
@@ -180,6 +202,8 @@ void rTestScene::exit()
 	LOGI(TAG,"delete Pos");
 	if( mButton ){ delete mButton; mButton = NULL; }
 	LOGI(TAG,"delete Button");
+	if( mStick ){ delete mStick; mStick = NULL; }
+	LOGI(TAG,"delete mStick");
 
 
 	if( frameBuffer ){ delete frameBuffer; frameBuffer = NULL; }

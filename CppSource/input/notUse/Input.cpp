@@ -14,10 +14,13 @@ bool	mlInput::mIsUpdating = false;
 mlInput::Info*	mlInput::mpInfos = NULL;
 float	mlInput::mFlickSensitivity = 50.f;
 int		mlInput::mNowTouchCount = 0;
+int		mlInput::mPrevTouchCount = 0;
 
 bool	mlInput::mIsPinch = false;
 float	mlInput::mPinchLength = 0.f;
 float	mlInput::mPrevPinchLength = 0.f;
+float	mlInput::mPincthLengths[2] = {0,0};
+float	mlInput::mPrevPinchLengths[2] = {0,0};
 
 void mlInput::init(int maxPoint)
 {
@@ -69,7 +72,20 @@ void mlInput::update(
 	if( eventID < M_POINT_MAX )
 	{
 		Info& info = mpInfos[eventID];
-		info.action = action;
+		static int order[]={
+			1,//DOWN
+			0,//UP
+			2,//PUSH
+			3,//FREE
+			-1,//CANCEL
+		};//状態の優先度のテーブル
+		if( order[action] < order[info.action] )
+			info.action = action;
+
+		if( info.action == 4 ){
+			info.action == UP;
+		}
+
 		if( info.isUpdate )
 		{
 			info.isUpdate = false;
@@ -115,6 +131,7 @@ void mlInput::update(float dt)
 	while(mIsUpdating){}
 	mIsUpdating = true;
 
+	mPrevTouchCount = mNowTouchCount;
 	int touchCount = mNowTouchCount;
 	for( int i=0; i<touchCount; i++ )
 	{
@@ -169,8 +186,8 @@ void mlInput::update(float dt)
 
 inline float getPointLength()
 {
-	float workX = rlib::r2DHelper::convertMoveX( mlInput::getX(1) - mlInput::getX(0) ) ;
-	float workY = rlib::r2DHelper::convertMoveY( mlInput::getY(1) - mlInput::getY(0) ) ;
+	float workX = rlib::r2DHelper::convertMoveX( mlInput::getX(1) - mlInput::getX(0) );
+	float workY = rlib::r2DHelper::convertMoveY( mlInput::getY(1) - mlInput::getY(0) );
 	return rlib::r2DHelper::toUpdateCoord( sqrt(workX*workX + workY*workY) );
 }
 

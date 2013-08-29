@@ -11,33 +11,39 @@ using namespace klib;
 r2DRenderer::r2DRenderer():
 mIsUpdate(true),
 mPos(0,0,0),
-mSize(50.f,50.f),
-mCenterType(DRAW_CENTER)
+mSize(r2DHelper::adjustSize(50.f, false)),
+mCenterType(DRAW_CENTER),
+mColor(1,1,1,1)
 {
 }
 
 void r2DRenderer::initBuf()
 {
+	glGenBuffers( S_MAX, this->mBuf);
 	initPosBuf();
 	initTexBuf();
 }
 
 void r2DRenderer::initPosBuf()
 {
+	glBindBuffer( GL_ARRAY_BUFFER, this->mBuf[S_POS] );
 	//位置データ
 	mPosBuf[0].x = 0.f; mPosBuf[0].y = 0.f; mPosBuf[0].z = 0.f;
 	mPosBuf[1].x = 1.f; mPosBuf[1].y = 0.f; mPosBuf[1].z = 0.f;
 	mPosBuf[2].x = 0.f; mPosBuf[2].y = 1.f; mPosBuf[2].z = 0.f;
 	mPosBuf[3].x = 1.f; mPosBuf[3].y = 1.f; mPosBuf[3].z = 0.f;
+	glBufferData( GL_ARRAY_BUFFER, sizeof(this->mPosBuf), this->mPosBuf, GL_DYNAMIC_DRAW );
 }
 
 void r2DRenderer::initTexBuf()
 {
+	glBindBuffer( GL_ARRAY_BUFFER, this->mBuf[S_TEX] );
 	//UV座標
 	mTexBuf[0].x = 0.f; mTexBuf[0].y = 1.f;
 	mTexBuf[1].x = 1.f; mTexBuf[1].y = 1.f;
 	mTexBuf[2].x = 0.f; mTexBuf[2].y = 0.f;
 	mTexBuf[3].x = 1.f; mTexBuf[3].y = 0.f;
+	glBufferData( GL_ARRAY_BUFFER, sizeof(this->mTexBuf), this->mTexBuf, GL_DYNAMIC_DRAW );
 }
 
 void r2DRenderer::render(rlib::Texture* pTex)
@@ -50,10 +56,9 @@ void r2DRenderer::innerRender(rlib::Texture* pTex)
 	update();
 
 	kTechnique& sh=r2DPipeline::getPipeline();
-
 	sh.setTechnique();
+	sh.setShaderValue("baseColor", this->mColor);
 	sh.setTexture("colorTex", 0,pTex);
-
 	glVertexAttribPointer(S_POS,3,GL_FLOAT, GL_FALSE,0,&this->mPosBuf);
 	glVertexAttribPointer(S_TEX,2,GL_FLOAT, GL_FALSE,0,&this->mTexBuf);
 	glEnableVertexAttribArray(S_POS);

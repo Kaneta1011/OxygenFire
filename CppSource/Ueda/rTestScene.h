@@ -4,6 +4,8 @@
 #include "FrameWork\Class\IScene\IScene.h"
 #include "GraphicsLib\Class\r2DObj\r2DObj.h"
 #include "input\Button.h"
+#include "input\AnalogStick.h"
+
 #include "GraphicsLib\Class\kDevice\kDevice.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
 #include "GraphicsLib\Class\kMesh\kMeshLoadIMO.h"
@@ -28,6 +30,7 @@ private:
 	rlib::Texture				*Tex;
 	rlib::FrameBuffer			*frameBuffer;
 	rlib::CircleButton			*mButton;
+	rlib::AnalogStick			*mStick;
 
 	klib::kSkin* mesh;
 	klib::kGraphicsPipline* pipline;

@@ -237,7 +237,7 @@ namespace klib
 		//*****************************************************************************
 		//		ä÷êîä÷òA
 		//*****************************************************************************
-		inline f32 Vector2Dot(const Vector2& from,const Vector2& dest){return from.x*dest.x + from.y,dest.y;}
+		inline f32 Vector2Dot(const Vector2& from,const Vector2& dest){return from.x*dest.x + from.y*dest.y;}
 		inline f32 Vector2Cross(const Vector2& from,const Vector2& dest){return from.x*dest.y-dest.x*from.y;}
 		inline f32 Vector2LengthSq(const Vector2& vec){return Vector2Dot(vec,vec);}
 		inline f32 Vector2Length(const Vector2& vec){return ksqrtf(Vector2LengthSq(vec));}
