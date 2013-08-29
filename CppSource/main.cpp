@@ -117,12 +117,12 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 
 	//glLineWidth(1.0f);
 
-	////シーン作成
-	//testScene::_create();
-	////シーン割り当て
-	//framework.sceneChange(testScene::_getInstancePtr());
+	//シーン作成
+	testScene::_create();
+	//シーン割り当て
+	framework.sceneChange(testScene::_getInstancePtr());
 
-	framework.sceneChange(new rTestScene() );
+	//framework.sceneChange(new rTestScene() );
 	
 	LOGI(TAG, "Complete graphic init");
 

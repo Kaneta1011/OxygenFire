@@ -1,4 +1,4 @@
-#pragma once
+
 #include "kDevice.h"
 #include "../kMesh/kMesh.h"
 namespace klib
@@ -129,14 +129,14 @@ namespace klib
 		case k_BLEND_NONE:
 			out->m_Desc.RenderTarget.BlendEnable=false;
 			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
-			out->m_Desc.RenderTarget.SrcBlend=GL_ZERO;
+			out->m_Desc.RenderTarget.DstBlend=GL_ZERO;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
 			//加算合成
 		case k_BLEND_ADD:
 			out->m_Desc.RenderTarget.BlendEnable=true;
 			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
-			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.DstBlend=GL_ONE;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
 		}   
@@ -152,16 +152,18 @@ namespace klib
 		{
 			//ブレンド無し
 		case k_BLEND_NONE:
+			dprintf("k_BLEND_NONE create");
 			out->m_Desc.RenderTarget.BlendEnable=false;
 			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
-			out->m_Desc.RenderTarget.SrcBlend=GL_ZERO;
+			out->m_Desc.RenderTarget.DstBlend=GL_ZERO;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
 			//加算合成
 		case k_BLEND_ADD:
+			dprintf("k_BLEND_ADD create");
 			out->m_Desc.RenderTarget.BlendEnable=true;
 			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
-			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.DstBlend=GL_ONE;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
 		}   
@@ -186,6 +188,7 @@ namespace klib
 	{
 		glBindBuffer( in->m_BufferType, in->m_BO );
 		glBufferSubData(in->m_BufferType, 0, datasize, data);  
+		glBindBuffer( in->m_BufferType, 0 );
 		return true;
 	}
 
@@ -199,10 +202,10 @@ namespace klib
 		{
 			glEnableVertexAttribArray(desc[i].m_Location);
 			glVertexAttribPointer(desc[i].m_Location, desc[i].m_Types.component, desc[i].m_Types.dxgi_format, desc[i].m_Types.normalize, in->m_VertexSize, (GLvoid*)offset);
-			dprintf("Location %u\n",desc[i].m_Location);
-			dprintf("Component %u\n",desc[i].m_Types.component);
-			dprintf("VertexSize %u\n",in->m_VertexSize);
-			dprintf("Offset %u\n",offset);
+			//dprintf("Location %u\n",desc[i].m_Location);
+			//dprintf("Component %u\n",desc[i].m_Types.component);
+			//dprintf("VertexSize %u\n",in->m_VertexSize);
+			//dprintf("Offset %u\n",offset);
 			offset+=desc[i].m_Types.size;
 		}
 		return true;
@@ -226,8 +229,8 @@ namespace klib
 	{
 		m_OMBlendState=in;
 		//αブレンドを有効/無効にする
-		if(m_OMBlendState->m_Desc.RenderTarget.BlendEnable)glEnable(GL_BLEND);
-		else glDisable(GL_BLEND);
+		if(m_OMBlendState->m_Desc.RenderTarget.BlendEnable){glEnable(GL_BLEND);dprintf("Blend On")}
+		else {glDisable(GL_BLEND);dprintf("Blend OFF")}
 		//ブレンド計算式を指定する
 		glBlendEquation(m_OMBlendState->m_Desc.RenderTarget.BlendOp);
 		//ブレンド係数を指定する

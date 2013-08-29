@@ -5,6 +5,7 @@ namespace klib
 	class kShader
 	{
 		friend class kDevice;
+		friend class kTechnique;
 		friend class kGraphicsPipline;
 	private:
 		GLuint m_ShaderID;

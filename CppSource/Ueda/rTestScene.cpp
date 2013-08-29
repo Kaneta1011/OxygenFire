@@ -68,7 +68,7 @@ void rTestScene::entry()
 	pipline=new kGraphicsPipline();
 	pipline->createVertexShader("vertex.txt");
 	pipline->createPixelShader("pixel.txt");
-	pipline->createBlendState(k_BLEND_NONE);
+	pipline->createBlendState(k_BLEND_ADD);
 	pipline->createDepthStencilState(true,eLESS_EQUAL);
 	pipline->createRasterizerState(eSOLID,eNONE,false);
 	pipline->complete(desc,descnum);
@@ -134,9 +134,10 @@ void rTestScene::render()
 	//RenderLib::RenderState::Clear_Color(0.1,0.125,0.6f, 1.f );
 	//RenderLib::RenderState::Clear_Buffer(RenderLib::CLEAR_BUFFER_COLOR );
 	//RenderLib::RenderState::Clear_Buffer(RenderLib::CLEAR_BUFFER_DEPTH );
-
+	
 	if( isMRT == 0){
 		this->frameBuffer->bind();
+		pipline->setTexture("colorTex",0,mp2dObj);
 		mesh->Render(pipline);
 		this->mp2dObj->render();
 
@@ -148,6 +149,7 @@ void rTestScene::render()
 	else if( isMRT  == 1 )
 	{
 		this->frameBuffer->bind();
+		pipline->setTexture("colorTex",0,mp2dObj);
 		mesh->Render(pipline);
 
 		rlib::FrameBuffer::bindScreenBuffer();
@@ -159,6 +161,7 @@ void rTestScene::render()
 	{
 		rlib::FrameBuffer::bindScreenBuffer();
 		this->mp2dObj->render();
+		pipline->setTexture("colorTex",0,mp2dObj);
 		mesh->Render(pipline);
 	}
 

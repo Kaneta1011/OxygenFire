@@ -40,8 +40,11 @@ namespace rlib
 
 		void render();
 		void render(rlib::FrameBuffer* frameBuffer);
-	public:
 
+		void render(klib::kTechnique* tec);
+		void render(klib::kTechnique* tec,rlib::FrameBuffer* frameBuffer);
+	public:
+		GLuint getTextureID()const{return mpTexture->getID();}
 	protected:
 		//virtual void innerRender(Texture* pTex);
 

@@ -5,6 +5,8 @@ attribute vec2 TEXCOORD;
 
 varying vec4 io_Color;
 varying vec4 io_Pos;
+varying vec2 io_Tex;
+
 uniform mat4 WVP;
 
 uniform float val;
@@ -14,6 +16,7 @@ void main()
 {
 	//io_Color = vec4(array[0],array[1],array[2],val);
 	io_Color = vec4(NORMAL,val+COLOR.x+TEXCOORD.x);
+	io_Tex=TEXCOORD;
 	
 	vec4 opos = WVP * POSITION;
 	opos.z=2.0*opos.z-opos.w;

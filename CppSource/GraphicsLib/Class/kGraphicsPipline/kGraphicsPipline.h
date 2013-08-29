@@ -6,24 +6,28 @@
 #include "../kBlendState/kBlendState.h"
 #include "../kRasterizerState/kRasterizerState.h"
 #include "../kDepthStencilState/kDepthStencilState.h"
-
+//#include "../r2DObj/r2DObj.h"
+namespace rlib
+{
+	class r2DObj;
+	class Texture;
+}
 namespace klib
 {
-	class kGraphicsPipline
+	class kTechnique
 	{
-		friend class kDevice;
-	private:
+	protected:
 		GLuint	m_Program;
-		kInputLayout* mp_InputLayout;
 		kShader* mp_VertexShader;
 		kShader* mp_PixelShader;
 
 		kBlendState* mp_BlendState;
 		kDepthStencilState* mp_DepthStencilState;
 		kRasterizerState* mp_RasterizerState;
+	private:
 	public:
-		kGraphicsPipline();
-		~kGraphicsPipline();
+		kTechnique();
+		~kTechnique();
 		/**
 		* @brief 頂点シェーダーを読み込む
 		* @param[in] filename ファイル名
@@ -52,16 +56,17 @@ namespace klib
 		* @param[in] front ポリゴン正面判定
 		*/
 		bool createRasterizerState(eFillMode fill,eCullMode cull,bool front);
-		/**
-		* @brief 頂点定義を指定してパイプラインを完成させる
-		* @param[in] desc 頂点定義
-		* @param[in] descsize 定義数
-		*/
-		bool complete(const kInputElementDesc* desc,u32 descsize);
-		/**
-		* @brief パイプラインを指定する
-		*/
-		bool setPipline();
+
+		bool complete();
+
+		bool setTechnique();
+
+		bool bindAttribLocation(s32 index,const char* name)
+		{
+			glBindAttribLocation(m_Program,index,name);
+			return true;
+		}
+
 		void setShaderValue(const char* name,f32 val);
 		void setShaderValue(const char* name,const f32* val,u32 len);
 		void setShaderValue(const char* name,s32 val);
@@ -74,5 +79,32 @@ namespace klib
 		void setShaderValue(const char* name,const math::Vector4* val,u32 len);
 		void setShaderValue(const char* name,const math::Matrix& val);
 		void setShaderValue(const char* name,const math::Matrix* val,u32 len);
+
+		void setTexture(const char* name,u32 index,const rlib::r2DObj* tex);
+		void setTexture(const char* name,u32 index,const rlib::Texture* tex);
+	};
+	class kGraphicsPipline:public kTechnique
+	{
+		friend class kDevice;
+	private:
+		
+		kInputLayout* mp_InputLayout;
+		
+
+	public:
+		kGraphicsPipline();
+		~kGraphicsPipline();
+
+		/**
+		* @brief 頂点定義を指定してパイプラインを完成させる
+		* @param[in] desc 頂点定義
+		* @param[in] descsize 定義数
+		*/
+		bool complete(const kInputElementDesc* desc,u32 descsize);
+		/**
+		* @brief パイプラインを指定する
+		*/
+		bool setPipline();
+
 	};
 }

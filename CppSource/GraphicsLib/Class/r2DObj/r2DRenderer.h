@@ -107,12 +107,10 @@ namespace rlib
 		static void init();
 		static void clear();
 
-		static klib::kGraphicsPipline& getPipeline(){return *spPipeline;};
-		static RenderLib::Shader& getShader(){return *spShader;};
+		static klib::kTechnique& getPipeline(){return *spPipeline;};
 
 	private:
-		static klib::kGraphicsPipline*	spPipeline;
-		static RenderLib::Shader*		spShader;
+		static klib::kTechnique*	spPipeline;
 	};
 
 	//==================================================================

@@ -6,6 +6,7 @@
 #include "utility\utility.h"
 
 using namespace rlib;
+using namespace klib;
 
 r2DRenderer::r2DRenderer():
 mIsUpdate(true),
@@ -48,28 +49,19 @@ void r2DRenderer::innerRender(rlib::Texture* pTex)
 {
 	update();
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	kTechnique& sh=r2DPipeline::getPipeline();
 
-	RenderLib::Shader& shader = r2DPipeline::getShader();
-	//shader.SetValue("isFrameBuffer", 1.f);
-	shader.Begin();
+	sh.setTechnique();
+	sh.setTexture("colorTex", 0,pTex);
+
 	glVertexAttribPointer(S_POS,3,GL_FLOAT, GL_FALSE,0,&this->mPosBuf);
 	glVertexAttribPointer(S_TEX,2,GL_FLOAT, GL_FALSE,0,&this->mTexBuf);
 	glEnableVertexAttribArray(S_POS);
 	glEnableVertexAttribArray(S_TEX);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
-
-	glEnable(GL_TEXTURE_2D);
-	pTex->Setting(Texture::ACTIVE_0);
-	shader.SetValue_No_BeginEnd("colorTex", 0);
-
 	GLuint count = sizeof(this->mPosBuf)/sizeof(this->mPosBuf[0]);
 	glDrawArrays(GL_TRIANGLE_STRIP,0,count);
 
-	shader.End();
 }
 
 void r2DRenderer::update()
@@ -136,20 +128,23 @@ void r2DRenderer::getDrawOffset(float* x, float *y)
 //================================================================
 #include "Ueda\TmpShader\ShaderManager.h"
 
-klib::kGraphicsPipline*	r2DPipeline::spPipeline = NULL;
-RenderLib::Shader*		r2DPipeline::spShader = NULL;
+kTechnique*	r2DPipeline::spPipeline = NULL;
 
 void r2DPipeline::init()
 {
 	clear();
-	spPipeline = new klib::kGraphicsPipline();
-
-	spShader = new RenderLib::Shader();
-	ShaderLib::ShaderManager::Create_Shader(&spShader, "Shader/r2d.vs","Shader/r2d.fs");
+	spPipeline = new kTechnique();
+	spPipeline->createVertexShader("Shader/r2d.vs");
+	spPipeline->createPixelShader("Shader/r2d.fs");
+	spPipeline->bindAttribLocation(0,"VPosition");
+	spPipeline->bindAttribLocation(1,"VTexCoord");
+	spPipeline->createBlendState(k_BLEND_NONE);
+	spPipeline->createDepthStencilState(true,eLESS_EQUAL);
+	spPipeline->createRasterizerState(eWIRE,eNONE,false);
+	spPipeline->complete();
 }
 
 void r2DPipeline::clear()
 {
 	if( spPipeline ){delete spPipeline ; spPipeline = NULL;}
-	if( spShader ){ delete spShader; spShader = NULL; }
 }
