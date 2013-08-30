@@ -83,6 +83,7 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 		}
 		LOGI(TAG, "width = %d | height = %d", info.width, info.height);
 
+		LOGI(TAG, "format = %d", info.format );
 	//LockをかけないとBitmapからピクセル情報を取り出せない
 		char* pixels = 0;
 		if( (ret = AndroidBitmap_lockPixels(env, bitmap, (void**)&pixels) ) < 0 )

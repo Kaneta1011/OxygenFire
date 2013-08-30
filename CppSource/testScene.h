@@ -61,6 +61,8 @@ namespace klib
 		r2DObj* paper;
 		r2DObj* mask;
 		rlib::AnalogStick* mp_Stick;
+
+		kMesh* test;
 	public:
 		//エントリー処理
 		void entry()
@@ -110,11 +112,16 @@ namespace klib
 			pipline->setShaderValue("val",0.8f);
 			pipline->setShaderValue("array",ary,3);
 
-			mesh=new kPlayer("kman.IEM",mp_Stick);
-			mesh->getObj()->setScale(0.05f);
-			mesh->getObj()->setPosition(0,0,0);
-			mesh->getObj()->SetMotion(4);
-			mesh->getObj()->Update();
+			//mesh=new kPlayer("kman.IEM",mp_Stick);
+			//mesh->getObj()->setScale(0.05f);
+			//mesh->getObj()->setPosition(0,0,0);
+			//mesh->getObj()->SetMotion(4);
+			//mesh->getObj()->Update();
+
+			test=new kMesh("kman.IMO",new kMeshLoadIMO,new kMeshGLES20Render);
+			test->setScale(0.05);
+			test->setPosition(0,0,0);
+			test->Update();
 		}
 		//更新処理
 		void update()
@@ -133,16 +140,17 @@ namespace klib
 			a+=.001f;
 			math::kclampf(0.0f,1.0f,&a);
 			tec->setShaderValue("alpha",a);
-			mesh->getObj()->setAngle(a);
-			
-			mesh->update();
+			//mesh->getObj()->setAngle(a);
+			test->setAngle(a);
+			//mesh->update();
+			test->Update();
 
 		}
 		//描画処理
 		void render()
 		{
-			
-			mesh->render(pipline);
+			test->Render(pipline);
+			//mesh->render(pipline);
 			tec->setTexture("maskTex",1,mask);
 			paper->render(tec);
 			mp_Stick->render();
@@ -150,7 +158,7 @@ namespace klib
 		//終了処理
 		void exit()
 		{
-			delete mesh;
+			//delete mesh;
 			delete pipline;
 			delete obj;
 		}
