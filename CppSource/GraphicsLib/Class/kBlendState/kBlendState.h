@@ -9,6 +9,7 @@ namespace klib
 	{
 		k_BLEND_NONE = 0,
 		k_BLEND_ADD = 1,
+		k_BLEND_ALPHA = 2,
 	};
 
 	class kBlendState

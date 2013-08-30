@@ -139,6 +139,12 @@ namespace klib
 			out->m_Desc.RenderTarget.DstBlend=GL_ONE;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
+		case k_BLEND_ALPHA:
+			out->m_Desc.RenderTarget.BlendEnable=true;
+			out->m_Desc.RenderTarget.SrcBlend=GL_SRC_ALPHA;
+			out->m_Desc.RenderTarget.DstBlend=GL_ZERO;
+			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
+			break;
 		}   
 	}
 
@@ -164,6 +170,12 @@ namespace klib
 			out->m_Desc.RenderTarget.BlendEnable=true;
 			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
 			out->m_Desc.RenderTarget.DstBlend=GL_ONE;
+			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
+			break;
+		case k_BLEND_ALPHA:
+			out->m_Desc.RenderTarget.BlendEnable=true;
+			out->m_Desc.RenderTarget.SrcBlend=GL_SRC_ALPHA;
+			out->m_Desc.RenderTarget.DstBlend=GL_ONE_MINUS_SRC_ALPHA;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
 		}   

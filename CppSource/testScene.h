@@ -1,4 +1,5 @@
 #pragma once
+#include "math\kmathf.h"
 #include "FrameWork\Class\kFrameWork\kFrameWork.h"
 #include "GraphicsLib\Class\kDevice\kDevice.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
@@ -55,6 +56,8 @@ namespace klib
 		kGraphicsPipline* pipline;
 		kTechnique* tec;
 		r2DObj* obj;
+		r2DObj* paper;
+		r2DObj* mask;
 	public:
 		//エントリー処理
 		void entry()
@@ -65,23 +68,34 @@ namespace klib
 			obj=new r2DObj;
 			obj->load("testImage.png");
 			obj->setPos(0,0);
+			obj->setSize(100,100);
+
+			paper=new r2DObj;
+			paper->load("oldpaper.png");
+			paper->setPos(0,0);
+			paper->setSize(200,200);
+
+			mask=new r2DObj;
+			mask->load("mask.png");
+			mask->setPos(0,0);
+			mask->setSize(200,200);
 
 			pipline=new kGraphicsPipline();
 			//pipline->createVertexShader("a");
 			pipline->createVertexShader("vertex.txt");
 			pipline->createPixelShader("pixel.txt");
-			pipline->createBlendState(k_BLEND_ADD);
+			pipline->createBlendState(k_BLEND_ALPHA);
 			pipline->createDepthStencilState(true,eLESS_EQUAL);
 			pipline->createRasterizerState(eSOLID,eFRONT,false);
 			pipline->complete(desc,descnum);
 
 			tec=new kTechnique();
 			//pipline->createVertexShader("a");
-			tec->createVertexShader("test.vs");
-			tec->createPixelShader("test.fs");
+			tec->createVertexShader("fire.vs");
+			tec->createPixelShader("fire.fs");
 			tec->bindAttribLocation(0,"VPosition");
 			tec->bindAttribLocation(1,"VTexCoord");
-			tec->createBlendState(k_BLEND_NONE);
+			tec->createBlendState(k_BLEND_ALPHA);
 			tec->createDepthStencilState(false,eLESS_EQUAL);
 			tec->createRasterizerState(eSOLID,eNONE,false);
 			tec->complete();
@@ -99,7 +113,13 @@ namespace klib
 		void update()
 		{
 			static float a=0;
-			a+=.005f;
+		 if( mlInput::isPinch() )
+			{
+				a += mlInput::getPinchMoveLength() * 0.01f;
+			}
+			a+=.001f;
+			math::kclampf(0.0f,1.0f,&a);
+			tec->setShaderValue("alpha",a);
 			mesh->setAngle(a);
 			mesh->animation(1);
 			mesh->Update();
@@ -109,7 +129,8 @@ namespace klib
 		{
 			pipline->setTexture("colorTex",0,obj);
 			mesh->Render(pipline);
-			obj->render(tec);
+			tec->setTexture("maskTex",1,mask);
+			paper->render(tec);
 		}
 		//終了処理
 		void exit()

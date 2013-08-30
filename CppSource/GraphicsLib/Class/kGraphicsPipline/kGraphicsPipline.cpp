@@ -194,6 +194,7 @@ namespace klib
 
 		void kTechnique::setTexture(const char* name,u32 index,const rlib::r2DObj* tex)
 		{
+			glUseProgram(m_Program);
 			GLenum texIndex = GL_TEXTURE0 + index;
 			glActiveTexture(texIndex);
 
@@ -210,6 +211,7 @@ namespace klib
 
 		void kTechnique::setTexture(const char* name,u32 index,const rlib::Texture* tex)
 		{
+			glUseProgram(m_Program);
 			GLenum texIndex = GL_TEXTURE0 + index;
 			glActiveTexture(texIndex);
 
