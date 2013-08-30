@@ -42,9 +42,13 @@ namespace klib
 	{
 		if( *mp_UseCount==0 )
 		{
+			dprintf("~kMesh");
 			SAFE_DELETE(mp_RenderDelegate);
+			dprintf("~kMesh");
 			SAFE_DELETE(mp_MeshData);
+			dprintf("~kMesh");
 			SAFE_DELETE(mp_UseCount);
+			dprintf("~kMesh");
 		}
 		else *mp_UseCount--;
 	}
@@ -145,13 +149,17 @@ namespace klib
 	}
 	kSkin::~kSkin()
 	{
-		if( *mp_UseCount==0 )
-		{
-			SAFE_DELETE(mp_RenderDelegate);
-			SAFE_DELETE(mp_MeshData);
-			SAFE_DELETE(mp_UseCount);
-		}
-		else *mp_UseCount--;
+		//if( *mp_UseCount==0 )
+		//{
+		//	dprintf("~kSkin");
+		//	SAFE_DELETE(mp_RenderDelegate);
+		//	dprintf("~kSkin");
+		//	SAFE_DELETE(mp_MeshData);
+		//	dprintf("~kSkin");
+		//	SAFE_DELETE(mp_UseCount);
+		//	dprintf("~kSkin");
+		//}
+		//else *mp_UseCount--;
 	}
 	//------------------------------------------------------
 	//	ÉNÉçÅ[ÉìÇÃçÏê¨

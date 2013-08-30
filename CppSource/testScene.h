@@ -68,17 +68,17 @@ namespace klib
 			obj=new r2DObj;
 			obj->load("testImage.png");
 			obj->setPos(0,0);
-			obj->setSize(100,100);
+			obj->setSize(100,true);
 
 			paper=new r2DObj;
 			paper->load("oldpaper.png");
 			paper->setPos(0,0);
-			paper->setSize(200,200);
+			paper->setSize(200,true);
 
 			mask=new r2DObj;
 			mask->load("mask.png");
 			mask->setPos(0,0);
-			mask->setSize(200,200);
+			mask->setSize(200,true);
 
 			pipline=new kGraphicsPipline();
 			//pipline->createVertexShader("a");

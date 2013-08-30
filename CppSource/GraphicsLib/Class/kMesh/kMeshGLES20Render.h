@@ -17,7 +17,7 @@ namespace klib
 			{
 				SAFE_DELETE(mp_IBO[i]);
 			}
-			SAFE_DELETE(mp_IBO);
+			SAFE_DELETE_ARRAY(mp_IBO);
 		}
 		bool CreateBuffer(const kMesh* data)
 		{

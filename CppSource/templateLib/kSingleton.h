@@ -27,7 +27,11 @@ namespace klib
 			static void _create()
 			{ 
 				//インスタンスポインタが真なら多重作成
-				DYNAMIC_ASSERT(!mp_Instance,"シングルトンクラスの多重作成");
+				if(mp_Instance)
+				{
+					WARNING(0,"シングルトンクラスの多重作成しようとしたので回避しました");
+					return;
+				}
 				mp_Instance = new T();
 			}
 			/**
