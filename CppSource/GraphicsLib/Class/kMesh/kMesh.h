@@ -4,6 +4,7 @@
 #include "GraphicsLib\Class\tRenderState\RenderState.h"
 #include "../kDevice/kDevice.h"
 #include "GraphicsLib\Class\tIObject3D\Object3D.h"
+#include "GraphicsLib\Class\rTexture\Texture.h"
 
 //kMeshに存在するメッシュへのポインタをvoid*にして
 //ユーザーが頂点のフォーマットを指定して
@@ -32,8 +33,16 @@ namespace klib
 		u32*			dwFrameFlag;
 		u16*			motionOffsets;
 		u16				NumBone;
+		rlib::Texture* Diffuse[32];
+		rlib::Texture* Normal[32];
+		rlib::Texture* Specular[32];
 		kMeshInfo()
 		{
+			for(int i=0;i<32;i++)
+			{
+				Diffuse[i]=Normal[i]=Specular[i]=NULL;
+			}
+			
 			NumVertex=NumFace=MaterialCount=NumFrame=NumBone=0;
 			Index=Material=MaterialNumFace=dwFrameFlag=NULL;
 			MaterialIndex=NULL;
@@ -43,8 +52,12 @@ namespace klib
 		{
 			//SAFE_DELETE(Index);
 			//SAFE_DELETE(Material);
+
 			//	テクスチャ解放
 			for( u32 i=0 ; i<MaterialCount ; i++ ){
+				SAFE_DELETE(Diffuse[i]);
+				SAFE_DELETE(Normal[i]);
+				SAFE_DELETE(Specular[i]);
 				//SAFE_DELETE(MaterialIndex[i]);
 			}
 			//SAFE_DELETE_ARRAY(MaterialNumFace);
@@ -221,7 +234,8 @@ namespace klib
 		void updateBoneMatrix();
 		void updateSkinMesh(f32 frame);
 	public:
-		void SetMotion( int motion )
+		u16 getMotion()const{return Motion;}
+		void forceMotion( int motion )
 		{
 			const kSkinData* m_Skin=(const kSkinData*)mp_MeshData;
 			int		param;
@@ -233,6 +247,11 @@ namespace klib
 
 			param = m_Skin->m_Info.dwFrameFlag[(s32)dwFrame];
 			if( (param!=0xFFFF) && (param&0x4000) ) Param[(param&0x0F00)>>8] = (u32)(param&0x00FF);
+		}
+		void SetMotion( int motion )
+		{
+			if(Motion==motion)return;
+			forceMotion(motion);
 		}
 		void animation(f32 dt);
 		void Update();

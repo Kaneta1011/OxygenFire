@@ -79,7 +79,7 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 		if( (ret = AndroidBitmap_getInfo(env, bitmap, &info)) < 0 )
 		{
 			LOGE(TAG, "Failure Get Bitmap Info...");
-			abort();
+			return false;
 		}
 		LOGI(TAG, "width = %d | height = %d", info.width, info.height);
 
@@ -88,7 +88,7 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 		if( (ret = AndroidBitmap_lockPixels(env, bitmap, (void**)&pixels) ) < 0 )
 		{
 			LOGE(TAG, "Failure Lock Bitmap...");
-			abort();
+			return false;
 		}
 	//GPUにピクセルデータを転送
 		glTexImage2D( GL_TEXTURE_2D, 0,
@@ -103,7 +103,7 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 	else
 	{//if( loadImageId == NULL ) エラー処理
 		LOGE(TAG, "file:%s | line:%d | Failure get MethodID from JNICallMethod class...", __LINE__, __FILE__);
-		abort();
+		return false;
 	}
 	return isOK;
 }

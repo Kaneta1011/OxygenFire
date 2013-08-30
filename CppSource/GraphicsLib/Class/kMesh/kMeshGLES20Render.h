@@ -66,11 +66,13 @@ namespace klib
 			shader->setShaderValue("WVP",wvp);
 			//頂点バッファを更新する
 			kDevice::updateSubResource(mp_VBO,((kMeshVertex*)m_MeshData->mp_Vertex),sizeof(kMeshVertex)*m_MeshData->m_Info.NumVertex);
-			//頂点バッファをパイプラインにセットする
-			kDevice::IAsetVertexBuffer(mp_VBO);
+
 			for(int i=0;i<m_MeshData->m_Info.MaterialCount;i++)
 			{
 				if(!mp_IBO[i])continue;
+				shader->setTexture("colorTex",0,m_MeshData->m_Info.Diffuse[i]);
+				//頂点バッファをパイプラインにセットする
+				kDevice::IAsetVertexBuffer(mp_VBO);
 				//インデックスバッファをパイプラインにセットする
 				kDevice::IAsetIndexBuffer(mp_IBO[i]);
 				//シェーダーをパイプラインにセットする

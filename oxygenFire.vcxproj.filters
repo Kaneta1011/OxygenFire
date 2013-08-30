@@ -261,6 +261,7 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp">
       <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
     </ClCompile>
+    <ClCompile Include="ICharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -461,5 +462,8 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h">
       <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
     </ClInclude>
+    <ClInclude Include="ICharacter.h" />
+    <ClInclude Include="kPlayer.h" />
+    <ClInclude Include="kView.h" />
   </ItemGroup>
 </Project>

@@ -107,6 +107,7 @@ namespace klib
 					workpath[i] = '\0';
 					break;
 				}
+				workpath[i-1] = '\0';
 			}
 
 			dprintf("%s",workpath);
@@ -178,18 +179,22 @@ namespace klib
 					m_Data->m_Info.MaterialIndex[i]=new u32[m_Data->m_Info.MaterialNumFace[i]*3];
 					CopyMemory( m_Data->m_Info.MaterialIndex[i], workMI, sizeof(u32)*(m_Data->m_Info.MaterialNumFace[i]*3) );
 				}
-				//if( imo.Texture[i][0] == '\0' ) continue;
-				////	テクスチャ読み込み
-				//sprintf_s( temp, "%s%s", workpath, imo.Texture[i] );
-				//lpTexture[i] = new klib2DObj(temp);
+				if( imo.Texture[i][0] == '\0' ) continue;
+				dprintf("IMO Texture Load %s",workpath);
+				//	テクスチャ読み込み
+				sprintf( temp, "%s%s", workpath, imo.Texture[i] );
+				m_Data->m_Info.Diffuse[i] = new rlib::Texture;
+				m_Data->m_Info.Diffuse[i]->Initilize(temp);
 
-				//sprintf_s( temp, "%sN%s", workpath, imo.Texture[i] );
-				//lpNormal[i] = new klib2DObj(temp);
+				sprintf( temp, "%sN%s", workpath, imo.Texture[i] );
+				m_Data->m_Info.Normal[i] = new rlib::Texture;
+				m_Data->m_Info.Normal[i]->Initilize(temp);
 
-				//sprintf_s( temp, "%sS%s", workpath, imo.Texture[i] );
-				//lpSpecular[i] = new klib2DObj(temp);
+				sprintf( temp, "%sS%s", workpath, imo.Texture[i] );
+				m_Data->m_Info.Specular[i] = new rlib::Texture;
+				m_Data->m_Info.Specular[i]->Initilize(temp);
 
-				//sprintf_s( temp, "%sH%s", workpath, imo.Texture[i] );
+				//sprintf( temp, "%sH%s", workpath, imo.Texture[i] );
 				//lpHeight[i] = new klib2DObj(temp);
 
 			}

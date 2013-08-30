@@ -301,20 +301,22 @@ namespace klib
 		m_bChanged=false;
 
 		//座標更新用変数
-		//const kSkinData* m_Skin=(kSkinData*)mp_MeshData;
-		//ZeroMemory(mp_MeshData->mp_Vertex,sizeof(kMeshVertex)*mp_MeshData->m_Info.NumVertex);
-		//for(int i=0;i<(s32)m_Skin->m_Info.NumBone;i++)
-		//{
-		//	//頂点に影響しているボーン行列を重みをつけて掛けていく
-		//	for(int j=0;j<m_Skin->mp_Bone[i].IndexNum;j++)
-		//	{
-		//		math::Vector3 out;
+		const kSkinData* m_Skin=(kSkinData*)mp_MeshData;
+		ZeroMemory(mp_MeshData->mp_Vertex,sizeof(kMeshVertex)*mp_MeshData->m_Info.NumVertex);
+		for(int i=0;i<(s32)m_Skin->m_Info.NumBone;i++)
+		{
+			//頂点に影響しているボーン行列を重みをつけて掛けていく
+			for(int j=0;j<m_Skin->mp_Bone[i].IndexNum;j++)
+			{
+				math::Vector3 out;
 
-		//		MatrixVec3TransformCoord(&out,mp_Original[m_Skin->mp_Bone[i].Index[j]].m_Pos,lpMatrix[i]);
-		//		mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Pos+=out*m_Skin->mp_Bone[i].Influence[j];
-		//		mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Color=math::Vector4(1,1,1,1);
-		//	}
-		//}
+				MatrixVec3TransformCoord(&out,mp_Original[m_Skin->mp_Bone[i].Index[j]].m_Pos,lpMatrix[i]);
+				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Pos+=out*m_Skin->mp_Bone[i].Influence[j];
+				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Color=math::Vector4(1,1,1,1);
+				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_Normal=mp_Original[m_Skin->mp_Bone[i].Index[j]].m_Normal;
+				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_TexCoord=mp_Original[m_Skin->mp_Bone[i].Index[j]].m_TexCoord;
+			}
+		}
 
 	}
 

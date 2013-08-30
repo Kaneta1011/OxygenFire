@@ -104,7 +104,7 @@ namespace klib
 
 	bool kDevice::createIndexBuffer(kObjectBuffer* out,const void* data,u32 datasize,s32 type)
 	{
-		dprintf("createIndexBuffer\n");
+		dprintf("createIndexBuffer size=%u\n",datasize);
 		//インデックスバッファオブジェクトの作成
 		glGenBuffers(1, &out->m_BO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, out->m_BO);

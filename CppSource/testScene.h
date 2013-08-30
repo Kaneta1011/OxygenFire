@@ -8,6 +8,8 @@
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 #include "GraphicsLib\Class\r2DObj\r2DObj.h"
 
+#include "input\AnalogStick.h"
+#include "../kPlayer.h"
 
 namespace klib
 {
@@ -52,16 +54,20 @@ namespace klib
 	{
 		friend class ktl::kSingleton<testScene>;
 	private:
-		kSkin* mesh;
+		kPlayer* mesh;
 		kGraphicsPipline* pipline;
 		kTechnique* tec;
 		r2DObj* obj;
 		r2DObj* paper;
 		r2DObj* mask;
+		rlib::AnalogStick* mp_Stick;
 	public:
 		//エントリー処理
 		void entry()
 		{
+			mp_Stick = new rlib::AnalogStick();
+			mp_Stick->init(-60, -50, 40);
+
 			testb* asd=new testb;
 			asd->aaa();
 			asd->bbb();
@@ -104,15 +110,22 @@ namespace klib
 			pipline->setShaderValue("val",0.8f);
 			pipline->setShaderValue("array",ary,3);
 
-			mesh=new kSkin("kman.IEM",new kMeshLoadIEM(),new kMeshGLES20Render());
-			mesh->setScale(0.05f);
-			mesh->setPosition(0,0,0);
-			mesh->Update();
+			mesh=new kPlayer("kman.IEM",mp_Stick);
+			mesh->getObj()->setScale(0.05f);
+			mesh->getObj()->setPosition(0,0,0);
+			mesh->getObj()->SetMotion(4);
+			mesh->getObj()->Update();
 		}
 		//更新処理
 		void update()
 		{
 			static float a=0;
+			mp_Stick->update();
+			if( this->mp_Stick->enable() )
+			{
+				a += mp_Stick->getX()*0.01f;
+			}
+			
 		 if( mlInput::isPinch() )
 			{
 				a += mlInput::getPinchMoveLength() * 0.01f;
@@ -120,17 +133,19 @@ namespace klib
 			a+=.001f;
 			math::kclampf(0.0f,1.0f,&a);
 			tec->setShaderValue("alpha",a);
-			mesh->setAngle(a);
-			mesh->animation(1);
-			mesh->Update();
+			mesh->getObj()->setAngle(a);
+			
+			mesh->update();
+
 		}
 		//描画処理
 		void render()
 		{
-			pipline->setTexture("colorTex",0,obj);
-			mesh->Render(pipline);
+			
+			mesh->render(pipline);
 			tec->setTexture("maskTex",1,mask);
 			paper->render(tec);
+			mp_Stick->render();
 		}
 		//終了処理
 		void exit()

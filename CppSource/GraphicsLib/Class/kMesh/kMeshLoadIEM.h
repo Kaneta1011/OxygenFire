@@ -169,27 +169,30 @@ namespace klib
 			//lpSpecular = new klib2DObj* [ MaterialCount ];
 			//lpHeight   = new klib2DObj* [ MaterialCount ];
 
-			//for( i=0 ; i<MaterialCount ; i++ ){
-			//	lpTexture[i]  = NULL;
-			//	lpNormal[i]   = NULL;
-			//	lpSpecular[i] = NULL;
-			//	lpHeight[i] = NULL;
-			//	if( lpIem->Texture[i][0] == '\0' ) continue;
-			//	//	テクスチャ読み込み
-			//	char	temp[256];
-			//	sprintf_s( temp,256, "%s%s", path, lpIem->Texture[i] );
-			//	lpTexture[i] = new klib2DObj(temp);
+			for( i=0 ; i<data->m_Info.MaterialCount ; i++ ){
+				data->m_Info.Diffuse[i]  = NULL;
+				data->m_Info.Normal[i]   = NULL;
+				data->m_Info.Specular[i] = NULL;
+				//lpHeight[i] = NULL;
+				if( lpIem->Texture[i][0] == '\0' ) continue;
+				//	テクスチャ読み込み
+				char	temp[256];
+				sprintf( temp, "%s%s", path, lpIem->Texture[i] );
+				data->m_Info.Diffuse[i] = new rlib::Texture;
+				data->m_Info.Diffuse[i]->Initilize(temp);
 
-			//	sprintf_s( temp,256, "%sN%s", path, lpIem->Texture[i] );
-			//	lpNormal[i] = new klib2DObj(temp);
+				sprintf( temp, "%sN%s", path, lpIem->Texture[i] );
+				data->m_Info.Normal[i] = new rlib::Texture;
+				data->m_Info.Normal[i]->Initilize(temp);
 
-			//	sprintf_s( temp,256, "%sS%s", path, lpIem->Texture[i] );
-			//	lpSpecular[i] = new klib2DObj(temp);
+				sprintf( temp, "%sS%s", path, lpIem->Texture[i] );
+				data->m_Info.Specular[i] = new rlib::Texture;
+				data->m_Info.Specular[i]->Initilize(temp);
 
-			//	sprintf_s( temp,256, "%sH%s", path, lpIem->Texture[i] );
-			//	lpHeight[i] = new klib2DObj(temp);
+				//sprintf_s( temp,256, "%sH%s", path, lpIem->Texture[i] );
+				//lpHeight[i] = new klib2DObj(temp);
 
-			//}
+			}
 
 			//
 			//	ボーン情報
@@ -355,7 +358,6 @@ namespace klib
 		{
 			dprintf("LoadObject Start");
 			IEMFILE		iem;
-			char		workpath[MAX_PATH];
 
 			dprintf("LoadiEM Start");
 			s32 version = LoadiEM( &iem, filename );
@@ -365,8 +367,10 @@ namespace klib
 				return false;
 			}
 
+			//	パス分割
+			char	workpath[MAX_PATH];
 			CopyMemory( workpath, filename, strlen(filename)+1 );
-			for( int i=strlen(filename) ; i>0 ; i-- ){
+			for( u32 i=strlen(filename) ; i>0 ; i-- ){
 				if( utility::IsDBCSLeadByte(workpath[i-2]) ){
 					i--;
 					continue;
@@ -375,7 +379,11 @@ namespace klib
 					workpath[i] = '\0';
 					break;
 				}
+				workpath[i-1] = '\0';
 			}
+
+			dprintf("%s",workpath);
+
 			dprintf("CreateFromIEM Start");
 			CreateFromIEM( workpath, &iem ,data);
 			dprintf("CreateFromIEM End");

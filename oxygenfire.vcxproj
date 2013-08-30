@@ -60,6 +60,7 @@
     <ClCompile Include="CppSource\utility\debugMessageMng.cpp" />
     <ClCompile Include="CppSource\utility\textLoader.cpp" />
     <ClCompile Include="CppSource\utility\utility.cpp" />
+    <ClCompile Include="ICharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\defines.h" />
@@ -128,6 +129,9 @@
     <ClInclude Include="CppSource\utility\SinglyLinkedList.h" />
     <ClInclude Include="CppSource\utility\textLoader.h" />
     <ClInclude Include="CppSource\utility\utility.h" />
+    <ClInclude Include="ICharacter.h" />
+    <ClInclude Include="kPlayer.h" />
+    <ClInclude Include="kView.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A99D29C-A422-4C77-8D46-1D3EC70730A9}</ProjectGuid>
