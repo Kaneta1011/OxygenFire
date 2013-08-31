@@ -6,6 +6,8 @@
 
 namespace ShaderLib{
 
+	using namespace RenderLib;
+
 //	なんかテンプレートつかわれへんから
 //	スマポとシングルトンつかわずに
 
@@ -15,9 +17,15 @@ namespace ShaderLib{
 class ShaderManager
 {
 public:
-	static void Create_Shader(RenderLib::Shader** pShader, const char* VS, const char* FS);
+	static void Init();
+	static void Delete();
+	static Shader* getSprite(){return m_spSprite;}
+
+	static void Create_Shader(Shader** pShader,const char* VS, const char* FS);
 
 private:
+	//	Data
+	static Shader* m_spSprite;
 };
 
 }//ShaderLib

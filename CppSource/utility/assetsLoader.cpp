@@ -59,16 +59,12 @@ bool AssetsLoader::load(char** out, int* outSize, const char* fileName)
 
 bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv* env, GLint format, GLenum type)
 {
-	bool isOK = false;
+	bool isOK = true;
 
 	//java側の関数を使う
 	jmethodID loadImageId = env->GetStaticMethodID(sJNICallMethod, "loadImage", "(Ljava/lang/String;)Landroid/graphics/Bitmap;");
 	if( loadImageId != NULL )
 	{
-	//テクスチャIDの取得
-		glGenTextures(1, outTexture);
-		glBindTexture(GL_TEXTURE_2D, *outTexture);
-
 	//Java側からBitmapクラスを取得
 		jstring name = env->NewStringUTF(fileName);
 		jobject bitmap = env->CallStaticObjectMethod(sJNICallMethod, loadImageId, name );
@@ -79,27 +75,40 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 		if( (ret = AndroidBitmap_getInfo(env, bitmap, &info)) < 0 )
 		{
 			LOGE(TAG, "Failure Get Bitmap Info...");
-			return false;
+			isOK = false;
 		}
-		LOGI(TAG, "width = %d | height = %d", info.width, info.height);
+		if( isOK ){
+			LOGI(TAG, "width = %d | height = %d", info.width, info.height);
+			LOGI(TAG, "format = %d | stride = %d | flag = %d", info.format, info.stride, info.flags);
 
-		LOGI(TAG, "format = %d", info.format );
-	//LockをかけないとBitmapからピクセル情報を取り出せない
-		char* pixels = 0;
-		if( (ret = AndroidBitmap_lockPixels(env, bitmap, (void**)&pixels) ) < 0 )
-		{
-			LOGE(TAG, "Failure Lock Bitmap...");
-			return false;
+		//LockをかけないとBitmapからピクセル情報を取り出せない
+			char* pixels = 0;
+			if( (ret = AndroidBitmap_lockPixels(env, bitmap, (void**)&pixels) ) < 0 )
+			{
+				LOGE(TAG, "Failure Lock Bitmap...");
+				isOK = false;
+			}
+			if( isOK )
+			{
+			//テクスチャIDの取得
+				checkGlError(TAG, "unknwon");
+				glGenTextures(1, outTexture);
+				checkGlError(TAG, "glGenTextures");
+				glBindTexture(GL_TEXTURE_2D, *outTexture);
+				checkGlError(TAG, "glBindTexture");
+
+			//GPUにピクセルデータを転送
+				glTexImage2D( GL_TEXTURE_2D, 0,
+						format, info.width, info.height, 0,
+						format, type, pixels );
+				checkGlError(TAG, "glTexImage2D");
+
+			//Unlockを忘れずに
+				AndroidBitmap_unlockPixels(env, bitmap);
+			//正常終了
+				isOK = true;
+			}
 		}
-	//GPUにピクセルデータを転送
-		glTexImage2D( GL_TEXTURE_2D, 0,
-				format, info.width, info.height, 0,
-				format, type, pixels );
-		checkGlError(TAG, "glTexImage2D");
-	//Unlockを忘れずに
-		AndroidBitmap_unlockPixels(env, bitmap);
-	//正常終了
-		isOK = true;
 	}
 	else
 	{//if( loadImageId == NULL ) エラー処理

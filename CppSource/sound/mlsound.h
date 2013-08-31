@@ -47,6 +47,7 @@ public:
 	static void init(bool isAsync = false);
 	static void clear();
 
+	static bool add(int No, const char* fileName);
 	static bool add(int No, JNIEnv* env, jstring fileName);
 	static void del(int No);
 

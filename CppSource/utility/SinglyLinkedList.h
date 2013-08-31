@@ -66,7 +66,7 @@ public:
 				break;
 			}
 			prev = it;
-			it = next;
+			it = prev->pNext;
 		}
 	}
 	void erase(Iterator& it)
@@ -122,11 +122,6 @@ public://イテレータの定義
 			this->mPrev = this->mData;
 			this->mData = this->mData->pNext;
 		}
-		void prev(){
-			assert( this->mPrev != NULL );
-			this->mData = mPrev;
-			this->mPrev = this->mData->pNext;
-		}
 
 		bool isBegin(){return this->mPrev == NULL; }
 		bool isEnd(){ return this->mData == NULL; }
@@ -135,10 +130,8 @@ public://イテレータの定義
 		Type* operator->(){return &this->mData->data;}
 
 		Type& operator++(){next();return mData->data;}
-		Type& operator--(){prev();return mData->data;}
 
 		Type& operator++(int){next();return mData->data;}
-		Type& operator--(int){prev();return mData->data;}
 
 	private:
 		SinglyLinkedList& mContainer;
@@ -149,8 +142,8 @@ public://イテレータの定義
 	{
 		friend class SinglyLinkedList;
 	public:
-		_ConstIterator(SinglyLinkedList& container):mContainer(container),mPrev(NULL),mData(mContainer._beginRaw()){}
-		_ConstIterator(SinglyLinkedList& container, NODE* pos):mContainer(container),mPrev(NULL),mData(NULL)
+		_ConstIterator(const SinglyLinkedList& container):mContainer(container),mPrev(NULL),mData(mContainer._beginRaw()){}
+		_ConstIterator(const SinglyLinkedList& container, NODE* pos):mContainer(container),mPrev(NULL),mData(NULL)
 		{
 			NODE *it = mContainer._beginRaw(), *p = NULL;
 			while(it){
@@ -167,11 +160,6 @@ public://イテレータの定義
 			this->mPrev = this->mData;
 			this->mData = this->mData->pNext;
 		}
-		void prev(){
-			assert( this->mPrev != NULL );
-			this->mData = mPrev;
-			this->mPrev = this->mData->pNext;
-		}
 
 		bool isBegin(){return this->mPrev == NULL; }
 		bool isEnd(){ return this->mData == NULL; }
@@ -180,15 +168,13 @@ public://イテレータの定義
 		const Type*const operator->()const{return &this->mData->data;}
 
 		const Type& operator++(){next();return mData->data;}
-		const Type& operator--(){prev();return mData->data;}
 
 		const Type& operator++(int){next();return mData->data;}
-		const Type& operator--(int){prev();return mData->data;}
 
 	private:
-		SinglyLinkedList& mContainer;
-		NODE* mPrev;
-		NODE* mData;
+		const SinglyLinkedList& mContainer;
+		const NODE* mPrev;
+		const NODE* mData;
 	};
 
 private://最下層のデータ構造

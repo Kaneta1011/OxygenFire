@@ -1,17 +1,13 @@
 
-#if 0
-
 #ifndef __teSmartPointer_H__
 #define __teSmartPointer_H__
-
-namespace StandardLib{
 
 	// スマートポインタテンプレート
 	template <class T>
 	class sp
 	{
 	protected:
-		template<class T> friend class wp;
+		template<class> friend class wp;
 
 	private:
 		unsigned int*	m_pRefCnt;		// 参照カウンタへのポインタ
@@ -1086,11 +1082,4 @@ namespace StandardLib{
 	template <class T>
 	T* wp<T>::m_NullPtr = 0;
 
-}//Standard
-
-
 #endif // !defined(AFX_SMARTPTR_H__4D5E5A30_6FF3_4C18_ACEC_19EA17209FC1__INCLUDED_)
-
-
-
-#endif

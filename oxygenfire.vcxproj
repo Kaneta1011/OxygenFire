@@ -11,6 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CppSource\DebugLib\teDebug.cpp" />
+    <ClCompile Include="CppSource\EffectLib\teEffect.cpp" />
+    <ClCompile Include="CppSource\EffectLib\teEffectItem.cpp" />
+    <ClCompile Include="CppSource\EffectLib\teEmitter.cpp" />
+    <ClCompile Include="CppSource\EffectLib\teEmitterSet.cpp" />
+    <ClCompile Include="CppSource\EffectLib\teParticle.cpp" />
+    <ClCompile Include="CppSource\Game\Bullet\Bullet.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp" />
@@ -63,9 +71,18 @@
     <ClCompile Include="ICharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CppSource\DebugLib\Debug.h" />
     <ClInclude Include="CppSource\defines.h" />
+    <ClInclude Include="CppSource\EffectLib\Effect.h" />
+    <ClInclude Include="CppSource\EffectLib\Emitter.h" />
+    <ClInclude Include="CppSource\EffectLib\EmitterSet.h" />
+    <ClInclude Include="CppSource\EffectLib\Item.h" />
+    <ClInclude Include="CppSource\EffectLib\Particle.h" />
     <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h" />
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
+    <ClInclude Include="CppSource\Game\Bullet\Bullet.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
+    <ClInclude Include="CppSource\Game\IObject\IObject.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kBlendState\kBlendState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDepthStencilState\kDepthStencilState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h" />

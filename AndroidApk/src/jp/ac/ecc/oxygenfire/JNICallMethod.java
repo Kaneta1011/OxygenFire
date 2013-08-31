@@ -12,7 +12,8 @@ public class JNICallMethod {
 		if( assets != null )
 		{
 			Bitmap bm = AssetsLoader.loadBitmap(assets, fileName);
-			Log.i(TAG,"“Ç‚İ‚İŠ®—¹B path=" + fileName);
+			if( bm != null )
+				Log.i(TAG,"“Ç‚İ‚İŠ®—¹B path=" + fileName);
 			return bm;
 		}
 		else

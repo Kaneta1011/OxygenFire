@@ -13,7 +13,7 @@ static const char* TAG = "rlib::PointSprite";
 
 void PointSprite::init()
 {
-	ShaderLib::ShaderManager::Create_Shader(&m_spSprite, "Shader/rSprite.vs","Shader/rSprite.fs");
+	ShaderLib::ShaderManager::Create_Shader(&m_spSprite, "shader/rSprite.vs","shader/rSprite.fs");
 }
 
 void PointSprite::clear()

@@ -44,6 +44,9 @@
 #include "testScene.h"
 #include "Ueda\rTestScene.h"
 
+#include "EffectLib\Particle.h"
+#include "EffectLib\Effect.h"
+
 //	use namespace
 using namespace RenderLib;
 using namespace klib;
@@ -94,13 +97,15 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env
 	
 	Sound::init();
 
+	//Sound::add( 0, "Sound/BGM/BGM1.mp3" );
+	//Sound::play(0,true);
+
 	LOGI(TAG, "Complete onResume.");
 }
 
 //
 //		グラフィックの初期化
 //
-
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods)
 {
 	LOGI(TAG, "Execute graphic init");
@@ -113,19 +118,23 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 
 	rlib::r2DPipeline::init();
 
+//エフェクトの初期化
+
+	EffectLib::EffectManager_Singleton::getInstance()->Initialize();
+	LOGI(TAG,"OK EffectManager_Singleton init");
+
 	dprintf("Screen Size Initialize w=%d h=%d",width,height);
 
 	//glLineWidth(1.0f);
 
-	//シーン作成
-	testScene::_create();
-	//シーン割り当て
-	framework.sceneChange(testScene::_getInstancePtr());
+	////シーン作成
+	//testScene::_create();
+	////シーン割り当て
+	//framework.sceneChange(testScene::_getInstancePtr());
 
-	//framework.sceneChange(new rTestScene() );
+	framework.scenePush( new rTestScene() );
 	
 	LOGI(TAG, "Complete graphic init");
-
 }
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
@@ -133,7 +142,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 //===========================================================================================
 //	デバッグ用の文字列表示のサンプル
 //	あと、dtの値は適当です(8/12植田　直しました。)
-	DEBUG_MSG("dt=%.3f[ms]", dt);
+	DEBUG_MSG("dt=%.3f[fps]", 1000.f/dt);
 	//mlInput::debugMseeage();
 //===========================================================================================
 	RenderState::Clear_Color(.5,.5,.5,1);
@@ -161,6 +170,9 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env,
 	testScene::_destroy();
 
 	rlib::r2DPipeline::clear();
+
+	EffectLib::EffectManager_Singleton::deleteInstance();
+	LOGI(TAG, "OK EffectManager_Singleton delete");
 
 	LOGI(TAG, "Complete onPause.");
 }

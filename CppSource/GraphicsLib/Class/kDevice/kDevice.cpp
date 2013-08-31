@@ -241,8 +241,8 @@ namespace klib
 	{
 		m_OMBlendState=in;
 		//αブレンドを有効/無効にする
-		if(m_OMBlendState->m_Desc.RenderTarget.BlendEnable){glEnable(GL_BLEND);dprintf("Blend On")}
-		else {glDisable(GL_BLEND);dprintf("Blend OFF")}
+		if(m_OMBlendState->m_Desc.RenderTarget.BlendEnable){glEnable(GL_BLEND);/*dprintf("Blend On")*/}
+		else {glDisable(GL_BLEND);/*dprintf("Blend OFF")*/}
 		//ブレンド計算式を指定する
 		glBlendEquation(m_OMBlendState->m_Desc.RenderTarget.BlendOp);
 		//ブレンド係数を指定する

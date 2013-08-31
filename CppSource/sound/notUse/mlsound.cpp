@@ -42,7 +42,7 @@ void Sound::clear()
 	LOGI(TAG,"OK Sound clear");
 }
 
-bool Sound::add(int No, JNIEnv* env, jstring fileName)
+bool Sound::add(int No, const char* fileName)
 {
 	bool isOK = true;
 	assert( 0 <= No && No < PLAYER_MAX );
@@ -54,14 +54,21 @@ bool Sound::add(int No, JNIEnv* env, jstring fileName)
     assert(NULL != mgr);
 
     // convert Java string to UTF-8
+
+	isOK = (bool)player.load(mDevice, mgr, fileName, AASSET_MODE_UNKNOWN, mOutputMix, mIsAsync);
+	
+	return isOK;
+}
+
+bool Sound::add(int No, JNIEnv* env, jstring fileName)
+{
+	bool isOK = false;
+    // convert Java string to UTF-8
     const char* name = (env)->GetStringUTFChars(fileName, NULL);
     assert(NULL != name);
-	isOK = (bool)player.load(mDevice, mgr, name, AASSET_MODE_UNKNOWN, mOutputMix, mIsAsync);
-	
-
+	isOK = add( No, name );
 	// release the Java string and UTF-8
     (env)->ReleaseStringUTFChars(fileName, name);
-
 	return isOK;
 }
 

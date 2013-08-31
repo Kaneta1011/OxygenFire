@@ -417,7 +417,9 @@ namespace klib
 		inline const Vector3* Vector3Normalize(Vector3* out,const Vector3& val)
 		{
 			f32 len=Vector3Length(val);
+			if(len != 0 ){
 			*out=val/len;
+			}
 			return out;
 		}
 		/**
