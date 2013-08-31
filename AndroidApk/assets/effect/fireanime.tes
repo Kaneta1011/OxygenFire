@@ -1,0 +1,1280 @@
+EmitterMax 18 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 1.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 1.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value -1.000000 0.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value -1.000000 0.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value -1.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value -1.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value -1.000000 0.000000 -1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value -1.000000 0.000000 -1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 1.000000 0.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 1.000000 0.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 1.000000 0.000000 -1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 1.000000 0.000000 -1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 3 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.600000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 0 64 0 
+			Middle 0 64 0 
+			End 0 64 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.600000 0.600000 0.600000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 -1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireanime0" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "firer.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 0 30 60 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 0 0 
+			Middle 255 0 0 
+			End 255 0 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 1.000000 1.000000 1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 -1.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+

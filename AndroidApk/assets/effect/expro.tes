@@ -1,0 +1,925 @@
+EmitterMax 13 
+
+Emitter { 
+	EmitterName "expro" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 15 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "flame.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 7 10 20 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 64 12 
+			Middle 255 64 12 
+			End 255 64 12 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 1.000000 1.000000 1.000000 
+			RandMax 2.000000 2.000000 2.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -1.000000 1.000000 -1.000000 
+			RandMax 1.000000 0.000000 1.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "expro1" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 15 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "flame.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 7 10 20 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 128 12 
+			Middle 255 128 12 
+			End 255 128 12 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.500000 0.500000 0.500000 
+			RandMax 1.000000 1.000000 1.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -1.000000 1.000000 -1.000000 
+			RandMax 1.000000 0.000000 1.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "expro2" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 15 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "flame.png" 
+		TextureMoveFlag 1 
+		TextureSize 16 
+		ParticleIndex 0 
+		Life 7 10 20 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 64 12 
+			Middle 255 64 12 
+			End 255 64 12 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 2.500000 2.500000 2.500000 
+			RandMax 3.000000 3.000000 3.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -1.000000 1.000000 -1.000000 
+			RandMax 1.000000 0.000000 1.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "exproSmo1" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 12 
+			Life 4 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 120 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 2.400000 2.400000 3.700000 
+			RandMax 2.500000 2.600000 3.800000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.500000 -0.500000 -0.500000 
+			RandMax 0.500000 0.500000 0.500000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "exproSmo3" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 45 
+			Life 1 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke2.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 120 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 64 64 64 
+			Middle 64 64 64 
+			End 64 64 64 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 2.000000 3.000000 4.000000 
+			RandMax 2.000000 3.000000 4.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.500000 -0.500000 -0.500000 
+			RandMax 0.500000 0.500000 0.500000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter6" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.600000 0.500000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter7" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value -0.600000 0.400000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter8" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin -0.600000 0.300000 0.400000 
+				RandMax -0.700000 0.400000 0.500000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter9" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.400000 0.400000 0.000000 
+				RandMax 0.700000 0.500000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter10" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.400000 0.400000 -0.400000 
+				RandMax 0.700000 0.500000 -0.500000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.000000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter11" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin -0.500000 0.700000 0.000000 
+				RandMax -0.400000 0.900000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.010000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter12" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.000000 0.700000 0.500000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.500000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.010000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "[P]_NewEmitter13" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 10 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.300000 0.400000 -0.200000 
+				RandMax 0.400000 0.800000 0.200000 
+			} 
+			InitPos { 
+				Value 0.000000 1.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 -0.400000 0.000000 
+				End 0.000000 -1.400000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 60 0 0 
+		WindPower 0.000000 
+		CenterPower 0.000000 0.000000 0.010000 
+		Color { 
+			Start 255 255 255 
+			Middle 255 255 255 
+			End 255 255 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.300000 0.500000 0.620000 
+			RandMax 0.500000 0.600000 0.700000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.200000 -0.200000 -0.200000 
+			RandMax 0.200000 0.200000 0.200000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+

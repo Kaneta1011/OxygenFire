@@ -1,0 +1,286 @@
+EmitterMax 4 
+
+Emitter { 
+	EmitterName "fireball3" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 62 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "light.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 20 0 0 
+		WindPower 1.000000 
+		CenterPower 0.001000 0.001000 0.001000 
+		Color { 
+			Start 0 0 255 
+			Middle 0 0 255 
+			End 0 0 255 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.400000 0.600000 0.500000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.010000 -0.010000 0.000000 
+			RandMax 0.010000 0.010000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireball2" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 60 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "smoke.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 45 0 0 
+		WindPower 1.000000 
+		CenterPower 0.001000 0.001000 0.001000 
+		Color { 
+			Start 255 32 0 
+			Middle 255 32 0 
+			End 255 32 0 
+		} 
+		RandColor { 
+			Start 0 0 0 
+			Middle 0 0 0 
+			End 0 0 0 
+		} 
+		Scale { 
+			Value 0.500000 0.700000 0.100000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.010000 -0.010000 0.000000 
+			RandMax 0.010000 0.010000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireball" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 60 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "fire3.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 45 0 0 
+		WindPower 1.000000 
+		CenterPower 0.001000 0.001000 0.001000 
+		Color { 
+			Start 255 64 0 
+			Middle 255 64 0 
+			End 255 64 0 
+		} 
+		RandColor { 
+			Start 0 0 4 
+			Middle 0 0 4 
+			End 0 0 4 
+		} 
+		Scale { 
+			Value 1.000000 1.200000 0.800000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.030000 -0.030000 0.000000 
+			RandMax 0.030000 0.030000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
+Emitter { 
+	EmitterName "fireball3" 
+	EmitterType "Particle" 
+
+	EmitterParameters { 
+		Common { 
+			StartFrame 0 
+			Life 32 0 0 
+			Velocity { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			InitPos { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			Force { 
+				Value 0.000000 0.000000 0.000000 
+				RandMin 0.000000 0.000000 0.000000 
+				RandMax 0.000000 0.000000 0.000000 
+			} 
+			AddVec { 
+				Start 0.000000 0.000000 0.000000 
+				Middle 0.000000 0.000000 0.000000 
+				End 0.000000 0.000000 0.000000 
+			} 
+		} 
+	}
+	Parameters { 
+		TextureName "light1.png" 
+		TextureMoveFlag 0 
+		TextureSize 1 
+		ParticleIndex 0 
+		Life 45 0 0 
+		WindPower 1.000000 
+		CenterPower 0.001000 0.001000 0.001000 
+		Color { 
+			Start 0 32 255 
+			Middle 0 32 255 
+			End 0 32 255 
+		} 
+		RandColor { 
+			Start 0 0 4 
+			Middle 0 0 4 
+			End 0 0 4 
+		} 
+		Scale { 
+			Value 0.500000 0.700000 0.800000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Velocity { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin -0.010000 -0.010000 0.000000 
+			RandMax 0.010000 0.010000 0.000000 
+		} 
+		InitPos { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+		Force { 
+			Value 0.000000 0.000000 0.000000 
+			RandMin 0.000000 0.000000 0.000000 
+			RandMax 0.000000 0.000000 0.000000 
+		} 
+	} 
+} 
+
