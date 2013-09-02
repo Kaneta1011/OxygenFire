@@ -179,6 +179,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>./CppSource/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG</PreprocessorDefinitions>
+      <Warnings>DisableAllWarnings</Warnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">

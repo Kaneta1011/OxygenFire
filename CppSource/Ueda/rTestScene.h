@@ -22,7 +22,6 @@ private:
 	rlib::FrameBuffer			*frameBuffer;
 	rlib::CircleButton			*mButton;
 	rlib::AnalogStick			*mStick;
-
 };
 
 #endif

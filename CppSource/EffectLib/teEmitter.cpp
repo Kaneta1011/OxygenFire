@@ -37,6 +37,7 @@ void Emitter::Clear()
 	m_Count = 0;
 	m_LoopFlag = false;
 	m_spData.SetPtr(new EmitterData);
+	m_spData->Scale=1.0f;
 }
 
 void Emitter::Destroy()
@@ -230,9 +231,9 @@ void ParticleEmitter::Generation_Particle()
 		sParticle->Setting(
 			p,
 			m_spEffectData->file,
-			scaS,
-			scaM,
-			scaE,
+			scaS*m_spData->Scale,
+			scaM*m_spData->Scale,
+			scaE*m_spData->Scale,
 			m_spEffectData->life,
 			vel,
 			m_spEffectData->moveFlag,

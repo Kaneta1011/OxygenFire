@@ -5,18 +5,26 @@
 #include	<iostream>
 #include	"StandardLib/SmartPointer.h"
 
+
 namespace PlacementLib{
 using namespace klib::math;
 const static int STR_LENGTH = 128;
 
 //==========================================================
 //	ここの構造体を受け皿にしてデータをもらって各種設定
+//	*基本的に上田君のみ使用することになる
 struct PlacementData
 {
 	int Num;
 	sp<Vector3> spPos;		
 	sp<Vector3> spScale;
 	sp<Vector3> spAngle;
+};
+struct GimmickLine
+{
+	int Num;
+	sp<Vector3> spStart;
+	sp<Vector3> spEnd;
 };
 struct WindData
 {
@@ -28,7 +36,6 @@ struct WindData
 };
 //==========================================================
 struct Data;
-
 /* -------------------------------------------------------
 	class PlacementManager
 
@@ -59,12 +66,45 @@ public:
 	//	データの解放
 	void Delete();
 	//	データを転送
+	void GetPlayer(sp<PlacementData>* spData);	//これ使わんと下つかって
+
+	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	・上田君用
+	基本的使い方は説明したけどわからないときは考えずにすぐに聞いて!
+
+	*/
 	void GetBox(sp<PlacementData>* spData);
-	void GetPlayer(sp<PlacementData>* spData);
 	void GetWind(sp<WindData>* spData);
+	void GetGimmickWind(sp<WindData>* spData);
+	void GetGimmickLine(sp<GimmickLine>* spData);
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	・吉原君用
+	プレイヤーは単体やから別で取得作った
+	よしはら君のプレイヤーはこれで初期設定OK
+	*/
+	Vector3 GetPlayerPos();			
+	Vector3 GetPlayerScale();
+	Vector3 GetPlayerAngle();
+	/*	使い方( これだけ )
+	pos = sPlacementManager->GetPlayerPos();
+	scale = sPlacementManager->GetPlayerScale();
+	angle = sPlacementManager->GetPlayerAngle();
+	*/
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
 
 	//=============================================
+	//=============================================
 	//			↓　この下以降は気にしなくてOK
+	//=============================================
 	//=============================================
 	PlacementManager(){Clear();}void Clear();
 	~PlacementManager(){Destroy();}void Destroy();
@@ -74,6 +114,8 @@ private:
 	void Setting_AllData(char* File);
 	void Setting_Data(sp<char> Name,sp<char> Load);
 	void Setting_Data(sp<Data> spData);
+	void Setting_Data_ScaleHalf(sp<Data> spData);
+	void Setting_Data_GimmickLine(sp<Data> spData);
 	void Setting_WindData(sp<Data> spData);
 	void Setting_ObjectName(sp<char> Name,sp<char> Load);
 	void Add_ObjectNum(sp<char> Name,sp<char> Load);
@@ -81,6 +123,8 @@ private:
 	sp<Data> m_spPlayerData;
 	sp<Data> m_spBoxData;
 	sp<Data> m_spWindData;
+	sp<Data> m_spGimmickWindData;
+	sp<Data> m_spGimmickLineData;
 	sp<textLoader> tl;
 };
 
@@ -94,6 +138,8 @@ struct Data
 	sp<Vector3> spScale;
 	sp<Vector3> spAngle;
 	sp<Vector3>	spWindVec;
+	sp<Vector3> spStart;
+	sp<Vector3> spEnd;
 	Data(char* Name):Num(0),NowNum(0){
 		strcpy(this->Name,Name);
 	}

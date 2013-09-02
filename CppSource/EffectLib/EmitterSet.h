@@ -33,6 +33,7 @@ public:
 	//	Create
 	void Create( const Vector3& Position );
 	void Create( const Vector3& Position, const Vector3& VelosityTarget );
+	void Setting_Scale(float Scale);
 	//	Initialize
 	bool Initialize(char* File);
 	//	Update

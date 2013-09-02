@@ -46,6 +46,8 @@ public:
 	//	
 	wp<EmitterSet> Create(eEFFECT_TYPE Type);
 	wp<EmitterSet> Create( eEFFECT_TYPE Type, const Vector3& Position );
+	wp<EmitterSet> Create( eEFFECT_TYPE Type, const Vector3& Position,
+		float Scale );
 	//void Create( eEFFECT_TYPE Type, const Vector3& Position, const Vector3& VelocityTarget );
 
 	EffectManager(){Clear();}void Clear();

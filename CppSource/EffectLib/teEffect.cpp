@@ -60,6 +60,9 @@ void EffectManager::Render()
 		m_spEffectEmitterSet[n]->Render();
 	}
 
+
+
+
 	//	パーティクル描画
 	sParticle->Render();
 }
@@ -90,6 +93,24 @@ wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type,const Vector3& Position)
 		Create_EmitterSet(Type,n);
 
 		m_spEffectEmitterSet[n]->Create(Position);
+
+		return m_spEffectEmitterSet[n];
+	}
+	return NULL;
+}
+wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type,const Vector3& Position,
+																		 float Scale )
+{
+	for( int n=0; n<EMITTERSET_MAX; n++ )
+	{
+		//	@if 使われてないので終了
+		if( m_spEffectEmitterSet[n].GetRefNum() != 0 ){ continue; }
+
+		Create_EmitterSet(Type,n);
+
+		m_spEffectEmitterSet[n]->Create(Position);
+
+		m_spEffectEmitterSet[n]->Setting_Scale(Scale);
 
 		return m_spEffectEmitterSet[n];
 	}

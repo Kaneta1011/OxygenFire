@@ -136,8 +136,9 @@ void rTestScene::update()
 		sEffectManager->Create(FIRE_CHARGE,
 		Vector3(
 			0,
-			0,
-			0));
+			5,
+			0),
+			5.0f);
 		t=0;
 	}
 }
