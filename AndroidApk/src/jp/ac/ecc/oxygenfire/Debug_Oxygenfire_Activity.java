@@ -16,6 +16,8 @@
 
 package jp.ac.ecc.oxygenfire;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,10 +50,13 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		ll_frame.addView(debugMsg);
 		setContentView(ll_frame);
 		
+		File localFolder = Environment.getDataDirectory();
+		localFolder.getPath();
 		//C++ë§ÇÃèâä˙âªÇ»Ç«
 		JNICallMethod.assets = getAssets();
 		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
 		GL2JNILib.debugInit(this);
+		
 		
 		Log.d("build","BOARD:" + Build.BOARD);
 		Log.d("build","BOOTLOADER:" + Build.BOOTLOADER);    //Android 1.6ñ¢ëŒâû

@@ -1,7 +1,10 @@
 package jp.ac.ecc.oxygenfire;
 
+import java.io.File;
+
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.util.Log;
 
 public class JNICallMethod {
@@ -21,5 +24,14 @@ public class JNICallMethod {
 			Log.e(TAG,"AssetManagerが設定されていません。");
 			return null;
 		}
+	}
+	
+	/*
+	 * SDカードのフォルダーパスを取得する
+	 */
+	static public String getSDCardDirectoryPath()
+	{
+		File folder = Environment.getExternalStorageDirectory();
+		return folder.getAbsolutePath();
 	}
 }
