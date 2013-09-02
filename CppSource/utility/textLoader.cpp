@@ -24,7 +24,7 @@ inline bool IsDBCSLeadByte(char c)
 //
 //*****************************************************************************************************************************
 
-bool	textLoader::Open( const char* filename )
+bool	textLoader::Open( const char* filename,  READ_LOCATION readLocation )
 {
 	FileBuf = NULL;
 	int size;
@@ -49,9 +49,9 @@ void	textLoader::SetIndex( int index )
 //
 //*****************************************************************************************************************************
 
-textLoader::textLoader( const char* filename )
+textLoader::textLoader( const char* filename, READ_LOCATION readLocation )
 {
-	bInit = Open(filename);
+	bInit = Open(filename, readLocation);
 }
 
 //--------------------------------------------------------------------------------------

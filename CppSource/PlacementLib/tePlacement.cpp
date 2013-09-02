@@ -2,6 +2,8 @@
 using namespace PlacementLib;
 PlacementManager_Singleton* PlacementManager_Singleton::singleton = NULL;
 
+#include "utility\utility.h"
+
 void PlacementManager::Clear()
 {
 	m_spPlayerData.SetPtr(new Data("PLAYER"));
@@ -28,9 +30,12 @@ void PlacementManager::Search_Num(char* File)
 		
 		Setting_ObjectName(name,load);
 		Add_ObjectNum(name,load);
+		LOGI("PlacementManager","Object name = %s", name.GetPtr());
 	}
 
 	tl.Clear();
+	LOGI("PlacementManager","Finish Search_Num()");
+
 }
 void PlacementManager::Setting_ObjectName(sp<char> name,sp<char> load)
 {
@@ -47,9 +52,11 @@ void PlacementManager::Add_ObjectNum(sp<char> name,sp<char> load)
 }
 void PlacementManager::Load(char* Filename)
 {
+	LOGI("PlacementManager", "Execute load");
 	Search_Num(Filename);
 	Create_AllData();
 	Setting_AllData(Filename);
+	LOGI("PlacementManager", "Finish load");
 }
 void PlacementManager::Setting_AllData(char* File)
 {

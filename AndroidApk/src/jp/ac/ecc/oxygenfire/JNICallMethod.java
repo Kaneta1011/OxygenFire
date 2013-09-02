@@ -10,6 +10,8 @@ import android.util.Log;
 public class JNICallMethod {
 	static final String TAG ="JNICallMethod";
 	static public AssetManager assets=null;
+	static public String localPath = "";
+	
 	static public Bitmap loadImage(String fileName)
 	{
 		if( assets != null )
@@ -26,6 +28,13 @@ public class JNICallMethod {
 		}
 	}
 	
+	/*
+	 * ローカルフォルダーのパスを取得する
+	 */
+	static public String getLoaclDirectoryPath()
+	{
+		return localPath;
+	}
 	/*
 	 * SDカードのフォルダーパスを取得する
 	 */

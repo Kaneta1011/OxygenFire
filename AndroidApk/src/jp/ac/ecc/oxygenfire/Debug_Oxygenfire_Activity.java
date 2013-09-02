@@ -50,14 +50,15 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		ll_frame.addView(debugMsg);
 		setContentView(ll_frame);
 		
-		File localFolder = Environment.getDataDirectory();
-		localFolder.getPath();
 		//C++ë§ÇÃèâä˙âªÇ»Ç«
 		JNICallMethod.assets = getAssets();
+		JNICallMethod.localPath = this.getFilesDir().getAbsolutePath();
 		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
 		GL2JNILib.debugInit(this);
-		
-		
+	}
+
+	private void writeLogSystemInfo()
+	{
 		Log.d("build","BOARD:" + Build.BOARD);
 		Log.d("build","BOOTLOADER:" + Build.BOOTLOADER);    //Android 1.6ñ¢ëŒâû
 		Log.d("build","BRAND:" + Build.BRAND);
@@ -82,9 +83,9 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		Log.d("build","VERSION.INCREMENTAL:" + Build.VERSION.INCREMENTAL);
 		Log.d("build","VERSION.RELEASE:" + Build.VERSION.RELEASE);
 		Log.d("build","VERSION.SDK:" + Build.VERSION.SDK);
-		Log.d("build","VERSION.SDK_INT:" + Build.VERSION.SDK_INT);
+		Log.d("build","VERSION.SDK_INT:" + Build.VERSION.SDK_INT);	
 	}
-
+	
 	protected void addMsg(String msg)
 	{
 		this.msg.insert(this.msg.length(), msg);

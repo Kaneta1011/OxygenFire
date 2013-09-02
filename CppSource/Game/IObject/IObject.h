@@ -25,15 +25,18 @@ namespace rlib
 		klib::math::Vector3& getPos(){return this->mPos;}
 		klib::math::Vector3& getVelocity(){return this->mVelocity;}
 		klib::math::Vector3& getRange(){return this->mRange;}
+		klib::math::Vector3& getAngle(){return this->mAngle;}
 
 		const klib::math::Vector3& getPos()const{return this->mPos;}
 		const klib::math::Vector3& getVelocity()const{return this->mVelocity;}
 		const klib::math::Vector3& getRange()const{return this->mRange;}
+		const klib::math::Vector3& getAngle()const{return this->mAngle;}
 
 	protected:
 		klib::math::Vector3	mPos;
 		klib::math::Vector3 mVelocity;
 		klib::math::Vector3 mRange;
+		klib::math::Vector3 mAngle;
 
 	};
 

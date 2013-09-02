@@ -17,8 +17,7 @@ public class AssetsLoader {
 	        Bitmap bm = BitmapFactory.decodeStream(is);
 	        return bm;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
         Log.e(TAG, "指定されたファイルは見つかりません。path = " + fileName);
         return null;

@@ -5,17 +5,19 @@
 #include "utility\utility.h"
 #include "utility\SinglyLinkedList.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
+#include "StandardLib\SmartPointer.h"
 
 namespace rlib
 {
 	struct GimmickInfo
 	{
-		const char* meshFilePath;
+		int type;
 		klib::math::Vector3 pos;
 		klib::math::Vector3 size;
+		klib::math::Vector3 angle;
 		//klib::math::Vector3 velocity;
 
-		GimmickInfo(const char* meshFilePath):meshFilePath(meshFilePath){}
+		GimmickInfo():type(-1){}
 	};
 
 	class Gimmick : public IObject
@@ -26,6 +28,13 @@ namespace rlib
 			MSG_NON,
 			MSG_DEAD,
 		};
+
+		enum TYPE
+		{
+			eTYPE_TEST,
+			eTYPE_NUM
+		};
+
 	public:
 		Gimmick();
 		~Gimmick();
@@ -39,10 +48,13 @@ namespace rlib
 
 	public:
 		void on(){this->mIsOn = true;}
+		int getType()const{ return this->mType; }
 
 	private:
+		int mType;
 		bool mIsOn;
 		int mCount;
+		
 	};
 
 	//===============================================================================
@@ -87,10 +99,12 @@ namespace rlib
 		unsigned int size(){return this->mData.size();}
 
 	private:
+		klib::kMesh* getMesh( int type ); 
+	private:
 		SinglyLinkedList<Gimmick> mData;
 
 		klib::kGraphicsPipline* pipline;
-		klib::kMesh* mpMesh;
+		sp<klib::kMesh*> mpMeshies;
 
 	private:
 		GimmickManager();

@@ -53,6 +53,10 @@ bool AssetsLoader::load(char** out, int* outSize, const char* fileName)
 		}
 		AAsset_close(asset);
 	}
+	else
+	{
+		LOGE(TAG, "miss load filename = %s", fileName);
+	}
 	*outSize = size;
 	return isOK;
 }

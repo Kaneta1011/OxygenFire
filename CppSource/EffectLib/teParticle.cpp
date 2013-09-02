@@ -90,6 +90,13 @@ bool Particle::Initialize()
 
 	ShaderLib::ShaderManager::Init();
 
+	m_spPipeline.SetPtr( new klib::kGraphicsPipline() );
+	m_spPipeline->createVertexShader("shader/sprite.vs");
+	m_spPipeline->createPixelShader("shader/sprite.fs");
+	m_spPipeline->createBlendState(klib::k_BLEND_ADD);
+	m_spPipeline->createDepthStencilState(false, klib::eLESS);
+	m_spPipeline->createRasterizerState(klib::eSOLID, klib::eNONE, true);
+
 	return true;
 }
 
@@ -460,6 +467,7 @@ void Particle::Render()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);// 0 ‚ğ“ü‚ê‚Ä‚¨‚©‚È‚¢‚Æ‚¢‚¯‚È‚¢
 
 	glDisable(GL_DEPTH_TEST);
+
 ShaderManager::getSprite()->Begin();
 
 	//

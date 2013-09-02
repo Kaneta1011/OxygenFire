@@ -151,6 +151,9 @@
     <Filter Include="source\EffectLib">
       <UniqueIdentifier>{a2262b9f-ae37-4551-a86c-da0bfce6dde3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\PlacementLib">
+      <UniqueIdentifier>{b01513e8-a325-4024-ac7b-fa9c280dc076}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -294,6 +297,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\EffectLib\Shader.cpp">
       <Filter>source\EffectLib</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\PlacementLib\tePlacement.cpp">
+      <Filter>source\PlacementLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -521,6 +527,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\EffectLib\Shader.h">
       <Filter>source\EffectLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\PlacementLib\Placement.h">
+      <Filter>source\PlacementLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

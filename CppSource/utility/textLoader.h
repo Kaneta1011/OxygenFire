@@ -8,18 +8,13 @@
 //		8/7	:　assetsからの読み込み完了
 //*****************************************************************************
 class	textLoader {
-private:
-		bool	bInit;
-
-		char	*FileBuf;		//	ファイルバッファ
-		unsigned long	TextSize;		//	ファイルサイズ
-		unsigned long	ReadIndex;		//	現在位置ポインタ
-		
-		unsigned long	PushIndex;
-		int		SearchTop();	//	頭出し
-
-protected:
-		bool	Open( const char* filename );
+public:
+	enum READ_LOCATION
+	{
+		LOCATION_ASSETS,
+		LOCATION_LOCAL,
+		LOCATION_SD_CARD,
+	};
 
 public:
 		bool	EndCheck();
@@ -50,13 +45,26 @@ public:
 		bool	SearchLine( const char* str );
 
 		//	初期化・解放
-		textLoader( const char* filename );
+		textLoader( const char* filename, READ_LOCATION readLocation=LOCATION_ASSETS );
 		textLoader(){}
 
 		~textLoader()
 		{
 			if( FileBuf ) delete[] FileBuf;		
 		}
+
+private:
+		bool	bInit;
+
+		char	*FileBuf;		//	ファイルバッファ
+		unsigned long	TextSize;		//	ファイルサイズ
+		unsigned long	ReadIndex;		//	現在位置ポインタ
+		
+		unsigned long	PushIndex;
+		int		SearchTop();	//	頭出し
+
+protected:
+		bool	Open( const char* filename, READ_LOCATION readLocation );
 
 };
 

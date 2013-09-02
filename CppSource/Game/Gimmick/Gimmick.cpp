@@ -5,6 +5,7 @@
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 
 #include "EffectLib\Effect.h"
+#include "PlacementLib\Placement.h"
 
 #include "utility\utility.h"
 
@@ -12,10 +13,12 @@
 
 using namespace rlib;
 using namespace klib;
+using namespace PlacementLib;
 
 static const char* TAG = "Gimmick";
 
 Gimmick::Gimmick():
+	mType(-1),
 	mIsOn(false)
 {
 	mCount = 0;
@@ -30,13 +33,15 @@ void Gimmick::init(GimmickInfo& info)
 	this->mPos = info.pos;
 	this->mRange = info.size;
 	this->mVelocity.x = this->mVelocity.y = this->mVelocity.z = 0.f;
+	this->mAngle = info.angle;
+
 }
 
 int Gimmick::update()
 {
 	if( this->mIsOn )
 	{
-		EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::BLUE_FIRE, this->mPos );
+		EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_CHARGE, this->mPos );
 		return MSG_DEAD;
 	}
 
@@ -46,7 +51,8 @@ int Gimmick::update()
 void Gimmick::render(klib::kMesh* mesh, klib::kGraphicsPipline* pipeline)
 {
 	mesh->setPosition(this->mPos);
-	mesh->setScale(0.01f);
+	mesh->setAngle(this->mAngle);
+	mesh->setScale(this->mRange*2.f);
 	mesh->Update();
 	mesh->Render(pipeline);
 }
@@ -65,8 +71,7 @@ using namespace klib;
 static const char* TAG_M = "GimmickManager";
 
 GimmickManager::GimmickManager():
-	pipline(NULL),
-	mpMesh(NULL)
+	pipline(NULL)
 {
 }
 
@@ -79,7 +84,6 @@ void GimmickManager::clear()
 	clearData();
 
 	if( pipline ){ delete pipline; pipline = NULL; }
-	if( this->mpMesh ){ delete this->mpMesh; this->mpMesh = NULL; } 
 }
 
 void GimmickManager::clearData()
@@ -90,6 +94,9 @@ void GimmickManager::clearData()
 void GimmickManager::init()
 {
 	LOGI(TAG_M, "Execute GimmickManager init");
+
+	this->mpMeshies.SetPtr(new klib::kMesh*, true, Gimmick::eTYPE_NUM);
+	this->mpMeshies[0] = new klib::kMesh("kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 
 	pipline = new klib::kGraphicsPipline();
 	pipline->createVertexShader("vertex.txt");
@@ -109,9 +116,20 @@ void GimmickManager::init()
 	pipline->complete(desc,descnum);
 	LOGI(TAG_M, "OK pipeline init");
 
-	this->mpMesh = new klib::kMesh( "kibako128.IMO", new kMeshLoadIMO(),new kMeshGLES20Render() );
-	LOGI(TAG, "OK mesh load");
+	sp<PlacementLib::PlacementData> spData;
+	sPlacementManager->GetBox( &spData );
+	LOGI(TAG, "Placement data num = %d", spData->Num);
 
+	rlib::GimmickInfo info;
+	for( int i=0; i<1; i++ )
+	{
+		info.pos = spData->spPos[i];
+		info.size = spData->spScale[i];
+		info.angle = spData->spAngle[i];
+		add( info ); 
+	}
+	LOGI(TAG, "box num = %d", this->mData.size() );
+	LOGI(TAG,"OK Placement read ");
 	LOGI(TAG_M, "Complete GimmickManager init");
 }
 
@@ -120,6 +138,11 @@ void GimmickManager::add(GimmickInfo& info)
 	Gimmick add;
 	add.init(info);
 	this->mData.pushFront(add);
+}
+
+klib::kMesh* GimmickManager::getMesh( int type )
+{
+	return this->mpMeshies[0];
 }
 
 int GimmickManager::update()
@@ -145,7 +168,7 @@ void GimmickManager::render()
 	Iterator it = this->mData.begin();
 	while( !it.isEnd() )
 	{
-		it->render( this->mpMesh, this->pipline);
+		it->render( getMesh(it->getType()), this->pipline);
 		it++;
 	}
 }

@@ -39,6 +39,7 @@
     <ClCompile Include="CppSource\math\Class\Vector\Vector2.cpp" />
     <ClCompile Include="CppSource\math\Class\Vector\Vector3.cpp" />
     <ClCompile Include="CppSource\math\Class\Vector\Vector4.cpp" />
+    <ClCompile Include="CppSource\PlacementLib\tePlacement.cpp" />
     <ClCompile Include="CppSource\sound\notUse\mlsound.cpp" />
     <ClCompile Include="CppSource\sound\notUse\mlSoundStream.cpp" />
     <ClCompile Include="CppSource\sound\notUse\OpenSLES.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
     <ClInclude Include="CppSource\math\Class\Vector\Vector.h" />
     <ClInclude Include="CppSource\math\kmathf.h" />
+    <ClInclude Include="CppSource\PlacementLib\Placement.h" />
     <ClInclude Include="CppSource\sound\mlsound.h" />
     <ClInclude Include="CppSource\sound\notUse\mlSoundDefine.h" />
     <ClInclude Include="CppSource\sound\notUse\mlSoundStream.h" />

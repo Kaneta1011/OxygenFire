@@ -12,8 +12,11 @@
 #include "input\Button.h"
 #include "input\AnalogStick.h"
 
+#include "PlacementLib\Placement.h"
+
 using namespace RenderLib;
 using namespace klib::math;
+using namespace PlacementLib;
 
 const static int	SPRITE_MAX = 8000;
 
@@ -30,15 +33,6 @@ static const char* TAG = "rTestScene";
 
 using namespace klib;
 
-static kInputElementDesc desc[]=
-{
-	{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-	{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
-	{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-	{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
-};
-static u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
-
 rTestScene::rTestScene()
 {
 	frameBuffer = NULL;
@@ -46,14 +40,9 @@ rTestScene::rTestScene()
 	mStick = NULL;
 }
 
-rlib::r2DObj* pParticle;
-
 void rTestScene::entry()
 {
 	LOGI(TAG,"Execute rTestScene init");
-
-	pParticle = new rlib::r2DObj();
-	pParticle->load("effect/particle/e.png");
 
 	mButton = new rlib::CircleButton();
 	mButton->init("testImage.png", 50, -50, 50.f);
@@ -61,16 +50,15 @@ void rTestScene::entry()
 	mStick = new rlib::AnalogStick();
 	this->mStick->init(-80, -50, 50);
 
-	frameBuffer = new rlib::FrameBuffer();
-	frameBuffer->init(512,512);
+	sPlacementManager->Load("Placement/stage1.mqo");
 
 	rlib::BulletManager::getInst().init();
 	GIMMICK_MNG.init();
 
-	rlib::GimmickInfo info("kibako128.IMO");
-	info.pos.x = info.pos.y = info.pos.z = 0.f;
-	info.size.x = info.size.y = info.size.z = 1.f;
-	GIMMICK_MNG.add(info);
+	//rlib::GimmickInfo info("kibako128.IMO");
+	//info.pos.x = info.pos.y = info.pos.z = 0.f;
+	//info.size.x = info.size.y = info.size.z = 1.f;
+	//GIMMICK_MNG.add(info);
 
 	LOGI(TAG,"Complete rTestScene init");
 }
@@ -141,17 +129,17 @@ void rTestScene::update()
 	DEBUG_MSG("camera pos( x=%.2f, y=%.2f, z=%.2f)", cpos.x, cpos.y, cpos.z );
 
 
-	//static int t = 0;
-	//t++;
-	//if( 180 < t )
-	//{
-	//	sEffectManager->Create(FIRE_CHARGE,
-	//	Vector3(
-	//		0,
-	//		0,
-	//		0));
-	//	t=0;
-	//}
+	static int t = 0;
+	t++;
+	if( 180 < t )
+	{
+		sEffectManager->Create(FIRE_CHARGE,
+		Vector3(
+			0,
+			0,
+			0));
+		t=0;
+	}
 }
 
 void rTestScene::render()
@@ -161,12 +149,14 @@ void rTestScene::render()
 	rlib::BulletManager::getInst().render();
 	GIMMICK_MNG.render();
 
+	LOGI(TAG,"start particle render");
+
 	sEffectManager->Render();
 
+	LOGI(TAG,"Fin particle render");
 	mButton->render();
 	mStick->render();
-
-	//pParticle->render();
+	LOGI(TAG,"complete render");
 
 }
 
@@ -182,20 +172,17 @@ void rTestScene::exit()
 {
 	LOGI(TAG, "Execute rTestScene::exit");
 
-	delete pParticle;
-
 	if( mButton ){ delete mButton; mButton = NULL; }
 	LOGI(TAG,"delete Button");
 	if( mStick ){ delete mStick; mStick = NULL; }
 	LOGI(TAG,"delete mStick");
 
-	if( frameBuffer ){ delete frameBuffer; frameBuffer = NULL; }
-	LOGI(TAG,"delete frameBuffer");
-
 	rlib::BulletManager::getInst().clear();
 	LOGI(TAG,"clear bullet Manager");
 	GIMMICK_MNG.clear();
 	LOGI(TAG,"clear gimmick Manager");
+
+	sPlacementManager->Delete();
 
 	LOGI(TAG, "Complete rTestScene::exit");
 }
