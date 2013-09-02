@@ -301,6 +301,9 @@
     <ClCompile Include="CppSource\PlacementLib\tePlacement.cpp">
       <Filter>source\PlacementLib</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\utility\FolderPathManager.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -530,6 +533,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\PlacementLib\Placement.h">
       <Filter>source\PlacementLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\FolderPathManager.h">
+      <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

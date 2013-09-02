@@ -28,19 +28,4 @@ public class JNICallMethod {
 		}
 	}
 	
-	/*
-	 * ローカルフォルダーのパスを取得する
-	 */
-	static public String getLoaclDirectoryPath()
-	{
-		return localPath;
-	}
-	/*
-	 * SDカードのフォルダーパスを取得する
-	 */
-	static public String getSDCardDirectoryPath()
-	{
-		File folder = Environment.getExternalStorageDirectory();
-		return folder.getAbsolutePath();
-	}
 }

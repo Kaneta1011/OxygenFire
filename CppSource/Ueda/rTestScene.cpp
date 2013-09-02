@@ -14,6 +14,9 @@
 
 #include "PlacementLib\Placement.h"
 
+#include "GraphicsLib\Class\kMesh\kMeshLoadIMO.h"
+#include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
+
 using namespace RenderLib;
 using namespace klib::math;
 using namespace PlacementLib;
@@ -33,11 +36,14 @@ static const char* TAG = "rTestScene";
 
 using namespace klib;
 
+klib::kGraphicsPipline* pipeline = NULL;
+
 rTestScene::rTestScene()
 {
 	frameBuffer = NULL;
 	mButton = NULL;
 	mStick = NULL;
+	mpStage = NULL;
 }
 
 void rTestScene::entry()
@@ -50,7 +56,25 @@ void rTestScene::entry()
 	mStick = new rlib::AnalogStick();
 	this->mStick->init(-80, -50, 50);
 
+	//this->mpStage = new klib::kMesh("Placement/stobj1.mqo", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
 	sPlacementManager->Load("Placement/stage1.mqo");
+
+	pipeline = new klib::kGraphicsPipline();
+	pipeline->createVertexShader("vertex.txt");
+	pipeline->createPixelShader("pixel.txt");
+	pipeline->createBlendState(k_BLEND_NONE);
+	pipeline->createDepthStencilState(true,eLESS_EQUAL);
+	pipeline->createRasterizerState(eSOLID,eFRONT,false);
+
+	kInputElementDesc desc[]=
+	{
+		{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+		{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
+		{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+		{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
+	};
+	u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
+	pipeline->complete(desc,descnum);
 
 	rlib::BulletManager::getInst().init();
 	GIMMICK_MNG.init();
@@ -86,7 +110,7 @@ void rTestScene::update()
 	mStick->update();
 	mButton->update();
 
-	static klib::math::Vector3 cpos(0,0,-10);
+	static klib::math::Vector3 cpos(0,0,-50);
 	if( this->mStick->enable() )
 	{
 		klib::math::Vector3 front = -cpos;
@@ -95,10 +119,17 @@ void rTestScene::update()
 		front.normalize();
 		side.normalize();
 
-		klib::math::Vector3 move = front*this->mStick->getY() + side*this->mStick->getX();
+		klib::math::Vector3 move = side*this->mStick->getX();
 		move.normalize();
 		move *= 0.5f;
 		cpos += move;
+		cpos.y += this->mStick->getY();
+		RenderLib::RenderState::Setting_ViewMatrix( cpos, klib::math::Vector3(0,0,0), klib::math::Vector3(0,1,0));
+	}
+	if( mlInput::isPinch() )
+	{
+		float move = mlInput::getPinchMoveLength();
+		cpos.z += move;
 		RenderLib::RenderState::Setting_ViewMatrix( cpos, klib::math::Vector3(0,0,0), klib::math::Vector3(0,1,0));
 	}
 
@@ -128,7 +159,6 @@ void rTestScene::update()
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
 	DEBUG_MSG("camera pos( x=%.2f, y=%.2f, z=%.2f)", cpos.x, cpos.y, cpos.z );
 
-
 	static int t = 0;
 	t++;
 	if( 180 < t )
@@ -147,17 +177,14 @@ void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
+	//mpStage->Render(pipeline);
 	rlib::BulletManager::getInst().render();
 	GIMMICK_MNG.render();
 
-	LOGI(TAG,"start particle render");
-
 	sEffectManager->Render();
 
-	LOGI(TAG,"Fin particle render");
 	mButton->render();
 	mStick->render();
-	LOGI(TAG,"complete render");
 
 }
 
@@ -172,6 +199,8 @@ void rTestScene::render()
 void rTestScene::exit()
 {
 	LOGI(TAG, "Execute rTestScene::exit");
+
+	if( pipeline ) { delete pipeline; pipeline = NULL; }
 
 	if( mButton ){ delete mButton; mButton = NULL; }
 	LOGI(TAG,"delete Button");

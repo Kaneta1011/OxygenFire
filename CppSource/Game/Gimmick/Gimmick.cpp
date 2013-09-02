@@ -8,6 +8,7 @@
 #include "PlacementLib\Placement.h"
 
 #include "utility\utility.h"
+#include "utility\debugMessageMng.h"
 
 //#include "Tool\Particle.h"
 
@@ -52,7 +53,7 @@ void Gimmick::render(klib::kMesh* mesh, klib::kGraphicsPipline* pipeline)
 {
 	mesh->setPosition(this->mPos);
 	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange*2.f);
+	mesh->setScale(this->mRange*0.1f);
 	mesh->Update();
 	mesh->Render(pipeline);
 }
@@ -160,6 +161,8 @@ int GimmickManager::update()
 			it++;
 		}
 	}
+
+	DEBUG_MSG("gimmick num = %d", this->mData.size());
 	return MSG_NON;
 }
 

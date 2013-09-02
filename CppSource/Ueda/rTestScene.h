@@ -3,6 +3,10 @@
 
 #include "FrameWork\Class\IScene\IScene.h"
 
+namespace klib{
+	class kMesh;
+}
+
 namespace rlib{
 	class FrameBuffer;
 	class CircleButton;
@@ -22,6 +26,7 @@ private:
 	rlib::FrameBuffer			*frameBuffer;
 	rlib::CircleButton			*mButton;
 	rlib::AnalogStick			*mStick;
+	klib::kMesh					*mpStage;
 };
 
 #endif

@@ -16,7 +16,7 @@ const static int STR_LENGTH = 128;
 struct PlacementData
 {
 	int Num;
-	sp<Vector3> spPos;		
+	sp<Vector3> spPos;
 	sp<Vector3> spScale;
 	sp<Vector3> spAngle;
 };

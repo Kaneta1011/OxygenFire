@@ -20,6 +20,7 @@ import java.io.File;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -52,9 +53,9 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		
 		//C++ë§ÇÃèâä˙âªÇ»Ç«
 		JNICallMethod.assets = getAssets();
-		JNICallMethod.localPath = this.getFilesDir().getAbsolutePath();
 		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
 		GL2JNILib.debugInit(this);
+		GL2JNILib.initFolderPath(this.getFilesDir().getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath());
 	}
 
 	private void writeLogSystemInfo()

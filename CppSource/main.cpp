@@ -21,6 +21,7 @@
 #include "utility\assetsLoader.h"
 #include "input\Input.h"
 #include "utility\debugMessageMng.h"//デバッグ用の文字列表示のためのヘッダー
+#include "utility\FolderPathManager.h"
 
 #include "main.h"
 
@@ -185,6 +186,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	LOGI(TAG, "Execute onDestory.");
 	
 	mlInput::clear();
+	FolderPathManager::clear();
 
 	LOGI(TAG, "Complete onDestory.");
 }

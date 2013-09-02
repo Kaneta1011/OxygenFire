@@ -66,6 +66,7 @@
     <ClCompile Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.cpp" />
     <ClCompile Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.cpp" />
     <ClCompile Include="CppSource\utility\debugMessageMng.cpp" />
+    <ClCompile Include="CppSource\utility\FolderPathManager.cpp" />
     <ClCompile Include="CppSource\utility\textLoader.cpp" />
     <ClCompile Include="CppSource\utility\utility.cpp" />
     <ClCompile Include="ICharacter.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.h" />
     <ClInclude Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.h" />
     <ClInclude Include="CppSource\utility\debugMessageMng.h" />
+    <ClInclude Include="CppSource\utility\FolderPathManager.h" />
     <ClInclude Include="CppSource\utility\kutility.h" />
     <ClInclude Include="CppSource\utility\SinglyLinkedList.h" />
     <ClInclude Include="CppSource\utility\textLoader.h" />

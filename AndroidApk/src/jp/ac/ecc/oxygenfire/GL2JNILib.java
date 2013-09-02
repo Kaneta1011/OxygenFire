@@ -46,6 +46,11 @@ public class GL2JNILib {
      public static native void onDestory();
 
      /*
+      * フォルダーパス用
+      */
+     public static native void initFolderPath(String localPath, String SDCardPath);
+     
+     /*
       * デバッグ用
       */
      public static native void debugInit(Debug_Oxygenfire_Activity activity);
