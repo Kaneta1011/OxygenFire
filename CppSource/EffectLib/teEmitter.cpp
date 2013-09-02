@@ -1,9 +1,10 @@
 #include	"Effectlib\\Emitter.h"
-using namespace EffectLib;
 #include	"utility\textLoader.h"
+
 #include	<iostream>
 #include	<math.h>
 
+using namespace EffectLib;
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -34,7 +35,7 @@ EmitterData::EmitterData()
 void Emitter::Clear()
 {
 	m_Count = 0;
-
+	m_LoopFlag = false;
 	m_spData.SetPtr(new EmitterData);
 }
 
@@ -102,6 +103,12 @@ bool ParticleEmitter::Update()
 	//	スタート開始調整
 	if( Adjustment_StartFrame() == false ){ return true; }
 
+	if( true == m_LoopFlag ){
+		if( m_Count >  ( m_MaxLife / 2 ) ){
+			m_Count = m_MaxLife / 2;
+		}
+	}
+
 	//	寿命が０以下ならエミッター消去
 	if( Adjustment_LifeEnd() == true ){ return false; }
 
@@ -147,7 +154,12 @@ bool ParticleEmitter::Adjustment_StartFrame()
 
 bool ParticleEmitter::Adjustment_LifeEnd()
 {
-	m_Count++;
+
+	if( true == m_LoopFlag ){
+		if( m_MaxLife == 1 ){ m_Count = 0; }
+	}else{
+		m_Count++;
+	}
 
 	if( m_Count > m_spData->life ){ return true; } 
 
@@ -214,10 +226,6 @@ void ParticleEmitter::Generation_Particle()
 	colE.blue = 
 		m_spEffectData->colorE.blue + 
 		Rand( 0, (float)m_spEffectData->rColorE.blue );
-
-	LOGI("---------------------------------------------------------\n");
-LOGI("%f %f %f", vel.x,vel.y,vel.z);
-LOGI("---------------------------------------------------------\n");
 
 		sParticle->Setting(
 			p,

@@ -131,8 +131,6 @@ void r2DRenderer::getDrawOffset(float* x, float *y)
 //		r2DPipelineƒNƒ‰ƒX
 //
 //================================================================
-#include "Ueda\TmpShader\ShaderManager.h"
-
 kTechnique*	r2DPipeline::spPipeline = NULL;
 
 void r2DPipeline::init()
@@ -141,8 +139,8 @@ void r2DPipeline::init()
 	spPipeline = new kTechnique();
 	spPipeline->createVertexShader("shader/r2d.vs");
 	spPipeline->createPixelShader("shader/r2d.fs");
-	spPipeline->bindAttribLocation(0,"VPosition");
-	spPipeline->bindAttribLocation(1,"VTexCoord");
+	spPipeline->bindAttribLocation(0,"Pos");
+	spPipeline->bindAttribLocation(1,"Tex");
 	spPipeline->createBlendState(k_BLEND_ALPHA);
 	spPipeline->createDepthStencilState(true,eLESS_EQUAL);
 	spPipeline->createRasterizerState(eWIRE,eNONE,false);

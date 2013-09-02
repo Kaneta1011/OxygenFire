@@ -65,6 +65,7 @@ LOGI("---------------------------------------------------------\n");
 void EmitterSet::Clear()
 {
 	m_Frame = -1;
+	m_UseNum = 0;
 }
 
 void EmitterSet::Destroy()
@@ -79,7 +80,7 @@ void EmitterSet::Load_TES( char* Filename )
 	//	エミッターの最大数取得
 	m_spTextLoader->Search( "EmitterMax" );
 	int max = m_spTextLoader->LoadInt();
-
+	m_UseNum = max;
 
 	//
 	//	@for エミッターの最大数分ループ
@@ -203,10 +204,6 @@ void EmitterSet::Load_TES( char* Filename )
 		t->LoadName( workN );
 		strcpy( p->getEffectData()->file, workN );
 
-LOGI("---------------------------------------------------------\n");
-LOGI("%s",workN);
-LOGI("---------------------------------------------------------\n");
-
 		sParticle->Setting_Texture( workN );
 
 
@@ -233,6 +230,8 @@ LOGI("---------------------------------------------------------\n");
 		p->getEffectData()->life = t->LoadInt();
 		p->getEffectData()->rLifeMin = t->LoadInt();
 		p->getEffectData()->rLifeMax = t->LoadInt();
+
+		p->setMaxLife(p->getEffectData()->life);
 
 		//[in]	WindPower
 		t->Search("WindPower");
@@ -330,24 +329,74 @@ LOGI("---------------------------------------------------------\n");
 	}
 }
 
-bool EmitterSet::Update()
+void EmitterSet::Setting_Position(const Vector3& Pos)
 {
-	m_Frame++;
-
-	bool updateFlag = false;
-
+	int use = 0;
 	//
 	//	@for EffectEmitter最大数分ループ
 	//
 	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
 	{
-		//	@if 使われてないので終了
+		if( use >= m_UseNum ){ break; }
+		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
+
+		m_spEffectEmitter[n]->setPos(Pos);
+		use++;
+	}
+}
+
+void EmitterSet::Loop()
+{
+	int use = 0;
+	//
+	//	@for EffectEmitter最大数分ループ
+	//
+	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
+	{
+		if( use >= m_UseNum ){ break; }
+		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
+
+		m_spEffectEmitter[n]->setLoopFlag(true);
+		use++;
+	}
+}
+
+void EmitterSet::End()
+{
+	int use = 0;
+	//
+	//	@for EffectEmitter最大数分ループ
+	//
+	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
+	{
+		if( use >= m_UseNum ){ break; }
+		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
+
+		m_spEffectEmitter[n]->setLoopFlag(false);
+		use++;
+	}
+}
+
+bool EmitterSet::Update()
+{
+	m_Frame++;
+
+	bool updateFlag = false;
+	int use = 0;
+	//
+	//	@for EffectEmitter最大数分ループ
+	//
+	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
+	{
+		if( use >= m_UseNum ){ break; }
 		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
 
 		if( m_spEffectEmitter[n]->Update() == true ){
+			use++;
 			updateFlag = true;
 		}else{
 			m_spEffectEmitter[n].Clear();
+			m_UseNum--;
 			continue;
 		}
 	}
@@ -357,10 +406,13 @@ bool EmitterSet::Update()
 
 void EmitterSet::Render()
 {
+	int use=0;
 	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
 	{
+		if( use >= m_UseNum ){ break; }
 		//	@if 使われてないので終了
 		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
 		m_spEffectEmitter[n]->Render();
+		use++;
 	}
 }

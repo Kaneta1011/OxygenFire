@@ -1,14 +1,44 @@
+//	use .h
 #include	"Shader.h"
-
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<GLES2/gl2.h>
 #include	<GLES2/gl2ext.h>
 #include	"GraphicsLib\Class\tRenderState\RenderState.h"
-#include	"utility\utility.h"
 
+#define  LOG_TAG    "libgl2jni"
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 //	use namespace
 using namespace RenderLib;
+
+
+
+bool isShaderError(GLenum shaderType,GLuint shader)
+{
+GLint compiled = 0;
+glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+if (!compiled) {
+	GLint infoLen = 0;
+	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+	//if(infoLen==0)return false;
+	char* buf = new char[infoLen];
+	glGetShaderInfoLog(shader, infoLen, NULL, buf);
+	eprintf("Could not compile shader %d:\n%s\n",shaderType, buf);
+	delete[] buf;
+
+	glDeleteShader(shader);
+	shader = 0;
+}
+else
+{
+	dprintf("Shader compile success\n");
+	return false;
+}
+return true;
+}
+
+
 
 
 //----------------------------------------------------------------------
@@ -25,7 +55,14 @@ void Shader::Load(GLuint* Shader,GLenum Type,const char* Filename)
 
 	glShaderSource(*Shader, 1, &Filename, NULL);
   glCompileShader(*Shader);
+
+
+
+	isShaderError(Type,*Shader);
 }
+
+
+
 
 void Shader::Init(char* VS,char* FS)
 {
@@ -44,8 +81,9 @@ void Shader::Init(char* VS,char* FS)
 	glAttachShader(m_Program,fragmentShader);
 
 	//	Bind
-	glBindAttribLocation(m_Program,VB_POSITION,"VPosition");
-	glBindAttribLocation(m_Program,VB_TEXCOORD,"VTexCoord");
+	glBindAttribLocation(m_Program,VB_POSITION,"Pos");
+	glBindAttribLocation(m_Program,VB_TEXCOORD,"Tex");
+	glBindAttribLocation(m_Program,VB_COLOR,"Color");
 
 	glLinkProgram(m_Program);
 
@@ -69,7 +107,7 @@ void Shader::Send_Matrix(const Matrix& mWorld)
 	//	WMP
 	Matrix wvp = 
 		mWorld * 
-		RenderState::getViewMatrix() *
+		RenderState::getViewMatrix() * 
 		RenderState::getProjectionMatrix();
 
   SetValue("WVP", wvp );
@@ -117,6 +155,8 @@ End();
 }
 
 
+
+
 void Shader::SetValue( 
 	const char* Name,
 	float x, float y, float z, float w)
@@ -157,6 +197,7 @@ Begin();
 End();
 }
 
+
 void Shader::SetValue_No_BeginEnd( 
 	const char* Name, int Value )
 {
@@ -165,10 +206,8 @@ void Shader::SetValue_No_BeginEnd(
   {
       glUniform1i(loc, Value);
   } else {
-	  LOGE("TmpShader", "Failure SetValue_No_BeginEnd name=%s", Name);
       assert(!"ëóêMÇ…ÇµÇ¡ÇœÇ¢");
   }
-
 }
 
 int Shader::getUniformLocation(

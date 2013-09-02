@@ -46,13 +46,14 @@ rTestScene::rTestScene()
 	mStick = NULL;
 }
 
-#include "Ueda\TmpShader\ShaderManager.h"
+rlib::r2DObj* pParticle;
 
 void rTestScene::entry()
 {
 	LOGI(TAG,"Execute rTestScene init");
 
-	ShaderLib::ShaderManager::Init();
+	pParticle = new rlib::r2DObj();
+	pParticle->load("effect/particle/e.png");
 
 	mButton = new rlib::CircleButton();
 	mButton->init("testImage.png", 50, -50, 50.f);
@@ -139,6 +140,18 @@ void rTestScene::update()
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
 	DEBUG_MSG("camera pos( x=%.2f, y=%.2f, z=%.2f)", cpos.x, cpos.y, cpos.z );
 
+
+	//static int t = 0;
+	//t++;
+	//if( 180 < t )
+	//{
+	//	sEffectManager->Create(FIRE_CHARGE,
+	//	Vector3(
+	//		0,
+	//		0,
+	//		0));
+	//	t=0;
+	//}
 }
 
 void rTestScene::render()
@@ -152,6 +165,9 @@ void rTestScene::render()
 
 	mButton->render();
 	mStick->render();
+
+	//pParticle->render();
+
 }
 
 //2D速度テストコード
@@ -166,13 +182,12 @@ void rTestScene::exit()
 {
 	LOGI(TAG, "Execute rTestScene::exit");
 
-	ShaderLib::ShaderManager::Delete();
+	delete pParticle;
 
 	if( mButton ){ delete mButton; mButton = NULL; }
 	LOGI(TAG,"delete Button");
 	if( mStick ){ delete mStick; mStick = NULL; }
 	LOGI(TAG,"delete mStick");
-
 
 	if( frameBuffer ){ delete frameBuffer; frameBuffer = NULL; }
 	LOGI(TAG,"delete frameBuffer");

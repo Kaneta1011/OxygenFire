@@ -4,6 +4,8 @@
 #include	"GraphicsLib\Class\rTexture\Texture.h"
 #include	"StandardLib\\SmartPointer.h"
 #include	"EffectLib\\Item.h"
+#include	"GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h"
+
 #include	<GLES2/gl2.h>
 #include	<GLES2/gl2ext.h>
 typedef unsigned long       DWORD;
@@ -136,6 +138,8 @@ private:
 	sp<ParticleData>		m_spParticleData;
 	sp<Vertex>					m_spVertexBuf;
 	static Vector3			s_WindVec;
+
+	sp<klib::kTechnique> m_spPipeline;
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

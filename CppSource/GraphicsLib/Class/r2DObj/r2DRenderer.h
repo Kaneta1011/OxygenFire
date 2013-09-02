@@ -4,7 +4,6 @@
 #include "math\kmathf.h"
 #include "GraphicsLib\Class\tRenderState\RenderState.h"
 #include "GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h"
-#include "Ueda\TmpShader\Shader.h"
 
 namespace rlib
 {

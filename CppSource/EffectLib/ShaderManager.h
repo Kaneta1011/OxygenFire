@@ -1,12 +1,11 @@
 #ifndef __teShaderManager_H__
 #define __teShaderManager_H__
+#include	"Shader.h"
 
-#include	"GraphicsLib\Class\tRenderState\RenderState.h"
-#include	"Ueda\TmpShader\Shader.h"
 
 namespace ShaderLib{
 
-	using namespace RenderLib;
+using namespace RenderLib;
 
 //	なんかテンプレートつかわれへんから
 //	スマポとシングルトンつかわずに
@@ -19,12 +18,12 @@ class ShaderManager
 public:
 	static void Init();
 	static void Delete();
+	static Shader* getSimple(){return m_spSimple;}
 	static Shader* getSprite(){return m_spSprite;}
-
-	static void Create_Shader(Shader** pShader,const char* VS, const char* FS);
-
 private:
+	static void Create_Shader(Shader** pShader,char* VS,char* FS);
 	//	Data
+	static Shader* m_spSimple;
 	static Shader* m_spSprite;
 };
 

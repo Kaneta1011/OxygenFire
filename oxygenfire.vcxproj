@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\DebugLib\teDebug.cpp" />
+    <ClCompile Include="CppSource\EffectLib\Shader.cpp" />
+    <ClCompile Include="CppSource\EffectLib\ShaderManager.cpp" />
     <ClCompile Include="CppSource\EffectLib\teEffect.cpp" />
     <ClCompile Include="CppSource\EffectLib\teEffectItem.cpp" />
     <ClCompile Include="CppSource\EffectLib\teEmitter.cpp" />
@@ -25,7 +27,6 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DObj.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DRenderer.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp" />
-    <ClCompile Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\rTexture\Texture.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\tIObject3D\Object3D.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\tRenderState\RenderLib.cpp" />
@@ -60,8 +61,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Android'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CppSource\Ueda\rTestScene.cpp" />
-    <ClCompile Include="CppSource\Ueda\TmpShader\Shader.cpp" />
-    <ClCompile Include="CppSource\Ueda\TmpShader\ShaderManager.cpp" />
     <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
     <ClCompile Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.cpp" />
     <ClCompile Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.cpp" />
@@ -78,6 +77,8 @@
     <ClInclude Include="CppSource\EffectLib\EmitterSet.h" />
     <ClInclude Include="CppSource\EffectLib\Item.h" />
     <ClInclude Include="CppSource\EffectLib\Particle.h" />
+    <ClInclude Include="CppSource\EffectLib\Shader.h" />
+    <ClInclude Include="CppSource\EffectLib\ShaderManager.h" />
     <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h" />
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
     <ClInclude Include="CppSource\Game\Bullet\Bullet.h" />
@@ -100,7 +101,6 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DObj.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DRenderer.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h" />
-    <ClInclude Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\rTexture\Texture.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\tIObject3D\Object3D.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\tRenderState\RenderState.h" />
@@ -136,8 +136,6 @@
     <ClInclude Include="CppSource\Thread\Class\kThread\kThread.h" />
     <ClInclude Include="CppSource\types.h" />
     <ClInclude Include="CppSource\Ueda\rTestScene.h" />
-    <ClInclude Include="CppSource\Ueda\TmpShader\Shader.h" />
-    <ClInclude Include="CppSource\Ueda\TmpShader\ShaderManager.h" />
     <ClInclude Include="CppSource\utility\assetsLoader.h" />
     <ClInclude Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.h" />
     <ClInclude Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.h" />

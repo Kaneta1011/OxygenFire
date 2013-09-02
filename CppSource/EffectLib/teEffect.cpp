@@ -1,6 +1,6 @@
 #include	"EffectLib\\Effect.h"
-#include	"GraphicsLib\Class\tRenderState\RenderState.h"
 #include	"EffectLib\\Particle.h"
+
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -12,7 +12,7 @@ EffectManager_Singleton* EffectManager_Singleton::singleton = NULL;
 
 void EffectManager::Clear()
 {
-
+	m_UseNum = 0;
 }
 
 void EffectManager::Destroy()
@@ -30,17 +30,17 @@ void EffectManager::Initialize()
 
 void EffectManager::Update()
 {
-	//
-	//	@for EffectEmitter最大数分ループ
-	//
+	int use=0;
 	for( int n=0; n<EMITTERSET_MAX; n++ )
 	{
-		//	@if 使われてないので終了
+		if( use >= m_UseNum ){ break; }
 		if( m_spEffectEmitterSet[n].GetRefNum() == 0 ){ continue; }
 
 		if( m_spEffectEmitterSet[n]->Update() == true ){
+			use++;
 		}else{
 			m_spEffectEmitterSet[n].Clear();
+			m_UseNum--;
 			continue;
 		}
 	}
@@ -50,11 +50,13 @@ void EffectManager::Update()
 
 void EffectManager::Render()
 {
+	int use = 0;
 	for( int n=0; n<EMITTERSET_MAX; n++ )
 	{
-		//	@if 使われてないので終了
+		if( use >= m_UseNum ){ break; }
 		if( m_spEffectEmitterSet[n].GetRefNum() == 0 ){ continue; }
 
+		use++;
 		m_spEffectEmitterSet[n]->Render();
 	}
 
@@ -62,7 +64,7 @@ void EffectManager::Render()
 	sParticle->Render();
 }
 
-sp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type)
+wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type)
 {
 	for( int n=0; n<EMITTERSET_MAX; n++ )
 	{
@@ -70,16 +72,16 @@ sp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type)
 		if( m_spEffectEmitterSet[n].GetRefNum() != 0 ){ continue; }
 
 		Create_EmitterSet(Type,n);
+
+
+
+		return m_spEffectEmitterSet[n];
 	}
+	return NULL;
 }
 
-void EffectManager::Create(eEFFECT_TYPE Type,const Vector3& Position)
+wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type,const Vector3& Position)
 {
-
-	LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
-
 	for( int n=0; n<EMITTERSET_MAX; n++ )
 	{
 		//	@if 使われてないので終了
@@ -88,74 +90,49 @@ LOGI("---------------------------------------------------------\n");
 		Create_EmitterSet(Type,n);
 
 		m_spEffectEmitterSet[n]->Create(Position);
-		break;
+
+		return m_spEffectEmitterSet[n];
 	}
+	return NULL;
 }
 
 void EffectManager::Create_EmitterSet(eEFFECT_TYPE Type,int n)
 {
 	m_spEffectEmitterSet[n].SetPtr(new EmitterSet);
+
+	m_UseNum++;
+
 	switch( Type )
 	{
 	case TEST:
 		m_spEffectEmitterSet[n]->Initialize("effect/test.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case FIRE_BALL:
 		m_spEffectEmitterSet[n]->Initialize("effect/[E]_fireball.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case FIRE_CHARGE:
 		m_spEffectEmitterSet[n]->Initialize("effect/[E]_firecharge.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case BLUE_FIRE:
 		m_spEffectEmitterSet[n]->Initialize("effect/bluefire.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case EXPRO:
 		m_spEffectEmitterSet[n]->Initialize("effect/expro.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case FIRE:
 		m_spEffectEmitterSet[n]->Initialize("effect/fire.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case FIRE_ANIME:
 		m_spEffectEmitterSet[n]->Initialize("effect/fireanime.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case FIRE_SP:
 		m_spEffectEmitterSet[n]->Initialize("effect/firesp.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case WIND:
 		m_spEffectEmitterSet[n]->Initialize("effect/wind.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	case YOSI_WIND:
 		m_spEffectEmitterSet[n]->Initialize("effect/yosiwind.tes");
-		LOGI("---------------------------------------------------------\n");
-LOGI("%d\n%s",__LINE__,__FILE__);
-LOGI("---------------------------------------------------------\n");
 		break;
 	}
 }

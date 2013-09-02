@@ -115,9 +115,6 @@
     <Filter Include="source\GraphicsLib\Class\r2DObj">
       <UniqueIdentifier>{ba43c65e-88b4-40e9-870f-59992fc910b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\GraphicsLib\Class\rPointSprite">
-      <UniqueIdentifier>{16fb4b89-85f2-49e4-8324-31be3e671185}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\GraphicsLib\Class\rFrameBuffer">
       <UniqueIdentifier>{d757f001-25b6-409e-a4df-e45653dedde8}</UniqueIdentifier>
     </Filter>
@@ -126,9 +123,6 @@
     </Filter>
     <Filter Include="source\GraphicsLib\Class\rTexture">
       <UniqueIdentifier>{4b8bdc7e-eae8-4597-aeb3-0e6c1ca299c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\Ueda\TmpShader">
-      <UniqueIdentifier>{11861543-75f4-4c31-91f9-dc1046ed83c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\GraphicsLib\Class\tRenderState">
       <UniqueIdentifier>{8c4e7f65-e61c-4868-bbd2-8ab0fa099ae5}</UniqueIdentifier>
@@ -255,12 +249,6 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\rTexture\Texture.cpp">
       <Filter>source\GraphicsLib\Class\rTexture</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\Ueda\TmpShader\Shader.cpp">
-      <Filter>source\Ueda\TmpShader</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\Ueda\TmpShader\ShaderManager.cpp">
-      <Filter>source\Ueda\TmpShader</Filter>
-    </ClCompile>
     <ClCompile Include="CppSource\GraphicsLib\Class\tRenderState\RenderLib.cpp">
       <Filter>source\GraphicsLib\Class\tRenderState</Filter>
     </ClCompile>
@@ -276,9 +264,6 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp">
       <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.cpp">
-      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
-    </ClCompile>
     <ClCompile Include="ICharacter.cpp" />
     <ClCompile Include="CppSource\Game\Bullet\Bullet.cpp">
       <Filter>source\Game\Bullet</Filter>
@@ -288,6 +273,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\DebugLib\teDebug.cpp">
       <Filter>source\DebugLib</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\EffectLib\teParticle.cpp">
+      <Filter>source\EffectLib</Filter>
     </ClCompile>
     <ClCompile Include="CppSource\EffectLib\teEffect.cpp">
       <Filter>source\EffectLib</Filter>
@@ -301,7 +289,10 @@
     <ClCompile Include="CppSource\EffectLib\teEmitterSet.cpp">
       <Filter>source\EffectLib</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\EffectLib\teParticle.cpp">
+    <ClCompile Include="CppSource\EffectLib\ShaderManager.cpp">
+      <Filter>source\EffectLib</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\EffectLib\Shader.cpp">
       <Filter>source\EffectLib</Filter>
     </ClCompile>
   </ItemGroup>
@@ -483,12 +474,6 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\rTexture\Texture.h">
       <Filter>source\GraphicsLib\Class\rTexture</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\Ueda\TmpShader\Shader.h">
-      <Filter>source\Ueda\TmpShader</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\Ueda\TmpShader\ShaderManager.h">
-      <Filter>source\Ueda\TmpShader</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\tRenderState\RenderState.h">
       <Filter>source\GraphicsLib\Class\tRenderState</Filter>
     </ClInclude>
@@ -500,9 +485,6 @@
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h">
       <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\GraphicsLib\Class\rPointSprite\rPointSprite.h">
-      <Filter>source\GraphicsLib\Class\rPointSprite</Filter>
     </ClInclude>
     <ClInclude Include="ICharacter.h" />
     <ClInclude Include="kPlayer.h" />
@@ -519,6 +501,9 @@
     <ClInclude Include="CppSource\DebugLib\Debug.h">
       <Filter>source\DebugLib</Filter>
     </ClInclude>
+    <ClInclude Include="CppSource\EffectLib\Particle.h">
+      <Filter>source\EffectLib</Filter>
+    </ClInclude>
     <ClInclude Include="CppSource\EffectLib\Effect.h">
       <Filter>source\EffectLib</Filter>
     </ClInclude>
@@ -531,7 +516,10 @@
     <ClInclude Include="CppSource\EffectLib\Item.h">
       <Filter>source\EffectLib</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\EffectLib\Particle.h">
+    <ClInclude Include="CppSource\EffectLib\ShaderManager.h">
+      <Filter>source\EffectLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\EffectLib\Shader.h">
       <Filter>source\EffectLib</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,8 +3,7 @@
 #include	<GLES2/gl2ext.h>
 #include	<iostream>
 #include	"GraphicsLib\Class\tRenderState\RenderState.h"
-#include	"Ueda\TmpShader\ShaderManager.h"
-
+#include	"ShaderManager.h"
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -88,6 +87,8 @@ void Particle::Destroy()
 bool Particle::Initialize()
 {
 	m_spParticleData.SetPtr(new ParticleData());
+
+	ShaderLib::ShaderManager::Init();
 
 	return true;
 }
@@ -455,20 +456,10 @@ void Particle::Render()
 	}
 	//	Uniform送信
 	ShaderManager::getSprite()->Send_Matrix(m_Matrix);
-	
-#if 0
-	ShaderManager::getSprite()->SetValue("W",
-		m_Matrix);
-
-	ShaderManager::getSprite()->SetValue("V",
-		RenderState::getViewMatrix());
-
-	ShaderManager::getSprite()->SetValue("P",
-		RenderState::getProjectionMatrix());
-#endif
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);// 0 を入れておかないといけない
 
+	glDisable(GL_DEPTH_TEST);
 ShaderManager::getSprite()->Begin();
 
 	//
@@ -498,7 +489,7 @@ ShaderManager::getSprite()->Begin();
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
 		//	テクスチャ情報設定
-		m_spTexture[n]->spTexture->Setting(Texture::ACTIVE_0);
+		m_spTexture[n]->spTexture->Setting(rlib::Texture::ACTIVE_0);
 		ShaderManager::getSprite()->SetValue_No_BeginEnd( "uTex", 0 );
 
 		//	描画

@@ -11,8 +11,6 @@
 
 #include "GraphicsLib\Class\tRenderState\RenderState.h"
 
-#include "Ueda\TmpShader\Shader.h"
-
 namespace klib
 {
 	class kGraphicsPipline;

@@ -4,7 +4,6 @@
 #include	"StandardLib\\SmartPointer.h"
 #include	"EffectLib\\Emitter.h"
 #include	"utility\textLoader.h"
-#include	<list>
 
 namespace EffectLib{
 using namespace klib::math;
@@ -17,15 +16,29 @@ static const int EFFECT_EMITTER_MAX = 512;
 class EmitterSet
 {
 public:
+	//	Setting 各種パラメータを設定
+	void Setting_Position(const Vector3& Pos);
+
+	//	Emitterを殺したくない時
+	void Loop();
+
+	//	Emitterを終了
+	void End();
+	
+
+
+	//===========================================================
+	//				↓↓↓↓↓↓  気にしなくてOK  ↓↓↓↓↓↓	[使用禁止]
+	//===========================================================
+	//	Create
+	void Create( const Vector3& Position );
+	void Create( const Vector3& Position, const Vector3& VelosityTarget );
 	//	Initialize
 	bool Initialize(char* File);
 	//	Update
 	bool Update();
 	//	Render
 	void Render();
-	//	Create
-	void Create( const Vector3& Position );
-	void Create( const Vector3& Position, const Vector3& VelosityTarget );
 	//	BasicSet
 	EmitterSet(){Clear();}void Clear();
 	virtual ~EmitterSet(){Destroy();}void Destroy();
@@ -36,6 +49,7 @@ protected:
 	sp<Emitter>	m_spEffectEmitter[EFFECT_EMITTER_MAX];
 	//	Data
 	int							m_Frame;
+	int							m_UseNum;
 	sp<textLoader>	m_spTextLoader;
 };
 

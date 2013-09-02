@@ -3,6 +3,7 @@
 #include	"math\\kmathf.h"
 #include	"StandardLib\\SmartPointer.h"
 #include	"EffectLib\\EmitterSet.h"
+
 #include	<iostream>
 
 namespace EffectLib{
@@ -43,16 +44,16 @@ public:
 	//
 	//	この関数で好きなエミッターセットを使う
 	//	
-	sp<EmitterSet> Create(eEFFECT_TYPE Type);
-	void Create( eEFFECT_TYPE Type, const Vector3& Position );
+	wp<EmitterSet> Create(eEFFECT_TYPE Type);
+	wp<EmitterSet> Create( eEFFECT_TYPE Type, const Vector3& Position );
 	//void Create( eEFFECT_TYPE Type, const Vector3& Position, const Vector3& VelocityTarget );
-
 
 	EffectManager(){Clear();}void Clear();
 	~EffectManager(){Destroy();}void Destroy();
 private:
 	void Create_EmitterSet(eEFFECT_TYPE Type,int Num);
 	sp<EmitterSet>	m_spEffectEmitterSet[EMITTERSET_MAX];
+	int m_UseNum;
 };
 
 

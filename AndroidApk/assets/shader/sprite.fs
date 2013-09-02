@@ -14,7 +14,7 @@ void main()
 
   //vec4 c = vec4( io_Color, 1, 1 );
 
-  gl_FragColor =  texColor * io_Color ;
+  gl_FragColor =  texColor * io_Color;
 
   //unsigned int c = unsigned int(test);
 

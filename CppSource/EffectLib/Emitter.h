@@ -50,6 +50,8 @@ public:
 	virtual void Create_Emitter(){}
 	//	set
 	void setPos(const Vector3& Pos){m_Pos=Pos;}
+	void setLoopFlag(bool Flag){m_LoopFlag=Flag;}
+	void setMaxLife(int Value){m_MaxLife=Value;}
 	//	setting
 	void Setting_Pos(const Vector3& Pos);
 	//	get
@@ -64,6 +66,8 @@ protected:
 	sp<EmitterData> m_spData;
 	int					m_Count;
 	Vector3			m_Pos;
+	bool				m_LoopFlag;
+	int					m_MaxLife;
 };
 
 //----------------------------------------

@@ -1,12 +1,10 @@
 #include "../r2DObj.h"
 
-#include "Ueda\TmpShader\ShaderManager.h"
 #include "GraphicsLib\Class\rFrameBufer\rFrameBuffer.h"
 #include "GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h"
 
 using namespace klib;
 using namespace math;
-using namespace ShaderLib;
 using namespace rlib;
 
 r2DObj::r2DObj():
