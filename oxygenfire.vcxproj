@@ -21,6 +21,7 @@
     <ClCompile Include="CppSource\EffectLib\teParticle.cpp" />
     <ClCompile Include="CppSource\Game\Bullet\Bullet.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
+    <ClCompile Include="CppSource\Game\SaveManager.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="CppSource\Game\Bullet\Bullet.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
     <ClInclude Include="CppSource\Game\IObject\IObject.h" />
+    <ClInclude Include="CppSource\Game\SaveManager.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kBlendState\kBlendState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDepthStencilState\kDepthStencilState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h" />

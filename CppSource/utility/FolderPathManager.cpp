@@ -31,14 +31,6 @@ void FolderPathManager::init(JNIEnv *env, jstring localPath, jstring sdCardPath)
 		env->ReleaseStringUTFChars(sdCardPath, org);
 		LOGI(TAG, "sdCardPath = %s | len = %d", sSDCardPath, sSDCardPathLength);
 	}
-	char* hoge;
-	setLoaclPath(&hoge, "hoge");
-	LOGI("test", "hoge = %s", hoge);
-	delete [] hoge;
-	setSDCardPath(&hoge, "hoge");
-	LOGI("test", "hoge = %s", hoge);
-	delete [] hoge;
-
 	LOGI(TAG, "Complete FolderPathManager init");
 }
 
@@ -51,7 +43,7 @@ void FolderPathManager::clear()
 }
 
 
-void FolderPathManager::setLoaclPath(char** out, const char* fileName)
+void FolderPathManager::setLocalPath(char** out, const char* fileName)
 {
 	int len = strlen(fileName)+1;
 

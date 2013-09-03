@@ -46,8 +46,13 @@ rTestScene::rTestScene()
 	mpStage = NULL;
 }
 
+#include "Game\SaveManager.h"
+
 void rTestScene::entry()
 {
+	rlib::SaveManager::save();
+	rlib::SaveManager::load();
+
 	LOGI(TAG,"Execute rTestScene init");
 
 	mButton = new rlib::CircleButton();
@@ -56,7 +61,7 @@ void rTestScene::entry()
 	mStick = new rlib::AnalogStick();
 	this->mStick->init(-80, -50, 50);
 
-	//this->mpStage = new klib::kMesh("Placement/stobj1.mqo", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
+	this->mpStage = new klib::kMesh("Placement/stage1.IMO", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
 	sPlacementManager->Load("Placement/stage1.mqo");
 
 	pipeline = new klib::kGraphicsPipline();
@@ -110,7 +115,7 @@ void rTestScene::update()
 	mStick->update();
 	mButton->update();
 
-	static klib::math::Vector3 cpos(0,0,-50);
+	static klib::math::Vector3 cpos(0,0,-10);
 	if( this->mStick->enable() )
 	{
 		klib::math::Vector3 front = -cpos;
@@ -121,9 +126,9 @@ void rTestScene::update()
 
 		klib::math::Vector3 move = side*this->mStick->getX();
 		move.normalize();
-		move *= 0.5f;
+		move *= 0.1f;
 		cpos += move;
-		cpos.y += this->mStick->getY();
+		cpos.y += this->mStick->getY() * 0.1f;
 		RenderLib::RenderState::Setting_ViewMatrix( cpos, klib::math::Vector3(0,0,0), klib::math::Vector3(0,1,0));
 	}
 	if( mlInput::isPinch() )
@@ -159,25 +164,25 @@ void rTestScene::update()
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
 	DEBUG_MSG("camera pos( x=%.2f, y=%.2f, z=%.2f)", cpos.x, cpos.y, cpos.z );
 
-	static int t = 0;
-	t++;
-	if( 180 < t )
-	{
-		sEffectManager->Create(FIRE_CHARGE,
-		Vector3(
-			0,
-			5,
-			0),
-			5.0f);
-		t=0;
-	}
+	//static int t = 0;
+	//t++;
+	//if( 180 < t )
+	//{
+	//	sEffectManager->Create(FIRE_CHARGE,
+	//	Vector3(
+	//		0,
+	//		5,
+	//		0),
+	//		5.0f);
+	//	t=0;
+	//}
 }
 
 void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	//mpStage->Render(pipeline);
+	mpStage->Render(pipeline);
 	rlib::BulletManager::getInst().render();
 	GIMMICK_MNG.render();
 

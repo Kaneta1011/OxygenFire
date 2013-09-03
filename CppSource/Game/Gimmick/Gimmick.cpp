@@ -53,7 +53,7 @@ void Gimmick::render(klib::kMesh* mesh, klib::kGraphicsPipline* pipeline)
 {
 	mesh->setPosition(this->mPos);
 	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange*0.1f);
+	mesh->setScale(this->mRange*0.01f);
 	mesh->Update();
 	mesh->Render(pipeline);
 }
@@ -122,12 +122,12 @@ void GimmickManager::init()
 	LOGI(TAG, "Placement data num = %d", spData->Num);
 
 	rlib::GimmickInfo info;
-	for( int i=0; i<1; i++ )
+	for( int i=0; i<spData->Num; i++ )
 	{
 		info.pos = spData->spPos[i];
 		info.size = spData->spScale[i];
 		info.angle = spData->spAngle[i];
-		add( info ); 
+		add( info );
 	}
 	LOGI(TAG, "box num = %d", this->mData.size() );
 	LOGI(TAG,"OK Placement read ");

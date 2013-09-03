@@ -4,8 +4,8 @@ Format Text Ver 1.0
 Scene {
 	pos 0.0430 -0.7374 47.2240
 	lookat 0.0000 0.0000 0.0000
-	head -11.8000
-	pich 0.6708
+	head -7.6299
+	pich 0.4492
 	bank 0.0000
 	ortho 0
 	zoom2 158.8132
@@ -18,22 +18,22 @@ Scene {
 	}
 }
 Material 12 {
-	"ínñ " shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("jimenR.png")
-	"ï«" shader(3) col(0.792 0.792 0.792 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("kabeR.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\kabeRN.png")
-	"ìSÇÃî‡" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("tetunotobira.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\tetunotobiraN.png")
-	"åuåıìî" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("keikoutou.png")
-	"ÉSÉ~î†" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("gomibako.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\gomibakoN.png")
-	"ìSÉpÉCÉv" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("tetupaipu.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\tetupaipuN.png")
-	"ìSÇÃî†" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("tetubox.png")
-	"ÉhÉâÉÄä " shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("sabiR.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\doramukanN.png")
-	"ìSî†" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("tetubako.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\tetubakoN.png")
-	"ìSî†ÇÃÇ≥Ç—" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("sabiR.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\sabiRN.png")
-	"èƒãpòFÇÃÇ≥Ç—" shader(3) vcol(1) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("sabiR.png")
-	"é©ìÆÉhÉA" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("jidoudoa.png") bump("C:\Users\bullets20130726a\Desktop\tekusutya\256tex\ÉmÅ[É}Éã\jidoudoaN.png")
+	"ínñ " shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\jimenR.png")
+	"ï«" shader(3) col(0.792 0.792 0.792 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\kabeR.png")
+	"ìSÇÃî‡" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\tetunotobira.png")
+	"åuåıìî" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\keikoutou.png")
+	"ÉSÉ~î†" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\gomibako.png")
+	"ìSÉpÉCÉv" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\tetupaipu.png")
+	"ìSÇÃî†" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\tetubox.png")
+	"ÉhÉâÉÄä " shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\sabiR.png")
+	"ìSî†" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\tetubako.png")
+	"ìSî†ÇÃÇ≥Ç—" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\sabiR.png")
+	"èƒãpòFÇÃÇ≥Ç—" shader(3) vcol(1) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\sabiR.png")
+	"é©ìÆÉhÉA" shader(3) col(1.000 1.000 1.000 1.000) dif(0.800) amb(0.600) emi(0.000) spc(0.000) power(5.00) tex("256tex\jidoudoa.png")
 }
 Object "STAGE1" {
 	depth 0
-	folding 1
+	folding 0
 	scale 0.003134 0.003134 0.003134
 	rotation 0.000000 0.000000 0.000000
 	translation 0.000000 0.000000 0.000000
@@ -924,51 +924,6 @@ Object "obj29" {
 		3 V(17 11 15) M(10) UV(1.31200 4.40985 1.73442 4.40985 1.31200 5.78617) COL(4294967295 4294967295 872415231)
 		4 V(9 8 14 15) M(10) UV(4.47457 -10.20375 1.20979 -10.20375 1.20979 -11.30487 4.47457 -11.30487) COL(872415231 872415231 872415231 872415231)
 		4 V(7 5 1 3) M(10) UV(5.42763 2.50723 6.75658 -2.81188 5.50986 -2.81188 6.67435 2.50723) COL(3439329279 3439329279 3439329279 3439329279)
-	}
-}
-Object "obj5" {
-	depth 1
-	folding 0
-	scale 1.000000 1.000000 1.000000
-	rotation 0.000000 -0.000000 0.000000
-	translation 0.000000 0.000000 0.000000
-	visible 15
-	locking 1
-	shading 1
-	facet 59.5
-	color 0.898 0.498 0.698
-	color_type 0
-	vertex 16 {
-		-1.0205 2.7078 4.3216
-		-1.0205 0.0000 4.3216
-		0.0232 2.7078 4.3216
-		0.0232 0.0000 4.3216
-		0.0232 2.7078 4.2685
-		0.0232 0.0000 4.2685
-		-1.0205 2.7078 4.2685
-		-1.0205 0.0000 4.2685
-		1.0669 2.7078 4.3216
-		1.0669 0.0000 4.3216
-		0.0232 2.7078 4.3216
-		0.0232 0.0000 4.3216
-		0.0232 2.7078 4.2685
-		0.0232 0.0000 4.2685
-		1.0669 2.7078 4.2685
-		1.0669 0.0000 4.2685
-	}
-	face 12 {
-		4 V(0 2 3 1) M(11) UV(0.00554 0.00206 0.49914 0.00206 0.49914 0.99750 0.00554 0.99750)
-		4 V(2 4 5 3) M(11) UV(-1.09179 -0.11969 -1.09179 -0.11969 -1.09179 0.82886 -1.09179 0.82886)
-		4 V(4 6 7 5) M(11) UV(0.49914 0.00206 0.00554 0.00206 0.00554 0.99750 0.49914 0.99750)
-		4 V(6 0 1 7) M(11) UV(-1.51386 -0.11969 -1.51386 -0.11969 -1.51386 0.82886 -1.51386 0.82886)
-		4 V(6 4 2 0) M(11) UV(-1.51386 -0.11969 -1.09179 -0.11969 -1.09179 -0.11969 -1.51386 -0.11969)
-		4 V(1 3 5 7) M(11) UV(-1.51386 0.82886 -1.09179 0.82886 -1.09179 0.82886 -1.51386 0.82886)
-		4 V(8 9 11 10) M(11) UV(0.99853 0.00206 0.99853 0.99750 0.49914 0.99750 0.49914 0.00206)
-		4 V(10 11 13 12) M(11) UV(-1.09179 -0.11969 -1.09179 0.82886 -1.09179 0.82886 -1.09179 -0.11969)
-		4 V(12 13 15 14) M(11) UV(0.49914 0.00206 0.49914 0.99750 0.99853 0.99750 0.99853 0.00206)
-		4 V(14 15 9 8) M(11) UV(-0.66973 -0.11969 -0.66973 0.82886 -0.66973 0.82886 -0.66973 -0.11969)
-		4 V(14 8 10 12) M(11) UV(-0.66973 -0.11969 -0.66973 -0.11969 -1.09179 -0.11969 -1.09179 -0.11969)
-		4 V(9 15 13 11) M(11) UV(-0.66973 0.82886 -0.66973 0.82886 -1.09179 0.82886 -1.09179 0.82886)
 	}
 }
 Eof

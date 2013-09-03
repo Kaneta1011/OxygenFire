@@ -14,8 +14,10 @@ public:
 	static void init(JNIEnv *env, jstring localPath, jstring sdCardPath);
 	static void clear();
 
-	static void setLoaclPath(char** out, const char* fileName);
+	static void setLocalPath(char** out, const char* fileName);
 	static void setSDCardPath(char**out, const char* fileName);
+
+	static void makeDirectory(const char* makeFolderName, const char* path);
 
 private:
 	static int   sLocalPathLength;
