@@ -121,3 +121,9 @@ bool AssetsLoader::loadTexture(GLuint* outTexture, const char* fileName, JNIEnv*
 	}
 	return isOK;
 }
+
+bool AssetsLoader::loadBitmap(rlib::Bitmap* outBitmap, const char* fileName, GLint format, GLenum type )
+{
+	outBitmap = new rlib::Bitmap();
+	return outBitmap->load(fileName, format, type);
+}

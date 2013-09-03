@@ -66,8 +66,12 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
+#include "utility\Bitmap.h"
+
 class AssetsLoader
 {
+	friend class rlib::Bitmap;
+
 public:
 	static void sInit(JNIEnv* env, jobject asset);
 	static void sClear(JNIEnv* env);
@@ -80,6 +84,11 @@ public:
 	サンプラーなどのテクスチャの設定は利用側が行ってください
 	*/
 	static bool loadTexture(GLuint* outTexture, const char* fileName, JNIEnv* env, GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE);
+
+	/*
+	Bitmapに吐き出す版
+	*/
+	static bool loadBitmap(rlib::Bitmap* outBitmap, const char* fileName, GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE);
 
 	static AAssetManager* getAssetManager(){return sAssetMng;}
 
