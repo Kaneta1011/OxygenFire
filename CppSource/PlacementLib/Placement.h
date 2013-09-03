@@ -4,7 +4,7 @@
 #include	"utility/textLoader.h"
 #include	<iostream>
 #include	"StandardLib/SmartPointer.h"
-
+#include	<string>
 
 namespace PlacementLib{
 using namespace klib::math;
@@ -13,9 +13,24 @@ const static int STR_LENGTH = 128;
 //==========================================================
 //	ここの構造体を受け皿にしてデータをもらって各種設定
 //	*基本的に上田君のみ使用することになる
+enum ePLACEMENT_TYPE
+{
+	PLACEMENT_BOX,				//	箱(初期テスト用)
+	PLACEMENT_GarbageBag,	//	ゴミ袋
+	PLACEMENT_DRUM,				//	ドラム
+	PLACEMENT_GASOLINE,		//	ガソリン
+	PLACEMENT_WoodenBox,	//	木箱
+	PLACEMENT_CARDBOARD,	//	ダンボール
+	PLACEMENT_FAN,				//	扇風機
+	PLACEMENT_CANDLE,			//	ろうそく
+	PLACEMENT_2D,					//	2D画像
+};
+
 struct PlacementData
 {
 	int Num;
+	sp<std::string> spStr;
+	sp<ePLACEMENT_TYPE> spType;
 	sp<Vector3> spPos;
 	sp<Vector3> spScale;
 	sp<Vector3> spAngle;
@@ -23,12 +38,14 @@ struct PlacementData
 struct GimmickLine
 {
 	int Num;
+	sp<std::string> spStr;
 	sp<Vector3> spStart;
 	sp<Vector3> spEnd;
 };
 struct WindData
 {
 	int Num;
+	sp<std::string> spStr;
 	sp<Vector3> spPos;
 	sp<Vector3> spScale;
 	sp<Vector3> spAngle;
@@ -67,6 +84,7 @@ public:
 	void Delete();
 	//	データを転送
 	void GetPlayer(sp<PlacementData>* spData);	//これ使わんと下つかって
+	std::string GetPlayerStr();
 
 	/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	・上田君用
@@ -118,6 +136,7 @@ private:
 	void Setting_Data_GimmickLine(sp<Data> spData);
 	void Setting_WindData(sp<Data> spData);
 	void Setting_ObjectName(sp<char> Name,sp<char> Load);
+	void Setting_CreateObjectName(sp<char> Name,sp<char> Load);
 	void Add_ObjectNum(sp<char> Name,sp<char> Load);
 	void Search_Num(char* File);
 	sp<Data> m_spPlayerData;
@@ -134,6 +153,8 @@ struct Data
 	int Num;
 	int NowNum;
 	char Name[STR_LENGTH];
+	sp<std::string> spStr;
+	sp<ePLACEMENT_TYPE> spType; 
 	sp<Vector3> spPos;
 	sp<Vector3> spScale;
 	sp<Vector3> spAngle;
