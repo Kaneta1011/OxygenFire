@@ -140,6 +140,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
 {
+
 //===========================================================================================
 //	デバッグ用の文字列表示のサンプル
 //	あと、dtの値は適当です(8/12植田　直しました。)
@@ -150,6 +151,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	RenderState::Clear_Buffer(CLEAR_BUFFER_COLOR);
 	RenderState::Clear_Buffer(CLEAR_BUFFER_DEPTH);
 	
+	mlInput::lock();
 	//シーン更新
 	if(framework.sceneUpdate()){framework.sceneRender();}
 

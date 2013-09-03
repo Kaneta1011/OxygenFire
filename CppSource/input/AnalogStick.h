@@ -31,11 +31,14 @@ namespace rlib
 		bool enable()const{return this->mEnable;}
 
 	private:
+		void reset();
+		bool isNowEnable(klib::math::Vector2& pos);
 
 	private:
 		klib::math::Vector2 mRate;
 		int					mStartTouchCount;
 		bool mEnable;
+		klib::math::Vector2 mPrevTouchPos;
 
 		r2DObj *mpBack, *mpStick;
 	};

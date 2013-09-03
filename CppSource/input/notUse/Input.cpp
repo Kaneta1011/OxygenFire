@@ -128,9 +128,6 @@ void mlInput::update(float dt)
 		FREE,//FREE
 	};
 
-	while(mIsUpdating){}
-	mIsUpdating = true;
-
 	mPrevTouchCount = mNowTouchCount;
 	int touchCount = mNowTouchCount;
 	for( int i=0; i<touchCount; i++ )
@@ -180,7 +177,7 @@ void mlInput::update(float dt)
 		Info& info = mpInfos[i];
 		info.init();
 	}
-	mIsUpdating = false;
+	unlock();
 
 }
 
@@ -215,6 +212,16 @@ void mlInput::updatePinck()
 			mPrevPinchLength = mPinchLength;
 		}
 	}
+}
+
+void mlInput::lock()
+{
+	mIsUpdating = true;
+}
+
+void mlInput::unlock()
+{
+	mIsUpdating = false;
 }
 
 void mlInput::debugMseeage()

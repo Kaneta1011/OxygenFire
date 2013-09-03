@@ -131,6 +131,10 @@ public://ゲッター
 	*/
 	static float getFlickSensitivity(){ return mFlickSensitivity; }
 
+public:
+	static void lock();
+	static void unlock();
+
 public://デバッグ用
 	static void debugMseeage();
 

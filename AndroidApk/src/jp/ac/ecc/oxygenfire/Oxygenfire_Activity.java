@@ -18,6 +18,7 @@ package jp.ac.ecc.oxygenfire;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -33,7 +34,9 @@ public class Oxygenfire_Activity extends Activity {
 		setContentView(graphic);
 		
 		JNICallMethod.assets = getAssets();
-		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());	
+		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
+		GL2JNILib.initFolderPath(this.getFilesDir().getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath());
+
 	}
 
 	@Override
