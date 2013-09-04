@@ -8,11 +8,6 @@ uniform float alpha;
 
 varying vec2 TexCoord;
 
-float lerp(float x,float y,float s)
-{
-	return x+s*(y-x);
-}
-
 void main()
 {
 vec4 mask=texture2D(maskTex,TexCoord);

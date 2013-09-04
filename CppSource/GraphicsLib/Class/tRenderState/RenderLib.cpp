@@ -47,7 +47,7 @@ void RenderState::Setting_ViewMatrix(
 	const Vector3& UpPos )
 {
 
-	MatrixLookAtLH(&s_mView,Pos,TargetPos,UpPos);
+	MatrixLookAtViewLH(&s_mView,Pos,TargetPos,UpPos);
 
 }
 

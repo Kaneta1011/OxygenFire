@@ -1,6 +1,6 @@
 #pragma once
-#include "..\defines.h"
-#include "..\types.h"
+#include "defines.h"
+#include "types.h"
 namespace klib
 {
 	namespace ktl{
@@ -124,6 +124,14 @@ namespace klib
 			{
 				return Data[index];
 			}
+
+			//[]演算子オペレータ
+			T& operator()(int index)
+			{
+				if(MaxSize<=index)resize(index*2);
+				return Data[index];
+			}
+
 			//=演算子オペレータ
 			kVector<T>& operator=(const kVector<T> d)
 			{

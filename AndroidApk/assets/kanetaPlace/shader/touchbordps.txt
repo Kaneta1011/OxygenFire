@@ -1,0 +1,13 @@
+precision mediump float;
+varying vec4 io_Color;
+varying vec4 io_Pos;
+varying vec2 io_Tex;
+
+uniform float alpha;
+uniform sampler2D colorTex;
+void main()
+{
+  vec4 texColor = texture2D(colorTex, io_Tex);
+  gl_FragColor = vec4(texColor.xyz,alpha);
+  //gl_FragColor = vec4(io_Tex.x,io_Tex.y,1.0,1.0);
+}

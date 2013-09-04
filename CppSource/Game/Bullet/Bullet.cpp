@@ -100,10 +100,10 @@ void BulletManager::init()
 	LOGI(TAG_M, "Execute BulletManager init");
 
 	pipline = new klib::kGraphicsPipline();
-	pipline->createVertexShader("vertex.txt");
-	pipline->createPixelShader("pixel.txt");
+	pipline->createVertexShader("kanetaPlace/shader/vertex.txt");
+	pipline->createPixelShader("kanetaPlace/shader/pixel.txt");
 	pipline->createBlendState(k_BLEND_NONE);
-	pipline->createDepthStencilState(true,eLESS_EQUAL);
+	pipline->createDepthStencilState(true,true,eLESS_EQUAL);
 	pipline->createRasterizerState(eSOLID,eNONE,false);
 	pipline->complete(desc,descnum);
 	

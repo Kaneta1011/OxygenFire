@@ -1,0 +1,19 @@
+attribute vec4 POSITION;
+attribute vec2 TEXCOORD;
+
+varying vec4 io_Pos;
+varying vec2 io_Tex;
+
+uniform mat4 WVP;
+
+
+void main()
+{
+	io_Tex=TEXCOORD;
+	
+	vec4 opos = WVP * POSITION;
+	opos.z=2.0*opos.z-opos.w;
+	
+	io_Pos = POSITION;
+	gl_Position = opos;
+}

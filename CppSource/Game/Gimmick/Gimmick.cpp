@@ -100,10 +100,10 @@ void GimmickManager::init()
 	this->mpMeshies[0] = new klib::kMesh("kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 
 	pipline = new klib::kGraphicsPipline();
-	pipline->createVertexShader("vertex.txt");
-	pipline->createPixelShader("pixel.txt");
+	pipline->createVertexShader("kanetaPlace/shader/vertex.txt");
+	pipline->createPixelShader("kanetaPlace/shader/pixel.txt");
 	pipline->createBlendState(k_BLEND_NONE);
-	pipline->createDepthStencilState(true,eLESS_EQUAL);
+	pipline->createDepthStencilState(true,true,eLESS_EQUAL);
 	pipline->createRasterizerState(eSOLID,eFRONT,false);
 
 	kInputElementDesc desc[]=

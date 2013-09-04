@@ -142,7 +142,7 @@ void r2DPipeline::init()
 	spPipeline->bindAttribLocation(0,"Pos");
 	spPipeline->bindAttribLocation(1,"Tex");
 	spPipeline->createBlendState(k_BLEND_ALPHA);
-	spPipeline->createDepthStencilState(true,eLESS_EQUAL);
+	spPipeline->createDepthStencilState(true,true,eLESS_EQUAL);
 	spPipeline->createRasterizerState(eWIRE,eNONE,false);
 	spPipeline->complete();
 }

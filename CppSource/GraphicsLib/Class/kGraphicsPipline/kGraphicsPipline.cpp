@@ -79,9 +79,9 @@ namespace klib
 			kDevice::createBlendStateAll(mp_BlendState,BlendStateType);
 			return true;
 		}
-		bool kTechnique::createDepthStencilState(bool enable,eDepthFunc func)
+		bool kTechnique::createDepthStencilState(bool enable,bool writeenable,eDepthFunc func)
 		{
-			kDevice::createDepthStencilState(mp_DepthStencilState,enable,func);
+			kDevice::createDepthStencilState(mp_DepthStencilState,enable,writeenable,func);
 			return true;
 		}
 		bool kTechnique::createRasterizerState(eFillMode fill,eCullMode cull,bool front)

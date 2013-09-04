@@ -94,7 +94,7 @@ bool Particle::Initialize()
 	m_spPipeline->createVertexShader("shader/sprite.vs");
 	m_spPipeline->createPixelShader("shader/sprite.fs");
 	m_spPipeline->createBlendState(klib::k_BLEND_ADD);
-	m_spPipeline->createDepthStencilState(false, klib::eLESS);
+	m_spPipeline->createDepthStencilState(false, false,klib::eLESS);
 	m_spPipeline->createRasterizerState(klib::eSOLID, klib::eNONE, true);
 
 	return true;

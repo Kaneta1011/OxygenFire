@@ -1,0 +1,22 @@
+precision mediump float;
+
+varying vec4 io_Pos;
+varying vec2 io_Tex;
+
+uniform sampler2D colorTex;
+uniform sampler2D maskTex;
+uniform float alpha;
+void main()
+{
+vec4 mask=texture2D(maskTex,vec2(io_Tex.x,io_Tex.y));
+if (mask.r < alpha) discard;
+float val=max(pow((1.0-(mask.r-alpha))*1.0,8.0),0.0);
+vec4 diffuse = texture2D(colorTex, io_Tex);
+if(diffuse.a<0.001)discard;
+
+vec3 point=vec3(1.0,0.8,0.6);
+
+float pval=max((val*4.0)-3.0,0.0);
+vec3 lim=vec3((pval+0.2)*0.8,pval*0.2,pval*0.1);
+  gl_FragColor = (mix(diffuse,vec4(lim,1.0),val)+vec4(mix(vec3(0.0,0.0,0.0),point,pval),0.0))*diffuse.a;
+}

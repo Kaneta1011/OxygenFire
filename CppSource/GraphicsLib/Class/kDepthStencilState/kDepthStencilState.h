@@ -39,6 +39,7 @@ namespace klib
 	private:
 		struct kDepthStencilDesc {
 			bool DepthEnable;	//深度テストを行うか
+			bool DepthWriteEnable;	//深度書き込みを行うか
 			//D3D11_DEPTH_WRITE_MASK DepthWriteMask;//未使用
 			s32 DepthFunc;		//深度テストの際の比較関数
 			//bool StencilEnable;

@@ -14,6 +14,7 @@ class IObject3D
 {
 public:
 	//	add
+	void addPosition(const Vector3& Value){m_Position+=Value;}
 	void addPoisitionX( float Value ){ m_Position.x += Value; }
 	void addPoisitionY( float Value ){ m_Position.y += Value; }
 	void addPoisitionZ( float Value ){ m_Position.z += Value; }

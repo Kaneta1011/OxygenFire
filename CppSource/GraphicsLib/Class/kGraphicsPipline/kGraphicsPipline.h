@@ -48,7 +48,7 @@ namespace klib
 		* @param[in] enable 深度テストを使用するか
 		* @param[in] func 深度テスト比較関数
 		*/
-		bool createDepthStencilState(bool enable,eDepthFunc func);
+		bool createDepthStencilState(bool enable,bool writeenable,eDepthFunc func);
 		/**
 		* @brief ラスタライザステートを作成する
 		* @param[in] fill ポリゴン描画モード

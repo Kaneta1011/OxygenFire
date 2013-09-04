@@ -25,6 +25,7 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp" />
+    <ClCompile Include="CppSource\GraphicsLib\Class\kPlane\kPlane.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DObj.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\r2DObj\notUse\r2DRenderer.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp" />
@@ -34,6 +35,13 @@
     <ClCompile Include="CppSource\input\notUse\AnalogStick.cpp" />
     <ClCompile Include="CppSource\input\notUse\Button.cpp" />
     <ClCompile Include="CppSource\input\notUse\Input.cpp" />
+    <ClCompile Include="CppSource\kaneta\ActionMediate\ActionMediate.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICamera\Class\ICamera\ICamera.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICamera\Class\kPlayCamera\kPlayCamera.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\ICharacter\ICharacter.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.cpp" />
     <ClCompile Include="CppSource\main.cpp" />
     <ClCompile Include="CppSource\math\Class\Matrix\Matrix.cpp" />
     <ClCompile Include="CppSource\math\Class\Quaternion\Quaternion.cpp" />
@@ -64,13 +72,13 @@
     </ClCompile>
     <ClCompile Include="CppSource\Ueda\rTestScene.cpp" />
     <ClCompile Include="CppSource\utility\assetsLoader.cpp" />
+    <ClCompile Include="CppSource\utility\Bitmap.cpp" />
     <ClCompile Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.cpp" />
     <ClCompile Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.cpp" />
     <ClCompile Include="CppSource\utility\debugMessageMng.cpp" />
     <ClCompile Include="CppSource\utility\FolderPathManager.cpp" />
     <ClCompile Include="CppSource\utility\textLoader.cpp" />
     <ClCompile Include="CppSource\utility\utility.cpp" />
-    <ClCompile Include="ICharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\DebugLib\Debug.h" />
@@ -100,6 +108,7 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIEM.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIMO.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kObjectBuffer\kObjectBuffer.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kPlane\kPlane.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kRasterizerState\kRasterizerState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kShader\kShader.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\r2DObj\r2DObj.h" />
@@ -112,6 +121,13 @@
     <ClInclude Include="CppSource\input\Button.h" />
     <ClInclude Include="CppSource\input\Input.h" />
     <ClInclude Include="CppSource\input\notUse\IButton.h" />
+    <ClInclude Include="CppSource\kaneta\ActionMediate\ActionMediate.h" />
+    <ClInclude Include="CppSource\kaneta\ICamera\Class\ICamera\ICamera.h" />
+    <ClInclude Include="CppSource\kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\ICharacter\ICharacter.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.h" />
     <ClInclude Include="CppSource\main.h" />
     <ClInclude Include="CppSource\math\Class\Matrix\Matrix.h" />
     <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
@@ -142,6 +158,7 @@
     <ClInclude Include="CppSource\types.h" />
     <ClInclude Include="CppSource\Ueda\rTestScene.h" />
     <ClInclude Include="CppSource\utility\assetsLoader.h" />
+    <ClInclude Include="CppSource\utility\Bitmap.h" />
     <ClInclude Include="CppSource\utility\Class\kBufferAnalyze\kBufferAnalyze.h" />
     <ClInclude Include="CppSource\utility\Class\kTextAnalyze\kTextAnalyze.h" />
     <ClInclude Include="CppSource\utility\debugMessageMng.h" />
@@ -150,9 +167,6 @@
     <ClInclude Include="CppSource\utility\SinglyLinkedList.h" />
     <ClInclude Include="CppSource\utility\textLoader.h" />
     <ClInclude Include="CppSource\utility\utility.h" />
-    <ClInclude Include="ICharacter.h" />
-    <ClInclude Include="kPlayer.h" />
-    <ClInclude Include="kView.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A99D29C-A422-4C77-8D46-1D3EC70730A9}</ProjectGuid>

@@ -1091,6 +1091,47 @@ namespace klib
 
 			return out;
 		}
+		inline Matrix* MatrixFrontVec( Matrix* out, const Vector3& Pos, const Vector3& Front, const Vector3& Up )
+		{
+			Vector3 xaxis = Vector3( Up.y*Front.z - Up.z*Front.y, Up.z*Front.x - Up.x*Front.z, Up.x*Front.y - Up.y*Front.x ); 
+			Vector3 yaxis = Vector3( Front.y*xaxis.z - Front.z*xaxis.y, Front.z*xaxis.x - Front.x*xaxis.z, Front.x*xaxis.y - Front.y*xaxis.x ); 
+
+			xaxis.normalize();
+			yaxis.normalize();
+
+			out->_11 = xaxis.x;																		out->_12 = xaxis.y;																		out->_13 = xaxis.z;																		out->_14 = 0;
+			out->_21 = yaxis.x;																		out->_22 = yaxis.y;																		out->_23 = yaxis.z;																		out->_24 = 0;
+			out->_31 = Front.x;																		out->_32 = Front.y;																		out->_33 = Front.z;																		out->_34 = 0;
+			out->_41 = Pos.x;																			out->_42 = Pos.y;																			out->_43 = Pos.z;																			out->_44 = 1;
+			return out;
+		}
+		/**
+		* @brief 注目点を向く姿勢行列を作成する
+		* @param[out] out 姿勢行列
+		* @param[in] Pos 位置
+		* @param[in] At 注目点
+		* @param[in] Up 頭上ベクトル(注目点へのベクトルが優先されるので注意)
+		* @return 出力結果と同じ
+		*/
+		inline Matrix* MatrixLookAt( Matrix* out, const Vector3& Pos, const Vector3& At, const Vector3& Up )
+		{
+			Vector3 zaxis;
+			zaxis.x = At.x - Pos.x;
+			zaxis.y = At.y - Pos.y;
+			zaxis.z = At.z - Pos.z;
+			Vector3 xaxis = Vector3( Up.y*zaxis.z - Up.z*zaxis.y, Up.z*zaxis.x - Up.x*zaxis.z, Up.x*zaxis.y - Up.y*zaxis.x ); 
+			Vector3 yaxis = Vector3( zaxis.y*xaxis.z - zaxis.z*xaxis.y, zaxis.z*xaxis.x - zaxis.x*xaxis.z, zaxis.x*xaxis.y - zaxis.y*xaxis.x ); 
+
+			xaxis.normalize();
+			yaxis.normalize();
+			zaxis.normalize();
+
+			out->_11 = xaxis.x;																		out->_12 = xaxis.y;																		out->_13 = xaxis.z;																		out->_14 = 0;
+			out->_21 = yaxis.x;																		out->_22 = yaxis.y;																		out->_23 = yaxis.z;																		out->_24 = 0;
+			out->_31 = zaxis.x;																		out->_32 = zaxis.y;																		out->_33 = zaxis.z;																		out->_34 = 0;
+			out->_41 = Pos.x;																			out->_42 = Pos.y;																			out->_43 = Pos.z;																			out->_44 = 1;
+			return out;
+		}
 		/**
 		* @brief 左手座標系ビュー変換行列を作成する
 		* @param[out] out ビュー変換行列
@@ -1099,7 +1140,7 @@ namespace klib
 		* @param[in] Up 頭上ベクトル(注目点へのベクトルが優先されるので注意)
 		* @return 出力結果と同じ
 		*/
-		inline Matrix* MatrixLookAtLH( Matrix* out, const Vector3& Eye, const Vector3& At, const Vector3& Up )
+		inline Matrix* MatrixLookAtViewLH( Matrix* out, const Vector3& Eye, const Vector3& At, const Vector3& Up )
 		{
 			Vector3 zaxis;
 			zaxis.x = At.x - Eye.x;

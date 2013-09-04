@@ -77,10 +77,6 @@ namespace klib
 				kDevice::IAsetIndexBuffer(mp_IBO[i]);
 				//シェーダーをパイプラインにセットする
 				shader->setPipline();
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_ONE,GL_ONE);
-
-	//glEnable(GL_TEXTURE_2D);
 				//描画
 				kDevice::drawIndexed(m_MeshData->m_Info.MaterialNumFace[i]*3);
 			}

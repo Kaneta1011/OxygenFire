@@ -168,7 +168,7 @@ namespace klib
 		case k_BLEND_ADD:
 			dprintf("k_BLEND_ADD create");
 			out->m_Desc.RenderTarget.BlendEnable=true;
-			out->m_Desc.RenderTarget.SrcBlend=GL_ONE;
+			out->m_Desc.RenderTarget.SrcBlend=GL_SRC_ALPHA;
 			out->m_Desc.RenderTarget.DstBlend=GL_ONE;
 			out->m_Desc.RenderTarget.BlendOp=GL_FUNC_ADD;
 			break;
@@ -180,9 +180,10 @@ namespace klib
 			break;
 		}   
 	}
-	bool kDevice::createDepthStencilState(kDepthStencilState* out,bool enable,eDepthFunc func)
+	bool kDevice::createDepthStencilState(kDepthStencilState* out,bool enable,bool writeenable,eDepthFunc func)
 	{
 		out->m_Desc.DepthEnable=enable;
+		out->m_Desc.DepthWriteEnable=writeenable;
 		out->m_Desc.DepthFunc=getDepthFunc(func);
 		return true;
 	}
@@ -255,6 +256,9 @@ namespace klib
 		//深度テストを有効/無効にする
 		if(m_OMDepthStencilState->m_Desc.DepthEnable)glEnable(GL_DEPTH_TEST);
 		else glDisable(GL_DEPTH_TEST);
+		//深度バッファへの書き込みを有効/無効にする
+		if(m_OMDepthStencilState->m_Desc.DepthWriteEnable)glDepthMask(GL_TRUE);
+		else glDepthMask(GL_FALSE);
 		//深度比較関数を指定する
 		glDepthFunc(m_OMDepthStencilState->m_Desc.DepthFunc);
 		return true;

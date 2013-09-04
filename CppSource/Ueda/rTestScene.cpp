@@ -65,10 +65,10 @@ void rTestScene::entry()
 	sPlacementManager->Load("Placement/stage1.mqo");
 
 	pipeline = new klib::kGraphicsPipline();
-	pipeline->createVertexShader("vertex.txt");
-	pipeline->createPixelShader("pixel.txt");
+	pipeline->createVertexShader("kanetaPlace/shader/vertex.txt");
+	pipeline->createPixelShader("kanetaPlace/shader/pixel.txt");
 	pipeline->createBlendState(k_BLEND_NONE);
-	pipeline->createDepthStencilState(true,eLESS_EQUAL);
+	pipeline->createDepthStencilState(true,true,eLESS_EQUAL);
 	pipeline->createRasterizerState(eSOLID,eFRONT,false);
 
 	kInputElementDesc desc[]=

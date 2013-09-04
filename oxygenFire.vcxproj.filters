@@ -154,6 +154,48 @@
     <Filter Include="source\PlacementLib">
       <UniqueIdentifier>{b01513e8-a325-4024-ac7b-fa9c280dc076}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\kaneta">
+      <UniqueIdentifier>{1f754662-6004-442b-8a35-71c1bb98e4ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter">
+      <UniqueIdentifier>{e3d6f435-25be-45aa-9507-9592a1dcd1c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICamera">
+      <UniqueIdentifier>{639a9a8d-7cd0-4b2f-9ca5-93013e1f8ae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GraphicsLib\Class\kPlane">
+      <UniqueIdentifier>{821296e3-3a28-4cb6-836e-675f1a2cd925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ActionMediate">
+      <UniqueIdentifier>{1f9d0c71-278d-4888-b7c3-e17efced1d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class">
+      <UniqueIdentifier>{379c0e61-1c97-46fb-8887-2bc9481ae304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\ICharacter">
+      <UniqueIdentifier>{d31858da-8fe1-4f9b-8fc7-06e09ec6099e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\ICharaStrategy">
+      <UniqueIdentifier>{a6c09a58-a805-4fa1-805a-8723f92a8f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\kPlayer">
+      <UniqueIdentifier>{f4ff6a79-fbea-4562-9b44-c90396c7c9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\kPlayer\Strategy">
+      <UniqueIdentifier>{ae8a69d8-cfe1-4752-8cf1-19e0de01bb9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\kPlayer\Strategy\Move">
+      <UniqueIdentifier>{3197edf4-7f58-4412-a198-bb5d5101210c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICamera\Class">
+      <UniqueIdentifier>{81709112-fb37-45ec-a562-e68d757b5e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICamera\Class\ICamera">
+      <UniqueIdentifier>{9c3b910c-026c-45cb-8a66-562a459a6bd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICamera\Class\kPlayCamera">
+      <UniqueIdentifier>{337b49bf-4101-4620-ba16-a2493f221583}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -267,7 +309,6 @@
     <ClCompile Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.cpp">
       <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="ICharacter.cpp" />
     <ClCompile Include="CppSource\Game\Bullet\Bullet.cpp">
       <Filter>source\Game\Bullet</Filter>
     </ClCompile>
@@ -306,6 +347,33 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\SaveManager.cpp">
       <Filter>source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\utility\Bitmap.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\GraphicsLib\Class\kPlane\kPlane.cpp">
+      <Filter>source\GraphicsLib\Class\kPlane</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ActionMediate\ActionMediate.cpp">
+      <Filter>source\kaneta\ActionMediate</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.cpp">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICamera\Class\ICamera\ICamera.cpp">
+      <Filter>source\kaneta\ICamera\Class\ICamera</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICamera\Class\kPlayCamera\kPlayCamera.cpp">
+      <Filter>source\kaneta\ICamera\Class\kPlayCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\ICharacter\ICharacter.cpp">
+      <Filter>source\kaneta\ICharacter\Class\ICharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.cpp">
+      <Filter>source\kaneta\ICharacter\Class\ICharaStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.cpp">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -498,9 +566,6 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\rFrameBufer\rFrameBuffer.h">
       <Filter>source\GraphicsLib\Class\rFrameBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="ICharacter.h" />
-    <ClInclude Include="kPlayer.h" />
-    <ClInclude Include="kView.h" />
     <ClInclude Include="CppSource\Game\Bullet\Bullet.h">
       <Filter>source\Game\Bullet</Filter>
     </ClInclude>
@@ -542,6 +607,33 @@
     </ClInclude>
     <ClInclude Include="CppSource\Game\SaveManager.h">
       <Filter>source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\Bitmap.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kPlane\kPlane.h">
+      <Filter>source\GraphicsLib\Class\kPlane</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ActionMediate\ActionMediate.h">
+      <Filter>source\kaneta\ActionMediate</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.h">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICamera\Class\ICamera\ICamera.h">
+      <Filter>source\kaneta\ICamera\Class\ICamera</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h">
+      <Filter>source\kaneta\ICamera\Class\kPlayCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\ICharacter\ICharacter.h">
+      <Filter>source\kaneta\ICharacter\Class\ICharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.h">
+      <Filter>source\kaneta\ICharacter\Class\ICharaStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.h">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
