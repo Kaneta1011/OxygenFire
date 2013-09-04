@@ -5,6 +5,8 @@
 #include	"StandardLib\\SmartPointer.h"
 #include	"EffectLib\\Item.h"
 #include	"GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h"
+#include	"GraphicsLib\Class\kInputLayout\kInputLayout.h"
+
 
 #include	<GLES2/gl2.h>
 #include	<GLES2/gl2ext.h>
@@ -20,7 +22,7 @@ using namespace klib::math;
 //	Constant
 const static int TEXTURE_MAX = 128;
 static const int TEXTURE_NAME_SIZE = 128;
-const static int PARTICLE_MAX = 2000;
+const static int PARTICLE_MAX = 500;
 const static int ONE_PARTICLE_VERTEX_NUM = 6;
 const static int PARTICLE_VERTEX_MAX = 
 	PARTICLE_MAX * ONE_PARTICLE_VERTEX_NUM;
@@ -69,6 +71,10 @@ struct ParticleData
 	sp<COLOR>			colorEnd;
 	TexData	texData[TEXTURE_MAX];
 	int			useNum;
+
+	void Setting(sp<ParticleData> data);
+
+	void Clear();
 	ParticleData();
 };
 
@@ -139,7 +145,7 @@ private:
 	sp<Vertex>					m_spVertexBuf;
 	static Vector3			s_WindVec;
 
-	sp<klib::kTechnique> m_spPipeline;
+	sp<ParticleData> work;
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -173,6 +179,52 @@ public:
 
 }//Renderlib
 
+
+
+
+#endif
+
+
+
+
+
+
+#if 0 
+
+
+
+void Render(const math::Matrix& mat,kGraphicsPipline* shader)
+{
+	const kMeshData* m_MeshData=m_Mesh->getMeshPtr();
+	//モデル行列作成(テスト用)
+	math::Matrix wvp = 
+		mat * 
+		RenderLib::RenderState::getViewMatrix() *
+		RenderLib::RenderState::getProjectionMatrix();
+	//シェーダに行列転送
+	shader->setShaderValue("WVP",wvp);
+	//頂点バッファを更新する
+	kDevice::updateSubResource(mp_VBO,((kMeshVertex*)m_MeshData->mp_Vertex),sizeof(kMeshVertex)*m_MeshData->m_Info.NumVertex);
+
+	for(int i=0;i<m_MeshData->m_Info.MaterialCount;i++)
+	{
+		if(!mp_IBO[i])continue;
+		shader->setTexture("colorTex",0,m_MeshData->m_Info.Diffuse[i]);
+		//頂点バッファをパイプラインにセットする
+		kDevice::IAsetVertexBuffer(mp_VBO);
+		//インデックスバッファをパイプラインにセットする
+		kDevice::IAsetIndexBuffer(mp_IBO[i]);
+		//シェーダーをパイプラインにセットする
+		shader->setPipline();
+//glEnable(GL_BLEND);
+//glBlendFunc(GL_ONE,GL_ONE);
+
+//glEnable(GL_TEXTURE_2D);
+		//描画
+		kDevice::drawIndexed(m_MeshData->m_Info.MaterialNumFace[i]*3);
+	}
+
+}
 
 
 

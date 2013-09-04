@@ -83,6 +83,26 @@ void EmitterSet::Destroy()
 	
 }
 
+void EmitterSet::Setting_Texture(char* Filename)
+{
+	sp<textLoader> t;
+	t.SetPtr(new textLoader(Filename));
+
+	char workN[TEXTURE_NAME_SIZE] = {NULL};
+	t->Search( "EmitterMax" );
+	int max = t->LoadInt();
+	
+
+	for(int n=0;n<max;n++)
+	{
+		//[in]	Texname
+		t->Search( "TextureName" );
+		t->LoadName( workN );
+
+		sParticle->Setting_Texture( workN );
+	}
+}
+
 void EmitterSet::Load_TES( char* Filename )
 {
 	m_spTextLoader.SetPtr( new textLoader(Filename) );
@@ -147,7 +167,7 @@ void EmitterSet::Load_TES( char* Filename )
 		p->getData()->rLifeMin = t->LoadInt();
 		p->getData()->rLifeMax = t->LoadInt();
 
-		Vector3 v;
+		static Vector3 v;
 
 		//[in]	Velocity
 		t->Search("Velocity");
@@ -214,7 +234,9 @@ void EmitterSet::Load_TES( char* Filename )
 		t->LoadName( workN );
 		strcpy( p->getEffectData()->file, workN );
 
+#if 0
 		sParticle->Setting_Texture( workN );
+#endif
 
 
 		//[in]	TextureMoveFlag
@@ -335,8 +357,9 @@ void EmitterSet::Load_TES( char* Filename )
 		t->Out();
 
 		t->Out();
-
 	}
+
+	m_spTextLoader.Clear();
 }
 
 void EmitterSet::Setting_Position(const Vector3& Pos)

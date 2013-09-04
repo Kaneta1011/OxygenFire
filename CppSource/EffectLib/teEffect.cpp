@@ -22,10 +22,30 @@ void EffectManager::Destroy()
 
 void EffectManager::Initialize()
 {
+	Setting_Texture();
+
 	//---------------------------------------------
 	//	パーティクル初期化
 	//---------------------------------------------
 	sParticle->Initialize();
+}
+
+void EffectManager::Setting_Texture()
+{
+	EmitterSet::Setting_Texture("effect/test.tes");
+	EmitterSet::Setting_Texture("effect/[E]_fireball.tes");
+	EmitterSet::Setting_Texture("effect/[E]_firecharge.tes");
+	EmitterSet::Setting_Texture("effect/bluefire.tes");
+	EmitterSet::Setting_Texture("effect/expro.tes");
+	EmitterSet::Setting_Texture("effect/fire.tes");
+	EmitterSet::Setting_Texture("effect/fireanime.tes");
+	EmitterSet::Setting_Texture("effect/firesp.tes");
+	EmitterSet::Setting_Texture("effect/wind.tes");
+	EmitterSet::Setting_Texture("effect/yosiwind.tes");
+
+	LOGI("---------------------------------------------------------\n");
+LOGI("%d\n%s",__LINE__,__FILE__);
+LOGI("---------------------------------------------------------\n");
 }
 
 void EffectManager::Update()
@@ -60,9 +80,6 @@ void EffectManager::Render()
 		m_spEffectEmitterSet[n]->Render();
 	}
 
-
-
-
 	//	パーティクル描画
 	sParticle->Render();
 }
@@ -75,8 +92,6 @@ wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type)
 		if( m_spEffectEmitterSet[n].GetRefNum() != 0 ){ continue; }
 
 		Create_EmitterSet(Type,n);
-
-
 
 		return m_spEffectEmitterSet[n];
 	}

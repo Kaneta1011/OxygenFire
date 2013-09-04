@@ -113,14 +113,11 @@ bool ParticleEmitter::Update()
 	//	寿命が０以下ならエミッター消去
 	if( Adjustment_LifeEnd() == true ){ return false; }
 
-	//	Alpha値取得
-	Setting_Alpha();
 
-	
 	//	加算地合成
-	Vector3 add;
-	Vector3 v;
-	float kakeru;
+	static Vector3 add;
+	static Vector3 v;
+	static float kakeru;
 	kakeru = 1.0f / ((float)m_spData->life/2.0f);
 	if(m_Count <= (m_spData->life/2))
 	{
@@ -170,15 +167,15 @@ bool ParticleEmitter::Adjustment_LifeEnd()
 void ParticleEmitter::Generation_Particle()
 {
 	//	Position
-	Vector3 p;//pos
-	Vector3 vel;//velocity
-	COLOR col;//color
-	float scaS;
-	float scaM;
-	float scaE;
-	COLOR colS;
-	COLOR colM;
-	COLOR colE;
+	static Vector3 p;//pos
+	static Vector3 vel;//velocity
+	static COLOR col;//color
+	static float scaS;
+	static float scaM;
+	static float scaE;
+	static COLOR colS;
+	static COLOR colM;
+	static COLOR colE;
 
 	p = Vector3(
 	Rand(m_spEffectData->rInitPosMin.x,m_spEffectData->rInitPosMax.x),
@@ -202,31 +199,31 @@ void ParticleEmitter::Generation_Particle()
 	//	カラー
 	colS.red = 
 		m_spEffectData->colorS.red + 
-		Rand( 0, (float)m_spEffectData->rColorS.red );
+		Rand( 0, m_spEffectData->rColorS.red );
 	colS.green = 
 		m_spEffectData->colorS.green + 
-		Rand( 0, (float)m_spEffectData->rColorS.green );
+		Rand( 0, m_spEffectData->rColorS.green );
 	colS.blue = 
 		m_spEffectData->colorS.blue + 
-		Rand( 0, (float)m_spEffectData->rColorS.blue );
+		Rand( 0, m_spEffectData->rColorS.blue );
 	colM.red = 
 		m_spEffectData->colorM.red + 
-		Rand( 0, (float)m_spEffectData->rColorM.red );
+		Rand( 0, m_spEffectData->rColorM.red );
 	colM.green = 
 		m_spEffectData->colorM.green + 
-		Rand( 0, (float)m_spEffectData->rColorM.green );
+		Rand( 0, m_spEffectData->rColorM.green );
 	colM.blue = 
 		m_spEffectData->colorM.blue + 
-		Rand( 0, (float)m_spEffectData->rColorM.blue );
+		Rand( 0, m_spEffectData->rColorM.blue );
 	colE.red = 
 		m_spEffectData->colorE.red + 
-		Rand( 0, (float)m_spEffectData->rColorE.red );
+		Rand( 0, m_spEffectData->rColorE.red );
 	colE.green = 
 		m_spEffectData->colorE.green + 
-		Rand( 0, (float)m_spEffectData->rColorE.green );
+		Rand( 0, m_spEffectData->rColorE.green );
 	colE.blue = 
 		m_spEffectData->colorE.blue + 
-		Rand( 0, (float)m_spEffectData->rColorE.blue );
+		Rand( 0, m_spEffectData->rColorE.blue );
 
 		sParticle->Setting(
 			p,

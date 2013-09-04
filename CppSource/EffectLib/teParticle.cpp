@@ -12,6 +12,8 @@ using namespace klib::math;
 using namespace RenderLib;
 using namespace ShaderLib;
 
+using namespace klib;
+
 int ParticleTextrue::s_LimitNum = 0;
 Vector3 Particle::s_WindVec = Vector3(0,0,0);
 
@@ -27,6 +29,7 @@ Vertex::Vertex()
 
 ParticleData::ParticleData()
 {
+
 	initPos.SetPtr(new Vector3[PARTICLE_MAX],true);
 	pos.SetPtr(new Vector3[PARTICLE_MAX],true);
 	tex.SetPtr(new Vector2[PARTICLE_MAX],true);
@@ -51,6 +54,11 @@ ParticleData::ParticleData()
 	colorMiddle.SetPtr(new COLOR[PARTICLE_MAX],true);
 	colorEnd.SetPtr(new COLOR[PARTICLE_MAX],true);
 
+	Clear();
+}
+
+void ParticleData::Clear()
+{
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
 		count[n] = 0;
@@ -60,8 +68,61 @@ ParticleData::ParticleData()
 		moveFlag[n] = false;
 	}
 	
+	for(int n=0;n<TEXTURE_MAX;n++)
+	{
+		texData[n].StartNum=0;
+		texData[n].UseNum=0;
+	}
+
 	useNum = 0;
 }
+
+void ParticleData::Setting(sp<ParticleData> data)
+{
+	useNum = data->useNum;
+
+	static int c = 0; c = 0;
+
+	for(int n=0;n<PARTICLE_MAX;n++)
+	{
+		initPos[n] = data->initPos[n];
+		pos[n] = data->pos[n];
+		tex[n] = data->tex[n];
+		life[n] = data->life[n];
+		scale[n] = data->scale[n];
+		scaleStart[n] = data->scaleStart[n];
+		scaleMiddle[n] = data->scaleMiddle[n];
+		scaleEnd[n] = data->scaleEnd[n];
+		flag[n] = data->flag[n];
+		texNum[n] = data->texNum[n];
+		velocity[n] = data->velocity[n];
+		size[n] = data->size[n];
+		moveFlag[n] = data->moveFlag[n];
+		index[n] = data->index[n];
+		count[n] = data->count[n];
+		windPower[n] = data->windPower[n];
+		centerPowerStart[n] = data->centerPowerStart[n];
+		centerPowerMiddle[n] = data->centerPowerMiddle[n];
+		centerPowerEnd[n] = data->centerPowerEnd[n];
+		color[n] = data->color[n];
+		colorStart[n] = data->colorStart[n];
+		colorMiddle[n] = data->colorMiddle[n];
+		colorEnd[n] = data->colorEnd[n];
+
+		count[n] = data->count[n];
+		flag[n] = data->flag[n];
+		texNum[n] = data->texNum[n];
+		life[n] = data->life[n];
+		moveFlag[n] = data->moveFlag[n];
+	}
+
+	for(int n=0;n<TEXTURE_MAX;n++)
+	{
+		texData[n].StartNum = data->texData[n].StartNum;
+		texData[n].UseNum = data->texData[n].UseNum;
+	}
+}
+
 
 ParticleTextrue::ParticleTextrue()
 {
@@ -77,6 +138,9 @@ void Particle::Clear()
 	m_TextureUseNumber = 0;
 	m_Matrix.identity();
 	offset = 0;
+
+	m_spParticleData.SetPtr(new ParticleData,false);
+	work.SetPtr(new ParticleData(),false);
 }
 
 void Particle::Destroy()
@@ -90,12 +154,24 @@ bool Particle::Initialize()
 
 	ShaderLib::ShaderManager::Init();
 
-	m_spPipeline.SetPtr( new klib::kGraphicsPipline() );
-	m_spPipeline->createVertexShader("shader/sprite.vs");
-	m_spPipeline->createPixelShader("shader/sprite.fs");
-	m_spPipeline->createBlendState(klib::k_BLEND_ADD);
-	m_spPipeline->createDepthStencilState(false, false,klib::eLESS);
-	m_spPipeline->createRasterizerState(klib::eSOLID, klib::eNONE, true);
+
+#if 0
+	pipeline = new klib::kGraphicsPipline();
+	pipeline->createVertexShader("vertex.txt");
+	pipeline->createPixelShader("pixel.txt");
+	pipeline->createBlendState(k_BLEND_NONE);
+	pipeline->createDepthStencilState(true,eLESS_EQUAL);
+	pipeline->createRasterizerState(eSOLID,eFRONT,false);
+
+	kInputElementDesc desc[]=
+	{
+		{"Pos",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+		{"Tex",0,k_VF_R32G32_FLOAT,0,eVertex,0},
+		{"Color",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
+	};
+	u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
+	pipeline->complete(desc,descnum);
+#endif
 
 	return true;
 }
@@ -197,19 +273,24 @@ void Particle::Update()
 	/*
 	テクスチャの順番でデータを格納しなおす
 	*/
-	sp<ParticleData> work;
-	work.SetPtr(new ParticleData);
+	
+	//sp<ParticleData> work;
+	//work.SetPtr( new ParticleData(), false );
 
-	int useNum=0;
-	int saveNum=0;
+	work->Clear();
+
+	static int useNum=0;
+	useNum = 0;
+	static int saveNum=0;
+	saveNum = 0;
 
 	work->useNum = m_spParticleData->useNum;
 	
-	float force = .0f;
-	float fv = .0f;
-	float	rate = .0f;
-	Vector3 vec;
-	COLOR nextC;
+	static float force = .0f; force = .0f;
+	static float fv = .0f; fv = .0f;
+	static float	rate = .0f; rate = .0f;
+	static Vector3 vec;
+	static COLOR nextC;
 
 
 	//
@@ -358,23 +439,23 @@ void Particle::Update()
 
 		saveNum = useNum;
 	}
-	m_spParticleData.Clear();
-	m_spParticleData.SetPtr(new ParticleData);
-	m_spParticleData = work;
-	work.Clear();
+
+	m_spParticleData->Setting(work);
 }
 
 void Particle::Render()
 {
-	Matrix m = RenderState::getViewMatrix();
+	glFrontFace(GL_CCW);
 
-	Vector3 axisX(m._11,m._12,m._13);
-	Vector3 axisY(m._21,m._22,m._23);
+	static Matrix m = RenderState::getViewMatrix();
 
-	Vector3 tl,tr,ul,ur; //	t=top; u=under; l=left; r=right;
-	Vector3 p;	//	p=pos;
+	static Vector3 axisX(m._11,m._12,m._13);
+	static Vector3 axisY(m._21,m._22,m._23);
 
-	Vector2 uv[4];float tu,tv;
+	static Vector3 tl,tr,ul,ur; //	t=top; u=under; l=left; r=right;
+	static Vector3 p;	//	p=pos;
+
+	static Vector2 uv[4];float tu,tv;
 
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
@@ -491,7 +572,6 @@ ShaderManager::getSprite()->Begin();
 		glEnableVertexAttribArray(VBO_COLOR);
 		glVertexAttribPointer(VBO_COLOR,4,GL_FLOAT, GL_FALSE,
 			0,m_spVertexBuf->color.GetPtr());
-
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE);

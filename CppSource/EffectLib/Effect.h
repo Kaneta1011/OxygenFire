@@ -27,7 +27,7 @@ enum eEFFECT_TYPE
 	YOSI_WIND,
 };
 
-static const int EMITTERSET_MAX = 256;
+static const int EMITTERSET_MAX = 64;
 //----------------------------------------------------------------------
 //	EffectManager
 //----------------------------------------------------------------------
@@ -53,6 +53,7 @@ public:
 	EffectManager(){Clear();}void Clear();
 	~EffectManager(){Destroy();}void Destroy();
 private:
+	void Setting_Texture();
 	void Create_EmitterSet(eEFFECT_TYPE Type,int Num);
 	sp<EmitterSet>	m_spEffectEmitterSet[EMITTERSET_MAX];
 	int m_UseNum;

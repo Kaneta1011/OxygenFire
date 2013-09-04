@@ -7,7 +7,7 @@
 
 namespace EffectLib{
 using namespace klib::math;
-static const int EFFECT_EMITTER_MAX = 512;
+static const int EFFECT_EMITTER_MAX = 256;
 
 
 //----------------------------------------------------------------------
@@ -25,6 +25,7 @@ public:
 	//	EmitterÇèIóπ
 	void End();
 	
+	static void Setting_Texture(char* Filename);
 
 
 	//===========================================================
