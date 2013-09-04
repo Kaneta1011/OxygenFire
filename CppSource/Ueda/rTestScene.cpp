@@ -76,7 +76,7 @@ void rTestScene::entry()
 	pipeline->complete(desc,descnum);
 
 	rlib::BulletManager::getInst().init();
-	GIMMICK_MNG.init("gimmick/giTest.gi");
+	//GIMMICK_MNG.init("gimmick/giTest.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
 }
@@ -145,40 +145,28 @@ void rTestScene::update()
 	}
 	bullet.update();
 
-	GIMMICK_MNG.update();
-	bullet.collision( GIMMICK_MNG );
+	//GIMMICK_MNG.update();
+	//bullet.collision( GIMMICK_MNG );
 
 	sEffectManager->Update();
 
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
 	DEBUG_MSG("camera pos( x=%.2f, y=%.2f, z=%.2f)", cpos.x, cpos.y, cpos.z );
 
-	//static int t = 0;
-	//t++;
-	//if( 180 < t )
-	//{
-	//	sEffectManager->Create(FIRE_CHARGE,
-	//	Vector3(
-	//		0,
-	//		5,
-	//		0),
-	//		5.0f);
-	//	t=0;
-	//}
 }
 
 void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	mpStage->Render(pipeline);
+	//->Render(pipeline);
 	rlib::BulletManager::getInst().render();
-	GIMMICK_MNG.render();
+	//GIMMICK_MNG.render();
 
-	sEffectManager->Render();
 
 	mButton->render();
 	mStick->render();
+	sEffectManager->Render();
 
 }
 

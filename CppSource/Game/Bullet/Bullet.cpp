@@ -7,17 +7,19 @@
 
 #include "EffectLib\Effect.h"
 
-//#include "Tool\Particle.h"
+#include "Ueda\rTestScene.h"
 
 using namespace rlib;
 
 Bullet::Bullet()
 {
 	mCount = 0;
+
 }
 
 Bullet::~Bullet()
 {
+	//this->mEmitter->End();
 }
 
 void Bullet::init(BulletInfo& info)
@@ -25,6 +27,11 @@ void Bullet::init(BulletInfo& info)
 	this->mPos = info.pos;
 	this->mRange = info.size;
 	this->mVelocity = info.velocity;
+	//this->mEmitter.Clear();
+	//this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
+	//this->mEmitter->Setting_Position( this->mPos );
+	//this->mEmitter->Setting_Scale( this->mRange.x );
+	//this->mEmitter->Loop();
 }
 
 int Bullet::update()
@@ -35,12 +42,12 @@ int Bullet::update()
 	//if( this->mPos.y < 0 )	return MSG_DEAD;
 	if(fabs( this->mPos.x ) > 200.f ||
 	   fabs( this->mPos.z ) > 200.f )
-	   return MSG_DEAD;
-
-	if( mCount % 10 == 0 )
 	{
-		EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL, this->mPos );
+		//this->mEmitter->End();
+		return MSG_DEAD;
 	}
+	//this->mEmitter->Setting_Position( this->mPos );
+
 	mCount ++;
 
 	return MSG_NON;
@@ -62,20 +69,11 @@ void Bullet::render()
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 
 using namespace klib;
-
-static kInputElementDesc desc[]=
-{
-	{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-	{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
-	{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-	{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
-};
-static u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
+klib::kMesh					*mpMesh;
 
 static const char* TAG_M = "BulletManager";
 
-BulletManager::BulletManager():
-	pipline(NULL)
+BulletManager::BulletManager()
 {
 }
 
@@ -86,8 +84,7 @@ BulletManager::~BulletManager()
 void BulletManager::clear()
 {
 	clearData();
-
-	if( pipline ){ delete pipline; pipline = NULL; }
+	delete mpMesh;
 }
 
 void BulletManager::clearData()
@@ -99,19 +96,8 @@ void BulletManager::init()
 {
 	LOGI(TAG_M, "Execute BulletManager init");
 
-	pipline = new klib::kGraphicsPipline();
-	pipline->createVertexShader("kanetaPlace/shader/vertex.txt");
-	pipline->createPixelShader("kanetaPlace/shader/pixel.txt");
-	pipline->createBlendState(k_BLEND_NONE);
-	pipline->createDepthStencilState(true,true,eLESS_EQUAL);
-	pipline->createRasterizerState(eSOLID,eNONE,false);
-	pipline->complete(desc,descnum);
-	
-	float ary[3]={0.25f,0.5f,1.0f};
-	pipline->setShaderValue("val",0.8f);
-	pipline->setShaderValue("array",ary,3);
-	LOGI(TAG_M, "OK pipeline init");
-
+	mpMesh = new klib::kMesh("kanetaPlace/kman.IMO", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
+	mpMesh->setScale(0.01f);
 	LOGI(TAG_M, "Complete BulletManager init");
 }
 
@@ -174,7 +160,10 @@ void BulletManager::render()
 	Iterator it = this->mData.begin();
 	while( !it.isEnd() )
 	{
-		it->render();
+		//it->render();
+		mpMesh->setPosition(it->getPos());
+		mpMesh->Update();
+		mpMesh->Render(rTestScene::pipeline);
 		it++;
 	}
 }

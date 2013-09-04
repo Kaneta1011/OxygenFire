@@ -6,6 +6,8 @@
 #include "utility\SinglyLinkedList.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
 
+#include "EffectLib\Effect.h"
+
 namespace rlib
 {
 	class GimmickManager;
@@ -40,6 +42,7 @@ namespace rlib
 
 	private:
 		int mCount;
+		wp<EffectLib::EmitterSet> mEmitter;
 	};
 
 	//===============================================================================
@@ -88,7 +91,6 @@ namespace rlib
 	private:
 		SinglyLinkedList<Bullet> mData;
 
-		klib::kGraphicsPipline* pipline;
 
 	private:
 		BulletManager();
