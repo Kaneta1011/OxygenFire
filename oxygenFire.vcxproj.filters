@@ -351,6 +351,15 @@
     <ClCompile Include="CppSource\utility\Bitmap.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp">
+      <Filter>source\Game\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfoManager.cpp">
+      <Filter>source\Game\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\utility\textWriter.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
     <ClCompile Include="CppSource\GraphicsLib\Class\kPlane\kPlane.cpp">
       <Filter>source\GraphicsLib\Class\kPlane</Filter>
     </ClCompile>
@@ -609,6 +618,15 @@
       <Filter>source\Game</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\utility\Bitmap.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h">
+      <Filter>source\Game\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfoManager.h">
+      <Filter>source\Game\Gimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\utility\textWriter.h">
       <Filter>source\utility</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kPlane\kPlane.h">

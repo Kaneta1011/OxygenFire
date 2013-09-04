@@ -15,6 +15,13 @@ namespace rlib
 		~AnalogStick();
 
 		void init(float xPosRate, float yPosRate, float range);
+		/*
+		使用する画像を設定する
+		@args
+		backImagePath : 背景画像のパス
+		stickImagePath : スティック画像のパス
+		*/
+		void loadImage(const char* backImagePath, const char* stickImagePath );
 
 		void update();
 		void render();

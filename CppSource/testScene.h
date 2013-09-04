@@ -82,7 +82,7 @@ namespace klib
 			kPlane::init();
 			mp_Stick = new rlib::AnalogStick();
 			mp_Stick->init(-60, -50, 40);
-
+			mp_Stick->loadImage("kanetaPlace/stickFrameAlpha.png","kanetaPlace/stick.png");
 
 			obj=new r2DObj;
 			obj->load("kanetaPlace/stick.png");

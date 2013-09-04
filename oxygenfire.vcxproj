@@ -21,6 +21,8 @@
     <ClCompile Include="CppSource\EffectLib\teParticle.cpp" />
     <ClCompile Include="CppSource\Game\Bullet\Bullet.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfoManager.cpp" />
     <ClCompile Include="CppSource\Game\SaveManager.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
@@ -78,6 +80,7 @@
     <ClCompile Include="CppSource\utility\debugMessageMng.cpp" />
     <ClCompile Include="CppSource\utility\FolderPathManager.cpp" />
     <ClCompile Include="CppSource\utility\textLoader.cpp" />
+    <ClCompile Include="CppSource\utility\textWriter.cpp" />
     <ClCompile Include="CppSource\utility\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +97,8 @@
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
     <ClInclude Include="CppSource\Game\Bullet\Bullet.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfoManager.h" />
     <ClInclude Include="CppSource\Game\IObject\IObject.h" />
     <ClInclude Include="CppSource\Game\SaveManager.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kBlendState\kBlendState.h" />
@@ -166,6 +171,7 @@
     <ClInclude Include="CppSource\utility\kutility.h" />
     <ClInclude Include="CppSource\utility\SinglyLinkedList.h" />
     <ClInclude Include="CppSource\utility\textLoader.h" />
+    <ClInclude Include="CppSource\utility\textWriter.h" />
     <ClInclude Include="CppSource\utility\utility.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

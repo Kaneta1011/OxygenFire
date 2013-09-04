@@ -4,8 +4,14 @@
 #include "Game/IObject/IObject.h"
 #include "utility\utility.h"
 #include "utility\SinglyLinkedList.h"
-#include "GraphicsLib\Class\kMesh\kMesh.h"
 #include "StandardLib\SmartPointer.h"
+#include <list>
+#include <vector>
+
+#define ANDROID_REDNER
+#ifdef ANDROID_REDNER
+#include "GraphicsLib\Class\kMesh\kMesh.h"
+#endif
 
 namespace rlib
 {
@@ -42,9 +48,10 @@ namespace rlib
 		void init(GimmickInfo& info);
 
 		virtual int update();
-		virtual void render(klib::kMesh* mesh, klib::kGraphicsPipline* pipeline);
 
-		klib::math::Vector3& pos(){return this->mPos;}
+#ifdef ANDROID_REDNER
+		virtual void render(klib::kMesh* mesh, klib::kGraphicsPipline* pipeline);
+#endif
 
 	public:
 		void on(){this->mIsOn = true;}
@@ -72,8 +79,9 @@ namespace rlib
 		}
 
 	public:
-		typedef SinglyLinkedList<Gimmick>::Iterator Iterator;
-		typedef SinglyLinkedList<Gimmick>::ConstIterator ConstIterator;
+		typedef std::vector<Gimmick*> ListType;
+		typedef ListType::iterator Iterator;
+		typedef ListType::const_iterator ConstIterator;
 
 	public:
 		enum MESSAGE
@@ -82,30 +90,38 @@ namespace rlib
 		};
 
 	public:
-		void init();
+		void init(const char* giFilePath);
 		void clear();
+		void clearData();
 
 		void add(GimmickInfo& info);
 
 		int update();
-		void render();
 
-		void clearData();
+#ifdef ANDROID_REDNER
+		void render();
+#endif
 
 	public:
 		Iterator begin(){return this->mData.begin();}
 		ConstIterator begin()const{return this->mData.begin();}
 
+		Iterator end(){ return this->mData.end(); }
+		ConstIterator end()const{return this->mData.end(); }
+
 		unsigned int size(){return this->mData.size();}
 
 	private:
-		klib::kMesh* getMesh( int type ); 
+#ifdef ANDROID_REDNER
+		void loadMeshes();
+		klib::kMesh* getMesh( int type );
+#endif
 	private:
-		SinglyLinkedList<Gimmick> mData;
+		ListType mData;
 
-		klib::kGraphicsPipline* pipline;
+#ifdef ANDROID_REDNER
 		sp<klib::kMesh*> mpMeshies;
-
+#endif
 	private:
 		GimmickManager();
 		~GimmickManager();

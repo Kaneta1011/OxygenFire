@@ -27,16 +27,9 @@ static const char* TAG = "rTestScene";
 
 #define SIZE 512.f
 
-#include <GLES2\gl2.h>
-#include <GLES2\gl2ext.h>
-#include <GLES2\gl2platform.h>
-#include <EGL\egl.h>
-#include <EGL\eglext.h>
-#include <EGL\eglplatform.h>
-
 using namespace klib;
 
-klib::kGraphicsPipline* pipeline = NULL;
+klib::kGraphicsPipline* rTestScene::pipeline = NULL;
 
 rTestScene::rTestScene()
 {
@@ -60,6 +53,7 @@ void rTestScene::entry()
 
 	mStick = new rlib::AnalogStick();
 	this->mStick->init(-80, -50, 50);
+	this->mStick->loadImage("cursor.png","testImage.png");
 
 	this->mpStage = new klib::kMesh("Placement/stage1.IMO", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
 	sPlacementManager->Load("Placement/stage1.mqo");
@@ -82,12 +76,7 @@ void rTestScene::entry()
 	pipeline->complete(desc,descnum);
 
 	rlib::BulletManager::getInst().init();
-	GIMMICK_MNG.init();
-
-	//rlib::GimmickInfo info("kibako128.IMO");
-	//info.pos.x = info.pos.y = info.pos.z = 0.f;
-	//info.size.x = info.size.y = info.size.z = 1.f;
-	//GIMMICK_MNG.add(info);
+	GIMMICK_MNG.init("gimmick/giTest.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
 }

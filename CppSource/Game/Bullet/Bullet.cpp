@@ -147,11 +147,11 @@ void BulletManager::collision(rlib::GimmickManager& gimmickMng)
 	{
 		GimmickManager::Iterator gIt = gimmickMng.begin();
 		bool isHit = false;
-		while( !gIt.isEnd() )
+		while( gIt != gimmickMng.end() )
 		{
-			if( it->vs( &(*gIt) ) )
+			if( it->vs( (*gIt) ) )
 			{
-				gIt->on();
+				(*gIt)->on();
 				isHit = true;
 				break;
 			}

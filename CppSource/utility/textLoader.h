@@ -53,6 +53,7 @@ public:
 			if( FileBuf ) delete[] FileBuf;		
 		}
 
+		char tmpBuf[128];
 private:
 		bool	bInit;
 

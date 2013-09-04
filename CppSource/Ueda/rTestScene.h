@@ -5,6 +5,7 @@
 
 namespace klib{
 	class kMesh;
+	class kGraphicsPipline;
 }
 
 namespace rlib{
@@ -15,6 +16,9 @@ namespace rlib{
 
 class rTestScene : public klib::IScene
 {
+public:
+	static klib::kGraphicsPipline* pipeline;
+
 public:
 	rTestScene();
 	void entry();

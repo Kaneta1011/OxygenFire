@@ -37,13 +37,19 @@ void AnalogStick::init(float xPosRate, float yPosRate, float range)
 {
 	IButton::init(xPosRate, yPosRate, range);
 
-	this->mpBack->load("cursor.png");
-	this->mpStick->load("testImage.png");
-
 	this->mpBack->setPos( this->mPos.x, this->mPos.y, 0.f );
 	this->mpBack->setSize(this->mRange);
 
 	this->mpStick->setSize(this->mRange*0.5f);
+}
+
+void AnalogStick::loadImage(const char* backImagePath, const char* stickImagePath )
+{
+	this->mpBack->clear();
+	this->mpStick->clear();
+
+	this->mpBack->load(backImagePath);
+	this->mpStick->load(stickImagePath);
 }
 
 inline float min(float a, float b)
@@ -112,8 +118,6 @@ void AnalogStick::update()
 			}
 		}
 	}
-	DEBUG_MSG("prevP (x=%.3f y=%.3f)", mPrevTouchPos.x, mPrevTouchPos.y);
-
 }
 
 void AnalogStick::reset()
