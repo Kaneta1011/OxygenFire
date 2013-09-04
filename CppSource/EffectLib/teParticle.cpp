@@ -448,9 +448,12 @@ void Particle::Render()
 	glFrontFace(GL_CCW);
 
 	static Matrix m = RenderState::getViewMatrix();
+	m = RenderState::getViewMatrix();
 
 	static Vector3 axisX(m._11,m._12,m._13);
+	axisX = Vector3(m._11,m._12,m._13);
 	static Vector3 axisY(m._21,m._22,m._23);
+	axisY = Vector3(m._21,m._22,m._23);
 
 	static Vector3 tl,tr,ul,ur; //	t=top; u=under; l=left; r=right;
 	static Vector3 p;	//	p=pos;

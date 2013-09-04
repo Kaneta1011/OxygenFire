@@ -22,7 +22,12 @@ public:
 	//	Emitterを殺したくない時
 	void Loop();
 
-	//	Emitterを終了
+	/*
+		Emitterを終了
+
+		wpでもらう時は実態があるかどうか確認してください
+		if( true == wp.IsExist() ){  }
+	*/
 	void End();
 	
 	static void Setting_Texture(char* Filename);
