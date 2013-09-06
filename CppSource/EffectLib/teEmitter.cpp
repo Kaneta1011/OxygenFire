@@ -38,6 +38,10 @@ void Emitter::Clear()
 	m_LoopFlag = false;
 	m_spData.SetPtr(new EmitterData);
 	m_spData->Scale=1.0f;
+	m_Angle=Vector3(0,0,0);
+
+	m_Velocity = Vector3(0,0,0);
+	m_VelFlag = false;
 }
 
 void Emitter::Destroy()
@@ -177,6 +181,10 @@ void ParticleEmitter::Generation_Particle()
 	static COLOR colM;
 	static COLOR colE;
 
+	static float work;
+	static Vector3 V;
+	static Vector3 VR;
+
 	p = Vector3(
 	Rand(m_spEffectData->rInitPosMin.x,m_spEffectData->rInitPosMax.x),
 	Rand(m_spEffectData->rInitPosMin.y,m_spEffectData->rInitPosMax.y),
@@ -184,11 +192,34 @@ void ParticleEmitter::Generation_Particle()
 	p = m_Pos + m_spEffectData->initPos + p;
 
 	//	R_Velocity
-	vel = 
-		m_spEffectData->vel + 
-		Vector3( Rand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
-						 Rand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
-						 Rand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
+
+	if( false == m_VelFlag )
+	{
+		vel = 
+			m_spEffectData->vel + 
+			Vector3( Rand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
+							 Rand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
+							 Rand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
+	}else{
+		work = m_spEffectData->vel.length();
+
+		Vector3Normalize(&m_Velocity,m_Velocity);
+
+		V = (m_Velocity*work);
+
+		VR = Vector3( Rand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
+							 Rand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
+							 Rand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
+
+		work = VR.length();
+
+		Vector3Normalize(&VR,VR);
+
+		VR =m_Velocity*work;
+
+		vel = V + VR;
+	}
+
 	//	R_Scale
 	scaS = m_spEffectData->scaleS + 
 		Rand(m_spEffectData->rScaleStartMin,m_spEffectData->rScaleStartMax);

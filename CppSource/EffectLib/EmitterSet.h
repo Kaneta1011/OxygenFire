@@ -18,6 +18,7 @@ class EmitterSet
 public:
 	//	Setting 各種パラメータを設定
 	void Setting_Position(const Vector3& Pos);
+	void Setting_Velocity(const Vector3& Velocity);
 
 	//	Emitterを殺したくない時
 	void Loop();

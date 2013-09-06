@@ -30,11 +30,11 @@ void Bullet::init(BulletInfo& info)
 	this->mVelocity = info.velocity;
 	this->mTemperature = info.temperature;
 
-	//this->mEmitter.Clear();
-	//this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
-	//this->mEmitter->Setting_Position( this->mPos );
-	//this->mEmitter->Setting_Scale( this->mRange.x );
-	//this->mEmitter->Loop();
+	this->mEmitter.Clear();
+	this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
+	this->mEmitter->Setting_Position( this->mPos );
+	this->mEmitter->Setting_Scale( this->mRange.x );
+	this->mEmitter->Loop();
 }
 
 int Bullet::update()

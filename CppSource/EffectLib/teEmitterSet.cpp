@@ -377,6 +377,21 @@ void EmitterSet::Setting_Position(const Vector3& Pos)
 		use++;
 	}
 }
+void EmitterSet::Setting_Velocity(const Vector3& Velocity)
+{
+	int use = 0;
+	//
+	//	@for EffectEmitterÅ‘å”•ªƒ‹[ƒv
+	//
+	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
+	{
+		if( use >= m_UseNum ){ break; }
+		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
+
+		m_spEffectEmitter[n]->setVelocity(Velocity);
+		use++;
+	}
+}
 
 void EmitterSet::Loop()
 {

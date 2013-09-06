@@ -20,6 +20,8 @@
 #include "kaneta\ICharacter\Class\kPlayer\kPlayer.h"
 #include "kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h"
 
+#include "EffectLib\/Effect.h"
+
 using namespace RenderLib;
 using namespace klib::math;
 using namespace PlacementLib;
@@ -45,6 +47,11 @@ rTestScene::rTestScene()
 #include "Game\SaveManager.h"
 #include "kaneta\ActionMediate\ActionMediate.h"
 #include "GraphicsLib\Class\kPlane\kPlane.h"
+
+using namespace EffectLib;
+
+wp<EmitterSet> wpE;
+wp<EmitterSet> wpE2;
 
 void rTestScene::entry()
 {
@@ -100,6 +107,18 @@ void rTestScene::entry()
 	GIMMICK_MNG.init("gimmick/giTest.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
+
+
+	//===============　田代デバッグ用  =======================================
+	wpE = sEffectManager->Create(FIRE_BALL,Vector3(0,0,0));
+	wpE->Setting_Velocity(Vector3(0,1,0));
+	wpE->Loop();
+
+
+	wpE2 = sEffectManager->Create(FIRE_CHARGE,Vector3(0,0,-5),0.1f);
+	wpE2->Setting_Velocity(Vector3(0,1,0));
+	wpE2->Loop();
+	//===============　田代デバッグ用  =======================================
 }
 
 #include "input\Input.h"
