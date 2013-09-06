@@ -7,6 +7,10 @@ namespace klib
 {
 	namespace utility
 	{
+		inline void pathYenToSlash(char* temp)
+		{
+			while( *temp++ ){if( *temp == '\\' ){*temp= '/';}}
+		}
 		/**
 		* @brief shift-jis”»’è
 		* @param[in] code ”»’è‚·‚é•¶šƒR[ƒh

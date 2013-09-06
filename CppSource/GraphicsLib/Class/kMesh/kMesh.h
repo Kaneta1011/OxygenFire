@@ -24,10 +24,10 @@ namespace klib
 		u32				NumVertex;		//頂点数
 		u32				NumFace;		//ポリゴン数
 		u32				MaterialCount;	//	材質数
-		u32*			Index;				//頂点インデックス
+		u16*			Index;				//頂点インデックス
 		u32*			Material;			//ポリゴン材質番号
 		u32*			MaterialNumFace;	//材質ごとのポリゴン数
-		u32**			MaterialIndex;	//材質ごとの頂点インデックス
+		u16**			MaterialIndex;	//材質ごとの頂点インデックス
 		//合計フレーム数
 		u32				NumFrame;
 		u32*			dwFrameFlag;
@@ -44,7 +44,8 @@ namespace klib
 			}
 			
 			NumVertex=NumFace=MaterialCount=NumFrame=NumBone=0;
-			Index=Material=MaterialNumFace=dwFrameFlag=NULL;
+			Material=MaterialNumFace=dwFrameFlag=NULL;
+			Index=NULL;
 			MaterialIndex=NULL;
 			motionOffsets=NULL;
 		}
@@ -202,6 +203,7 @@ namespace klib
 		inline s32 getUseCount()const{return *mp_UseCount;}
 		inline const kMeshData* getMeshPtr()const{return mp_MeshData;}
 		inline const math::Matrix& getTransMatrixRef()const{return m_TransMatrix;}
+		inline void setTransMatrix(const math::Matrix& mat){m_TransMatrix=mat;}
 	};
 
 	class kSkin:public kMesh

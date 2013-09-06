@@ -12,7 +12,7 @@ namespace klib
 		
 	public:
 		kPlayer(const char* filename);
-		kPlayer(const char* filename,const rlib::AnalogStick* stick);
+		kPlayer(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button);
 		~kPlayer();
 		bool update();
 		bool render(kGraphicsPipline* pipline);

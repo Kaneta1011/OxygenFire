@@ -25,13 +25,15 @@ namespace klib
 					//スレッドを非アクティブ状態にする
 					threadInst->setActiveFlag(false);
 					//処理をロックする(既にここに処理が来ていたらlockの中でunlockされるまで待つ)
-					m_Mutex.lock();
+					m_Mutex.lock(3);
+					dprintf("Worker lock End");
 					//プールに処理が入ってくるのを待つ(もしプールのwaitが起床してイベントが非シグナルになっているときにシグナル状態になってしまった時のためにwhileで処理が入るまでループしている)
 					//上の状態のため最悪の状態でこのwhileループで一回ループされることになる
 					while(kThreadPool::isEmpty())
 					{
 						//プールが終了待ちに入っていればスレッドを終了する
-						if(!kThreadPool::isActive()){m_Mutex.unLock();return 0;}
+						if(!kThreadPool::isActive()){m_Mutex.unLock(4);return 0;}
+						
 						kThreadPool::wait();
 					}
 					//スレッドをアクティブ状態にする
@@ -40,7 +42,7 @@ namespace klib
 					IkThreadFunc* func=NULL;
 					kThreadPool::get(&func);
 					//処理をアンロックする
-					m_Mutex.unLock();
+					m_Mutex.unLock(5);
 					//実行
 					dprintf("ThreadID:%d Run\n",threadInst->getID());
 					func->run();

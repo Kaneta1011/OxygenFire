@@ -12,23 +12,25 @@ namespace klib
 	kObjectBuffer* kPlane::m_VBO=NULL;
 	kObjectBuffer* kPlane::m_IBO=NULL;
 
+	static planeVertex planeV[4]=
+	{
+		{Vector3(0.5f,0.5f,0),Vector2(0,0)},		//右上
+		{Vector3(-0.5f,0.5f,0),Vector2(1,0)},		//左上
+		{Vector3(0.5f,-0.5f,0),Vector2(0,1)},		//右下
+		{Vector3(-0.5f,-0.5f,0),Vector2(1,1)}	//左下
+	};
+	static u16 planeI[6]=
+	{
+		0,1,2,1,2,3
+	};
+
 	void kPlane::init()
 	{
-		planeVertex workV[4]=
-		{
-			{Vector3(0.5f,0.5f,0),Vector2(0,0)},		//右上
-			{Vector3(-0.5f,0.5f,0),Vector2(1,0)},		//左上
-			{Vector3(0.5f,-0.5f,0),Vector2(0,1)},		//右下
-			{Vector3(-0.5f,-0.5f,0),Vector2(1,1)}	//左下
-		};
-		u16 workI[6]=
-		{
-			0,1,2,1,2,3
-		};
+
 		m_VBO=new kObjectBuffer;
 		m_IBO=new kObjectBuffer;
-		kDevice::createVertexBuffer(m_VBO,workV,sizeof(planeVertex)*4,GL_STATIC_DRAW);
-		kDevice::createIndexBuffer(m_IBO,workI,sizeof(u16)*6,GL_STATIC_DRAW);
+		kDevice::createVertexBuffer(m_VBO,planeV,sizeof(planeVertex)*4,GL_STATIC_DRAW);
+		kDevice::createIndexBuffer(m_IBO,planeI,sizeof(u16)*6,GL_STATIC_DRAW);
 	}
 	void kPlane::release()
 	{

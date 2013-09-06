@@ -55,6 +55,8 @@ wp<EmitterSet> wpE2;
 
 void rTestScene::entry()
 {
+	AssetsLoader::begin();
+	kDevice::begin();
 	rlib::SaveManager::save();
 	rlib::SaveManager::load();
 
@@ -73,7 +75,7 @@ void rTestScene::entry()
 
 
 //プレイヤーの設定
-	mMesh=new kPlayer("kanetaPlace/kman.IEM",mStick);
+	mMesh=new kPlayer("kanetaPlace/kman.IEM",mStick,mButton);
 	mMesh->getObj()->setScale(0.01f);
 	mMesh->getObj()->setPosition(0,0,-5);
 	mMesh->getObj()->setAngle(0);
@@ -83,13 +85,15 @@ void rTestScene::entry()
 	m_Camera=new kPlayCamera(mMesh);
 
 	klib::kPlane::init();
-	klib::ActionMediate::init(this->mMesh);
+	klib::ActionMediate::init();
 
 	rlib::BulletManager::getInst().init();
 	GIMMICK_MNG.init("gimmick/giTest.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
 
+	kDevice::end();
+	AssetsLoader::end();
 
 	//===============　田代デバッグ用  =======================================
 	//wpE = sEffectManager->Create(FIRE_BALL,Vector3(0,0,0));
@@ -173,7 +177,7 @@ void rTestScene::update()
 		mMesh->getObj()->Update();
 	}
 
-	klib::ActionMediate::update();
+	klib::ActionMediate::update(mMesh);
 
 	sEffectManager->Update();
 

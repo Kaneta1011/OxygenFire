@@ -24,6 +24,7 @@ namespace klib
 		class IkThreadFunc
 		{
 		private:
+			bool* m_EndFlag;
 			///@brief 関数終了待ちイベント(デストラクタでセットしてスレッドクラスに知らせる)
 			kEvent m_Event;
 			///@関数または関数オブジェクトを保持する
@@ -35,7 +36,7 @@ namespace klib
 				delete m_Func;
 			}
 			IkThreadFunc(){}
-			IkThreadFunc( kThreadHolder* f ) : m_Func( f ){}
+			IkThreadFunc( kThreadHolder* f ,bool* flag) : m_Func( f ),m_EndFlag(flag){}
 		public:
 			/**
 			* @brief 関数または関数オブジェクトの実行
@@ -59,6 +60,7 @@ namespace klib
 			{
 				//LOGI("IkThreadFunc::end");
 				m_Event.set();
+				*m_EndFlag=true;
 			}
 		private:
 			/**
@@ -79,6 +81,7 @@ namespace klib
 		class kThread
 		{
 		private:
+			bool m_EndFlag;
 			///@関数または関数オブジェクトを保持した親クラス
 			IkThreadFunc* m_Data;
 		public:
@@ -88,7 +91,7 @@ namespace klib
 			* 関数クラスを作成してスレッドプールにリクエストする
 			*/
 			kThread( kThreadHolder* f )
-				: m_Data( new IkThreadFunc( f ) )
+				: m_EndFlag(false),m_Data( new IkThreadFunc(f,&m_EndFlag) )
 			{
 				//LOGI("kThread");
 				kThreadPool::request(m_Data);
@@ -116,6 +119,7 @@ namespace klib
 				//LOGI("kThread wait");
 				m_Data->wait();
 			}
+			bool isEnd()const{return m_EndFlag;}
 		private:
 			/**
 			* @brief コピーコンストラクタ禁止

@@ -84,6 +84,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_systemInit(JNIEnv * e
 	
 	AssetsLoader::sInit(env, asset);
 	mlInput::init(input_maxPoint);
+	thread::kThreadPool::create(16);
 
 	LOGI(TAG, "Complete systemInit.");
 }
@@ -97,7 +98,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env
 	LOGI(TAG, "Execute onResume.");
 	
 	Sound::init();
-
+	thread::kThreadPool::create(16);
 	//Sound::add( 0, "Sound/BGM/BGM1.mp3" );
 	//Sound::play(0,true);
 
@@ -121,23 +122,26 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,10,0),Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix(K_PI/4,(float)width/(float)height,.1f,100.0f);
 
+	AssetsLoader::begin();
+	kDevice::begin();
 	rlib::r2DPipeline::init();
-
+	klib::ActionMediate::init();
 //エフェクトの初期化
 
 	EffectLib::EffectManager_Singleton::getInstance()->Initialize();
 	LOGI(TAG,"OK EffectManager_Singleton init");
 
 	dprintf("Screen Size Initialize w=%d h=%d",width,height);
-
+	kDevice::end();
+	AssetsLoader::end();
 	//glLineWidth(1.0f);
 
 	////シーン作成
-	//testScene::_create();
+	testScene::_create();
 	////シーン割り当て
-	//framework.sceneChange(testScene::_getInstancePtr());
+	framework.sceneChange(testScene::_getInstancePtr());
 
-	framework.scenePush( new rTestScene() );
+	//framework.scenePush( new rTestScene() );
 	
 	LOGI(TAG, "Complete graphic init");
 }
@@ -178,7 +182,8 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env,
 	testScene::_destroy();
 
 	rlib::r2DPipeline::clear();
-
+	klib::ActionMediate::release();
+	thread::kThreadPool::destroy();
 	EffectLib::EffectManager_Singleton::deleteInstance();
 	LOGI(TAG, "OK EffectManager_Singleton delete");
 
@@ -195,7 +200,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onDestory(JNIEnv * en
 	
 	mlInput::clear();
 	FolderPathManager::clear();
-
+	thread::kThreadPool::destroy();
 	LOGI(TAG, "Complete onDestory.");
 }
 

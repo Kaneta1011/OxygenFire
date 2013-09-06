@@ -30,6 +30,7 @@ namespace klib
 				if(mp_Instance)
 				{
 					WARNING(0,"シングルトンクラスの多重作成しようとしたので回避しました");
+					//delete mp_Instance;
 					return;
 				}
 				mp_Instance = new T();

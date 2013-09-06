@@ -67,16 +67,36 @@
 #include <GLES2/gl2ext.h>
 
 #include "utility\Bitmap.h"
+#include "templateLib\kQueue.h"
+#include "thread\Class\kMutex\kMutex.h"
+
+struct LoadTextureInfo
+{
+	GLuint* m_TexID;
+	rlib::Bitmap* mp_Bitmap;
+	LoadTextureInfo()
+	{
+		m_TexID=NULL;
+		mp_Bitmap=NULL;
+	}
+	~LoadTextureInfo()
+	{
+		delete mp_Bitmap;
+	}
+};
 
 class AssetsLoader
 {
 	friend class rlib::Bitmap;
-
+	typedef klib::ktl::kQueue_Safe<LoadTextureInfo*> LoadTextureQueue;
 public:
 	static void sInit(JNIEnv* env, jobject asset);
 	static void sClear(JNIEnv* env);
 
 	static bool load(char** out, int* outSize, const char* fileName);
+
+	static void begin();
+	static void end();
 
 	/*
 	Assetsにある画像からテクスチャを読み込む関数
@@ -90,11 +110,15 @@ public:
 	*/
 	static bool loadBitmap(rlib::Bitmap* outBitmap, const char* fileName, GLint format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE);
 
+
 	static AAssetManager* getAssetManager(){return sAssetMng;}
 
 protected:
 	static AAssetManager* sAssetMng;
 	static jclass		  sJNICallMethod;
+	static LoadTextureQueue m_LoadTextureQueue;
+	static bool m_Loading;
+	static klib::thread::kMutex m_Mutex;
 };
 
 #endif

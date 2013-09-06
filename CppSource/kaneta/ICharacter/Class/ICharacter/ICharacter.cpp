@@ -8,17 +8,25 @@
 namespace klib
 {
 
-	ICharacter::ICharacter(const char* filename):mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshGLES20Render)){}
-	ICharacter::ICharacter(const char* filename,const rlib::AnalogStick* stick):mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshGLES20Render)),m_Stick(stick){}
+	ICharacter::ICharacter(const char* filename):m_NextStrategy(NULL),mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshGLES20Render)){}
+	ICharacter::ICharacter(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button):m_NextStrategy(NULL),mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshGLES20Render)),m_Stick(stick),m_Button(button){}
 
 	void ICharacter::setStrategy(ICharaStrategy* strategy)
 	{
-		mp_Strategy.SetPtr(strategy,false);
+		m_NextStrategy=strategy;
+		//mp_Strategy.SetPtr(strategy,false);
 	}
 
 	bool ICharacter::exeStrategy()
 	{
+		if(m_NextStrategy)
+		{
+			mp_Strategy.SetPtr(m_NextStrategy,false);
+			m_NextStrategy=NULL;
+		}
+
 		if(!mp_Strategy.GetPtr())return false;
+
 		mp_Strategy->execute(this);
 		return true;
 	}

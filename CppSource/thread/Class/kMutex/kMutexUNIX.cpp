@@ -36,7 +36,7 @@ namespace klib
 		};
 		kMutex::kMutex():m_Impl(new Impl){}
 		kMutex::~kMutex(){}
-		void kMutex::lock(){m_Impl->lock();}
-		void kMutex::unLock(){m_Impl->unLock();}
+		void kMutex::lock(int val){dprintf("			Mutex Lock!!!!!!!%d",val);m_Impl->lock();}
+		void kMutex::unLock(int val){dprintf("			Mutex UnLock!!!!!!!%d",val);m_Impl->unLock();}
 	}
 }

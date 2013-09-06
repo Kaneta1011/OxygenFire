@@ -131,15 +131,15 @@ void GimmickManager::init(const char* giFilePath)
 	infoMng.load(giFilePath);
 	std::vector<GimmickInfoBase*>& infos = infoMng.getDatas();
 	LOGI(TAG, "data count = %d\n", infos.size() );
-	TEST_POS_NUM = 0;
+	//TEST_POS_NUM = 0;
 	this->mData.resize(infos.size());
 	for( size_t i=0; i<infos.size(); i++ )
 	{
 		if( infos[i] ){
 			this->mData[i] = infos[i]->makeGimmick();
 			if( isShowMessegeType( this->mData[i]->getType() ) ){
-				klib::testpos[TEST_POS_NUM] = this->mData[i]->getPos();
-				TEST_POS_NUM++;
+			//	klib::testpos[TEST_POS_NUM] = this->mData[i]->getPos();
+				//TEST_POS_NUM++;
 			}
 		}
 	}

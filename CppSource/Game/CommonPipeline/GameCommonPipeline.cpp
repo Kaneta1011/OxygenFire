@@ -7,8 +7,9 @@ klib::kGraphicsPipline* GameCommonPipeline::pipeline = NULL;
 void GameCommonPipeline::init()
 {
 	pipeline = new klib::kGraphicsPipline();
-	pipeline->createVertexShader("kanetaPlace/shader/vertex.txt");
-	pipeline->createPixelShader("kanetaPlace/shader/pixel.txt");
+	//pipeline->createVertexShader("kanetaPlace/shader/vertex.txt");
+	//pipeline->createPixelShader("kanetaPlace/shader/pixel.txt");
+	pipeline->createShader("kanetaPlace/shader/vertex.txt","kanetaPlace/shader/pixel.txt");
 	pipeline->createBlendState(klib::k_BLEND_NONE);
 	pipeline->createDepthStencilState(true,true,klib::eLESS_EQUAL);
 	pipeline->createRasterizerState(klib::eSOLID,klib::eFRONT,false);

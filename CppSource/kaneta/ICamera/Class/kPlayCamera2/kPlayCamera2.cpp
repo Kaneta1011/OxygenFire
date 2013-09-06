@@ -1,18 +1,19 @@
-#include "kPlayCamera.h"
+#include "kPlayCamera2.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
 #include "kaneta\ICharacter\Class\ICharacter\ICharacter.h"
 
 namespace klib
 {
 	using namespace math;
-	kPlayCamera::kPlayCamera(ICharacter* player):m_Player(player)
+	kPlayCamera2::kPlayCamera2(ICharacter* player):m_Player(player)
 	{
 		m_Angle=math::Vector3(K_PI/4.0f,0,0);
 	}
-	kPlayCamera::~kPlayCamera(){}
+	kPlayCamera2::~kPlayCamera2(){}
 
-	void kPlayCamera::update()
+	void kPlayCamera2::update()
 	{
+		f32 cameraLength=10.0f;
 		const rlib::AnalogStick* stick=m_Player->getAnalogStick();
 		math::Vector3 playerPos=m_Player->getObj()->getPosition();
 
@@ -33,12 +34,22 @@ namespace klib
 		//’·‚·‚¬‚éˆÚ“®’l‚É‘Î‚µ‚Ä•â³
 		if(2.0f<flickMaxLength.length())
 		{
-				flickMaxLength.normalize();
-				flickMaxLength*=2.0f;
+			flickMaxLength.normalize();
+			flickMaxLength*=2.0f;
 		}
 		m_Angle.y+=flickMaxLength.x*0.16f;
 		m_Angle.x-=flickMaxLength.y*0.09f;
+		if(flickMaxLength.length()<0.0001f)
+		{
+			Vector3 vec=m_Pos-(playerPos+Vector3(0,1,0));
+			f32 len=vec.length();
+			vec.normalize();
 
+			Vector3 ret;
+			math::Vector3toEuler(&ret,-vec);
+			m_Angle.y=ret.y;
+
+		}
 		kclampf(-1.5f,1.5f,&m_Angle.x);
 
 		//Šp“x‚É‚æ‚Á‚Ä³–Ê‚ğ‰ñ“]
@@ -47,7 +58,8 @@ namespace klib
 		rot.setRXYZ(m_Angle);
 		math::Vector3 front(0,0,1);
 		front.trans3x3(rot);
+		this->m_Pos=-front*cameraLength+playerPos+Vector3(0,1,0);
 
-		RenderLib::RenderState::Setting_ViewMatrix(-front*10.0f+playerPos+Vector3(0,1,0),playerPos+Vector3(0,1,0),math::Vector3(0,1,0));
+		RenderLib::RenderState::Setting_ViewMatrix(m_Pos,playerPos+Vector3(0,1,0),math::Vector3(0,1,0));
 	}
 }

@@ -1,8 +1,15 @@
-
 #include "kDevice.h"
 #include "../kMesh/kMesh.h"
+
 namespace klib
 {
+	thread::kMutex kDevice::m_Mutex;
+
+	kDevice::LoadVertexBufferQueue kDevice::m_LoadVertexBufferQueue;
+	kDevice::LoadIndexBufferQueue kDevice::m_LoadIndexBufferQueue;
+	kDevice::LoadShaderQueue kDevice::m_LoadShaderQueue;
+	kDevice::CreateInputLayoutQueue kDevice::m_CreateInputLayoutQueue;
+
 	const kInputLayout* kDevice::m_IAInputLayout;
 	const kObjectBuffer* kDevice::m_IAVertexBuffer;
 	const kObjectBuffer* kDevice::m_IAIndexBuffer;
@@ -10,6 +17,109 @@ namespace klib
 	const kBlendState* kDevice::m_OMBlendState;
 	const kDepthStencilState* kDevice::m_OMDepthStencilState;
 	const kRasterizerState* kDevice::m_RasterizerState;
+
+	//デバイス遅延読み込みを開始する
+	void kDevice::begin()
+	{
+		m_Mutex.lock();
+		dprintf("kDevice begin");
+		//キューに溜まった頂点バッファを削除する
+		while(!m_LoadVertexBufferQueue.isEmpty())
+		{
+			LoadBufferInfo* p;
+			m_LoadVertexBufferQueue.get(&p);
+			delete p;
+		}
+		//キューに溜まったインデックスバッファを削除する
+		while(!m_LoadIndexBufferQueue.isEmpty())
+		{
+			LoadBufferInfo* p;
+			m_LoadIndexBufferQueue.get(&p);
+			delete p;
+		}
+		//キューに溜まったシェーダーを削除する
+		while(!m_LoadShaderQueue.isEmpty())
+		{
+			LoadShaderInfo* p;
+			m_LoadShaderQueue.get(&p);
+			delete p;
+		}
+		//キューに溜まったインプットレイアウトを削除する
+		while(!m_CreateInputLayoutQueue.isEmpty())
+		{
+			CreateInputLayoutInfo* p;
+			m_CreateInputLayoutQueue.get(&p);
+			delete p;
+		}
+		m_LoadVertexBufferQueue.clear();
+		m_LoadIndexBufferQueue.clear();
+		m_LoadShaderQueue.clear();
+		m_CreateInputLayoutQueue.clear();
+	}
+	//デバイス遅延読み込みを終了する
+	void kDevice::end()
+	{
+		//キューに溜まった頂点バッファを作成する
+		while(!m_LoadVertexBufferQueue.isEmpty())
+		{
+			LoadBufferInfo* p;
+			m_LoadVertexBufferQueue.get(&p);
+			//頂点バッファオブジェクトの作成
+			glGenBuffers(1,&p->m_Buffer->m_BO);
+			glBindBuffer(GL_ARRAY_BUFFER,p->m_Buffer->m_BO);
+			glBufferData(GL_ARRAY_BUFFER,p->m_DataSize,p->m_Data,p->m_Type);
+			p->m_Buffer->m_BufferSize=p->m_DataSize;
+			p->m_Buffer->m_BufferType=GL_ARRAY_BUFFER;
+			//バインド解除
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			delete p;
+		}
+		//キューに溜まったインデックスバッファを作成する
+		while(!m_LoadIndexBufferQueue.isEmpty())
+		{
+			LoadBufferInfo* p;
+			m_LoadIndexBufferQueue.get(&p);
+			//頂点バッファオブジェクトの作成
+			glGenBuffers(1,&p->m_Buffer->m_BO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,p->m_Buffer->m_BO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER,p->m_DataSize,p->m_Data,p->m_Type);
+			p->m_Buffer->m_BufferSize=p->m_DataSize;
+			p->m_Buffer->m_BufferType=GL_ELEMENT_ARRAY_BUFFER;
+			//バインド解除
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			delete p;
+		}
+		//キューに溜まったシェーダーをコンパイルする
+		while(!m_LoadShaderQueue.isEmpty())
+		{
+			LoadShaderInfo* p;
+			m_LoadShaderQueue.get(&p);
+			//シェーダープログラムを作成
+			p->m_Technique->m_Program=glCreateProgram();
+			createVertexShaderFromMemory(p->m_Technique->mp_VertexShader,p->mp_VShader,p->m_VShaderLength);
+			glAttachShader(p->m_Technique->m_Program,p->m_Technique->mp_VertexShader->m_ShaderID);
+
+			createPixelShaderFromMemory(p->m_Technique->mp_PixelShader,p->mp_PShader,p->m_PShaderLength);
+			glAttachShader(p->m_Technique->m_Program,p->m_Technique->mp_PixelShader->m_ShaderID);
+
+			glLinkProgram(p->m_Technique->m_Program);
+			delete p;
+		}
+		//キューに溜まったインプットレイアウトを作成する
+		while(!m_CreateInputLayoutQueue.isEmpty())
+		{
+			CreateInputLayoutInfo* p;
+			m_CreateInputLayoutQueue.get(&p);
+			for(int i=0;i<p->m_InputLayout->m_TypeNum;i++)
+			{
+				dprintf("%s",p->m_SemanticName[i]);
+				p->m_InputLayout->mp_Desc[i].m_Location=glGetAttribLocation(*p->m_Program,p->m_SemanticName[i]);
+			}
+			delete p;
+		}
+		dprintf("kDevice end");
+		m_Mutex.unLock();
+	}
 
 	static bool isShaderError(GLenum shaderType,GLuint shader)
 	{
@@ -57,7 +167,15 @@ namespace klib
 		glCompileShader(out->m_ShaderID);
 		if(isShaderError(GL_FRAGMENT_SHADER,out->m_ShaderID))return false;
 		return true;
+	}
 
+	bool kDevice::createShaderMemory(kTechnique* out,const char* vertexBuffer,s32 vertexLength,const char* pixelBuffer,s32 pixelLength)
+	{
+		LoadShaderInfo* info=new LoadShaderInfo(out,vertexBuffer,vertexLength,pixelBuffer,pixelLength);
+
+		m_LoadShaderQueue.put(info);
+
+		return true;
 	}
 
 	bool kDevice::createInputLayout(kInputLayout* out,const kGraphicsPipline* usePipline,const kInputElementDesc* desc,u32 descsize)
@@ -68,10 +186,14 @@ namespace klib
 		out->mp_Desc=new kInputLayoutDesc[descsize];
 		out->m_TypeNum=descsize;
 		out->m_VertexSize=0;
+		CreateInputLayoutInfo* info=new CreateInputLayoutInfo;
+		info->m_InputLayout=out;
+		info->m_Program=&usePipline->m_Program;
 		for(int i=0;i<descsize;i++)
 		{
+			info->m_SemanticName[i]=desc[i].SemanticName;
 			//シェーダロケーションを取得する
-			out->mp_Desc[i].m_Location=glGetAttribLocation(usePipline->m_Program,desc[i].SemanticName);
+			//out->mp_Desc[i].m_Location=glGetAttribLocation(usePipline->m_Program,desc[i].SemanticName);
 			//フォーマット情報を取得する
 			out->mp_Desc[i].m_Types.dxgi_format=PixelToFormat(desc[i].Format,&out->mp_Desc[i].m_Types.component,&out->mp_Desc[i].m_Types.size,&out->mp_Desc[i].m_Types.normalize);
 			dprintf("	SemanticName=%s\n",desc[i].SemanticName);
@@ -81,6 +203,8 @@ namespace klib
 			out->mp_Desc[i].m_Types.size/=8;
 			out->m_VertexSize+=out->mp_Desc[i].m_Types.size;
 		}
+
+		m_CreateInputLayoutQueue.put(info);
 		//bit単位をbyte単位に変換
 		//out->m_VertexSize/=8;
 		dprintf("InputLayoutSize=%ubyte\n",out->m_VertexSize);
@@ -91,28 +215,42 @@ namespace klib
 	bool kDevice::createVertexBuffer(kObjectBuffer*out,const void* data,u32 datasize,s32 type)
 	{
 		dprintf("createVertexBuffer\n");
-		//頂点バッファオブジェクトの作成
-		glGenBuffers(1,&out->m_BO);
-		glBindBuffer(GL_ARRAY_BUFFER,out->m_BO);
-		glBufferData(GL_ARRAY_BUFFER,datasize,data,type);
-		out->m_BufferSize=datasize;
-		out->m_BufferType=GL_ARRAY_BUFFER;
-		//バインド解除
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		LoadBufferInfo* p=new LoadBufferInfo;
+		p->m_Buffer=out;
+		p->m_Type=type;
+		p->m_Data=data;
+		p->m_DataSize=datasize;
+
+		m_LoadVertexBufferQueue.put(p);
+		////頂点バッファオブジェクトの作成
+		//glGenBuffers(1,&out->m_BO);
+		//glBindBuffer(GL_ARRAY_BUFFER,out->m_BO);
+		//glBufferData(GL_ARRAY_BUFFER,datasize,data,type);
+		//out->m_BufferSize=datasize;
+		//out->m_BufferType=GL_ARRAY_BUFFER;
+		////バインド解除
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return true;
 	}
 
 	bool kDevice::createIndexBuffer(kObjectBuffer* out,const void* data,u32 datasize,s32 type)
 	{
 		dprintf("createIndexBuffer size=%u\n",datasize);
-		//インデックスバッファオブジェクトの作成
-		glGenBuffers(1, &out->m_BO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, out->m_BO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, datasize,data, type);
-		out->m_BufferSize=datasize;
-		out->m_BufferType=GL_ELEMENT_ARRAY_BUFFER;
-		//　バインドしたものをもどす
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		LoadBufferInfo* p=new LoadBufferInfo;
+		p->m_Buffer=out;
+		p->m_Type=type;
+		p->m_Data=data;
+		p->m_DataSize=datasize;
+
+		m_LoadIndexBufferQueue.put(p);
+		////インデックスバッファオブジェクトの作成
+		//glGenBuffers(1, &out->m_BO);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, out->m_BO);
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, datasize,data, type);
+		//out->m_BufferSize=datasize;
+		//out->m_BufferType=GL_ELEMENT_ARRAY_BUFFER;
+		////　バインドしたものをもどす
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		return true;
 	}
 	void kDevice::createBlendState( kBlendState* out,const eBlendType* BlendStateType, u32 BlendStateTypeLength )

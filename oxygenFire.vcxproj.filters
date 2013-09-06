@@ -223,6 +223,15 @@
     <Filter Include="source\Game\CommonPipeline">
       <UniqueIdentifier>{5a298504-edd6-4bc2-a085-a4c5b204f90a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\kPlayer\Strategy\Shot">
+      <UniqueIdentifier>{caef642e-71dc-47c8-87d0-0ed32c5d4664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICamera\Class\kPlayCamera2">
+      <UniqueIdentifier>{dcdd91f6-af9f-4580-8bfb-7c90ac45bad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kaneta\ICamera\Class\kShotCamera">
+      <UniqueIdentifier>{31c80fed-2f81-4971-9a38-5b8af57ea5bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -431,6 +440,15 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\CommonPipeline\GameCommonPipeline.cpp">
       <Filter>source\Game\CommonPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.cpp">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICamera\Class\kPlayCamera2\kPlayCamera2.cpp">
+      <Filter>source\kaneta\ICamera\Class\kPlayCamera2</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICamera\Class\kShotCamera\kShotCamera.cpp">
+      <Filter>source\kaneta\ICamera\Class\kShotCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -721,6 +739,15 @@
     </ClInclude>
     <ClInclude Include="CppSource\Game\CommonPipeline\GameCommonPipeline.h">
       <Filter>source\Game\CommonPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICamera\Class\kPlayCamera2\kPlayCamera2.h">
+      <Filter>source\kaneta\ICamera\Class\kPlayCamera2</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICamera\Class\kShotCamera\kShotCamera.h">
+      <Filter>source\kaneta\ICamera\Class\kShotCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,8 +2,16 @@
 #include "kaneta\ICharacter\Class\ICharacter\ICharacter.h"
 #include "input\AnalogStick.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
+#include "kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h"
+#include "testScene.h"
+#include "kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h"
+#include "kaneta\ICamera\Class\kPlayCamera2\kPlayCamera2.h"
 namespace klib
 {
+	kPlayerMove::kPlayerMove(ICharacter* acter)
+	{
+		testScene::_getInstance().setCamera(new kPlayCamera2(acter));
+	}
 		void kPlayerMove::calcAngle(ICharacter* acter)
 		{
 			math::Vector3 Move=acter->getMove();
@@ -45,9 +53,8 @@ namespace klib
 				side.normalize();
 				front.normalize();
 				math::Vector3 move(0,0,0);
-				float rate = 0.05f;
-				move+=side*stick->getX()*rate;
-				move+=front*stick->getY()*rate;
+				move+=side*stick->getX()*0.1f;
+				move+=front*stick->getY()*0.1f;
 				if(move.length()>0.01f)
 				{
 					acter->setMove(move);
@@ -55,7 +62,10 @@ namespace klib
 				}
 			}
 			
-			obj->setScale(0.002f);
 			obj->addPosition(acter->getMove());
+			if(acter->getButton()->getMode()==acter->getButton()->eDOWN)
+			{
+				acter->setStrategy(new kPlayerShot(acter));
+			}
 		}
 }

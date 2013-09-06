@@ -7,15 +7,72 @@
 #include "../kBlendState/kBlendState.h"
 #include "../kRasterizerState/kRasterizerState.h"
 #include "../kDepthStencilState/kDepthStencilState.h"
+#include "templateLib\kQueue.h"
 
 namespace klib
 {
+	//遅延読み込みの際に使用するバッファ作成情報構造体
+	struct LoadBufferInfo
+	{
+		const void* m_Data;
+		u32 m_DataSize;
+		GLenum m_Type;
+		kObjectBuffer* m_Buffer;
+	};
+	//遅延読み込みの際に使用するシェーダー作成情報構造体
+	struct LoadShaderInfo
+	{
+		kTechnique* m_Technique;
+		char* mp_VShader;
+		char* mp_PShader;
+		s32 m_VShaderLength;
+		s32 m_PShaderLength;
+		LoadShaderInfo(kTechnique* tec,const char* vbuf,s32 vlen,const char* pbuf,s32 plen)
+		{
+			m_Technique=tec;
+			m_VShaderLength=vlen;
+			mp_VShader=new char[vlen];
+			CopyMemory(mp_VShader,vbuf,sizeof(char)*vlen);
+
+			m_PShaderLength=plen;
+			mp_PShader=new char[plen];
+			CopyMemory(mp_PShader,pbuf,sizeof(char)*plen);
+		}
+		~LoadShaderInfo()
+		{
+			delete[] mp_VShader;
+			delete[] mp_PShader;
+		}
+	};
+	//遅延読み込みの際に使用するインプットレイアウト作成情報構造体
+	struct CreateInputLayoutInfo
+	{
+		const GLuint* m_Program;
+		kInputLayout* m_InputLayout;
+		const char* m_SemanticName[16];
+	};
+
+	
 	/**
 	* @class デバイスクラス
 	*/
 	class kDevice
 	{
+		typedef ktl::kQueue_Safe<LoadBufferInfo*> LoadVertexBufferQueue;
+		typedef ktl::kQueue_Safe<LoadBufferInfo*> LoadIndexBufferQueue;
+		typedef ktl::kQueue_Safe<LoadShaderInfo*> LoadShaderQueue;
+		typedef ktl::kQueue_Safe<CreateInputLayoutInfo*> CreateInputLayoutQueue;
 	private:
+		static thread::kMutex m_Mutex;
+		//頂点バッファの遅延読み込み情報キュー
+		static LoadVertexBufferQueue m_LoadVertexBufferQueue;
+		//インデックスバッファの遅延読み込み情報キュー
+		static LoadIndexBufferQueue m_LoadIndexBufferQueue;
+		//シェーダーの遅延読み込み情報キュー
+		static LoadShaderQueue m_LoadShaderQueue;
+		//インプットレイアウトの遅延読み込み情報キュー
+		static CreateInputLayoutQueue m_CreateInputLayoutQueue;
+
 		static const kInputLayout* m_IAInputLayout;
 		static const kObjectBuffer* m_IAVertexBuffer;
 		static const kObjectBuffer* m_IAIndexBuffer;
@@ -24,6 +81,8 @@ namespace klib
 		static const kDepthStencilState* m_OMDepthStencilState;
 		static const kRasterizerState* m_RasterizerState;
 	public:
+		static void begin();
+		static void end();
 		/**
 		* @brief 頂点シェーダーをシェーダー文字列から作成する
 		* @param[out] out 作成したシェーダー
@@ -36,6 +95,7 @@ namespace klib
 		* @param[in] buffer シェーダーが記述された文字列
 		*/
 		static bool createPixelShaderFromMemory(kShader* out,const char* buffer,s32 length);
+		static bool createShaderMemory(kTechnique* out,const char* vertexBuffer,s32 vertexLength,const char* pixelBuffer,s32 pixelLength);
 		/**
 		* @brief 頂点レイアウトを作成する
 		* @param[out] out 作成したレイアウト

@@ -3,13 +3,14 @@
 #include "math\kmathf.h"
 #include "templateLib\smartptr.h"
 #include "kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.h"
-
+#include "input\Button.h"
 
 
 //‘O•ûéŒ¾
 namespace rlib
 {
 	class AnalogStick;
+	class IButton;
 }
 
 namespace klib
@@ -28,14 +29,16 @@ namespace klib
 	class ICharacter
 	{
 	protected:
+		ICharaStrategy* m_NextStrategy;
 		ktl::sp<ICharaStrategy> mp_Strategy;
 		const rlib::AnalogStick* m_Stick;
+		const rlib::IButton* m_Button;
 		kSkin* mp_Mesh;
 		math::Vector3 m_Move;
 		bool exeStrategy();
 	public:
 		ICharacter(const char* filename);
-		ICharacter(const char* filename,const rlib::AnalogStick* stick);
+		ICharacter(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button);
 		virtual ~ICharacter(){}
 		/**
 		* @brief ó‘Ôˆ—ƒNƒ‰ƒX‚ğ“ü‚ê‚é
@@ -47,6 +50,7 @@ namespace klib
 		virtual bool render(kGraphicsPipline* pipline)=0;
 
 		const rlib::AnalogStick* getAnalogStick()const{return m_Stick;}
+		const rlib::IButton* getButton()const{return m_Button;}
 		kSkin* getObj(){return mp_Mesh;}
 
 		math::Vector3 getMove()const{return m_Move;}

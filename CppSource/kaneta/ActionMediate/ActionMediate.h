@@ -2,6 +2,8 @@
 
 #include "templateLib\kVector.h"
 #include "math\kmathf.h"
+#define TEST_ACTION_POS 100
+extern int TEST_POS_NUM;
 
 //ëOï˚êÈåæ
 namespace rlib
@@ -16,10 +18,7 @@ namespace klib
 
 namespace klib
 {
-#define TEST_ACTION_POS 100
-	extern int TEST_POS_NUM;
 	extern klib::math::Vector3 testpos[TEST_ACTION_POS];
-
 	struct TouchEvent
 	{
 		f32 m_FontTime;
@@ -30,7 +29,6 @@ namespace klib
 		typedef ktl::kVector<TouchEvent> TimeTable;
 		typedef ktl::kVector<s32> IndexList;
 	private:
-		static kPlayer* m_Player;
 		static IndexList m_IndexList;
 		static TimeTable m_TimeTable;
 
@@ -42,8 +40,9 @@ namespace klib
 		static kGraphicsPipline* m_AddBord;
 
 	public:
-		static void init(kPlayer* player);
-		static bool update();
+		static void init();
+		static bool release();
+		static bool update(kPlayer* m_Player);
 		static void render();
 	};
 }

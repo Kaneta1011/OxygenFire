@@ -1,5 +1,6 @@
 #pragma once
 #include "IMeshLoadDelegate.h"
+#include "utility\kutility.h"
 
 namespace klib
 {
@@ -129,18 +130,18 @@ namespace klib
 				((kMeshVertex*)(m_Data->mp_Vertex))[i].m_TexCoord=math::Vector2(workV[i].tu,workV[i].tv);
 			}
 			//インデックスコピー
-			m_Data->m_Info.Index=new u32[imo.NumFace*3];
+			m_Data->m_Info.Index=new u16[imo.NumFace*3];
 			for(int i=0;i<imo.NumFace*3;i++)
 			{
-				m_Data->m_Info.Index[i]=(u32)workF[i];
+				m_Data->m_Info.Index[i]=(u16)workF[i];
 			}
 			//マテリアルコピー
 			m_Data->m_Info.Material=new u32[imo.NumFace];
 			CopyMemory( m_Data->m_Info.Material, workM, sizeof(u32)*(imo.NumFace) );
 
 			//マテリアル毎のポリゴン数インデックス作成
-			u32* workMI=new u32[m_Data->m_Info.NumFace*3];
-			m_Data->m_Info.MaterialIndex=new u32*[m_Data->m_Info.MaterialCount];
+			u16* workMI=new u16[m_Data->m_Info.NumFace*3];
+			m_Data->m_Info.MaterialIndex=new u16*[m_Data->m_Info.MaterialCount];
 			m_Data->m_Info.MaterialNumFace=new u32[m_Data->m_Info.MaterialCount];
 			//テクスチャ読み込み
 			//lpTexture  = new klib2DObj* [ imo.NumMaterial ];
@@ -176,28 +177,24 @@ namespace klib
 				}
 				else
 				{
-					m_Data->m_Info.MaterialIndex[i]=new u32[m_Data->m_Info.MaterialNumFace[i]*3];
-					CopyMemory( m_Data->m_Info.MaterialIndex[i], workMI, sizeof(u32)*(m_Data->m_Info.MaterialNumFace[i]*3) );
+					m_Data->m_Info.MaterialIndex[i]=new u16[m_Data->m_Info.MaterialNumFace[i]*3];
+					CopyMemory( m_Data->m_Info.MaterialIndex[i], workMI, sizeof(u16)*(m_Data->m_Info.MaterialNumFace[i]*3) );
 				}
 				if( imo.Texture[i][0] == '\0' ) continue;
 				dprintf("IMO Texture Load %s",workpath);
 				//	テクスチャ読み込み
-				int n=0;
 				sprintf( temp, "%s%s", workpath, imo.Texture[i] );
-				n=0;
-				while( temp[n] ){if( temp[n] == '\\' ){temp[n] = '/';} n++;}
+				utility::pathYenToSlash(temp);
 				m_Data->m_Info.Diffuse[i] = new rlib::Texture;
 				m_Data->m_Info.Diffuse[i]->Initilize(temp);
 
 				sprintf( temp, "%sN%s", workpath, imo.Texture[i] );
-				n=0;
-				while( temp[n] ){if( temp[n] == '\\' ){temp[n] = '/';} n++;}
+				utility::pathYenToSlash(temp);
 				m_Data->m_Info.Normal[i] = new rlib::Texture;
 				m_Data->m_Info.Normal[i]->Initilize(temp);
 
 				sprintf( temp, "%sS%s", workpath, imo.Texture[i] );
-				n=0;
-				while( temp[n] ){if( temp[n] == '\\' ){temp[n] = '/';} n++;}
+				utility::pathYenToSlash(temp);
 				m_Data->m_Info.Specular[i] = new rlib::Texture;
 				m_Data->m_Info.Specular[i]->Initilize(temp);
 

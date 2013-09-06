@@ -12,8 +12,7 @@ namespace klib
 	
 		kTechnique::kTechnique()
 		{
-			//シェーダープログラムを作成
-			m_Program=glCreateProgram();
+
 			//頂点シェーダーを確保
 			mp_VertexShader=new kShader;
 			//ピクセルシェーダーを確保
@@ -74,6 +73,25 @@ namespace klib
 			glAttachShader(m_Program,mp_PixelShader->m_ShaderID);
 			return true;
 		}
+		bool kTechnique::createShader(const char* vfilename,const char* pfilename)
+		{
+			char* vbuffer;
+			s32 vbuffersize;
+			//アセットからシェーダーコードを読み込み
+			AssetsLoader::load(&vbuffer, &vbuffersize, vfilename);
+
+			char* pbuffer;
+			s32 pbuffersize;
+			//アセットからシェーダーコードを読み込み
+			AssetsLoader::load(&pbuffer, &pbuffersize, pfilename);
+
+			kDevice::createShaderMemory(this,vbuffer,vbuffersize,pbuffer,pbuffersize);
+
+			delete[] vbuffer;
+			delete[] pbuffer;
+
+		}
+
 		bool kTechnique::createBlendState(const eBlendType BlendStateType)
 		{
 			kDevice::createBlendStateAll(mp_BlendState,BlendStateType);
@@ -93,7 +111,7 @@ namespace klib
 		{
 			dprintf("complete\n");
 			//プログラムをリンクする
-			glLinkProgram(m_Program);
+			//glLinkProgram(m_Program);
 			return true;
 		}
 		bool kTechnique::setTechnique()
@@ -240,7 +258,7 @@ namespace klib
 		{
 			dprintf("complete\n");
 			//プログラムをリンクする
-			glLinkProgram(m_Program);
+			//glLinkProgram(m_Program);
 			//頂点レイアウトを定義から作成する
 			kDevice::createInputLayout(mp_InputLayout,this,desc,descsize);
 			return true;

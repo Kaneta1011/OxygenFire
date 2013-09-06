@@ -12,8 +12,6 @@ namespace klib
 	using namespace math;
 	using namespace ktl;
 
-	kPlayer* ActionMediate::m_Player=NULL;
-
 	ActionMediate::IndexList ActionMediate::m_IndexList;
 	ActionMediate::TimeTable ActionMediate::m_TimeTable;
 
@@ -24,8 +22,7 @@ namespace klib
 	kGraphicsPipline* ActionMediate::m_AlphaBord;
 	kGraphicsPipline* ActionMediate::m_AddBord;
 
-#define TEST_ACTION_POS 100
-	int TEST_POS_NUM = 0;
+int TEST_POS_NUM;
 	Vector3 testpos[TEST_ACTION_POS];
 
 	static kInputElementDesc billBordDesc[]=
@@ -35,7 +32,7 @@ namespace klib
 	};
 	static u32 billBordDescNum=sizeof(billBordDesc)/sizeof(kInputElementDesc);
 
-	void ActionMediate::init(kPlayer* player)
+	void ActionMediate::init()
 	{
 
 		m_Font0=new r2DObj;
@@ -49,8 +46,9 @@ namespace klib
 
 		m_AlphaBord=new kGraphicsPipline();
 		//pipline->createVertexShader("a");
-		m_AlphaBord->createVertexShader("kanetaPlace/shader/testbordvs.txt");
-		m_AlphaBord->createPixelShader("kanetaPlace/shader/testbordps.txt");
+		//m_AlphaBord->createVertexShader("kanetaPlace/shader/testbordvs.txt");
+		//m_AlphaBord->createPixelShader("kanetaPlace/shader/testbordps.txt");
+		m_AlphaBord->createShader("kanetaPlace/shader/testbordvs.txt","kanetaPlace/shader/testbordps.txt");
 		m_AlphaBord->createBlendState(k_BLEND_ALPHA);
 		m_AlphaBord->createDepthStencilState(true,true,eLESS_EQUAL);
 		m_AlphaBord->createRasterizerState(eSOLID,eNONE,false);
@@ -58,14 +56,15 @@ namespace klib
 
 		m_AddBord=new kGraphicsPipline();
 		//pipline->createVertexShader("a");
-		m_AddBord->createVertexShader("kanetaPlace/shader/touchbordvs.txt");
-		m_AddBord->createPixelShader("kanetaPlace/shader/touchbordps.txt");
+		//m_AddBord->createVertexShader("kanetaPlace/shader/touchbordvs.txt");
+		//m_AddBord->createPixelShader("kanetaPlace/shader/touchbordps.txt");
+		m_AddBord->createShader("kanetaPlace/shader/touchbordvs.txt","kanetaPlace/shader/touchbordps.txt");
 		m_AddBord->createBlendState(k_BLEND_ADD);
 		m_AddBord->createDepthStencilState(true,false,eLESS_EQUAL);
 		m_AddBord->createRasterizerState(eSOLID,eNONE,false);
 		m_AddBord->complete(billBordDesc,billBordDescNum);
 
-		m_Player=player;
+		//m_Player=player;
 		m_IndexList.clear();
 		m_TimeTable.clear();
 
@@ -77,8 +76,18 @@ namespace klib
 		}
 	}
 
+	bool ActionMediate::release()
+	{
+		delete m_Font0;
+		delete m_FireMask;
+		delete m_Ring;
 
-	bool ActionMediate::update()
+		delete m_AlphaBord;
+		delete m_AddBord;
+	}
+
+
+	bool ActionMediate::update(kPlayer* m_Player)
 	{
 		//前回のプレイヤー周囲のイベントに登録されていないイベントのタイマーを０にする
 		//for(int i=0;i<TEST_ACTION_POS;i++)
@@ -89,7 +98,7 @@ namespace klib
 
 		//
 
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
 			f32 dist=testpos[i].distance(m_Player->getObj()->getPosition());
 			if(m_IndexList.find(i)==-1)
@@ -118,7 +127,7 @@ namespace klib
 		}
 
 		m_IndexList.clear();
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
 			if(0.0f<m_TimeTable(i).m_FontTime)
 			{
@@ -136,9 +145,9 @@ namespace klib
 			f32 ringScale=m_TimeTable[m_IndexList[i]].m_FontTime*4.0f;
 			kclampf(0,1,&ringScale);
 			
-			kPlane::render(m_AlphaBord,m_Font0,0.0f,0.5f,0.5f,math::Vector3(testpos[m_IndexList[i]].x,testpos[m_IndexList[i]].y+1.0f,testpos[m_IndexList[i]].z),0,0,0,0);
+			kPlane::render(m_AlphaBord,m_Font0,0.0f,1.0f,1.0f,math::Vector3(testpos[m_IndexList[i]].x,testpos[m_IndexList[i]].y+2.0f,testpos[m_IndexList[i]].z),0,0,0,0);
 			m_AddBord->setShaderValue("alpha",ringScale);
-			kPlane::render(m_AddBord,m_Ring,m_TimeTable[m_IndexList[i]].m_RingTime,(1.0f-ringScale)*2.0f+1.0f,(1.0f-ringScale)*2.0f+1.0f,testpos[m_IndexList[i]],0,0,0,0);
+			kPlane::render(m_AddBord,m_Ring,m_TimeTable[m_IndexList[i]].m_RingTime,(1.0f-ringScale)*4.0f+2.0f,(1.0f-ringScale)*4.0f+2.0f,testpos[m_IndexList[i]],0,0,0,0);
 		}
 	}
 }

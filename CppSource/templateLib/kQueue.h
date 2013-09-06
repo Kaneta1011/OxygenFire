@@ -27,6 +27,13 @@ namespace klib
 			inline kQueue():m_Head(NULL),m_Tail(NULL),m_Size(0){}
 			inline virtual ~kQueue()
 			{
+				clear();
+			}
+			/**
+			* @brief キューを空にする
+			*/
+			inline virtual void clear()
+			{
 				while(!isEmpty())
 				{
 					node* next=m_Head->m_Next;
@@ -99,16 +106,22 @@ namespace klib
 			thread::kMutex m_Mutex;
 		public:
 			inline kQueue_Safe():kQueue<T>(){}
-			inline ~kQueue_Safe(){}
+			inline ~kQueue_Safe(){this->clear();}
+			inline void clear()
+			{
+				m_Mutex.lock(2);
+				kQueue<T>::clear();
+				m_Mutex.unLock(2);
+			}
 			/**
 			* @brief キューにデータを追加する
 			* @param[in] v データ
 			*/
 			inline void put(T v)
 			{
-				m_Mutex.lock();
+				m_Mutex.lock(2);
 				kQueue<T>::put(v);
-				m_Mutex.unLock();
+				m_Mutex.unLock(2);
 			}
 			/**
 			* @brief 頭からデータを取り出す
@@ -116,9 +129,9 @@ namespace klib
 			* @return データを取得すればtrue
 			*/
 			inline virtual bool get(T* ret){
-				m_Mutex.lock();
+				m_Mutex.lock(2);
 				bool flag=kQueue<T>::get(ret);
-				m_Mutex.unLock();
+				m_Mutex.unLock(2);
 				return flag;
 			}
 			/**
@@ -127,9 +140,9 @@ namespace klib
 			*/
 			inline virtual int size()
 			{
-				m_Mutex.lock();
+				m_Mutex.lock(2);
 				int ret=kQueue<T>::size();
-				m_Mutex.unLock();
+				m_Mutex.unLock(2);
 				return ret;
 			}
 			/**
@@ -138,9 +151,9 @@ namespace klib
 			*/
 			inline bool isEmpty()
 			{
-				m_Mutex.lock();
+				m_Mutex.lock(2);
 				bool ret=kQueue<T>::isEmpty();
-				m_Mutex.unLock();
+				m_Mutex.unLock(2);
 				return ret;
 			}
 		};

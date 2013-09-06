@@ -137,8 +137,9 @@ void r2DPipeline::init()
 {
 	clear();
 	spPipeline = new kTechnique();
-	spPipeline->createVertexShader("shader/r2d.vs");
-	spPipeline->createPixelShader("shader/r2d.fs");
+	//spPipeline->createVertexShader("shader/r2d.vs");
+	//spPipeline->createPixelShader("shader/r2d.fs");
+	spPipeline->createShader("shader/r2d.vs","shader/r2d.fs");
 	spPipeline->bindAttribLocation(0,"Pos");
 	spPipeline->bindAttribLocation(1,"Tex");
 	spPipeline->createBlendState(k_BLEND_ALPHA);

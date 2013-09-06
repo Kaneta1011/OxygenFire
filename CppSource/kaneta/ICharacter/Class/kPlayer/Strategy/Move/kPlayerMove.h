@@ -8,6 +8,7 @@ namespace klib
 	private:
 		void calcAngle(ICharacter* acter);
 	public:
+		kPlayerMove(ICharacter* acter);
 		virtual bool execute(ICharacter* acter);
 	};
 }

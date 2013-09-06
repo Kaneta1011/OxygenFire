@@ -16,6 +16,7 @@ namespace klib
 {
 	class kTechnique
 	{
+		friend class kDevice;
 	protected:
 		GLuint	m_Program;
 		kShader* mp_VertexShader;
@@ -38,6 +39,7 @@ namespace klib
 		* @param[in] filename ファイル名
 		*/
 		bool createPixelShader(const char* filename);
+		bool createShader(const char* vfilename,const char* pfilename);
 		/**
 		* @brief ブレンドステートを作成する
 		* @param[in] BlendStateType ブレンドタイプ

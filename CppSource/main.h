@@ -2,6 +2,7 @@
 #define _MAIN_
 
 #include <jni.h>
+#include "FrameWork\Class\kFrameWork\kFrameWork.h"
 
 //----------------------------------------------------------------------
 //
@@ -29,5 +30,6 @@ extern "C" {
 
 #define USE_JNI_VERSION JNI_VERSION_1_6
 extern JavaVM* g_VM;	//マルチスレッドを作るとき必要になる。
+extern klib::kFrameWork	framework;
 
 #endif

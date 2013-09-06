@@ -1,5 +1,6 @@
 #pragma once
 #include "kMeshLoadIMO.h"
+#include "utility\kutility.h"
 
 namespace klib
 {
@@ -114,10 +115,10 @@ namespace klib
 			}
 
 			//インデックスコピー
-			data->m_Info.Index=new u32[data->m_Info.NumFace*3];
+			data->m_Info.Index=new u16[data->m_Info.NumFace*3];
 			for(int i=0;i<data->m_Info.NumFace*3;i++)
 			{
-				data->m_Info.Index[i]=(u32)lpIem->lpFace[i];
+				data->m_Info.Index[i]=(u16)lpIem->lpFace[i];
 			}
 			//マテリアルコピー
 			data->m_Info.Material=new u32[data->m_Info.NumFace];
@@ -125,10 +126,10 @@ namespace klib
 
 			//	マテリアル設定
 			data->m_Info.MaterialCount = (u32)lpIem->NumMaterial;
-			data->m_Info.MaterialIndex=new u32*[lpIem->NumMaterial];
+			data->m_Info.MaterialIndex=new u16*[lpIem->NumMaterial];
 			data->m_Info.MaterialNumFace=new u32[lpIem->NumMaterial];
 
-			u32* workMI=new u32[data->m_Info.NumFace*3];
+			u16* workMI=new u16[data->m_Info.NumFace*3];
 			for( u32 i=0 ; i<data->m_Info.MaterialCount ; i++ ){
 				dprintf("Material %d",i);
 				//lpTexture[i]  = NULL;
@@ -156,8 +157,8 @@ namespace klib
 				}
 				else
 				{
-					data->m_Info.MaterialIndex[i]=new u32[data->m_Info.MaterialNumFace[i]*3];
-					CopyMemory( data->m_Info.MaterialIndex[i], workMI, sizeof(u32)*(data->m_Info.MaterialNumFace[i]*3) );
+					data->m_Info.MaterialIndex[i]=new u16[data->m_Info.MaterialNumFace[i]*3];
+					CopyMemory( data->m_Info.MaterialIndex[i], workMI, sizeof(u16)*(data->m_Info.MaterialNumFace[i]*3) );
 					dprintf("Material NumFace %u",data->m_Info.MaterialNumFace[i]);
 				}
 			}
@@ -178,14 +179,17 @@ namespace klib
 				//	テクスチャ読み込み
 				char	temp[256];
 				sprintf( temp, "%s%s", path, lpIem->Texture[i] );
+				utility::pathYenToSlash(temp);
 				data->m_Info.Diffuse[i] = new rlib::Texture;
 				data->m_Info.Diffuse[i]->Initilize(temp);
 
 				sprintf( temp, "%sN%s", path, lpIem->Texture[i] );
+				utility::pathYenToSlash(temp);
 				data->m_Info.Normal[i] = new rlib::Texture;
 				data->m_Info.Normal[i]->Initilize(temp);
 
 				sprintf( temp, "%sS%s", path, lpIem->Texture[i] );
+				utility::pathYenToSlash(temp);
 				data->m_Info.Specular[i] = new rlib::Texture;
 				data->m_Info.Specular[i]->Initilize(temp);
 

@@ -23,9 +23,9 @@ namespace klib
 			kMutex();
 			~kMutex();
 			///@brief ミューテックスをロックする
-			void lock();
+			void lock(int val=0);
 			///@brief ミューテックスを解除する
-			void unLock();
+			void unLock(int val=0);
 		};
 
 	}
