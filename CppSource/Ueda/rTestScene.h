@@ -5,7 +5,6 @@
 
 namespace klib{
 	class kMesh;
-	class kGraphicsPipline;
 	class kPlayer;
 	class ICamera;
 }
@@ -19,9 +18,6 @@ namespace rlib{
 class rTestScene : public klib::IScene
 {
 public:
-	static klib::kGraphicsPipline* pipeline;
-
-public:
 	rTestScene();
 	void entry();
 	void update();
@@ -34,7 +30,6 @@ private:
 	rlib::AnalogStick			*mStick;
 	klib::kPlayer				*mMesh;
 	klib::ICamera				*m_Camera;
-	klib::kMesh					*mpStage;
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include "GraphicsLib\Class\kMesh\kMeshLoadIEM.h"
 #include "GraphicsLib\Class\kMesh\kMeshLoadIMO.h"
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
+#include "Game\CommonPipeline\GameCommonPipeline.h"
 
 #include "EffectLib\Effect.h"
 #include "Ueda\rTestScene.h"
@@ -78,7 +79,12 @@ bool GimmickManager::isHitGimmick(GIMMICK_TYPE type)
 		return true;
 	}
 }
-
+//ゴールギミックか？
+bool GimmickManager::isGoalGimmick(GIMMICK_TYPE type)
+{
+	LOGE(TAG, "please make GimmickManager::isGoalGimmick()");
+	return false;
+}
 //==================================================================
 //
 //		マネージャの定義
@@ -381,7 +387,7 @@ void GimmickManager::render()
 			float  scale = 0.01f;
 			klib::kMesh* mesh = getMesh((*it)->getType(), &scale);
 			if( mesh ){
-				(*it)->render( mesh, scale, rTestScene::pipeline);
+				(*it)->render( mesh, scale, GameCommonPipeline::getPipeline());
 			}
 		}
 		it++;

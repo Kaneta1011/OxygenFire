@@ -20,6 +20,7 @@
     <ClCompile Include="CppSource\EffectLib\teEmitterSet.cpp" />
     <ClCompile Include="CppSource\EffectLib\teParticle.cpp" />
     <ClCompile Include="CppSource\Game\Bullet\Bullet.cpp" />
+    <ClCompile Include="CppSource\Game\CommonPipeline\GameCommonPipeline.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Fuse.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\FusePoint.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="CppSource\Game\Gimmick\IGimmick.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Wind.cpp" />
     <ClCompile Include="CppSource\Game\SaveManager.cpp" />
+    <ClCompile Include="CppSource\Game\Stage\Stage.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kDevice\kDevice.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.cpp" />
     <ClCompile Include="CppSource\GraphicsLib\Class\kMesh\kMesh.cpp" />
@@ -101,6 +103,7 @@
     <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h" />
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
     <ClInclude Include="CppSource\Game\Bullet\Bullet.h" />
+    <ClInclude Include="CppSource\Game\CommonPipeline\GameCommonPipeline.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Fuse.h" />
     <ClInclude Include="CppSource\Game\Gimmick\FusePoint.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h" />
@@ -111,6 +114,7 @@
     <ClInclude Include="CppSource\Game\Gimmick\Wind.h" />
     <ClInclude Include="CppSource\Game\IObject\IObject.h" />
     <ClInclude Include="CppSource\Game\SaveManager.h" />
+    <ClInclude Include="CppSource\Game\Stage\Stage.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kBlendState\kBlendState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDepthStencilState\kDepthStencilState.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kDevice\kDevice.h" />

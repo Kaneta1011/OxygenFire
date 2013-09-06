@@ -217,6 +217,12 @@
     <Filter Include="source\Game\Gimmick\IObject">
       <UniqueIdentifier>{afb32f68-68f5-4648-89b1-fc53f57451ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Game\Stage">
+      <UniqueIdentifier>{fd51d073-649d-452f-9c6a-9ec24caf2397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\CommonPipeline">
+      <UniqueIdentifier>{5a298504-edd6-4bc2-a085-a4c5b204f90a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -419,6 +425,12 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\Gimmick\FusePoint.cpp">
       <Filter>source\Game\Gimmick\Type\FusePoint</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Stage\Stage.cpp">
+      <Filter>source\Game\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\CommonPipeline\GameCommonPipeline.cpp">
+      <Filter>source\Game\CommonPipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -703,6 +715,12 @@
     </ClInclude>
     <ClInclude Include="CppSource\Game\Gimmick\FusePoint.h">
       <Filter>source\Game\Gimmick\Type\FusePoint</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Stage\Stage.h">
+      <Filter>source\Game\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\CommonPipeline\GameCommonPipeline.h">
+      <Filter>source\Game\CommonPipeline</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

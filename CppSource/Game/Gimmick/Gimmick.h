@@ -39,6 +39,9 @@ namespace rlib
 		static bool isShowMessegeType(GIMMICK_TYPE type);
 		//ぶつかるタイプか？
 		static bool isHitGimmick(GIMMICK_TYPE type);
+		//ゴールギミックか？
+		static bool isGoalGimmick(GIMMICK_TYPE type);
+
 	public:
 		static GimmickManager& getInst(){
 			static GimmickManager inst;
@@ -89,6 +92,12 @@ namespace rlib
 		//	・posが受ける風の力を返す
 		//
 		klib::math::Vector3 calWindPower(const klib::math::Vector3& pos, float range);
+
+		//
+		//	ゴールしたか？
+		//	・ゴール判定はギミックで行う
+		//
+		bool isGoal(const klib::math::Vector3& pos);
 
 #ifndef ANDROID_REDNER
 		void render();

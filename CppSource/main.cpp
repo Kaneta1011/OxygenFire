@@ -155,8 +155,10 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	RenderState::Clear_Buffer(CLEAR_BUFFER_DEPTH);
 	
 	mlInput::lock();
+	LOGI(TAG,"start update");
 	//シーン更新
 	if(framework.sceneUpdate()){framework.sceneRender();}
+	LOGI(TAG,"finish update");
 
 	mlInput::update(dt);
 	DEBUG_FLUSH_MSG();//ここでデバッグ用の文字列をTextViewに設定しているので、消さないで!!

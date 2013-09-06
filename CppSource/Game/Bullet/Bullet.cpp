@@ -72,6 +72,7 @@ void Bullet::render()
 //===============================================================================
 #include "GraphicsLib\Class\kInputLayout\kInputLayout.h"
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
+#include "Game\CommonPipeline\GameCommonPipeline.h"
 
 using namespace klib;
 klib::kMesh					*mpMesh;
@@ -88,8 +89,10 @@ BulletManager::~BulletManager()
 
 void BulletManager::clear()
 {
+	LOGI(TAG_M,"Execute bullet Manager clear");
 	clearData();
 	delete mpMesh;
+	LOGI(TAG_M,"Complete bullet Manager clear");
 }
 
 void BulletManager::clearData()
@@ -168,7 +171,7 @@ void BulletManager::render()
 		//it->render();
 		mpMesh->setPosition(it->getPos());
 		mpMesh->Update();
-		mpMesh->Render(rTestScene::pipeline);
+		mpMesh->Render(GameCommonPipeline::getPipeline());
 		it++;
 	}
 }

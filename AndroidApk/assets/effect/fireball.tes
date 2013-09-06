@@ -7,7 +7,7 @@ Emitter {
 	EmitterParameters { 
 		Common { 
 			StartFrame 0 
-			Life 62 0 0 
+			Life 42 0 0 
 			Velocity { 
 				Value 0.000000 0.000000 0.000000 
 				RandMin 0.000000 0.000000 0.000000 
@@ -35,7 +35,7 @@ Emitter {
 		TextureMoveFlag 0 
 		TextureSize 1 
 		ParticleIndex 0 
-		Life 20 0 0 
+		Life 30 0 0 
 		WindPower 1.000000 
 		CenterPower 0.001000 0.001000 0.001000 
 		Color { 
@@ -78,7 +78,7 @@ Emitter {
 	EmitterParameters { 
 		Common { 
 			StartFrame 0 
-			Life 60 0 0 
+			Life 40 0 0 
 			Velocity { 
 				Value 0.000000 0.000000 0.000000 
 				RandMin 0.000000 0.000000 0.000000 
@@ -106,7 +106,7 @@ Emitter {
 		TextureMoveFlag 0 
 		TextureSize 1 
 		ParticleIndex 0 
-		Life 45 0 0 
+		Life 55 0 0 
 		WindPower 1.000000 
 		CenterPower 0.001000 0.001000 0.001000 
 		Color { 
@@ -149,7 +149,7 @@ Emitter {
 	EmitterParameters { 
 		Common { 
 			StartFrame 0 
-			Life 60 0 0 
+			Life 40 0 0 
 			Velocity { 
 				Value 0.000000 0.000000 0.000000 
 				RandMin 0.000000 0.000000 0.000000 
@@ -177,7 +177,7 @@ Emitter {
 		TextureMoveFlag 0 
 		TextureSize 1 
 		ParticleIndex 0 
-		Life 45 0 0 
+		Life 55 0 0 
 		WindPower 1.000000 
 		CenterPower 0.001000 0.001000 0.001000 
 		Color { 
@@ -244,11 +244,11 @@ Emitter {
 		} 
 	}
 	Parameters { 
-		TextureName "light1.png" 
+		TextureName "light.png" 
 		TextureMoveFlag 0 
 		TextureSize 1 
 		ParticleIndex 0 
-		Life 45 0 0 
+		Life 55 0 0 
 		WindPower 1.000000 
 		CenterPower 0.001000 0.001000 0.001000 
 		Color { 

@@ -8,6 +8,8 @@
 #include "EffectLib\Effect.h"
 #include "Game\Gimmick\Gimmick.h"
 #include "Game\Bullet\Bullet.h"
+#include "Game\Stage\Stage.h"
+#include "Game\CommonPipeline\GameCommonPipeline.h"
 
 #include "input\Button.h"
 #include "input\AnalogStick.h"
@@ -32,16 +34,14 @@ static const char* TAG = "rTestScene";
 
 #define SIZE 512.f
 
+using namespace rlib;
 using namespace klib;
-
-klib::kGraphicsPipline* rTestScene::pipeline = NULL;
 
 rTestScene::rTestScene()
 {
 	frameBuffer = NULL;
 	mButton = NULL;
 	mStick = NULL;
-	mpStage = NULL;
 }
 
 #include "Game\SaveManager.h"
@@ -67,7 +67,8 @@ void rTestScene::entry()
 	this->mStick->init(-80, -50, 50);
 	this->mStick->loadImage("cursor.png","testImage.png");
 
-	this->mpStage = new klib::kMesh("Placement/stage1.IMO", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
+	GameCommonPipeline::init();
+	STAGE.init("Placement/stage1.IMO");
 	sPlacementManager->Load("Placement/stage1.mqo");
 
 
@@ -81,25 +82,6 @@ void rTestScene::entry()
 
 	m_Camera=new kPlayCamera(mMesh);
 
-//グラフィックパイプラインの初期化
-
-	pipeline = new klib::kGraphicsPipline();
-	pipeline->createVertexShader("kanetaPlace/shader/vertex.txt");
-	pipeline->createPixelShader("kanetaPlace/shader/pixel.txt");
-	pipeline->createBlendState(k_BLEND_NONE);
-	pipeline->createDepthStencilState(true,true,eLESS_EQUAL);
-	pipeline->createRasterizerState(eSOLID,eFRONT,false);
-
-	kInputElementDesc desc[]=
-	{
-		{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-		{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
-		{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-		{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
-	};
-	u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
-	pipeline->complete(desc,descnum);
-
 	klib::kPlane::init();
 	klib::ActionMediate::init(this->mMesh);
 
@@ -110,14 +92,14 @@ void rTestScene::entry()
 
 
 	//===============　田代デバッグ用  =======================================
-	wpE = sEffectManager->Create(FIRE_BALL,Vector3(0,0,0));
-	wpE->Setting_Velocity(Vector3(0,1,0));
-	wpE->Loop();
+	//wpE = sEffectManager->Create(FIRE_BALL,Vector3(0,0,0));
+	//wpE->Setting_Velocity(Vector3(0,1,0));
+	//wpE->Loop();
 
 
-	wpE2 = sEffectManager->Create(FIRE_CHARGE,Vector3(0,0,-5),0.1f);
-	wpE2->Setting_Velocity(Vector3(0,1,0));
-	wpE2->Loop();
+	//wpE2 = sEffectManager->Create(FIRE_CHARGE,Vector3(0,0,-5),0.1f);
+	//wpE2->Setting_Velocity(Vector3(0,1,0));
+	//wpE2->Loop();
 	//===============　田代デバッグ用  =======================================
 }
 
@@ -177,33 +159,33 @@ void rTestScene::update()
 	{
 		BULLET_MNG.clearData();
 	}
+	STAGE.update();
 	BULLET_MNG.update();
-
 	GIMMICK_MNG.update();
 	BULLET_MNG.collision( GIMMICK_MNG );
 
-	Vector3 playerPos = mMesh->getObj()->getPosition();
-	playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
-	playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
+	{//プレイヤーのギミックとの当たり判定
+		Vector3 playerPos = mMesh->getObj()->getPosition();
+		playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
+		playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
 
-	mMesh->getObj()->setPosition(playerPos);
-	mMesh->getObj()->Update();
+		mMesh->getObj()->setPosition(playerPos);
+		mMesh->getObj()->Update();
+	}
 
 	klib::ActionMediate::update();
 
 	sEffectManager->Update();
-	//DEBUG_MSG("mesh pos=(%2f,%2f,%2f)", mMesh->getObj()->getPositionX(),mMesh->getObj()->getPositionY(),mMesh->getObj()->getPositionZ());
 
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
-
 }
 
 void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	mMesh->render(pipeline);
-	this->mpStage->Render(pipeline);
+	mMesh->render(GameCommonPipeline::getPipeline());
+	STAGE.render();
 	BULLET_MNG.render();
 	GIMMICK_MNG.render();
 
@@ -212,22 +194,11 @@ void rTestScene::render()
 	mButton->render();
 	mStick->render();
 	sEffectManager->Render();
-
 }
-
-//2D速度テストコード
-	//rlib::FrameBuffer::bindScreenBuffer();
-	//for( int i=0; i<50; i++ )
-	//{
-	//	this->mp2dObj->setPos( rand()/(float)RAND_MAX * 200.f - 100.f, rand()/(float)RAND_MAX * 200.f - 100.f );
-	//	this->mp2dObj->render();
-	//}
 
 void rTestScene::exit()
 {
 	LOGI(TAG, "Execute rTestScene::exit");
-
-	if( pipeline ) { delete pipeline; pipeline = NULL; }
 
 	if( mButton ){ delete mButton; mButton = NULL; }
 	LOGI(TAG,"delete Button");
@@ -235,10 +206,10 @@ void rTestScene::exit()
 	LOGI(TAG,"delete mStick");
 
 	rlib::BulletManager::getInst().clear();
-	LOGI(TAG,"clear bullet Manager");
 	GIMMICK_MNG.clear();
-	LOGI(TAG,"clear gimmick Manager");
+	STAGE.clear();
 
+	GameCommonPipeline::clear();
 	sPlacementManager->Delete();
 
 	LOGI(TAG, "Complete rTestScene::exit");
