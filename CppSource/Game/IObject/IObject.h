@@ -19,6 +19,12 @@ namespace rlib
 					 fabs(obj->mPos.z-this->mPos.z) <= this->mRange.z+obj->mRange.z );
 		}
 
+		virtual bool vsPoint(const klib::math::Vector3& pos){
+			return ( fabs(pos.x-this->mPos.x) <= this->mRange.x &&
+					 fabs(pos.y-this->mPos.y) <= this->mRange.y &&
+					 fabs(pos.z-this->mPos.z) <= this->mRange.z );
+		}
+
 	public://ゲッター・セッター
 		void setRange(const klib::math::Vector3& range){this->mRange = range;}
 

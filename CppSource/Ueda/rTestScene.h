@@ -6,6 +6,8 @@
 namespace klib{
 	class kMesh;
 	class kGraphicsPipline;
+	class kPlayer;
+	class ICamera;
 }
 
 namespace rlib{
@@ -30,6 +32,8 @@ private:
 	rlib::FrameBuffer			*frameBuffer;
 	rlib::CircleButton			*mButton;
 	rlib::AnalogStick			*mStick;
+	klib::kPlayer				*mMesh;
+	klib::ICamera				*m_Camera;
 	klib::kMesh					*mpStage;
 };
 

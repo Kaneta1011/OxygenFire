@@ -162,7 +162,7 @@ namespace klib
 				{
 					if(m_Data->m_Info.Material[j]==i)
 					{
-						dprintf("	%d,%d,%d",m_Data->m_Info.Index[j*3+1],m_Data->m_Info.Index[j*3+2],m_Data->m_Info.Index[j*3+3])
+						//dprintf("	%d,%d,%d",m_Data->m_Info.Index[j*3+1],m_Data->m_Info.Index[j*3+2],m_Data->m_Info.Index[j*3+3])
 							workMI[m_Data->m_Info.MaterialNumFace[i]*3+0]=m_Data->m_Info.Index[j*3+0];
 						workMI[m_Data->m_Info.MaterialNumFace[i]*3+1]=m_Data->m_Info.Index[j*3+1];
 						workMI[m_Data->m_Info.MaterialNumFace[i]*3+2]=m_Data->m_Info.Index[j*3+2];
@@ -182,15 +182,22 @@ namespace klib
 				if( imo.Texture[i][0] == '\0' ) continue;
 				dprintf("IMO Texture Load %s",workpath);
 				//	テクスチャ読み込み
+				int n=0;
 				sprintf( temp, "%s%s", workpath, imo.Texture[i] );
+				n=0;
+				while( temp[n] ){if( temp[n] == '\\' ){temp[n] = '/';} n++;}
 				m_Data->m_Info.Diffuse[i] = new rlib::Texture;
 				m_Data->m_Info.Diffuse[i]->Initilize(temp);
 
 				sprintf( temp, "%sN%s", workpath, imo.Texture[i] );
+				n=0;
+				while( temp[n] ){if( temp[n] == '\\' ){temp[n] = '/';} n++;}
 				m_Data->m_Info.Normal[i] = new rlib::Texture;
 				m_Data->m_Info.Normal[i]->Initilize(temp);
 
 				sprintf( temp, "%sS%s", workpath, imo.Texture[i] );
+				n=0;
+				while( temp[n] ){if( temp[n] == '\\' ){temp[n] = '/';} n++;}
 				m_Data->m_Info.Specular[i] = new rlib::Texture;
 				m_Data->m_Info.Specular[i]->Initilize(temp);
 

@@ -19,7 +19,8 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
-	//this->mEmitter->End();
+	if( this->mEmitter.IsExist() )
+		this->mEmitter->End();
 }
 
 void Bullet::init(BulletInfo& info)
@@ -27,6 +28,8 @@ void Bullet::init(BulletInfo& info)
 	this->mPos = info.pos;
 	this->mRange = info.size;
 	this->mVelocity = info.velocity;
+	this->mTemperature = info.temperature;
+
 	//this->mEmitter.Clear();
 	//this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
 	//this->mEmitter->Setting_Position( this->mPos );
@@ -43,11 +46,13 @@ int Bullet::update()
 	if(fabs( this->mPos.x ) > 200.f ||
 	   fabs( this->mPos.z ) > 200.f )
 	{
-		//this->mEmitter->End();
+		if( this->mEmitter.IsExist() )
+			this->mEmitter->End();
 		return MSG_DEAD;
 	}
-	//this->mEmitter->Setting_Position( this->mPos );
-
+	if( this->mEmitter.IsExist() ){
+		this->mEmitter->Setting_Position( this->mPos );
+	}
 	mCount ++;
 
 	return MSG_NON;
@@ -135,9 +140,9 @@ void BulletManager::collision(rlib::GimmickManager& gimmickMng)
 		bool isHit = false;
 		while( gIt != gimmickMng.end() )
 		{
-			if( it->vs( (*gIt) ) )
+			if( (*gIt)->vs(&(*it)) )
 			{
-				(*gIt)->on();
+				LOGI(TAG_M,"hit gimmick");
 				isHit = true;
 				break;
 			}

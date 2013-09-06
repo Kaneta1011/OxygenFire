@@ -31,10 +31,11 @@ namespace klib
 			}
 		}
 		//’·‚·‚¬‚éˆÚ“®’l‚É‘Î‚µ‚Ä•â³
-		if(2.0f<flickMaxLength.length())
+		float range = 2.0f;
+		if(range<flickMaxLength.length())
 		{
 				flickMaxLength.normalize();
-				flickMaxLength*=2.0f;
+				flickMaxLength*=range;
 		}
 		m_Angle.y+=flickMaxLength.x*0.16f;
 		m_Angle.x-=flickMaxLength.y*0.09f;
@@ -48,6 +49,6 @@ namespace klib
 		math::Vector3 front(0,0,1);
 		front.trans3x3(rot);
 
-		RenderLib::RenderState::Setting_ViewMatrix(-front*10.0f+playerPos+Vector3(0,1,0),playerPos+Vector3(0,1,0),math::Vector3(0,1,0));
+		RenderLib::RenderState::Setting_ViewMatrix(-front*3.0f+playerPos+Vector3(0,0.01f,0),playerPos+Vector3(0,1,0),math::Vector3(0,1,0));
 	}
 }

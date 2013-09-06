@@ -1,13 +1,26 @@
 #include "GimmickInfoManager.h"
 
+#include "GExplosion.h"
+#include "FusePoint.h"
+
 #include "PlacementLib/Placement.h"
 #include "utility\textWriter.h"
 
 #include "utility\utility.h"
 
+#include <stdlib.h>
+
 using namespace rlib;
 
 static const char* TAG = "GimmickInfoManager";
+
+template <typename T>
+void swap(T& a, T& b)
+{
+	T w = a;
+	a = b;
+	b = w;
+}
 
 GimmickInfoManager::GimmickInfoManager()
 {
@@ -15,6 +28,7 @@ GimmickInfoManager::GimmickInfoManager()
 
 GimmickInfoManager::~GimmickInfoManager()
 {
+	clear();
 }
 
 void GimmickInfoManager::clear()
@@ -38,14 +52,62 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 //BOX系の読み込み
 	for( int i=0; i<spBox->Num; i++ )
 	{
-		GGimmickInfo* info = new GGimmickInfo;
-		info->convert( spBox.GetPtr(), i );
+		spBox->spPos[i].x *= -1.f;
+		swap( spBox->spAngle[i].x, spBox->spAngle[i].y );
 
-		this->mData.push_back(info);
+		GimmickInfoBase* info = NULL;
+		switch( spBox->spType[i] )
+		{
+		//爆発物系
+		case PLACEMENT_BOX://テスト用
+		case PLACEMENT_DRUM:
+		case PLACEMENT_GASOLINE:
+		case PLACEMENT_GarbageBag:
+		case PLACEMENT_WoodenBox:
+		case PLACEMENT_CARDBOARD:
+			{
+				GExplosionInfo* expInfo = new GExplosionInfo();
+				expInfo->convert(spBox.GetPtr(), i);
+				info = expInfo;
+				break;
+			}
+		//扇風機
+		case PLACEMENT_FAN:
+			{
+				LOGE(TAG, "扇風機の変換処理を作ってね GimmickInfoManager::loadMqo()\n");
+				//info = ;
+				break;
+			}
+		//ろうそく
+		case PLACEMENT_CANDLE:
+			{
+				LOGE(TAG, "ろうそくの変換処理を作ってね GimmickInfoManager::loadMqo()\n");
+				//info = ;
+				break;
+			}
+		//2D
+		case PLACEMENT_2D:
+			{
+				LOGE(TAG, "2Dの変換処理を作ってね GimmickInfoManager::loadMqo()\n");
+				//info = ;
+				break;
+			}
+		//エラー
+		default:
+			{
+				LOGE(TAG, "見知らぬ種類を変換しようとしました GimmickInfoManager::loadMqo()\n");
+				break;
+			}
+		}
+		if( info )
+			this->mData.push_back(info);
 	}
 //風の読み込み
 	for( int i=0; i<spWind->Num; i++ )
 	{
+		spWind->spPos[i].x *= -1;
+		spWind->spWindVec[i].x *= -1;
+		swap( spWind->spAngle[i].x, spWind->spAngle[i].y );
 		GWindInfo* info = new GWindInfo();
 		info->convert(spWind.GetPtr(), i);
 
@@ -54,6 +116,9 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 //ギミック風の読み込み
 	for( int i=0; i<spGimmickWind->Num; i++ )
 	{
+		spGimmickWind->spPos[i].x *= -1;
+		spGimmickWind->spWindVec[i].x *= -1;
+		swap( spGimmickWind->spAngle[i].x, spGimmickWind->spAngle[i].y );
 		GWindInfo* info = new GWindInfo();
 		info->convert(spGimmickWind.GetPtr(), i);
 
@@ -62,6 +127,8 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 //導火線の読み込み
 	for( int i=0; i<spLine->Num; i++ )
 	{
+		spLine->spStart[i].x *= -1;
+		spLine->spEnd[i].x *= -1;
 		GLineInfo* lineInfo = new GLineInfo();
 		lineInfo->convert( spLine.GetPtr(), i );
 		std::string spName = lineInfo->name+"Start";
@@ -71,14 +138,16 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 		this->mData.push_back(lineInfo);
 
 	//導火線の両端の追加
-		GGimmickInfo* sp = new GGimmickInfo();
+		//LOGE(TAG,"導火線の両端を作ってね GimmickInfoManager::loadMqo()\n");
+		GFusePointInfo* sp = new GFusePointInfo();
 		setFusePoint(sp, spName, lineInfo->start);
 		this->mData.push_back(sp);
-		GGimmickInfo* ep = new GGimmickInfo();
-		setFusePoint(ep, epName, lineInfo->start);
+		GFusePointInfo* ep = new GFusePointInfo();
+		setFusePoint(ep, epName, lineInfo->end);
 		this->mData.push_back(ep);
 	}
 	sPlacementManager->Destroy();
+	PlacementManager_Singleton::deleteInstance();
 }
 
 void GimmickInfoManager::setFusePoint(GGimmickInfo* out, std::string& name, const klib::math::Vector3& pos)
@@ -90,6 +159,11 @@ void GimmickInfoManager::setFusePoint(GGimmickInfo* out, std::string& name, cons
 	out->scale.x = out->scale.y = out->scale.z = 0.5f;
 }
 
+//=========================================================
+//
+//		giファイルの読み込み
+//
+//=========================================================
 void GimmickInfoManager::load(const char* giFilePath)
 {
 	clear();
@@ -158,12 +232,57 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 
 void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** out, int type, std::string& name)
 {
-	GGimmickInfo* set = new GGimmickInfo();
-	set->name = name;
-	set->type = (GIMMICK_TYPE)type;
+	//LOGE(TAG,"BOX系の作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
+	GGimmickInfo* set = 0;
+	switch( type )
+	{
+	//爆発物
+	case eGIMMICK_DRUM:			//ドラム缶
+	case eGIMMICK_GASOLINE:		//ガソリン
+	case eGIMMICK_GARBAGE_BAG:	//ゴミ袋
+	case eGIMMICK_WOOD_BOX:		//木箱
+	case eGIMMICK_CARDBOARD:	//ダンボール
+		{
+			GExplosionInfo* info = new GExplosionInfo();
+			info->setNameAndType(name, type);
 
-	set->load(loader);
+			info->load(loader);
+			
+			set = info;
+			break;
+		}
+	case eGIMMICK_FAN:			//扇風機
+		{
+			LOGE(TAG, "扇風機の作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
+			//set = ;
+			break;
+		}
+	case eGIMMICK_CANDLE:		//ろうそく
+		{
+			LOGE(TAG, "ろうそくの作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
 
+			//set = ;
+			break;
+		}
+	case eGIMMICK_FUSE_POINT:	//導火線の両端
+		{
+			GFusePointInfo* info = new GFusePointInfo();
+			info->setNameAndType(name, type);
+			info->load(loader);
+
+			set = info;
+			break;
+		}
+	case eGIMMICK_2D:			//2D描画
+		{
+			LOGE(TAG, "2Dの作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
+			//set = ;
+			break;
+		}
+	default:
+		LOGE(TAG, "未確認のtypeのギミックを作成しようとしました GimmickInfoManager::setGimmickInfo()\n");
+		break;
+	}
 	*out = set;
 }
 
@@ -207,7 +326,8 @@ void GimmickInfoManager::write(const char* giFilePath)
 		w.write("index ").write(i).write(' ').write("{");
 		w.nestIn();
 		w.br();
-		(*it)->forFile(w);
+		if( *it )
+			(*it)->forFile(w);
 		w.nestOut();
 
 		w.write("}").br();

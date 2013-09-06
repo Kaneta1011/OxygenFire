@@ -139,9 +139,6 @@
     <Filter Include="source\Game\Bullet">
       <UniqueIdentifier>{d016ea27-fb10-4658-9f51-355a4e01e3c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Game\IObject">
-      <UniqueIdentifier>{afb32f68-68f5-4648-89b1-fc53f57451ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\Game\Gimmick">
       <UniqueIdentifier>{51e39112-686d-49f1-8cfd-264d6e3f864b}</UniqueIdentifier>
     </Filter>
@@ -195,6 +192,30 @@
     </Filter>
     <Filter Include="source\kaneta\ICamera\Class\kPlayCamera">
       <UniqueIdentifier>{337b49bf-4101-4620-ba16-a2493f221583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type">
+      <UniqueIdentifier>{3e72d155-ff6b-4a19-8d37-7cba38747a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type\Explosion">
+      <UniqueIdentifier>{09129276-3a54-4c36-b51e-f85c428a2f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\info">
+      <UniqueIdentifier>{32047ea1-b7e1-49a8-96f6-6ee479786dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\info\Mng">
+      <UniqueIdentifier>{917b312d-c20c-45a7-862f-6a99a8d0344b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type\Wind">
+      <UniqueIdentifier>{51253006-7679-4254-abca-5d093261bdd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type\Fuse">
+      <UniqueIdentifier>{546a74ae-8393-4c11-8b3a-ddf44084ea50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type\FusePoint">
+      <UniqueIdentifier>{1af85909-a7e6-4052-bf4c-1bc024be5691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\IObject">
+      <UniqueIdentifier>{afb32f68-68f5-4648-89b1-fc53f57451ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -351,12 +372,6 @@
     <ClCompile Include="CppSource\utility\Bitmap.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
-    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp">
-      <Filter>source\Game\Gimmick</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfoManager.cpp">
-      <Filter>source\Game\Gimmick</Filter>
-    </ClCompile>
     <ClCompile Include="CppSource\utility\textWriter.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
@@ -383,6 +398,27 @@
     </ClCompile>
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.cpp">
       <Filter>source\kaneta\ICharacter\Class\kPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp">
+      <Filter>source\Game\Gimmick\info</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GimmickInfoManager.cpp">
+      <Filter>source\Game\Gimmick\info\Mng</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp">
+      <Filter>source\Game\Gimmick\Type\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\IGimmick.cpp">
+      <Filter>source\Game\Gimmick\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\Wind.cpp">
+      <Filter>source\Game\Gimmick\Type\Wind</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\Fuse.cpp">
+      <Filter>source\Game\Gimmick\Type\Fuse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\FusePoint.cpp">
+      <Filter>source\Game\Gimmick\Type\FusePoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -579,7 +615,7 @@
       <Filter>source\Game\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\Game\IObject\IObject.h">
-      <Filter>source\Game\IObject</Filter>
+      <Filter>source\Game\Gimmick\IObject</Filter>
     </ClInclude>
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h">
       <Filter>source\Game\Gimmick</Filter>
@@ -620,12 +656,6 @@
     <ClInclude Include="CppSource\utility\Bitmap.h">
       <Filter>source\utility</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h">
-      <Filter>source\Game\Gimmick</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfoManager.h">
-      <Filter>source\Game\Gimmick</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\utility\textWriter.h">
       <Filter>source\utility</Filter>
     </ClInclude>
@@ -652,6 +682,27 @@
     </ClInclude>
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.h">
       <Filter>source\kaneta\ICharacter\Class\kPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h">
+      <Filter>source\Game\Gimmick\info</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GimmickInfoManager.h">
+      <Filter>source\Game\Gimmick\info\Mng</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h">
+      <Filter>source\Game\Gimmick\Type\Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\IGimmick.h">
+      <Filter>source\Game\Gimmick\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\Wind.h">
+      <Filter>source\Game\Gimmick\Type\Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\Fuse.h">
+      <Filter>source\Game\Gimmick\Type\Fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\FusePoint.h">
+      <Filter>source\Game\Gimmick\Type\FusePoint</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

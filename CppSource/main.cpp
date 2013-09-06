@@ -104,11 +104,15 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onResume(JNIEnv * env
 	LOGI(TAG, "Complete onResume.");
 }
 
+static bool isFinishInit = false;
 //
 //		グラフィックの初期化
 //
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height, jobject methods)
 {
+	if( isFinishInit ) return;
+	isFinishInit = true;
+
 	LOGI(TAG, "Execute graphic init");
 	//レンダーステート初期化
 	RenderState::setScreenWidth(width);
@@ -140,7 +144,6 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 
 JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, jobject obj, jfloat dt)
 {
-
 //===========================================================================================
 //	デバッグ用の文字列表示のサンプル
 //	あと、dtの値は適当です(8/12植田　直しました。)
@@ -177,6 +180,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_onPause(JNIEnv * env,
 	EffectLib::EffectManager_Singleton::deleteInstance();
 	LOGI(TAG, "OK EffectManager_Singleton delete");
 
+	isFinishInit = false;
 	LOGI(TAG, "Complete onPause.");
 }
 

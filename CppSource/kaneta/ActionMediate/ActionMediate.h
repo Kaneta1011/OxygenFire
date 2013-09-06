@@ -16,6 +16,10 @@ namespace klib
 
 namespace klib
 {
+#define TEST_ACTION_POS 100
+	extern int TEST_POS_NUM;
+	extern klib::math::Vector3 testpos[TEST_ACTION_POS];
+
 	struct TouchEvent
 	{
 		f32 m_FontTime;

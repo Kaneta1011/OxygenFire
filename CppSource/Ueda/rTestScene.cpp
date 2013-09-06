@@ -17,6 +17,9 @@
 #include "GraphicsLib\Class\kMesh\kMeshLoadIMO.h"
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 
+#include "kaneta\ICharacter\Class\kPlayer\kPlayer.h"
+#include "kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h"
+
 using namespace RenderLib;
 using namespace klib::math;
 using namespace PlacementLib;
@@ -40,6 +43,8 @@ rTestScene::rTestScene()
 }
 
 #include "Game\SaveManager.h"
+#include "kaneta\ActionMediate\ActionMediate.h"
+#include "GraphicsLib\Class\kPlane\kPlane.h"
 
 void rTestScene::entry()
 {
@@ -58,6 +63,19 @@ void rTestScene::entry()
 	this->mpStage = new klib::kMesh("Placement/stage1.IMO", new klib::kMeshLoadIMO(), new klib::kMeshGLES20Render() );
 	sPlacementManager->Load("Placement/stage1.mqo");
 
+
+//プレイヤーの設定
+	mMesh=new kPlayer("kanetaPlace/kman.IEM",mStick);
+	mMesh->getObj()->setScale(0.01f);
+	mMesh->getObj()->setPosition(0,0,-5);
+	mMesh->getObj()->setAngle(0);
+	mMesh->getObj()->SetMotion(4);
+	mMesh->getObj()->Update();
+
+	m_Camera=new kPlayCamera(mMesh);
+
+//グラフィックパイプラインの初期化
+
 	pipeline = new klib::kGraphicsPipline();
 	pipeline->createVertexShader("kanetaPlace/shader/vertex.txt");
 	pipeline->createPixelShader("kanetaPlace/shader/pixel.txt");
@@ -75,8 +93,11 @@ void rTestScene::entry()
 	u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
 	pipeline->complete(desc,descnum);
 
+	klib::kPlane::init();
+	klib::ActionMediate::init(this->mMesh);
+
 	rlib::BulletManager::getInst().init();
-	//GIMMICK_MNG.init("gimmick/giTest.gi");
+	GIMMICK_MNG.init("gimmick/giTest.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
 }
@@ -101,57 +122,60 @@ void rTestScene::update()
 {
 	DEBUG_MSG_NON_ARAG("rTestScene");
 
-	mStick->update();
 	mButton->update();
 
-	static klib::math::Vector3 cpos(0,0,-10);
+//プレイヤーの移動
+	static float a=K_PI/4.0f;
+	mStick->update();
 	if( this->mStick->enable() )
 	{
-		klib::math::Vector3 front = -cpos;
-		klib::math::Vector3 side;
-		front.cross(&side, klib::math::Vector3(0,1,0));
-		front.normalize();
-		side.normalize();
-
-		klib::math::Vector3 move = side*this->mStick->getX();
-		move.normalize();
-		move *= 0.1f;
-		cpos += move;
-		cpos.y += this->mStick->getY() * 0.1f;
-		RenderLib::RenderState::Setting_ViewMatrix( cpos, klib::math::Vector3(0,0,0), klib::math::Vector3(0,1,0));
-	}
+		//a += mp_Stick->getX()*0.01f;
+	}	
 	if( mlInput::isPinch() )
 	{
-		float move = mlInput::getPinchMoveLength();
-		cpos.z += move;
-		RenderLib::RenderState::Setting_ViewMatrix( cpos, klib::math::Vector3(0,0,0), klib::math::Vector3(0,1,0));
+		//a -= mlInput::getPinchMoveLength() * 0.01f;
 	}
+	//a+=.001f;
+
+	math::kclampf(K_PI/8.0f,K_PI/1.5f,&a);
+	m_Camera->setFov(a);
+	m_Camera->update();
+	mMesh->update();
 
 	rlib::BulletManager& bullet = rlib::BulletManager::getInst();
 	if( this->mButton->getMode() == rlib::IButton::eUP )
 	{
 		rlib::BulletInfo info;
-		info.pos = cpos;
+		info.pos = mMesh->getObj()->getPosition();
 
-		info.velocity = -cpos;
+		info.velocity = -info.pos;
 		info.velocity.normalize();
 		//info.velocity *= 0.1f;
-		bullet.add(info);
+		BULLET_MNG.add(info);
 	}
 
 	if( mlInput::getNowTouchCount() == 3 )
 	{
-		bullet.clearData();
+		BULLET_MNG.clearData();
 	}
-	bullet.update();
+	BULLET_MNG.update();
 
-	//GIMMICK_MNG.update();
-	//bullet.collision( GIMMICK_MNG );
+	GIMMICK_MNG.update();
+	BULLET_MNG.collision( GIMMICK_MNG );
+
+	Vector3 playerPos = mMesh->getObj()->getPosition();
+	playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
+	playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
+
+	mMesh->getObj()->setPosition(playerPos);
+	mMesh->getObj()->Update();
+
+	klib::ActionMediate::update();
 
 	sEffectManager->Update();
+	//DEBUG_MSG("mesh pos=(%2f,%2f,%2f)", mMesh->getObj()->getPositionX(),mMesh->getObj()->getPositionY(),mMesh->getObj()->getPositionZ());
 
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
-	DEBUG_MSG("camera pos( x=%.2f, y=%.2f, z=%.2f)", cpos.x, cpos.y, cpos.z );
 
 }
 
@@ -159,10 +183,12 @@ void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	//->Render(pipeline);
-	rlib::BulletManager::getInst().render();
-	//GIMMICK_MNG.render();
+	mMesh->render(pipeline);
+	this->mpStage->Render(pipeline);
+	BULLET_MNG.render();
+	GIMMICK_MNG.render();
 
+	klib::ActionMediate::render();
 
 	mButton->render();
 	mStick->render();

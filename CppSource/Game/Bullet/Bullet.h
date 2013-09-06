@@ -17,7 +17,8 @@ namespace rlib
 		klib::math::Vector3 pos;
 		klib::math::Vector3 size;
 		klib::math::Vector3 velocity;
-		BulletInfo():size(1,1,1){}
+		int					temperature;	//弾の温度　ギミックを燃やすために必要
+		BulletInfo():size(1,1,1),temperature(100){}
 
 	};
 
@@ -38,10 +39,11 @@ namespace rlib
 		virtual int update();
 		virtual void render();
 
-		klib::math::Vector3& pos(){return this->mPos;}
+		int getTemperature()const{return mTemperature;}
 
 	private:
 		int mCount;
+		int mTemperature;
 		wp<EffectLib::EmitterSet> mEmitter;
 	};
 
@@ -97,6 +99,7 @@ namespace rlib
 		~BulletManager();
 
 	};
+#define BULLET_MNG BulletManager::getInst()
 
 }
 #endif

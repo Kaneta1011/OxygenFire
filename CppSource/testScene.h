@@ -172,7 +172,7 @@ namespace klib
 				//a += mp_Stick->getX()*0.01f;
 			}
 			
-		 if( mlInput::isPinch() )
+			if( mlInput::isPinch() )
 			{
 				//a -= mlInput::getPinchMoveLength() * 0.01f;
 			}

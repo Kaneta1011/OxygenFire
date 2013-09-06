@@ -5,7 +5,9 @@
 //#include <iostream>
 #include "utility\utility.h"
 
-#include "Game\Gimmick\Gimmick.h"
+#include "IGimmick.h"
+#include "Wind.h"
+#include "Fuse.h"
 
 using namespace std;
 using namespace rlib;
@@ -32,7 +34,7 @@ void writeVec3(klib::math::Vector3& vec, textWriter& w)
 GIMMICK_TYPE rlib::getGimmickType(PlacementLib::ePLACEMENT_TYPE type)
 {
 	static GIMMICK_TYPE table[]={
-		eGIMMICK_WOOD_BOX,		//PLACEMENT_BOX,				//	箱(初期テスト用)
+		eGIMMICK_DRUM,			//PLACEMENT_BOX,				//	箱(初期テスト用)
 		eGIMMICK_GARBAGE_BAG,	//PLACEMENT_GarbageBag,			//	ゴミ袋
 		eGIMMICK_DRUM,			//PLACEMENT_DRUM,				//	ドラム
 		eGIMMICK_GASOLINE,		//PLACEMENT_GASOLINE,			//	ガソリン
@@ -163,18 +165,6 @@ bool GGimmickInfo::loadParam(textLoader& loader)
 	return true;
 }
 
-Gimmick* GGimmickInfo::makeGimmick()
-{
-	Gimmick* set = new Gimmick();
-	GimmickInfo info;
-	info.type = this->type;
-	info.pos = this->pos;
-	info.angle = this->angle;
-	info.size = this->scale;
-	set->init(info);
-	return set;
-}
-
 //===============================================================
 //
 //		GLineInfoクラス
@@ -224,14 +214,10 @@ bool GLineInfo::loadParam(textLoader& loader)
 	return true;
 }
 
-Gimmick* GLineInfo::makeGimmick()
+IGimmick* GLineInfo::makeGimmick()
 {
-	Gimmick* set = new Gimmick();
-	GimmickInfo info;
-	info.type = this->type;
-	info.pos = this->start;
-	info.size.x = info.size.y = info.size.z = 0.5f;
-	set->init(info);
+	//LOGE(TAG, "GLineInfo::makeGimmick() 作ってね\n");
+	GFuse* set = new GFuse(*this);
 	return set;
 }
 
@@ -293,13 +279,9 @@ bool GWindInfo::loadParam(textLoader& loader)
 	return true;
 }
 
-Gimmick* GWindInfo::makeGimmick()
+IGimmick* GWindInfo::makeGimmick()
 {
-	Gimmick* set = new Gimmick();
-	GimmickInfo info;
-	info.type = this->type;
-	info.pos = this->pos;
-	info.size = this->scale;
-	set->init(info);
+	//LOGE(TAG,"GWindInfo::makeGimmick() 作ってね\n");
+	GWind* set = new GWind(*this);
 	return set;
 }

@@ -25,7 +25,8 @@ namespace klib
 	kGraphicsPipline* ActionMediate::m_AddBord;
 
 #define TEST_ACTION_POS 100
-	static Vector3 testpos[TEST_ACTION_POS];
+	int TEST_POS_NUM = 0;
+	Vector3 testpos[TEST_ACTION_POS];
 
 	static kInputElementDesc billBordDesc[]=
 	{
@@ -88,7 +89,7 @@ namespace klib
 
 		//
 
-		for(int i=0;i<TEST_ACTION_POS;i++)
+		for(int i=0;i<TEST_POS_NUM;i++)
 		{
 			f32 dist=testpos[i].distance(m_Player->getObj()->getPosition());
 			if(m_IndexList.find(i)==-1)
@@ -117,7 +118,7 @@ namespace klib
 		}
 
 		m_IndexList.clear();
-		for(int i=0;i<TEST_ACTION_POS;i++)
+		for(int i=0;i<TEST_POS_NUM;i++)
 		{
 			if(0.0f<m_TimeTable(i).m_FontTime)
 			{
@@ -135,9 +136,9 @@ namespace klib
 			f32 ringScale=m_TimeTable[m_IndexList[i]].m_FontTime*4.0f;
 			kclampf(0,1,&ringScale);
 			
-			kPlane::render(m_AlphaBord,m_Font0,0.0f,1.0f,1.0f,math::Vector3(testpos[m_IndexList[i]].x,testpos[m_IndexList[i]].y+2.0f,testpos[m_IndexList[i]].z),0,0,0,0);
+			kPlane::render(m_AlphaBord,m_Font0,0.0f,0.5f,0.5f,math::Vector3(testpos[m_IndexList[i]].x,testpos[m_IndexList[i]].y+1.0f,testpos[m_IndexList[i]].z),0,0,0,0);
 			m_AddBord->setShaderValue("alpha",ringScale);
-			kPlane::render(m_AddBord,m_Ring,m_TimeTable[m_IndexList[i]].m_RingTime,(1.0f-ringScale)*4.0f+2.0f,(1.0f-ringScale)*4.0f+2.0f,testpos[m_IndexList[i]],0,0,0,0);
+			kPlane::render(m_AddBord,m_Ring,m_TimeTable[m_IndexList[i]].m_RingTime,(1.0f-ringScale)*2.0f+1.0f,(1.0f-ringScale)*2.0f+1.0f,testpos[m_IndexList[i]],0,0,0,0);
 		}
 	}
 }

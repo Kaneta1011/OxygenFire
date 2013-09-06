@@ -19,6 +19,7 @@ package jp.ac.ecc.oxygenfire;
 import java.io.File;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -45,7 +46,7 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		graphic.setRenderer(new SceneRender(this));
 		
 		debugMsg = new DebugMessageView(this);
-		
+		debugMsg.setTextColor(Color.YELLOW);
 		FrameLayout ll_frame = new FrameLayout(this);
 		ll_frame.addView(graphic);
 		ll_frame.addView(debugMsg);
@@ -56,7 +57,6 @@ public class Debug_Oxygenfire_Activity extends Activity {
 		GL2JNILib.systemInit(getAssets(), TouchEventManager.getMaxPoint());
 		GL2JNILib.debugInit(this);
 		GL2JNILib.initFolderPath(this.getFilesDir().getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath());
-
 	}
 
 	private void writeLogSystemInfo()

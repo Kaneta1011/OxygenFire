@@ -45,8 +45,9 @@ namespace klib
 				side.normalize();
 				front.normalize();
 				math::Vector3 move(0,0,0);
-				move+=side*stick->getX()*0.1f;
-				move+=front*stick->getY()*0.1f;
+				float rate = 0.05f;
+				move+=side*stick->getX()*rate;
+				move+=front*stick->getY()*rate;
 				if(move.length()>0.01f)
 				{
 					acter->setMove(move);
@@ -54,6 +55,7 @@ namespace klib
 				}
 			}
 			
+			obj->setScale(0.002f);
 			obj->addPosition(acter->getMove());
 		}
 }

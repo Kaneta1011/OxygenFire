@@ -1,4 +1,4 @@
-#ifndef _GIMMICK_INFO_
+ï»¿#ifndef _GIMMICK_INFO_
 #define _GIMMICK_INFO_
 
 #include "math\kmathf.h"
@@ -16,17 +16,17 @@ namespace rlib
 
 	enum GIMMICK_TYPE
 	{
-		eGIMMICK_DRUM,			//ƒhƒ‰ƒ€ŠÊ
-		eGIMMICK_GASOLINE,		//ƒKƒ\ƒŠƒ“
-		eGIMMICK_GARBAGE_BAG,	//ƒSƒ~‘Ü
-		eGIMMICK_WOOD_BOX,		//–Ø” 
-		eGIMMICK_CARDBOARD,		//ƒ_ƒ“ƒ{[ƒ‹
-		eGIMMICK_FAN,			//î•—‹@
-		eGIMMICK_CANDLE,		//‚ë‚¤‚»‚­
-		eGIMMICK_FUSE,			//“±‰Îü
-		eGIMMICK_FUSE_POINT,	//“±‰Îü‚Ì—¼’[
-		eGIMMICK_WIND,			//•—
-		eGIMMICK_2D,			//2D•`‰æ
+		eGIMMICK_DRUM,			//ãƒ‰ãƒ©ãƒ ç¼¶
+		eGIMMICK_GASOLINE,		//ã‚¬ã‚½ãƒªãƒ³
+		eGIMMICK_GARBAGE_BAG,	//ã‚´ãƒŸè¢‹
+		eGIMMICK_WOOD_BOX,		//æœ¨ç®±
+		eGIMMICK_CARDBOARD,		//ãƒ€ãƒ³ãƒœãƒ¼ãƒ«
+		eGIMMICK_FAN,			//æ‰‡é¢¨æ©Ÿ
+		eGIMMICK_CANDLE,		//ã‚ã†ãã
+		eGIMMICK_FUSE,			//å°Žç«ç·š
+		eGIMMICK_FUSE_POINT,	//å°Žç«ç·šã®ä¸¡ç«¯
+		eGIMMICK_WIND,			//é¢¨
+		eGIMMICK_2D,			//2Dæç”»
 		eGIMMICK_TYPE_NUM,
 		eGIMMICK_UNKNOWN
 	};
