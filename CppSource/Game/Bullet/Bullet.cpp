@@ -11,7 +11,8 @@
 
 using namespace rlib;
 
-Bullet::Bullet()
+Bullet::Bullet():
+	mIsAlive(true)
 {
 	mCount = 0;
 
@@ -33,6 +34,7 @@ void Bullet::init(BulletInfo& info)
 	this->mEmitter.Clear();
 	this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
 	this->mEmitter->Setting_Position( this->mPos );
+	this->mEmitter->Setting_Velocity(this->mVelocity);
 	this->mEmitter->Setting_Scale( this->mRange.x );
 	this->mEmitter->Loop();
 }
@@ -44,7 +46,8 @@ int Bullet::update()
 
 	//if( this->mPos.y < 0 )	return MSG_DEAD;
 	if(fabs( this->mPos.x ) > 200.f ||
-	   fabs( this->mPos.z ) > 200.f )
+	   fabs( this->mPos.z ) > 200.f ||
+	   !mIsAlive )
 	{
 		if( this->mEmitter.IsExist() )
 			this->mEmitter->End();
@@ -154,12 +157,9 @@ void BulletManager::collision(rlib::GimmickManager& gimmickMng)
 
 		if( isHit )
 		{
-			this->mData.erase(it);
+			it->kill();
 		}
-		else
-		{
-			it++;
-		}
+		it++;
 	}
 }
 

@@ -34,6 +34,8 @@ namespace rlib
 
 	struct GimmickInfoBase{
 		static const char* CHECK_END;
+		static void writeVec3(klib::math::Vector3& vec, textWriter& w);
+
 		std::string name;
 		GIMMICK_TYPE type;
 		std::list<std::string> checkOn;
@@ -74,19 +76,6 @@ namespace rlib
 		virtual void forFile(textWriter& writer);
 		virtual bool loadParam(textLoader& loader);
 
-		virtual IGimmick* makeGimmick();
-	};
-
-	struct GWindInfo : public GimmickInfoBase
-	{
-		klib::math::Vector3 pos;
-		klib::math::Vector3 dir;
-		klib::math::Vector3 scale;
-
-		void convert(WindData* data, int index);
-		virtual void forFile(textWriter& writer);
-		virtual bool loadParam(textLoader& loader);
-		
 		virtual IGimmick* makeGimmick();
 	};
 

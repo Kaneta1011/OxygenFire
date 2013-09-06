@@ -26,7 +26,7 @@ void writeStringIt(T begin, T end, textWriter& w)
 	w.write(GimmickInfoBase::CHECK_END);
 }
 
-void writeVec3(klib::math::Vector3& vec, textWriter& w)
+void GimmickInfoBase::writeVec3(klib::math::Vector3& vec, textWriter& w)
 {
 	w.write(vec.x).write(' ').write(vec.y).write(' ').write(vec.z);
 }
@@ -44,7 +44,13 @@ GIMMICK_TYPE rlib::getGimmickType(PlacementLib::ePLACEMENT_TYPE type)
 		eGIMMICK_CANDLE,		//PLACEMENT_CANDLE,				//	ろうそく
 		eGIMMICK_2D,			//PLACEMENT_2D,					//	2D画像
 	};
-	return table[type];
+
+	if( type >= eGIMMICK_TYPE_NUM){
+		LOGE(TAG, "getGimmickType() unknwon type... type=%d", type);
+		return table[0];
+	}else{
+		return table[type];
+	}
 }
 
 //===============================================================
@@ -218,70 +224,5 @@ IGimmick* GLineInfo::makeGimmick()
 {
 	//LOGE(TAG, "GLineInfo::makeGimmick() 作ってね\n");
 	GFuse* set = new GFuse(*this);
-	return set;
-}
-
-//===============================================================
-//
-//		GWindInfoクラス
-//
-//===============================================================
-void GWindInfo::convert(WindData* data, int index)
-{
-//名前の設定
-	//cout << "GWindInfoで名前設定の処理作ってね" << endl;
-	this->name = data->spStr[index];
-//
-	this->type = eGIMMICK_WIND;
-	this->pos = data->spPos[index];
-	this->dir = data->spWindVec[index];
-	this->scale = data->spScale[index];
-}
-
-void GWindInfo::forFile(textWriter&  w)
-{
-	GimmickInfoBase::forFile(w);
-
-	w.nestIn();w.writeNest();
-	w.write("pos\t");
-	writeVec3(pos, w);
-	w.br().write("dir\t");
-	writeVec3(dir, w);
-	w.br().write("scale\t");
-	writeVec3(scale, w);
-
-	w.nestOut();
-	w.br();
-}
-
-bool GWindInfo::loadParam(textLoader& loader)
-{
-	if( ! GimmickInfoBase::loadParam(loader) )
-	{
-		if( strcmp("pos",loader.tmpBuf) == 0 ){
-			this->pos.x = loader.LoadFloat();
-			this->pos.y = loader.LoadFloat();
-			this->pos.z = loader.LoadFloat();
-			return true;
-		}else if( strcmp("dir",loader.tmpBuf) == 0 ){
-			this->dir.x = loader.LoadFloat();
-			this->dir.y = loader.LoadFloat();
-			this->dir.z = loader.LoadFloat();
-			return true;
-		}else if( strcmp("scale",loader.tmpBuf) == 0 ){
-			this->scale.x = loader.LoadFloat();
-			this->scale.y = loader.LoadFloat();
-			this->scale.z = loader.LoadFloat();
-			return true;
-		}
-		return false;
-	}
-	return true;
-}
-
-IGimmick* GWindInfo::makeGimmick()
-{
-	//LOGE(TAG,"GWindInfo::makeGimmick() 作ってね\n");
-	GWind* set = new GWind(*this);
 	return set;
 }

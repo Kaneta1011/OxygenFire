@@ -18,12 +18,12 @@ public class JNICallMethod {
 		{
 			Bitmap bm = AssetsLoader.loadBitmap(assets, fileName);
 			if( bm != null )
-				Log.i(TAG,"“Ç‚İ‚İŠ®—¹B path=" + fileName);
+				Log.i(TAG,"Complete load image file. path=" + fileName);
 			return bm;
 		}
 		else
 		{
-			Log.e(TAG,"AssetManager‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+			Log.e(TAG,"Don't set AssetManager!");
 			return null;
 		}
 	}

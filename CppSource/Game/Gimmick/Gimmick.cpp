@@ -10,6 +10,10 @@
 #include "Ueda\rTestScene.h"
 
 #include "utility\debugMessageMng.h"
+
+#include "kaneta\ActionMediate\ActionMediate.h"
+#include "input\Input.h"
+
 #endif
 
 //#include "PlacementLib\Placement.h"
@@ -19,7 +23,7 @@
 #include "GimmickInfo.h"
 #include "GimmickInfoManager.h"
 
-#include "kaneta\ActionMediate\ActionMediate.h"
+
 
 //#include "Tool\Particle.h"
 
@@ -90,9 +94,10 @@ bool GimmickManager::isGoalGimmick(GIMMICK_TYPE type)
 //		マネージャの定義
 //
 //==================================================================
-
+#ifndef ANDROID_REDNER
 static klib::kMesh* debugMesh = NULL;
 static bool isDebugMesh = false;
+#endif
 
 GimmickManager::GimmickManager()
 {
@@ -106,7 +111,9 @@ void GimmickManager::clear()
 {
 	LOGI(TAG, "Execute GimmickManager::clear\n");
 	clearData();
+#ifndef ANDROID_REDNER
 	delete debugMesh;
+#endif
 	LOGI(TAG, "Complete GimmickManager::clear\n");
 }
 
@@ -123,7 +130,9 @@ void GimmickManager::clearData()
 
 void GimmickManager::init(const char* giFilePath)
 {
+#ifndef ANDROID_REDNER
 	debugMesh = new klib::kMesh("gimmick/unitBox.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+#endif
 
 	LOGI(TAG, "Execute GimmickManager init\n");
 
@@ -131,16 +140,20 @@ void GimmickManager::init(const char* giFilePath)
 	infoMng.load(giFilePath);
 	std::vector<GimmickInfoBase*>& infos = infoMng.getDatas();
 	LOGI(TAG, "data count = %d\n", infos.size() );
-	//TEST_POS_NUM = 0;
+#ifndef ANDROID_REDNER
+	TEST_POS_NUM = 0;
+#endif
 	this->mData.resize(infos.size());
 	for( size_t i=0; i<infos.size(); i++ )
 	{
 		if( infos[i] ){
 			this->mData[i] = infos[i]->makeGimmick();
+#ifndef ANDROID_REDNER
 			if( isShowMessegeType( this->mData[i]->getType() ) ){
-			//	klib::testpos[TEST_POS_NUM] = this->mData[i]->getPos();
-				//TEST_POS_NUM++;
+				klib::testpos[TEST_POS_NUM] = this->mData[i]->getPos();
+				TEST_POS_NUM++;
 			}
+#endif
 		}
 	}
 
@@ -236,15 +249,16 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 }
 #endif
 
-#include "input\Input.h"
 
 int GimmickManager::update()
 {
 	static int oldTouchCount = -1;
+#ifndef ANDROID_REDNER
 	if( mlInput::getNowTouchCount() == 3 && oldTouchCount != 3 ){
 		isDebugMesh = !isDebugMesh;
 	}
 	oldTouchCount = mlInput::getNowTouchCount();
+#endif
 
 	for( unsigned int i=0; i<this->mData.size(); i++ )
 	{

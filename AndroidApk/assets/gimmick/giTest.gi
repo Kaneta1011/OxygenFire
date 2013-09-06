@@ -84,6 +84,7 @@ index 7 {
  pos	-0 1.38067 0
  dir	-0.1 0 0
  scale	13.7163 8.54003 13.7163
+ isRender	0
 }
 index 8 {
  name	GWIND_0
@@ -91,8 +92,9 @@ index 8 {
  checkOn	END@
  checkOff	END@
  pos	-2.20824 1.33603 0.403965
- dir	-3.9954 0 -0.523946
+ dir	-5.9954 0 -0.523946
  scale	3.69411 3.16491 0.708831
+ isRender	1
 }
 index 9 {
  name	GimmickLine_1

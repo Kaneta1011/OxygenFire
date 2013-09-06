@@ -15,15 +15,16 @@ const static int STR_LENGTH = 128;
 //	*基本的に上田君のみ使用することになる
 enum ePLACEMENT_TYPE
 {
-	PLACEMENT_BOX,				//	箱(初期テスト用)
+	PLACEMENT_BOX,			//	箱(初期テスト用)
 	PLACEMENT_GarbageBag,	//	ゴミ袋
-	PLACEMENT_DRUM,				//	ドラム
+	PLACEMENT_DRUM,			//	ドラム
 	PLACEMENT_GASOLINE,		//	ガソリン
 	PLACEMENT_WoodenBox,	//	木箱
 	PLACEMENT_CARDBOARD,	//	ダンボール
-	PLACEMENT_FAN,				//	扇風機
-	PLACEMENT_CANDLE,			//	ろうそく
-	PLACEMENT_2D,					//	2D画像
+	PLACEMENT_FAN,			//	扇風機
+	PLACEMENT_CANDLE,		//	ろうそく
+	PLACEMENT_2D,			//	2D画像
+	PLACEMENT_GOAL,			//	ゴール
 };
 
 struct PlacementData
@@ -129,7 +130,7 @@ public:
 private:
 	void Create_AllData();
 	void Create_Data(sp<PlacementData>* spUserData,sp<Data> spData); 
-	void Setting_AllData(char* File);
+	void Setting_AllData(const char* File);
 	void Setting_Data(sp<char> Name,sp<char> Load);
 	void Setting_Data(sp<Data> spData);
 	void Setting_Data_ScaleHalf(sp<Data> spData);
@@ -138,7 +139,7 @@ private:
 	void Setting_ObjectName(sp<char> Name,sp<char> Load);
 	void Setting_CreateObjectName(sp<char> Name,sp<char> Load);
 	void Add_ObjectNum(sp<char> Name,sp<char> Load);
-	void Search_Num(char* File);
+	void Search_Num(const char* File);
 	sp<Data> m_spPlayerData;
 	sp<Data> m_spBoxData;
 	sp<Data> m_spWindData;

@@ -19,7 +19,7 @@ public class AssetsLoader {
 		} catch (IOException e) {
 			//e.printStackTrace();
 		}
-        Log.e(TAG, "指定されたファイルは見つかりません。path = " + fileName);
+        Log.e(TAG, "Don't found image file... path = " + fileName);
         return null;
 	}
 	static String[] getFileName(AssetManager assets, String folderPath)

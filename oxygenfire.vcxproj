@@ -24,6 +24,7 @@
     <ClCompile Include="CppSource\Game\Gimmick\Fuse.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\FusePoint.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\GGoal.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GimmickInfoManager.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="CppSource\Game\Gimmick\Fuse.h" />
     <ClInclude Include="CppSource\Game\Gimmick\FusePoint.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\GGoal.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GimmickInfoManager.h" />
@@ -200,6 +202,9 @@
     <ProjectName>oxygenfire</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <AndroidArch>armv7-a</AndroidArch>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -238,6 +243,7 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>./CppSource/</AdditionalIncludeDirectories>
+      <ThumbMode>true</ThumbMode>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

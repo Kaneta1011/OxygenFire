@@ -2,9 +2,28 @@
 #define _WIND_
 
 #include "IGimmick.h"
+#ifndef ANDROID_REDNER
+#include "EffectLib\Effect.h"
+#endif
 
 namespace rlib
 {
+
+	struct GWindInfo : public GimmickInfoBase
+	{
+		klib::math::Vector3 pos;
+		klib::math::Vector3 dir;
+		klib::math::Vector3 scale;
+		bool				isRender;
+
+		void convert(WindData* data, int index);
+		virtual void forFile(textWriter& writer);
+		virtual bool loadParam(textLoader& loader);
+		
+		virtual IGimmick* makeGimmick();
+
+		GWindInfo():isRender(true){}
+	};
 	//
 	//	ステージ内の風クラス
 	//		基本的にAABBの領域内にいたら風を吹かせる
@@ -29,6 +48,15 @@ namespace rlib
 #endif
 
 	protected:
+		Vector3 getEmitterPos();
+
+	protected:
+		bool mIsRender;
+		float mRate;
+		Vector3	mMaxVelocity;
+#ifndef ANDROID_REDNER
+		wp<EffectLib::EmitterSet> mEmitter;
+#endif
 	};
 }
 

@@ -232,6 +232,9 @@
     <Filter Include="source\kaneta\ICamera\Class\kShotCamera">
       <UniqueIdentifier>{31c80fed-2f81-4971-9a38-5b8af57ea5bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Game\Gimmick\Type\Goal">
+      <UniqueIdentifier>{e395aab4-9a99-4fb6-8c97-28a790c7ebc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -449,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\kaneta\ICamera\Class\kShotCamera\kShotCamera.cpp">
       <Filter>source\kaneta\ICamera\Class\kShotCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GGoal.cpp">
+      <Filter>source\Game\Gimmick\Type\Goal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -748,6 +754,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\kaneta\ICamera\Class\kShotCamera\kShotCamera.h">
       <Filter>source\kaneta\ICamera\Class\kShotCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GGoal.h">
+      <Filter>source\Game\Gimmick\Type\Goal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

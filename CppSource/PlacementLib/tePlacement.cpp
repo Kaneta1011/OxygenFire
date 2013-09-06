@@ -1,4 +1,7 @@
-#include "PlacementLib/Placement.h"
+#include "Placement.h"
+
+#include "utility\utility.h"
+
 using namespace PlacementLib;
 PlacementManager_Singleton* PlacementManager_Singleton::singleton = NULL;
 
@@ -14,7 +17,7 @@ void PlacementManager::Destroy()
 {
 
 }
-void PlacementManager::Search_Num(char* File)
+void PlacementManager::Search_Num(const char* File)
 {
 	tl.SetPtr(new textLoader(File));
 	sp<char> name(new char[STR_LENGTH],true);
@@ -73,24 +76,39 @@ void PlacementManager::Setting_CreateObjectName(sp<char> name,sp<char> load)
 
 	m_spBoxData->spStr[m_spBoxData->NowNum] = fullName;
 
-	if(strcmp(box,"GarbageBag")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_GarbageBag;
-	}else if(strcmp(box,"DRUM")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_DRUM;
-	}else if(strcmp(box,"GASOLINE")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_GASOLINE;
-	}else if(strcmp(box,"WoodenBox")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_WoodenBox;
-	}else if(strcmp(box,"CARDBOARD")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_CARDBOARD;
-	}else if(strcmp(box,"FAN")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_FAN;
-	}else if(strcmp(box,"CANDLE")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_CANDLE;
-	}else if(strcmp(box,"2D")==0){
-		m_spBoxData->spType[m_spBoxData->NowNum] = PLACEMENT_2D;
+	struct TypeTable{
+		const char*		keyName;
+		ePLACEMENT_TYPE type;
+	};
+	static TypeTable table[]={
+		{"GarbageBag",	PLACEMENT_GarbageBag},
+		{"DRUM",		PLACEMENT_DRUM},
+		{"GASOLINE",	PLACEMENT_GASOLINE},
+		{"WOODBOX",		PLACEMENT_WoodenBox},
+		{"CARDBOARD",	PLACEMENT_CARDBOARD},
+		{"FAN",			PLACEMENT_FAN},
+		{"CANDLE",		PLACEMENT_CANDLE},
+		{"2D",			PLACEMENT_2D},
+		{"GOAL",		PLACEMENT_GOAL},
+		{"",			PLACEMENT_WoodenBox},//不明データ　一番最後にしてください
+	};
+	static int tableNum = sizeof( table ) / sizeof(table[0]);
+	int tableIndex;
+	for( tableIndex=0; tableIndex<tableNum-1; tableIndex++ )
+	{
+		if(strcmp(box,table[tableIndex].keyName)==0)
+		{
+			m_spBoxData->spType[m_spBoxData->NowNum] = table[tableIndex].type;
+			break;
+		}
+	}
+//見つからなければ木箱として扱う
+	if( tableIndex == tableNum-1 ){
+		LOGE("PlacementManager", "mqoから設定されていないBOXがありました　name=%s\n", load.GetPtr());
+		m_spBoxData->spType[m_spBoxData->NowNum] = table[tableIndex].type;
 	}
 }
+
 void PlacementManager::Add_ObjectNum(sp<char> name,sp<char> load)
 {
 	if(strcmp(m_spPlayerData->Name,name.GetPtr())==0){m_spPlayerData->Num++;}
@@ -105,7 +123,7 @@ void PlacementManager::Load(char* Filename)
 	Create_AllData();
 	Setting_AllData(Filename);
 }
-void PlacementManager::Setting_AllData(char* File)
+void PlacementManager::Setting_AllData(const char* File)
 {
 	tl.SetPtr(new textLoader(File));
 	sp<char> name(new char[STR_LENGTH],true);
@@ -401,12 +419,14 @@ void PlacementManager::Create_Data(sp<PlacementData>* spUserData,sp<Data> spData
 	(*spUserData)->spScale.SetPtr(new Vector3[n],true);
 	(*spUserData)->spAngle.SetPtr(new Vector3[n],true);
 	(*spUserData)->spStr.SetPtr(new std::string[n],true);
-	
+	(*spUserData)->spType.SetPtr(new ePLACEMENT_TYPE[n], true);
+
 	for(int n=0;n<spData->Num;n++)
 	{
 		(*spUserData)->spPos[n] = spData->spPos[n];
 		(*spUserData)->spScale[n] = spData->spScale[n];
 		(*spUserData)->spAngle[n] = spData->spAngle[n];
 		(*spUserData)->spStr[n] = spData->spStr[n];
+		(*spUserData)->spType[n] = spData->spType[n];
 	}
 }

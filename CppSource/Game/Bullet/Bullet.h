@@ -41,7 +41,9 @@ namespace rlib
 
 		int getTemperature()const{return mTemperature;}
 
+		void kill(){ this->mIsAlive = false; }
 	private:
+		bool mIsAlive;
 		int mCount;
 		int mTemperature;
 		wp<EffectLib::EmitterSet> mEmitter;

@@ -2,6 +2,8 @@
 
 #include "GExplosion.h"
 #include "FusePoint.h"
+#include "Wind.h"
+#include "GGoal.h"
 
 #include "PlacementLib/Placement.h"
 #include "utility\textWriter.h"
@@ -69,6 +71,14 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 				GExplosionInfo* expInfo = new GExplosionInfo();
 				expInfo->convert(spBox.GetPtr(), i);
 				info = expInfo;
+				break;
+			}
+		case PLACEMENT_GOAL:
+			{
+				GGoalInfo* goalInfo = new GGoalInfo();
+				goalInfo->convert(spBox.GetPtr(), i);
+
+				info = goalInfo;
 				break;
 			}
 		//扇風機
@@ -188,7 +198,7 @@ void GimmickInfoManager::load(const char* giFilePath)
 			loader.LoadString(buf);
 			name = buf;
 		}else{
-			LOGE(TAG, "miss data line... [no name]");
+			LOGE(TAG, "miss data... [no name]");
 			return ;
 		}
 		loader.LoadString(buf);
@@ -197,7 +207,7 @@ void GimmickInfoManager::load(const char* giFilePath)
 			setInfo(loader, info, type, name);
 
 		}else{
-			LOGE(TAG, "miss data line... [no type]");
+			LOGE(TAG, "miss data... [no type]");
 			return ;
 		}
 	}
@@ -211,7 +221,7 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 	case eGIMMICK_GASOLINE:		//ガソリン
 	case eGIMMICK_GARBAGE_BAG:	//ゴミ袋
 	case eGIMMICK_WOOD_BOX:		//木箱
-	case eGIMMICK_CARDBOARD:		//ダンボール
+	case eGIMMICK_CARDBOARD:	//ダンボール
 	case eGIMMICK_FAN:			//扇風機
 	case eGIMMICK_CANDLE:		//ろうそく
 	case eGIMMICK_FUSE_POINT:	//導火線の両端

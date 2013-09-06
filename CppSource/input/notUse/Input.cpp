@@ -55,7 +55,7 @@ void mlInput::update(
 	float* y=env->GetFloatArrayElements(pointsY, NULL);
 	float* pressures = env->GetFloatArrayElements(arrayPressures, NULL);
 
-	while(mIsUpdating){}
+	//while(mIsUpdating){}
 
 	mIsUpdating = true;
 

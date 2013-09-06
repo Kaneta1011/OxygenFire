@@ -7,6 +7,8 @@
 #include <stdlib.h>
 using namespace rlib;
 
+int TEST_POS_NUM;
+
 namespace klib
 {
 	using namespace math;
@@ -22,7 +24,6 @@ namespace klib
 	kGraphicsPipline* ActionMediate::m_AlphaBord;
 	kGraphicsPipline* ActionMediate::m_AddBord;
 
-int TEST_POS_NUM;
 	Vector3 testpos[TEST_ACTION_POS];
 
 	static kInputElementDesc billBordDesc[]=
