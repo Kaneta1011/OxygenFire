@@ -161,6 +161,9 @@ void EffectManager::Create_EmitterSet(eEFFECT_TYPE Type,int n)
 
 	switch( Type )
 	{
+	case BODY:
+		m_spEffectEmitterSet[n]->Initialize("effect/SyuzinKouFire.tes");
+		break;
 	case TEST:
 		m_spEffectEmitterSet[n]->Initialize("effect/test.tes");
 		break;

@@ -758,5 +758,8 @@
     <ClInclude Include="CppSource\Game\Gimmick\GGoal.h">
       <Filter>source\Game\Gimmick\Type\Goal</Filter>
     </ClInclude>
+    <ClInclude Include="CppSource\EffectLib\singleParticle.h">
+      <Filter>source\EffectLib</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

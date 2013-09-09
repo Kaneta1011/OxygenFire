@@ -15,6 +15,7 @@ using namespace klib::math;
 */
 enum eEFFECT_TYPE
 {
+	BODY,
 	TEST,
 	FIRE_BALL,
 	FIRE_CHARGE,

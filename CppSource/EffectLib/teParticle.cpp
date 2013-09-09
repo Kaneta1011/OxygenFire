@@ -600,6 +600,7 @@ void Particle::Setting(const Vector3& Pos,char* File,float ScaleStart,
 	float CenterPowerStart,float CenterPowerMiddle,float CenterPowerEnd,
 	COLOR ColorStart,COLOR ColorMiddle,COLOR ColorEnd)
 {
+
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
 		if(true == m_spParticleData->flag[n])continue;
@@ -640,7 +641,68 @@ void Particle::Setting(const Vector3& Pos,char* File,float ScaleStart,
 	}
 }
 
+#if 1
+void Particle::Setting_Single(
+	eSINGLE_TYPE Type,
+	int Life,
+	const Vector3& Pos,
+	const Vector3& Move,
+	float Scale,
+	//	色の設定
+	COLOR StartColor,
+	COLOR MiddleColor,
+	COLOR EndColor
+		)
+{
+	char* File;
 
+	switch( Type )
+	{
+	case SINGLE_NORMAL:
+		File = "light.png";
+		break;
+	}
+
+	for(int n=0;n<PARTICLE_MAX;n++)
+	{
+		if(true == m_spParticleData->flag[n])continue;
+
+		//	Data格納
+		m_spParticleData->useNum++;
+		m_spParticleData->pos[n] = Pos;
+		m_spParticleData->initPos[n] = Pos;
+		m_spParticleData->flag[n] = true;
+		m_spParticleData->scaleStart[n] = Scale;
+		m_spParticleData->scaleMiddle[n] = Scale;
+		m_spParticleData->scaleEnd[n] = Scale;
+		m_spParticleData->life[n] = Life;
+		m_spParticleData->velocity[n] = Move;
+		m_spParticleData->moveFlag[n] = false;
+		m_spParticleData->size[n] = 1;
+		m_spParticleData->index[n] = 0;
+		m_spParticleData->windPower[n] = 0;
+		m_spParticleData->centerPowerStart[n] = 0;
+		m_spParticleData->centerPowerMiddle[n] = 0;
+		m_spParticleData->centerPowerEnd[n] = 0;
+		m_spParticleData->colorStart[n] = StartColor;
+		m_spParticleData->colorMiddle[n] = MiddleColor;
+		m_spParticleData->colorEnd[n] = EndColor;
+
+		//	どのテクスチャか探す
+		for(int t=0;t<m_TextureUseNumber;t++)
+		{
+			if(m_spTexture[t].GetRefNum() == 0)continue;
+
+			if(strcmp( m_spTexture[t]->TextureName, File ) == 0)
+			{
+				m_spParticleData->texNum[n] = m_spTexture[t]->texNum;
+				return;
+			}
+		}
+		break;
+	}
+}
+#endif
 
 //========================================================
 //	使うかわからないもの

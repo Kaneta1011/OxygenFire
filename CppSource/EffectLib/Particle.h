@@ -22,7 +22,7 @@ using namespace klib::math;
 //	Constant
 const static int TEXTURE_MAX = 128;
 static const int TEXTURE_NAME_SIZE = 128;
-const static int PARTICLE_MAX = 500;
+const static int PARTICLE_MAX = 2000;
 const static int ONE_PARTICLE_VERTEX_NUM = 6;
 const static int PARTICLE_VERTEX_MAX = 
 	PARTICLE_MAX * ONE_PARTICLE_VERTEX_NUM;
@@ -89,6 +89,39 @@ struct ParticleTextrue
 	ParticleTextrue();
 };
 
+
+class particle 
+{
+public:
+	void create( const Vector3& pos , const Vector3& vec , int life, sp<Texture> tex )
+	{
+		this->pos = pos;
+		this->vec = vec;
+		this->life = life;
+
+	}
+
+	void setting_vec(const Vector3& vec)
+	{
+		this->vec = vec;
+	}
+
+	void update()
+	{
+		pos += vec;
+	}
+
+	static void render()
+	{
+
+	}
+	particle():pos(Vector3(0,0,0)),vec(Vector3(0,0,0)),life(0){}
+private:
+	Vector3 pos;
+	Vector3 vec;
+	int life;
+};
+
 //-------------------------------------------------------------------------
 //	Particle
 //-------------------------------------------------------------------------
@@ -107,8 +140,27 @@ public:
 		const Vector3& Velocity,bool MoveFlag,int Size,int Index,
 		float WindPower,float CenterPowerStart,float CenterPowerMiddle,
 		float CenterPowerEnd,COLOR ColorStart,COLOR ColorMiddle,COLOR ColorEnd);
-	//吉原君注文品
-	void Setting(const Vector3& Pos,char* File,float Scale){}
+
+
+
+	//========== 単体パーティクル用 =============
+	enum eSINGLE_TYPE
+	{
+		SINGLE_NORMAL,
+	};
+	void Setting_Single(
+		eSINGLE_TYPE Type,
+		int Life,
+		const Vector3& Pos,
+		const Vector3& Move,
+		float Scale,
+		//	色の設定
+		COLOR StartColor,
+		COLOR MiddleColor,
+		COLOR EndColor );
+	//========== 単体パーティクル用 =============
+
+
 	bool Setting_Texture( char* TextureName );
 	//	BasicSet
 	Particle(){Clear();}void Clear();

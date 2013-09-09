@@ -7,15 +7,6 @@ using namespace EffectLib;
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-float R( float Min, float Max )
-{
-	if( Min < 0 )
-		Max += -Min;
-	else
-		Max -= Min;
-
-	return ( float )rand() / ( float )RAND_MAX * Max + Min;
-}
 
 //----------------------------------------------------------------------
 //	EmitterSet
@@ -194,9 +185,9 @@ void EmitterSet::Load_TES( char* Filename )
 		p->getData()->rVelMax = v;
 
 		p->getData()->vel = 
-			Vector3( R(p->getData()->rVelMin.x,p->getData()->rVelMax.x),
-							 R(p->getData()->rVelMin.y,p->getData()->rVelMax.y),
-							 R(p->getData()->rVelMin.z,p->getData()->rVelMax.z) )
+			Vector3( tRand(p->getData()->rVelMin.x,p->getData()->rVelMax.x),
+							 tRand(p->getData()->rVelMin.y,p->getData()->rVelMax.y),
+							 tRand(p->getData()->rVelMin.z,p->getData()->rVelMax.z) )
 			+ p->getData()->vel;
 
 		t->Out();

@@ -4,22 +4,13 @@
 #include	<iostream>
 #include	<math.h>
 
+#include	<EffectLib/Item.h>
+
 using namespace EffectLib;
 #define  LOG_TAG    "libgl2jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-
-
-float Rand( float Min, float Max )
-{
-	if( Min < 0 )
-		Max += -Min;
-	else
-		Max -= Min;
-
-	return ( float )rand() / ( float )RAND_MAX * Max + Min;
-}
 
 //----------------------------------------
 //	EmitterData
@@ -84,9 +75,9 @@ void Emitter::Setting_Pos(const Vector3& Pos)
 {
 	m_Pos = 
 		m_spData->initPos + Vector3(
-			Rand( m_spData->rInitPosMin.x, m_spData->rInitPosMax.x ),
-			Rand( m_spData->rInitPosMin.y, m_spData->rInitPosMax.y ),
-			Rand( m_spData->rInitPosMin.z, m_spData->rInitPosMax.z ) )
+			tRand( m_spData->rInitPosMin.x, m_spData->rInitPosMax.x ),
+			tRand( m_spData->rInitPosMin.y, m_spData->rInitPosMax.y ),
+			tRand( m_spData->rInitPosMin.z, m_spData->rInitPosMax.z ) )
 		+ Pos;
 }
 
@@ -192,9 +183,9 @@ void ParticleEmitter::Generation_Particle()
 	static Vector3 VR;
 
 	p = Vector3(
-	Rand(m_spEffectData->rInitPosMin.x,m_spEffectData->rInitPosMax.x),
-	Rand(m_spEffectData->rInitPosMin.y,m_spEffectData->rInitPosMax.y),
-	Rand(m_spEffectData->rInitPosMin.z,m_spEffectData->rInitPosMax.z) );
+	tRand(m_spEffectData->rInitPosMin.x,m_spEffectData->rInitPosMax.x),
+	tRand(m_spEffectData->rInitPosMin.y,m_spEffectData->rInitPosMax.y),
+	tRand(m_spEffectData->rInitPosMin.z,m_spEffectData->rInitPosMax.z) );
 	p = m_Pos + m_spEffectData->initPos + p;
 
 	//	R_Velocity
@@ -203,9 +194,9 @@ void ParticleEmitter::Generation_Particle()
 	{
 		vel = 
 			m_spEffectData->vel + 
-			Vector3( Rand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
-							 Rand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
-							 Rand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
+			Vector3( tRand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
+							 tRand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
+							 tRand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
 	}else{
 		work = m_spEffectData->vel.length();
 
@@ -213,9 +204,9 @@ void ParticleEmitter::Generation_Particle()
 
 		V = (m_Velocity*work);
 
-		VR = Vector3( Rand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
-							 Rand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
-							 Rand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
+		VR = Vector3( tRand(m_spEffectData->rVelMin.x,m_spEffectData->rVelMax.x),
+							 tRand(m_spEffectData->rVelMin.y,m_spEffectData->rVelMax.y),
+							 tRand(m_spEffectData->rVelMin.z,m_spEffectData->rVelMax.z) );
 
 		work = VR.length();
 
@@ -228,39 +219,39 @@ void ParticleEmitter::Generation_Particle()
 
 	//	R_Scale
 	scaS = m_spEffectData->scaleS + 
-		Rand(m_spEffectData->rScaleStartMin,m_spEffectData->rScaleStartMax);
+		tRand(m_spEffectData->rScaleStartMin,m_spEffectData->rScaleStartMax);
 	scaM = m_spEffectData->scaleM + 
-		Rand(m_spEffectData->rScaleMiddleMin,m_spEffectData->rScaleMiddleMax);
+		tRand(m_spEffectData->rScaleMiddleMin,m_spEffectData->rScaleMiddleMax);
 	scaE = m_spEffectData->scaleE + 
-		Rand(m_spEffectData->rScaleEndMin,m_spEffectData->rScaleEndMax);
+		tRand(m_spEffectData->rScaleEndMin,m_spEffectData->rScaleEndMax);
 	//	ƒJƒ‰[
 	colS.red = 
 		m_spEffectData->colorS.red + 
-		Rand( 0, m_spEffectData->rColorS.red );
+		tRand( 0, m_spEffectData->rColorS.red );
 	colS.green = 
 		m_spEffectData->colorS.green + 
-		Rand( 0, m_spEffectData->rColorS.green );
+		tRand( 0, m_spEffectData->rColorS.green );
 	colS.blue = 
 		m_spEffectData->colorS.blue + 
-		Rand( 0, m_spEffectData->rColorS.blue );
+		tRand( 0, m_spEffectData->rColorS.blue );
 	colM.red = 
 		m_spEffectData->colorM.red + 
-		Rand( 0, m_spEffectData->rColorM.red );
+		tRand( 0, m_spEffectData->rColorM.red );
 	colM.green = 
 		m_spEffectData->colorM.green + 
-		Rand( 0, m_spEffectData->rColorM.green );
+		tRand( 0, m_spEffectData->rColorM.green );
 	colM.blue = 
 		m_spEffectData->colorM.blue + 
-		Rand( 0, m_spEffectData->rColorM.blue );
+		tRand( 0, m_spEffectData->rColorM.blue );
 	colE.red = 
 		m_spEffectData->colorE.red + 
-		Rand( 0, m_spEffectData->rColorE.red );
+		tRand( 0, m_spEffectData->rColorE.red );
 	colE.green = 
 		m_spEffectData->colorE.green + 
-		Rand( 0, m_spEffectData->rColorE.green );
+		tRand( 0, m_spEffectData->rColorE.green );
 	colE.blue = 
 		m_spEffectData->colorE.blue + 
-		Rand( 0, m_spEffectData->rColorE.blue );
+		tRand( 0, m_spEffectData->rColorE.blue );
 
 		sParticle->Setting(
 			p,

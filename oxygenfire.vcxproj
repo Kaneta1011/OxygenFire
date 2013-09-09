@@ -104,6 +104,7 @@
     <ClInclude Include="CppSource\EffectLib\Particle.h" />
     <ClInclude Include="CppSource\EffectLib\Shader.h" />
     <ClInclude Include="CppSource\EffectLib\ShaderManager.h" />
+    <ClInclude Include="CppSource\EffectLib\singleParticle.h" />
     <ClInclude Include="CppSource\FrameWork\Class\IScene\IScene.h" />
     <ClInclude Include="CppSource\FrameWork\Class\kFrameWork\kFrameWork.h" />
     <ClInclude Include="CppSource\Game\Bullet\Bullet.h" />

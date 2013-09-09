@@ -20,5 +20,26 @@ struct COLOR
 	Vector4 Value_0from1();
 };
 
+inline unsigned long xor128() {
+  static unsigned long x=123456789, y=362436069, z=521288629, w=88675123;
+  static unsigned long t;
+	t=(x^(x<<11));
+  x=y; y=z; z=w;
+  return ( w=(w^(w>>19))^(t^(t>>8)) );
+}
+
+inline float tRand( float Min, float Max )
+{
+	if( Min < 0 )
+		Max += -Min;
+	else
+		Max -= Min;
+
+	static float rand;
+	rand = xor128() / 4294967295.0f;
+
+	return rand * Max + Min;
+}
+
 
 #endif
