@@ -35,6 +35,7 @@ struct EmitterData
 	Vector3 addVecM;
 	Vector3 addVecE;
 	float Scale;
+	int addLife;
 	EmitterData();
 };
 

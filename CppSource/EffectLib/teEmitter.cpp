@@ -26,7 +26,7 @@ float Rand( float Min, float Max )
 //----------------------------------------
 EmitterData::EmitterData()
 {
-	
+	addLife = 0;
 }
 
 //-------------------------------------------------------------------------
@@ -107,6 +107,12 @@ bool ParticleEmitter::Update()
 {
 	//	スタート開始調整
 	if( Adjustment_StartFrame() == false ){ return true; }
+
+	//	加算ライフ
+	if( m_spData->addLife != 0 ){
+		m_spData->life += m_spData->addLife;
+		m_spData->addLife = 0;
+	}
 
 	if( true == m_LoopFlag ){
 		if( m_Count >  ( m_MaxLife / 2 ) ){

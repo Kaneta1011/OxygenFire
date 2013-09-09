@@ -132,6 +132,27 @@ wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type,const Vector3& Position,
 	return NULL;
 }
 
+wp<EmitterSet> EffectManager::Create(eEFFECT_TYPE Type,const Vector3& Position,
+																		 float Scale, int AddLife )
+{
+	for( int n=0; n<EMITTERSET_MAX; n++ )
+	{
+		//	@if Žg‚í‚ê‚Ä‚È‚¢‚Ì‚ÅI—¹
+		if( m_spEffectEmitterSet[n].GetRefNum() != 0 ){ continue; }
+
+		Create_EmitterSet(Type,n);
+
+		m_spEffectEmitterSet[n]->Create(Position);
+
+		m_spEffectEmitterSet[n]->Setting_Scale(Scale);
+
+		m_spEffectEmitterSet[n]->Setting_AddLife(AddLife);
+
+		return m_spEffectEmitterSet[n];
+	}
+	return NULL;
+}
+
 void EffectManager::Create_EmitterSet(eEFFECT_TYPE Type,int n)
 {
 	m_spEffectEmitterSet[n].SetPtr(new EmitterSet);

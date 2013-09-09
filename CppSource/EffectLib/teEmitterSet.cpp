@@ -42,6 +42,17 @@ void EmitterSet::Setting_Scale(float Scale)
 	}
 }
 
+void EmitterSet::Setting_AddLife(int AddLife)
+{
+	for( int n=0; n<EFFECT_EMITTER_MAX; n++ )
+	{
+		//	@if Žg‚í‚ê‚Ä‚È‚¢‚Ì‚ÅI—¹
+		if( m_spEffectEmitter[n].GetRefNum() == 0 ){ continue; }
+		
+		m_spEffectEmitter[n]->getData()->addLife = AddLife;
+	}
+}
+
 void EmitterSet::Create(
 	const Vector3& Position,
 	const Vector3& VelosityTarget )
