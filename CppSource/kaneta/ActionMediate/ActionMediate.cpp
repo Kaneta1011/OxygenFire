@@ -7,7 +7,7 @@
 #include <stdlib.h>
 using namespace rlib;
 
-int TEST_POS_NUM;
+int TEST_POS_NUM = 0;
 
 namespace klib
 {
@@ -35,7 +35,6 @@ namespace klib
 
 	void ActionMediate::init()
 	{
-
 		m_Font0=new r2DObj;
 		m_Font0->load("Font/font1.png");
 
@@ -99,7 +98,7 @@ namespace klib
 
 		//
 
-		for(int i=0;i<TEST_ACTION_POS;i++)
+		for(int i=0;i<TEST_POS_NUM;i++)
 		{
 			f32 dist=testpos[i].distance(m_Player->getObj()->getPosition());
 			if(m_IndexList.find(i)==-1)
@@ -128,7 +127,7 @@ namespace klib
 		}
 
 		m_IndexList.clear();
-		for(int i=0;i<TEST_ACTION_POS;i++)
+		for(int i=0;i<TEST_POS_NUM;i++)
 		{
 			if(0.0f<m_TimeTable(i).m_FontTime)
 			{

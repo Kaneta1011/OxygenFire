@@ -29,7 +29,7 @@ namespace rlib
 	{
 	public:
 		GFusePoint(GFusePointInfo& info);
-		~GFusePoint();
+		virtual ~GFusePoint();
 
 		virtual int update();
 		virtual bool vs(Bullet* op);

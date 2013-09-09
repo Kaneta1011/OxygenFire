@@ -27,6 +27,7 @@ namespace rlib
 		eGIMMICK_FUSE_POINT,	//“±‰Îü‚Ì—¼’[
 		eGIMMICK_WIND,			//•—
 		eGIMMICK_2D,			//2D•`‰æ
+		eGIMMICK_GOAL,			//ƒS[ƒ‹
 		eGIMMICK_TYPE_NUM,
 		eGIMMICK_UNKNOWN
 	};

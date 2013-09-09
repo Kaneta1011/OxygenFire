@@ -43,10 +43,12 @@ GIMMICK_TYPE rlib::getGimmickType(PlacementLib::ePLACEMENT_TYPE type)
 		eGIMMICK_FAN,			//PLACEMENT_FAN,				//	î•—‹@
 		eGIMMICK_CANDLE,		//PLACEMENT_CANDLE,				//	‚ë‚¤‚»‚­
 		eGIMMICK_2D,			//PLACEMENT_2D,					//	2D‰æ‘œ
+		eGIMMICK_GOAL,			//PLACEMENT_GOAL,				//	ƒS[ƒ‹
 	};
+	static const int tableNum = sizeof(table)/sizeof(table[0]);
 
-	if( type >= eGIMMICK_TYPE_NUM){
-		LOGE(TAG, "getGimmickType() unknwon type... type=%d", type);
+	if( type >= tableNum){
+		LOGE(TAG, "GimmickInfo.cpp : getGimmickType() unknwon type... type=%d\n", type);
 		return table[0];
 	}else{
 		return table[type];

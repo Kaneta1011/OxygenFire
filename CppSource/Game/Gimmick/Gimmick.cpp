@@ -14,6 +14,7 @@
 #include "kaneta\ActionMediate\ActionMediate.h"
 #include "input\Input.h"
 
+#include "Game\Stage\Stage.h"
 #endif
 
 //#include "PlacementLib\Placement.h"
@@ -37,11 +38,6 @@ using namespace PlacementLib;
 //		・シングルトン
 //
 //===============================================================================
-#ifndef ANDROID_REDNER
-#include "GraphicsLib\Class\kInputLayout\kInputLayout.h"
-#include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
-#endif
-
 using namespace klib;
 
 static const char* TAG = "GimmickManager";
@@ -162,8 +158,9 @@ void GimmickManager::init(const char* giFilePath)
 	{
 		IGimmick* g = this->mData[i];
 		GimmickInfoBase* info = infos[i];
+		if( info == NULL ){ LOGE(TAG, "null pointer found... set Listenier loop index = %d\n", i); continue;}
+
 	//flagOnイベントの登録
-		
 		for( std::list<std::string>::iterator onIt = info->checkOn.begin();
 				onIt != info->checkOn.end();
 				onIt++ )
@@ -171,6 +168,8 @@ void GimmickManager::init(const char* giFilePath)
 			for( size_t n=0; n<this->mData.size(); n++ )
 			{//データの中から検索
 				IGimmick* check = this->mData[n];
+				if( check == NULL ) continue;
+
 				if( (*onIt) == check->getName() )
 				{
 					check->addOnListener( g );
@@ -198,6 +197,10 @@ void GimmickManager::init(const char* giFilePath)
 	for( unsigned int i=0; i<this->mData.size(); i++ )
 	{
 		IGimmick* g = this->mData[i];
+		if( g == NULL ){
+			LOGE(TAG,"null pointer found... show debugMessage loop at init. index=%d\n", i);
+			continue;
+		}
 		g->debugMessage();
 	}
 #endif
@@ -242,6 +245,7 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 	case eGIMMICK_FUSE_POINT:	*outUnitScale = 0.005f; index = eMESH_DRUM; break;	//導火線の両端
 	case eGIMMICK_WIND:			break;	//風
 	//case eGIMMICK_2D:			break;	//2D描画
+	case eGIMMICK_GOAL:			break;	//ゴールの扉
 	default:
 		LOGE(TAG, "unknwon type = %d!! GimmickManager::getMesh()", type);
 	}
@@ -280,6 +284,10 @@ int GimmickManager::update()
 	for( unsigned int i=0; i<this->mData.size(); i++ )
 	{
 		IGimmick* g = this->mData[i];
+		if( g == NULL ){
+			LOGE(TAG,"null pointer found... show debugMessage loop at update. index=%d\n", i);
+			continue;
+		}
 		g->debugMessage();
 	}
 #endif
@@ -366,10 +374,14 @@ klib::math::Vector3 GimmickManager::collision(const klib::math::Vector3& pos, fl
 		rangeSq *= rangeSq;
 		if( dir.lengthSq() < rangeSq )
 		{
-			float len = g->getRange().x + range;
-			dir.normalize();
-			result = g->getPos() - dir*len;
-			result.y = y;
+			if( g->getType() == eGIMMICK_GOAL && g->isFlag() ){
+				STAGE.onClearFlag();
+			}else{
+				float len = g->getRange().x + range;
+				dir.normalize();
+				result = g->getPos() - dir*len;
+				result.y = y;
+			}
 		}
 	}
 	return result;

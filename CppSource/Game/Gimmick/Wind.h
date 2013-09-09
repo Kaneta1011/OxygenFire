@@ -35,7 +35,7 @@ namespace rlib
 		static bool isWindType(GIMMICK_TYPE type);
 	public:
 		GWind(GWindInfo& info);
-		~GWind();
+		virtual ~GWind();
 
 		virtual int update();
 		virtual bool vs(Bullet* op);

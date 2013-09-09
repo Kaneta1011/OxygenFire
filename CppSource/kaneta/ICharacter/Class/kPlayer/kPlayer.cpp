@@ -13,7 +13,7 @@ namespace klib
 
 	bool kPlayer::update()
 	{
-		
+		mp_Mesh->setScale(0.01f);
 		mp_Mesh->animation(1.0f);
 		mp_Mesh->Update();
 		ICharacter::exeStrategy();

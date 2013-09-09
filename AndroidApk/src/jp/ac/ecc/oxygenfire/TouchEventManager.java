@@ -1,11 +1,10 @@
 package jp.ac.ecc.oxygenfire;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 public class TouchEventManager {
 	/**
-	 * Å‘åƒ^ƒbƒ`ŒŸo”
+	 * æœ€å¤§ã‚¿ãƒƒãƒæ¤œå‡ºæ•°
 	 */
 	static private int maxPoint = 4;
 	static private float[] x = new float[maxPoint];
@@ -34,7 +33,7 @@ public class TouchEventManager {
 //			Log.i("touch info", "action=" + msg + " | id=" + event.getActionIndex() );
 //			prevAction = event.getAction();
 //		}
-	//ƒ^ƒbƒ`‚µ‚Ä‚¢‚é‘SÀ•W‚Ìæ“¾
+	//ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹å…¨åº§æ¨™ã®å–å¾—
 		int count = 0;
 		for( int i=0; i<event.getPointerCount(); i++ )
 		{
@@ -45,7 +44,7 @@ public class TouchEventManager {
 			pressures[i] = event.getPressure(i);
 			count++;
 		}
-	//ƒ^ƒbƒ`‚Ìó‘Ô‚ğæ“¾
+	//ã‚¿ãƒƒãƒã®çŠ¶æ…‹ã‚’å–å¾—
 		int condition = 3;
 		int action = event.getAction();
 		switch(action & MotionEvent.ACTION_MASK) {
@@ -66,9 +65,9 @@ public class TouchEventManager {
 		default:
 			condition = 3;
 		}
-	//ƒCƒxƒ“ƒg‚ª”­¶‚µ‚½ƒ|ƒCƒ“ƒ^[‚ÌID‚ğæ“¾‚µ‚Ä‚¢‚é	
+	//ã‚¤ãƒ™ãƒ³ãƒˆãŒç™ºç”Ÿã—ãŸãƒã‚¤ãƒ³ã‚¿ãƒ¼ã®IDã‚’å–å¾—ã—ã¦ã„ã‚‹
 		int id = (action & MotionEvent.ACTION_POINTER_ID_MASK) >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-	//cpp‘¤‚Éƒf[ƒ^‚ğ“]‘—
+	//cppå´ã«ãƒ‡ãƒ¼ã‚¿ã‚’è»¢é€
 		GL2JNILib.sendTouchEvent(count, x, y, pressures, id, condition);
 	}
 }

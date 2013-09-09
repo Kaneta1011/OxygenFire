@@ -17,7 +17,6 @@
 package jp.ac.ecc.oxygenfire;
 
 import android.content.res.AssetManager;
-import android.util.Log;
 
 // Wrapper for native library
 
@@ -35,8 +34,8 @@ public class GL2JNILib {
      public static native void update(float dt);
      
      /**
-      * @param asset : native‘¤‚É‘—‚éAssetManager
-      * @Asset‚È‚Ç‚Ì‚ƒ{{‘¤‚ÌƒOƒ‰ƒtƒBƒbƒNˆÈŠO‚Ì‰Šú‰»‚ðs‚¤
+      * @param asset : nativeå´ã«é€ã‚‹AssetManager
+      * @Assetãªã©ã®c++å´ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ä»¥å¤–ã®åˆæœŸåŒ–ã«ä½¿ã†
       */
      public static native void systemInit(AssetManager asset, int input_maxPoint);
      public static native void sendTouchEvent(int count, float[] pointsX, float[] pointsY, float[] arrayPressure, int id, int con);
@@ -46,12 +45,12 @@ public class GL2JNILib {
      public static native void onDestory();
 
      /*
-      * ƒtƒHƒ‹ƒ_[ƒpƒX—p
+      * ãƒ•ã‚©ãƒ«ãƒ€ãƒ¼ãƒ‘ã‚¹ç”¨
       */
      public static native void initFolderPath(String localPath, String SDCardPath);
      
      /*
-      * ƒfƒoƒbƒO—p
+      * ãƒ‡ãƒãƒƒã‚°ç”¨
       */
      public static native void debugInit(Debug_Oxygenfire_Activity activity);
      public static native void debugDelete();

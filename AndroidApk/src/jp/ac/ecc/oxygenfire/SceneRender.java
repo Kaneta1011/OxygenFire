@@ -5,7 +5,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
-import android.util.Log;
 
 public class SceneRender implements Renderer{
 

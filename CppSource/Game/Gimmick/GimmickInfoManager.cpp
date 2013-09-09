@@ -226,6 +226,7 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 	case eGIMMICK_CANDLE:		//ろうそく
 	case eGIMMICK_FUSE_POINT:	//導火線の両端
 	case eGIMMICK_2D:			//2D描画
+	case eGIMMICK_GOAL:
 		setGimmickInfo(loader, out, type, name);
 		break;
 	case eGIMMICK_FUSE:			//導火線
@@ -235,7 +236,7 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 		setWindInfo(loader, out, type, name);
 		break;
 	default:
-		LOGE(TAG,"unknown type set!! type=%d | name=\"%s\"\n", type, name.c_str());
+		LOGE(TAG,"GimmickInfoManager::setInfo : unknown type set!! type=%d | name=\"%s\"\n", type, name.c_str());
 		break;
 	}
 }
@@ -263,13 +264,13 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		}
 	case eGIMMICK_FAN:			//扇風機
 		{
-			LOGE(TAG, "扇風機の作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
+			LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Please create a fan!\n");
 			//set = ;
 			break;
 		}
 	case eGIMMICK_CANDLE:		//ろうそく
 		{
-			LOGE(TAG, "ろうそくの作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
+			LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Please create a candle!\n");
 
 			//set = ;
 			break;
@@ -285,12 +286,21 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		}
 	case eGIMMICK_2D:			//2D描画
 		{
-			LOGE(TAG, "2Dの作成処理をつくってね GimmickInfoManager::setGimmickInfo()\n");
+			LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Please create 2d gimmick!\n");
 			//set = ;
 			break;
 		}
+	case eGIMMICK_GOAL:
+		{
+			GGoalInfo* info = new GGoalInfo();
+			info->setNameAndType(name, type);
+			info->load(loader);
+
+			set = info;
+			break;
+		}
 	default:
-		LOGE(TAG, "未確認のtypeのギミックを作成しようとしました GimmickInfoManager::setGimmickInfo()\n");
+		LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Try creating a gimmick type of unknown...\n");
 		break;
 	}
 	*out = set;

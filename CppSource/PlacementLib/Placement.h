@@ -25,6 +25,7 @@ enum ePLACEMENT_TYPE
 	PLACEMENT_CANDLE,		//	ÇÎÇ§ÇªÇ≠
 	PLACEMENT_2D,			//	2DâÊëú
 	PLACEMENT_GOAL,			//	ÉSÅ[Éã
+	PLACEMENT_TYPE_NUM,
 };
 
 struct PlacementData

@@ -34,6 +34,7 @@ namespace klib
 
 		bool kPlayerMove::execute(ICharacter* acter)
 		{
+			acter->getObj()->setScale(0.01f);
 			acter->setMove(math::Vector3(0,0,0));
 			const rlib::AnalogStick* stick=acter->getAnalogStick();
 			kSkin* obj=acter->getObj();

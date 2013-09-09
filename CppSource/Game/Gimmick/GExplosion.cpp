@@ -189,11 +189,7 @@ bool GDrum::vs(Bullet* op)
 #ifndef ANDROID_REDNER
 void GDrum::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
-	mesh->setPosition(this->mPos);
-	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange * scale);
-	mesh->Update();
-	mesh->Render(pipeline);
+	IGimmickObj::render(mesh, scale, pipeline);
 }
 #endif
 
@@ -229,11 +225,7 @@ bool GGasoline::vs(Bullet* op)
 #ifndef ANDROID_REDNER
 void GGasoline::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
-	mesh->setPosition(this->mPos);
-	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange * scale);
-	mesh->Update();
-	mesh->Render(pipeline);
+	IGimmickObj::render(mesh, scale, pipeline);
 }
 #endif
 
@@ -273,10 +265,6 @@ bool GWoodBox::vs(Bullet* op)
 #ifndef ANDROID_REDNER
 void GWoodBox::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
-	mesh->setPosition(this->mPos);
-	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange * scale);
-	mesh->Update();
-	mesh->Render(pipeline);
+	IGimmickObj::render(mesh, scale, pipeline);
 }
 #endif

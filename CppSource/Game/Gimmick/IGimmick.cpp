@@ -132,3 +132,14 @@ IGimmickObj::IGimmickObj(GGimmickInfo* info):
 	if( max < info->scale.z ) max = info->scale.z;
 	this->mRadius = max;
 }
+
+#ifndef ANDROID_REDNER
+void IGimmickObj::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+{
+	mesh->setPosition(this->mPos);
+	mesh->setAngle(this->mAngle);
+	mesh->setScale(this->mRange * scale);
+	mesh->Update();
+	mesh->Render(pipeline);
+}
+#endif

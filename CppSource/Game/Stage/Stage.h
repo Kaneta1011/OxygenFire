@@ -24,7 +24,13 @@ namespace rlib
 		void render();
 	//9/6 レイピックを作るのわすれない
 
+		void onClearFlag(){this->mIsClear = true;}
+		void offClearFlag(){this->mIsClear = false; }
+
+		bool isClear()const{ return this->mIsClear; }
+
 	private:
+		bool mIsClear;
 		klib::kMesh *mpMesh;
 
 	public:

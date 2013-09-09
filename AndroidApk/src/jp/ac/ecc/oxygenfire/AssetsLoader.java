@@ -30,7 +30,7 @@ public class AssetsLoader {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		Log.e(TAG, "指定されたフォルダーは見つかりません。path = " + folderPath);
+		Log.e(TAG, "Folder you specified is not found. path = " + folderPath);
 		return null;
 	}
 }

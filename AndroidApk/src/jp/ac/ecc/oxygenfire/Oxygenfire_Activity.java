@@ -19,7 +19,6 @@ package jp.ac.ecc.oxygenfire;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.MotionEvent;
 
 public class Oxygenfire_Activity extends Activity {

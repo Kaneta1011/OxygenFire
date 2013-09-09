@@ -62,11 +62,7 @@ void GFusePoint::flagOffListener(IGimmick* thiz)
 #ifndef ANDROID_REDNER
 void GFusePoint::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
-	mesh->setPosition(this->mPos);
-	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange * scale);
-	mesh->Update();
-	mesh->Render(pipeline);
+	IGimmickObj::render(mesh, scale, pipeline);
 }
 
 #endif

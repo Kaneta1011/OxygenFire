@@ -91,8 +91,13 @@ namespace rlib
 
 		//“–‚½‚è”»’è‚Ì‚½‚ß‚Ì”¼ŒaŽæ“¾
 		virtual float getRadius(){return this->mRadius;}
+
+#ifndef ANDROID_REDNER
+		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)=0;
+#endif
 	protected:
 		float mRadius;
 	};
 }
+
 #endif

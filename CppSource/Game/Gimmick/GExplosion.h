@@ -75,7 +75,7 @@ namespace rlib
 	{
 	public:
 		GDrum(GExplosionInfo& info);
-		~GDrum();
+		virtual ~GDrum();
 
 		virtual int update();
 		virtual bool vs(Bullet* op);
@@ -95,7 +95,7 @@ namespace rlib
 	{
 	public:
 		GGasoline(GExplosionInfo& info);
-		~GGasoline();
+		virtual ~GGasoline();
 
 		virtual int update();
 		virtual bool vs(Bullet* op);
@@ -115,7 +115,7 @@ namespace rlib
 	{
 	public:
 		GWoodBox(GExplosionInfo& info);
-		~GWoodBox();
+		virtual ~GWoodBox();
 
 		virtual int update();
 		virtual bool vs(Bullet* op);	

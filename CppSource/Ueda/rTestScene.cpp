@@ -88,7 +88,7 @@ void rTestScene::entry()
 	klib::ActionMediate::init();
 
 	rlib::BulletManager::getInst().init();
-	GIMMICK_MNG.init("gimmick/giTest.gi");
+	GIMMICK_MNG.init("gimmick/stage1.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
 
@@ -147,18 +147,6 @@ void rTestScene::update()
 	m_Camera->update();
 	mMesh->update();
 
-	rlib::BulletManager& bullet = rlib::BulletManager::getInst();
-	if( this->mButton->getMode() == rlib::IButton::eUP )
-	{
-		rlib::BulletInfo info;
-		info.pos = mMesh->getObj()->getPosition();
-
-		info.velocity = -info.pos;
-		info.velocity.normalize();
-		//info.velocity *= 0.1f;
-		BULLET_MNG.add(info);
-	}
-
 	if( mlInput::getNowTouchCount() == 3 )
 	{
 		BULLET_MNG.clearData();
@@ -181,6 +169,9 @@ void rTestScene::update()
 
 	sEffectManager->Update();
 
+	if( STAGE.isClear() ){
+		DEBUG_MSG_NON_ARAG("Stage Clear!!");
+	}
 	DEBUG_MSG("fire count = %d", rlib::BulletManager::getInst().size() );
 }
 
@@ -188,16 +179,16 @@ void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	mMesh->render(GameCommonPipeline::getPipeline());
+	//mMesh->render(GameCommonPipeline::getPipeline());
 	STAGE.render();
-	BULLET_MNG.render();
-	GIMMICK_MNG.render();
+	//BULLET_MNG.render();
+	//GIMMICK_MNG.render();
 
-	klib::ActionMediate::render();
+	//klib::ActionMediate::render();
 
-	mButton->render();
-	mStick->render();
-	sEffectManager->Render();
+	//mButton->render();
+	//mStick->render();
+	//sEffectManager->Render();
 }
 
 void rTestScene::exit()

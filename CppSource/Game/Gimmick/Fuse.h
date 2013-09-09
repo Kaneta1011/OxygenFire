@@ -14,7 +14,7 @@ namespace rlib
 	{
 	public:
 		GFuse(GLineInfo& info);
-		~GFuse();
+		virtual ~GFuse();
 
 		virtual int update();
 		/*
