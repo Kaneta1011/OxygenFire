@@ -292,7 +292,11 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		}
 	case eGIMMICK_RESET_CANDLE:
 		{
-
+			GResetCandleInfo* info = new GResetCandleInfo();
+			info->setNameAndType(name, type);
+			info->loadParam(loader);
+			set = info;
+			break;
 		}
 	case eGIMMICK_FUSE_POINT:	//“±‰Îü‚Ì—¼’[
 		{

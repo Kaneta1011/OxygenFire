@@ -36,9 +36,6 @@ namespace rlib
 		virtual void flagOnListener(IGimmick* thiz);
 		virtual void flagOffListener(IGimmick* thiz);
 
-#ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)=0;
-#endif
 	protected:
 	};
 }
