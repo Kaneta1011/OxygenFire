@@ -23,11 +23,13 @@
     <ClCompile Include="CppSource\Game\CommonPipeline\GameCommonPipeline.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Fuse.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\FusePoint.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\GCandle.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GGoal.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GimmickInfoManager.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\GResetCandle.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\IGimmick.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Wind.cpp" />
     <ClCompile Include="CppSource\Game\SaveManager.cpp" />
@@ -114,11 +116,13 @@
     <ClInclude Include="CppSource\Game\CommonPipeline\GameCommonPipeline.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Fuse.h" />
     <ClInclude Include="CppSource\Game\Gimmick\FusePoint.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\GCandle.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GGoal.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GimmickInfoManager.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\GResetCandle.h" />
     <ClInclude Include="CppSource\Game\Gimmick\IGimmick.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Wind.h" />
     <ClInclude Include="CppSource\Game\IObject\IObject.h" />

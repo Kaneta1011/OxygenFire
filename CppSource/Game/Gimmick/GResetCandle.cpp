@@ -76,3 +76,9 @@ void GResetCandle::flagOffListener(IGimmick* thiz)
 {
 }
 
+#ifndef ANDROID_REDNER
+void GResetCandle::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+{
+	IGimmickObj::render(mesh, scale, pipeline);
+}
+#endif

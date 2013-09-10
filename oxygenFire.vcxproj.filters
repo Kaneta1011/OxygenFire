@@ -238,6 +238,15 @@
     <Filter Include="source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse">
       <UniqueIdentifier>{1a43ee12-fa1b-47df-8559-d9d3d7f4c8e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Game\Gimmick\Type\Candle">
+      <UniqueIdentifier>{5e9f0ffc-5c7a-402b-9593-66fd28e1bcb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type\ResetCandle">
+      <UniqueIdentifier>{bce14585-6324-40cd-a697-12a9e830c960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Game\Gimmick\Type\CandleChecker">
+      <UniqueIdentifier>{464d4873-2cbc-4f8f-a29e-79c05810e04f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -467,6 +476,12 @@
     </ClCompile>
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.cpp">
       <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GCandle.cpp">
+      <Filter>source\Game\Gimmick\Type\Candle</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GResetCandle.cpp">
+      <Filter>source\Game\Gimmick\Type\ResetCandle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +796,12 @@
     </ClInclude>
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.h">
       <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GCandle.h">
+      <Filter>source\Game\Gimmick\Type\Candle</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GResetCandle.h">
+      <Filter>source\Game\Gimmick\Type\ResetCandle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

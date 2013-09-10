@@ -23,8 +23,6 @@ namespace klib
 
 		obj->setPosition(kbezier(m_StartPos,(m_StartPos+m_EndPos)*0.25+Vector3(0,2,0),(m_StartPos+m_EndPos)*0.75+Vector3(0,2,0),m_EndPos,m_Time));
 
-
-
 		m_Time+=0.05f;
 
 		if(1.0f<m_Time)
