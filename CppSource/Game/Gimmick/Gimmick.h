@@ -120,6 +120,8 @@ namespace rlib
 			eMESH_DRUM,
 			eMESH_GASOLINE,
 			eMESH_WOOD_BOX,
+			eMESH_GABERAGE_BOX,
+			eMESH_CARD_BOARD,
 			eMESH_TYPE_NUM
 		};
 

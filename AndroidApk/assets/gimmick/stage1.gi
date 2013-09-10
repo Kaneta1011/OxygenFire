@@ -22,8 +22,8 @@ index 1 {
  limitTemperature	100
 }
 index 2 {
- name	WOODBOX_2
- type	3
+ name	CARDBOARD_2
+ type	4
  checkOn	END@
  checkOff	END@
  pos	1.50783 0.285534 -1.69885
@@ -46,29 +46,18 @@ index 3 {
 index 4 {
  name	GOAL_0
  type	11
- checkOn	WOODBOX_2 END@
+ checkOn	WOODBOX_1 END@
  checkOff	END@
  pos	0.031325 0.619444 4.77713
- angle	0 0 0
+ angle	-0 0 0
  scale	1.253738 1.253738 1.253738
 }
 index 5 {
- name	WOODBOX_5
- type	3
+ name	GASOLINE_5
+ type	1
  checkOn	END@
  checkOff	END@
  pos	2.88736 2.27553 3.45975
- angle	-0 0 0
- scale	0.132677 0.132677 0.132677
- oxygenCost	0
- limitTemperature	100
-}
-index 6 {
- name	WOODBOX_6
- type	3
- checkOn	END@
- checkOff	END@
- pos	2.83856 1.96417 -1.82229
  angle	-0 0 0
  scale	0.132677 0.132677 0.132677
  oxygenCost	0
@@ -81,7 +70,7 @@ index 7 {
  checkOff	END@
  pos	-0 1.38067 0
  dir	-0.1 0 0
- scale	29.7163 8.54003 13.7163
+ scale	13.7163 8.54003 13.7163
  isRender	0
 }
 index 8 {
@@ -89,9 +78,9 @@ index 8 {
  type	9
  checkOn	END@
  checkOff	END@
- pos	-0.00471 0.666853 4.35087
+ pos	-0.00471 0.185308 4.35087
  dir	0.261967 0 -5.9989
- scale	1.34886 1.965691 5.10239
+ scale	1.34886 0.965691 3.10239
  isRender	1
 }
 index 9 {
@@ -101,6 +90,7 @@ index 9 {
  checkOff	END@
  start	0.0134 0.007 2.3134
  end	2.93685 1.918 2.8886
+ speed	1
 }
 index 10 {
  name	GimmickLine_1Start

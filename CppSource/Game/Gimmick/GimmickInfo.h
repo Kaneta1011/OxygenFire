@@ -68,18 +68,6 @@ namespace rlib
 
 	};
 
-	struct GLineInfo : public GimmickInfoBase
-	{
-		klib::math::Vector3 start;
-		klib::math::Vector3 end;
-
-		void convert(GimmickLine* data, int index);
-		virtual void forFile(textWriter& writer);
-		virtual bool loadParam(textLoader& loader);
-
-		virtual IGimmick* makeGimmick();
-	};
-
 }
 
 #endif

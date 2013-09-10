@@ -37,24 +37,32 @@ IGimmick* GGoalInfo::makeGimmick()
 //
 //===========================================================
 GGoal::GGoal(GGoalInfo& info):
-	IGimmickObj(&info),
-	mpSkin(new klib::kSkin("gimmick/door/door_animation.IEM", new klib::kMeshLoadIEM, new klib::kMeshGLES20Render()))
+	IGimmickObj(&info)
+#ifndef ANDROID_REDNER
+	,mpSkin(new klib::kSkin("gimmick/door/door_animation.IEM", new klib::kMeshLoadIEM, new klib::kMeshGLES20Render()))
+#endif
 {
+#ifndef ANDROID_REDNER
 	this->mpSkin->setPosition(this->mPos);
 	this->mpSkin->setAngle(this->mAngle);
 	this->mpSkin->setScale(this->mRange*1.f);
 	this->mpSkin->SetMotion(0);
+#endif
 }
 
 GGoal::~GGoal()
 {
+#ifndef ANDROID_REDNER
 	if( this->mpSkin ){ delete this->mpSkin; this->mpSkin = NULL; }
+#endif
 }
 
 int GGoal::update()
 {
+#ifndef ANDROID_REDNER
 	this->mpSkin->animation(1.f);
 	this->mpSkin->Update();
+#endif
 	return 0;
 }
 
@@ -67,14 +75,18 @@ void GGoal::flagOnListener(IGimmick* thiz)
 {
 	this->mFlag = !this->mFlag;
 	int motionNo = ( this->mFlag )? 2:3;
+#ifndef ANDROID_REDNER
 	this->mpSkin->SetMotion(motionNo);
+#endif
 	LOGI("GGoal", "flagOn motion=%d", motionNo);
 }
 void GGoal::flagOffListener(IGimmick* thiz)
 {
 	this->mFlag = !this->mFlag;
 	int motionNo = ( this->mFlag )? 2:3;
+#ifndef ANDROID_REDNER
 	this->mpSkin->SetMotion(motionNo);
+#endif
 	LOGI("GGoal", "flagOn motion=%d", motionNo);
 }
 

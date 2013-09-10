@@ -141,7 +141,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	////シーン割り当て
 	//framework.sceneChange(testScene::_getInstancePtr());
 
-	framework.scenePush( new rTestScene() );
+	framework.scenePush( rTestScene::_getInstancePtr() );
 	
 	LOGI(TAG, "Complete graphic init");
 }
@@ -163,7 +163,6 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_update(JNIEnv * env, 
 	if(framework.sceneUpdate()){framework.sceneRender();}
 	//LOGI(TAG,"finish update");
 
-	mlInput::lock();
 	mlInput::update(dt);
 	DEBUG_FLUSH_MSG();//ここでデバッグ用の文字列をTextViewに設定しているので、消さないで!!
 }

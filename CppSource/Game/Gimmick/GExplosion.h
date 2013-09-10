@@ -43,6 +43,10 @@ namespace rlib
 		virtual void flagOnListener(IGimmick* thiz);
 		virtual void flagOffListener(IGimmick* thiz);
 
+#ifndef ANDROID_REDNER
+		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
+#endif
+
 	protected:
 		enum UPDATE_MESSAGE{
 			UPDATE_MSG_NON,
@@ -62,8 +66,17 @@ namespace rlib
 		int mLimitTemperature;	//爆発限界温度 現在の温度がこれを超えると爆発する
 
 		int mExplosionCount;	//爆発までのカウントダウン 0のときに爆発  通常時は-1
+		int mExplosionMaxCount;	//爆発するまでの時間
 
 		int mOxygenCost;		//爆発した際の酸素の減り具合
+		bool mIsExplosion;		//爆発するか？
+
+#ifndef ANDROID_REDNER
+		wp<EffectLib::EmitterSet> wpCatchFire;
+		wp<EffectLib::EmitterSet> wpBurning;
+#endif
+		float mObjBurnInterval;
+		float mEffectBurnInterval;
 	};
 
 	//===============================================
@@ -80,11 +93,7 @@ namespace rlib
 		virtual int update();
 		virtual bool vs(Bullet* op);
 
-#ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
-#endif
 	private:
-		int mOxygenCost;
 	};
 
 	//===============================================
@@ -100,11 +109,7 @@ namespace rlib
 		virtual int update();
 		virtual bool vs(Bullet* op);
 
-#ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
-#endif
 	private:
-		int mOxygenCost;
 	};
 
 	//===============================================
@@ -120,13 +125,44 @@ namespace rlib
 		virtual int update();
 		virtual bool vs(Bullet* op);	
 
-#ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
-#endif
 	private:
-		int mOxygenCost;
 
 	};
+
+	//===============================================
+	//	ダンボール
+	//		弾で燃える
+	//===============================================
+	class GCardBoard : public IGExplosion
+	{
+	public:
+		GCardBoard(GExplosionInfo& info);
+		virtual ~GCardBoard();
+
+		virtual int update();
+		virtual bool vs(Bullet* op);	
+
+	private:
+
+	};
+
+	//===============================================
+	//	ゴミ袋
+	//		弾で燃える
+	//===============================================
+	class GGaberageBox : public IGExplosion
+	{
+	public:
+		GGaberageBox(GExplosionInfo& info);
+		virtual ~GGaberageBox();
+
+		virtual int update();
+		virtual bool vs(Bullet* op);	
+
+	private:
+
+	};
+
 }
 
 #endif

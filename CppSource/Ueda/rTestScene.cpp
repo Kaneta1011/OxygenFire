@@ -53,36 +53,37 @@ using namespace EffectLib;
 wp<EmitterSet> wpE;
 wp<EmitterSet> wpE2;
 
-void rTestScene::entry()
+void rTestScene::threadFunc(rTestScene* obj)
 {
-	AssetsLoader::begin();
-	kDevice::begin();
+	JNIEnv* env;
+	getJNIEnv(&env);
+	g_VM->AttachCurrentThread((JNIEnv**)&env, NULL);
+
 	rlib::SaveManager::save();
 	rlib::SaveManager::load();
 
 	LOGI(TAG,"Execute rTestScene init");
 
-	mButton = new rlib::CircleButton();
-	mButton->init("testImage.png", 50, -50, 50.f);
+	obj->mButton = new rlib::CircleButton();
+	obj->mButton->init("testImage.png", 50, -50, 50.f);
 
-	mStick = new rlib::AnalogStick();
-	this->mStick->init(-80, -50, 50);
-	this->mStick->loadImage("cursor.png","testImage.png");
+	obj->mStick = new rlib::AnalogStick();
+	obj->mStick->init(-80, -50, 50);
+	obj->mStick->loadImage("cursor.png","testImage.png");
 
 	GameCommonPipeline::init();
 	STAGE.init("Placement/stage1.IMO");
 	sPlacementManager->Load("Placement/stage1.mqo");
 
-
 //プレイヤーの設定
-	mMesh=new kPlayer("kanetaPlace/kman.IEM",mStick,mButton);
-	mMesh->getObj()->setScale(0.01f);
-	mMesh->getObj()->setPosition(0,0,-5);
-	mMesh->getObj()->setAngle(0);
-	mMesh->getObj()->SetMotion(4);
-	mMesh->getObj()->Update();
+	obj->mMesh=new kPlayer("kanetaPlace/kman.IEM",obj->mStick,obj->mButton);
+	obj->mMesh->getObj()->setScale(0.01f);
+	obj->mMesh->getObj()->setPosition(0,0,-5);
+	obj->mMesh->getObj()->setAngle(0);
+	obj->mMesh->getObj()->SetMotion(4);
+	obj->mMesh->getObj()->Update();
 
-	m_Camera=new kPlayCamera(mMesh);
+	obj->m_Camera=new kPlayCamera(obj->mMesh);
 
 	klib::kPlane::init();
 	klib::ActionMediate::init();
@@ -92,8 +93,14 @@ void rTestScene::entry()
 
 	LOGI(TAG,"Complete rTestScene init");
 
-	kDevice::end();
-	AssetsLoader::end();
+	g_VM->DetachCurrentThread();
+}
+
+void rTestScene::entry()
+{
+	thread::kThreadHolder* func=new thread::kThreadHolder(threadFunc,this);
+	LoadingScene::_getInstance().set(func);
+	framework.scenePush(LoadingScene::_getInstancePtr());
 
 	//===============　田代デバッグ用  =======================================
 	//wpE = sEffectManager->Create(FIRE_BALL,Vector3(0,0,0));
@@ -153,17 +160,17 @@ void rTestScene::update()
 	}
 	STAGE.update();
 	BULLET_MNG.update();
-	GIMMICK_MNG.update();
-	BULLET_MNG.collision( GIMMICK_MNG );
+	//GIMMICK_MNG.update();
+	//BULLET_MNG.collision( GIMMICK_MNG );
 
-	{//プレイヤーのギミックとの当たり判定
-		Vector3 playerPos = mMesh->getObj()->getPosition();
-		playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
-		playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
+	//{//プレイヤーのギミックとの当たり判定
+	//	Vector3 playerPos = mMesh->getObj()->getPosition();
+	//	playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
+	//	playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
 
-		mMesh->getObj()->setPosition(playerPos);
-		mMesh->getObj()->Update();
-	}
+	//	mMesh->getObj()->setPosition(playerPos);
+	//	mMesh->getObj()->Update();
+	//}
 
 	klib::ActionMediate::update(mMesh);
 
@@ -179,16 +186,16 @@ void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	//mMesh->render(GameCommonPipeline::getPipeline());
+	mMesh->render(GameCommonPipeline::getPipeline());
 	STAGE.render();
-	//BULLET_MNG.render();
+	BULLET_MNG.render();
 	//GIMMICK_MNG.render();
 
-	//klib::ActionMediate::render();
+	klib::ActionMediate::render();
 
-	//mButton->render();
-	//mStick->render();
-	//sEffectManager->Render();
+	mButton->render();
+	mStick->render();
+	sEffectManager->Render();
 }
 
 void rTestScene::exit()
@@ -203,6 +210,9 @@ void rTestScene::exit()
 	rlib::BulletManager::getInst().clear();
 	GIMMICK_MNG.clear();
 	STAGE.clear();
+
+	if( this->mMesh){ delete this->mMesh; }
+	if( this->m_Camera ){ delete this->m_Camera; }
 
 	GameCommonPipeline::clear();
 	sPlacementManager->Delete();

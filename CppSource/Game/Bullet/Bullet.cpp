@@ -45,8 +45,8 @@ int Bullet::update()
 	//this->mVelocity.y -= 0.01f;
 
 	//if( this->mPos.y < 0 )	return MSG_DEAD;
-	if(fabs( this->mPos.x ) > 200.f ||
-	   fabs( this->mPos.z ) > 200.f ||
+	if(fabs( this->mPos.x ) > 20.f ||
+	   fabs( this->mPos.z ) > 20.f ||
 	   !mIsAlive )
 	{
 		if( this->mEmitter.IsExist() )

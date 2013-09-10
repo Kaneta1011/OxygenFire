@@ -1,7 +1,13 @@
 #ifndef _TEST_SCENE_
 #define _TEST_SCENE_
 
+#include "FrameWork\Class\kFrameWork\kFrameWork.h"
+
 #include "FrameWork\Class\IScene\IScene.h"
+#include "thread\Class\kThread\kThread.h"
+#include "templateLib\kSingleton.h"
+
+#include "LoadingScene.h"
 
 namespace klib{
 	class kMesh;
@@ -15,9 +21,12 @@ namespace rlib{
 	class AnalogStick;
 }
 
-class rTestScene : public klib::IScene
+class rTestScene:public klib::IScene, public klib::ktl::kSingleton<rTestScene>
 {
+	friend class klib::ktl::kSingleton<rTestScene>;
 public:
+	static void threadFunc(rTestScene* obj);
+
 	rTestScene();
 	void entry();
 	void update();

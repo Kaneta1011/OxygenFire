@@ -41,6 +41,7 @@ namespace klib
 					//処理を取り出す
 					IkThreadFunc* func=NULL;
 					kThreadPool::get(&func);
+					dprintf("abcdefg");
 					//処理をアンロックする
 					m_Mutex.unLock(5);
 					//実行

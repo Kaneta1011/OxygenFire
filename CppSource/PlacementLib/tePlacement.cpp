@@ -81,7 +81,7 @@ void PlacementManager::Setting_CreateObjectName(sp<char> name,sp<char> load)
 		ePLACEMENT_TYPE type;
 	};
 	static TypeTable table[]={
-		{"GarbageBag",	PLACEMENT_GarbageBag},
+		{"GARBAGEBAG",	PLACEMENT_GarbageBag},
 		{"DRUM",		PLACEMENT_DRUM},
 		{"GASOLINE",	PLACEMENT_GASOLINE},
 		{"WOODBOX",		PLACEMENT_WoodenBox},

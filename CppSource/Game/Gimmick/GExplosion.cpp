@@ -47,11 +47,11 @@ IGimmick* GExplosionInfo::makeGimmick()
 	IGimmick* make = NULL;
 	switch( this->type )
 	{
-	case eGIMMICK_DRUM:			make = new GDrum(*this); break;
-	case eGIMMICK_GASOLINE:		make = new GGasoline(*this); break;
-	case eGIMMICK_GARBAGE_BAG:	LOGE("GExplosionInfo", "please create garbage bag class\n"); break;
-	case eGIMMICK_WOOD_BOX:		make = new GWoodBox(*this); break;
-	case eGIMMICK_CARDBOARD:	LOGE("GExplosionInfo", "please create cardboard class\n");	break;
+	case eGIMMICK_DRUM:			make = new GDrum(*this);		break;
+	case eGIMMICK_GASOLINE:		make = new GGasoline(*this);	break;
+	case eGIMMICK_GARBAGE_BAG:	make = new GGaberageBox(*this); break;
+	case eGIMMICK_WOOD_BOX:		make = new GWoodBox(*this);		break;
+	case eGIMMICK_CARDBOARD:	make = new GCardBoard(*this);	break;
 	default:
 		LOGE("GExplosionInfo", "爆発物以外のギミックをGExplosionInfoで作ろうとしてます\n");
 	}
@@ -83,7 +83,10 @@ IGimmickObj(info),
 mTemperature(0),
 mLimitTemperature(info->limitTemperature),
 mExplosionCount(-1),
-mOxygenCost(info->oxygenCost)
+mOxygenCost(info->oxygenCost),
+mIsExplosion(false),
+mObjBurnInterval(rand()/(float)RAND_MAX * 0.1f + 0.7f),
+mEffectBurnInterval(rand()/(float)RAND_MAX * 0.1f + 0.3f)
 {
 }
 
@@ -124,8 +127,27 @@ int IGExplosion::udateExplosion()
 
 bool IGExplosion::updateTemperature()
 {
+	if( this->isFlag() ) return false;
+
 	if( isOverTemperature() ){
-		this->mExplosionCount = rand()%60 - (this->mTemperature-this->mLimitTemperature);
+		this->mExplosionCount = rand()%120 + 60;
+		this->mExplosionMaxCount = this->mExplosionCount;
+
+		flagOn();
+
+#ifndef ANDROID_REDNER
+		if( this->mIsExplosion ){
+			sEffectManager->Create(EXPRO, this->mPos);
+		}
+
+		if( !this->wpBurning.IsExist() ){
+			this->wpBurning = sEffectManager->Create(FIRE);
+			this->wpBurning->Setting_Position(this->mPos);
+			this->wpBurning->Setting_Scale(this->mRadius);
+			this->wpBurning->Loop();
+		}
+#endif
+
 		if( this->mExplosionCount < 0 )
 			this->mExplosionCount = 1;
 
@@ -142,9 +164,47 @@ bool IGExplosion::updateExplosionCount()
 	if( this->mExplosionCount < 0 ) return false;
 
 	this->mExplosionCount--;
-	return this->mExplosionCount == 0;
+	bool is = this->mExplosionCount == 0;
+#ifndef ANDROID_REDNER
+	if( wpBurning.IsExist() ){
+		if( is ){
+			wpBurning->End();
+			LOGI("GExplosion","burning finish!!");
+		//最後の煙
+			//sEffectManager->Create(BLUE_FIRE, this->mPos);
+		}else{
+			float rate = this->mExplosionCount / (float)this->mExplosionMaxCount;
+			if( rate < this->mEffectBurnInterval ){
+				rate /= this->mEffectBurnInterval;
+			}else if( rate > 0.95f ) {
+				rate = 2.f;
+			}else{
+				rate = 1.f;
+			}
+			wpBurning->Setting_Scale( this->getRadius() * rate * 1.5f );
+		}
+	}
+#endif
+	return is;
 }
 
+#ifndef ANDROID_REDNER
+void IGExplosion::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+{
+	float rate = 1.f;
+	if( this->isFlag() ){
+		rate = this->mExplosionCount / (float)this->mExplosionMaxCount;
+		if( rate < this->mObjBurnInterval){
+			rate =  rate / (this->mObjBurnInterval);
+		}else{
+			rate = 1.f;
+		}
+		if( rate > 1.f ) rate = 1.f;
+		else if( rate < 0.f ) rate = 0.f;
+	}
+	IGimmickObj::render(mesh, scale*rate, pipeline);
+}
+#endif
 //================================================================
 //
 //		GDrumクラス
@@ -153,6 +213,7 @@ bool IGExplosion::updateExplosionCount()
 GDrum::GDrum(GExplosionInfo& info):
 IGExplosion(&info)
 {
+	this->mIsExplosion = true;
 }
 
 GDrum::~GDrum()
@@ -164,10 +225,6 @@ int GDrum::update()
 	int msg = udateExplosion();
 	if( msg == UPDATE_MSG_EXPLOSION )
 	{
-#ifndef ANDROID_REDNER
-		sEffectManager->Create(BLUE_FIRE, this->mPos);
-#endif
-		flagOn();
 		return MSG_DEAD;
 	}
 	return 0;
@@ -179,28 +236,22 @@ bool GDrum::vs(Bullet* op)
 	{
 		if( isOverTemperature() )
 		{//弾では爆発させない
-			this->mTemperature = this->mLimitTemperature-1;
+			//this->mTemperature = this->mLimitTemperature-1;
 		}
 		return true;
 	}
 	return false;
 }
 
-#ifndef ANDROID_REDNER
-void GDrum::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
-{
-	IGimmickObj::render(mesh, scale, pipeline);
-}
-#endif
-
 //================================================================
 //
-//		GWoodBoxクラス
+//		GGasolineクラス
 //
 //================================================================
 GGasoline::GGasoline(GExplosionInfo& info):
 IGExplosion(&info)
 {
+	this->mIsExplosion = true;
 }
 
 GGasoline::~GGasoline()
@@ -222,13 +273,6 @@ bool GGasoline::vs(Bullet* op)
 	return IGExplosion::vs(op);
 }
 
-#ifndef ANDROID_REDNER
-void GGasoline::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
-{
-	IGimmickObj::render(mesh, scale, pipeline);
-}
-#endif
-
 //================================================================
 //
 //		GWoodBoxクラス
@@ -247,10 +291,6 @@ int GWoodBox::update()
 {
 	int msg = udateExplosion();
 	if( msg == UPDATE_MSG_EXPLOSION ){
-#ifndef ANDROID_REDNER
-		sEffectManager->Create(BLUE_FIRE, this->mPos);
-#endif
-		flagOn();
 		return MSG_DEAD;
 	}
 
@@ -262,9 +302,60 @@ bool GWoodBox::vs(Bullet* op)
 	return IGExplosion::vs(op);
 }
 
-#ifndef ANDROID_REDNER
-void GWoodBox::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+//================================================================
+//
+//		GCardBoardクラス
+//
+//================================================================
+GCardBoard::GCardBoard(GExplosionInfo& info):
+IGExplosion(&info)
 {
-	IGimmickObj::render(mesh, scale, pipeline);
 }
-#endif
+
+GCardBoard::~GCardBoard()
+{
+}
+
+int GCardBoard::update()
+{
+	int msg = udateExplosion();
+	if( msg == UPDATE_MSG_EXPLOSION ){
+		return MSG_DEAD;
+	}
+
+	return 0;
+}
+
+bool GCardBoard::vs(Bullet* op)
+{
+	return IGExplosion::vs(op);
+}
+
+//================================================================
+//
+//		GGaberageBoxクラス
+//
+//================================================================
+GGaberageBox::GGaberageBox(GExplosionInfo& info):
+IGExplosion(&info)
+{
+}
+
+GGaberageBox::~GGaberageBox()
+{
+}
+
+int GGaberageBox::update()
+{
+	int msg = udateExplosion();
+	if( msg == UPDATE_MSG_EXPLOSION ){
+		return MSG_DEAD;
+	}
+
+	return 0;
+}
+
+bool GGaberageBox::vs(Bullet* op)
+{
+	return IGExplosion::vs(op);
+}

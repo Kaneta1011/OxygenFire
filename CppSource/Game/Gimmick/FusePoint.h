@@ -2,6 +2,7 @@
 #define _FUSE_POINT_
 
 #include "IGimmick.h"
+#include "Fuse.h"
 
 namespace rlib
 {
@@ -17,8 +18,9 @@ namespace rlib
 	//===========================================================
 	//
 	//	導火線の両端
-	//		プレイヤーが近づいたら導火線に燃え移るかを聞くメッセージを表示する
-	//		聞いた結果、燃え移るなら対応している導火線にflagOnイベントを通知する
+	//		燃え移りたい場合はflagOn()をつかってからgetFuse()を呼び出してください
+	//		enableBurning()で1度通った導火線かを判断できます(trueで可能)
+	//
 	//		一度燃え移ったら2度とメッセージを出さない？
 	//		それともエラーメッセージ的なものをだす？
 	//
@@ -37,10 +39,24 @@ namespace rlib
 		virtual void flagOnListener(IGimmick* thiz);
 		virtual void flagOffListener(IGimmick* thiz);
 
+		void setFuse(GFuse* fuse){ this->mParent = fuse; }
+
+		//
+		//・対応しているGFuseを返す
+		//・使う前に必ず、flagOn()を呼び出してください
+		//
+		GFuse*	getFuse(){ return this->mParent; }
+
+		/*
+		燃え移ることが可能か？
+		*/
+		bool enableBurning()const{ return !this->mParent->isBurnOut(); }
+
 #ifndef ANDROID_REDNER
 		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
 #endif
 	private:
+		GFuse* mParent;
 	};
 }
 

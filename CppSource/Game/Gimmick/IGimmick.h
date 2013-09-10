@@ -70,12 +70,12 @@ namespace rlib
 		bool				mFlag;			//ƒtƒ‰ƒO
 		GIMMICK_TYPE		mType;
 
-	private:
+	protected:
 		typedef std::vector<IGimmick*>				ListenerContenier;
 		typedef ListenerContenier::iterator			Iterator;
 		typedef ListenerContenier::const_iterator	ConstIterator;
 
-	private:
+	protected:
 		ListenerContenier	mOnListener;
 		ListenerContenier	mOffListener;
 	};

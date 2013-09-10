@@ -38,7 +38,9 @@ namespace rlib
 		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
 #endif
 	private:
+#ifndef ANDROID_REDNER
 		klib::kSkin*	mpSkin;
+#endif
 	};
 }
 

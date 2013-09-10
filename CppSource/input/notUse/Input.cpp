@@ -128,6 +128,7 @@ void mlInput::update(float dt)
 		FREE,//FREE
 	};
 
+	lock();
 	mPrevTouchCount = mNowTouchCount;
 	int touchCount = mNowTouchCount;
 	for( int i=0; i<touchCount; i++ )

@@ -109,6 +109,10 @@ void GimmickManager::clear()
 	clearData();
 #ifndef ANDROID_REDNER
 	delete debugMesh;
+	for( int i=0; i<eMESH_TYPE_NUM; i++ )
+	{
+		if( this->mpMeshies[i] ){ delete this->mpMeshies[i]; this->mpMeshies[i] = NULL; }
+	}
 #endif
 	LOGI(TAG, "Complete GimmickManager::clear\n");
 }
@@ -219,9 +223,10 @@ void GimmickManager::loadMeshes()
 {
 	this->mpMeshies.SetPtr(new klib::kMesh*, true, eMESH_TYPE_NUM);
 	this->mpMeshies[eMESH_DRUM] = new klib::kMesh("gimmick/drum/ittokan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mpMeshies[eMESH_GASOLINE] = new klib::kMesh("gimmick/gasoline/gaso.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	//this->mpMeshies[eMESH_GASOLINE] = new klib::kMesh("gimmick/gasoline/gaso.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mpMeshies[eMESH_WOOD_BOX] = new klib::kMesh("gimmick/wood_box/kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-
+	//this->mpMeshies[eMESH_GABERAGE_BOX] = new klib::kMesh("Placement/gomibukuro.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mpMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	LOGI(TAG, "Successed gimmick meshes | count = %d", eMESH_TYPE_NUM);
 }
 #endif
@@ -236,9 +241,9 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 	{
 	case eGIMMICK_DRUM:			*outUnitScale = 0.01f; index = eMESH_DRUM; break;//ドラム缶
 	case eGIMMICK_GASOLINE:		*outUnitScale = 0.01f; index = eMESH_GASOLINE; break;	//ガソリン
-	//case eGIMMICK_GARBAGE_BAG:	break;	//ゴミ袋
+	//case eGIMMICK_GARBAGE_BAG:	*outUnitScale = 1.f; index = eMESH_GABERAGE_BOX; break;	//ゴミ袋
 	case eGIMMICK_WOOD_BOX:		*outUnitScale = 0.01f; index = eMESH_WOOD_BOX; break;	//木箱
-	//case eGIMMICK_CARDBOARD:	break;	//ダンボール
+	case eGIMMICK_CARDBOARD:	*outUnitScale = 0.01f; index = eMESH_CARD_BOARD; break;	//ダンボール
 	//case eGIMMICK_FAN:			break;	//扇風機
 	//case eGIMMICK_CANDLE:		break;	//ろうそく
 	case eGIMMICK_FUSE:			break;	//導火線
@@ -256,6 +261,7 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 
 int GimmickManager::update()
 {
+	LOGI(TAG,"gimmick update");
 	static int oldTouchCount = -1;
 #ifndef ANDROID_REDNER
 	if( mlInput::getNowTouchCount() == 3 && oldTouchCount != 3 ){
@@ -375,7 +381,9 @@ klib::math::Vector3 GimmickManager::collision(const klib::math::Vector3& pos, fl
 		if( dir.lengthSq() < rangeSq )
 		{
 			if( g->getType() == eGIMMICK_GOAL && g->isFlag() ){
+#ifndef ANDROID_REDNER
 				STAGE.onClearFlag();
+#endif
 			}else{
 				float len = g->getRange().x + range;
 				dir.normalize();
