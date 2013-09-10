@@ -28,6 +28,7 @@ namespace rlib
 		eGIMMICK_WIND,			//風
 		eGIMMICK_2D,			//2D描画
 		eGIMMICK_GOAL,			//ゴール
+		eGIMMICK_RESET_CANDLE,	//リセットろうそく
 		eGIMMICK_TYPE_NUM,
 		eGIMMICK_UNKNOWN
 	};

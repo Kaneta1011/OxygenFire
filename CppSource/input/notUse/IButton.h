@@ -28,6 +28,17 @@ namespace rlib
 		const klib::math::Vector2& getPos()const{return this->mPos;}
 		const klib::math::Vector2& getRange()const{return this->mRange;}
 
+		void setPos(const klib::math::Vector2& pos){ this->mPos = pos; }
+
+		//
+		//	サイズの自由設定
+		//
+		void setRange(const klib::math::Vector2& range){ this->mRange = range; }
+		//
+		//	自動的に画面上での縦横サイズを一致させる
+		//
+		void setRange(float range){ this->mRange = rlib::r2DHelper::adjustSize(range, false); }
+
 	protected:
 		float adjustPos(float p, float size, float range, float offset=10.f){
 			if( p - range < 0 ) p = offset + range;

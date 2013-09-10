@@ -90,6 +90,7 @@ void PlacementManager::Setting_CreateObjectName(sp<char> name,sp<char> load)
 		{"CANDLE",		PLACEMENT_CANDLE},
 		{"2D",			PLACEMENT_2D},
 		{"GOAL",		PLACEMENT_GOAL},
+		{"RESETCANDLE",	PLACEMENT_RESET_CANDLE},
 		{"",			PLACEMENT_WoodenBox},//不明データ　一番最後にしてください
 	};
 	static int tableNum = sizeof( table ) / sizeof(table[0]);
@@ -104,7 +105,7 @@ void PlacementManager::Setting_CreateObjectName(sp<char> name,sp<char> load)
 	}
 //見つからなければ木箱として扱う
 	if( tableIndex == tableNum-1 ){
-		LOGE("PlacementManager", "mqoから設定されていないBOXがありました　name=%s\n", load.GetPtr());
+		LOGE("PlacementManager", "PlacementManager:: Setting_CreateObjectName : unknwon box find...　name=%s\n", load.GetPtr());
 		m_spBoxData->spType[m_spBoxData->NowNum] = table[tableIndex].type;
 	}
 }

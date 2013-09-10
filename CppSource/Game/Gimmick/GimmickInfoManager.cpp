@@ -4,6 +4,8 @@
 #include "FusePoint.h"
 #include "Wind.h"
 #include "GGoal.h"
+#include "GCandle.h"
+#include "GResetCandle.h"
 
 #include "PlacementLib/Placement.h"
 #include "utility\textWriter.h"
@@ -91,8 +93,11 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 		//ろうそく
 		case PLACEMENT_CANDLE:
 			{
-				LOGE(TAG, "ろうそくの変換処理を作ってね GimmickInfoManager::loadMqo()\n");
-				//info = ;
+				//LOGE(TAG, "ろうそくの変換処理を作ってね GimmickInfoManager::loadMqo()\n");
+				GCandleInfo *set = new GCandleInfo();
+				set->convert(spBox.GetPtr(), i);
+
+				info = set;
 				break;
 			}
 		//2D
@@ -100,6 +105,14 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 			{
 				LOGE(TAG, "2Dの変換処理を作ってね GimmickInfoManager::loadMqo()\n");
 				//info = ;
+				break;
+			}
+		case PLACEMENT_RESET_CANDLE:
+			{
+				GResetCandleInfo* set = new GResetCandleInfo();
+				set->convert(spBox.GetPtr(), i);
+
+				info = set;
 				break;
 			}
 		//エラー
@@ -227,6 +240,7 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 	case eGIMMICK_FUSE_POINT:	//導火線の両端
 	case eGIMMICK_2D:			//2D描画
 	case eGIMMICK_GOAL:
+	case eGIMMICK_RESET_CANDLE:
 		setGimmickInfo(loader, out, type, name);
 		break;
 	case eGIMMICK_FUSE:			//導火線
@@ -270,10 +284,15 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		}
 	case eGIMMICK_CANDLE:		//ろうそく
 		{
-			LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Please create a candle!\n");
-
-			//set = ;
+			GCandleInfo* info = new GCandleInfo();
+			info->setNameAndType(name, type);
+			info->loadParam(loader);
+			set = info;
 			break;
+		}
+	case eGIMMICK_RESET_CANDLE:
+		{
+
 		}
 	case eGIMMICK_FUSE_POINT:	//導火線の両端
 		{

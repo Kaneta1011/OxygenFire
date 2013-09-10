@@ -44,6 +44,7 @@ GIMMICK_TYPE rlib::getGimmickType(PlacementLib::ePLACEMENT_TYPE type)
 		eGIMMICK_CANDLE,		//PLACEMENT_CANDLE,				//	ろうそく
 		eGIMMICK_2D,			//PLACEMENT_2D,					//	2D画像
 		eGIMMICK_GOAL,			//PLACEMENT_GOAL,				//	ゴール
+		eGIMMICK_RESET_CANDLE,	//PLACEMENT_RESET_CANDLE		//リセットろうそく
 	};
 	static const int tableNum = sizeof(table)/sizeof(table[0]);
 
