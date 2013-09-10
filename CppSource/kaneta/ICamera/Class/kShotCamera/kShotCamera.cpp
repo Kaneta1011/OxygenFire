@@ -5,10 +5,9 @@
 namespace klib
 {
 	using namespace math;
-	kShotCamera::kShotCamera(ICharacter* player):m_Player(player)
+	kShotCamera::kShotCamera(ICharacter* player,const math::Vector3& pos,const math::Vector3& angle):ICamera(pos,angle),m_Player(player)
 	{
-
-		m_Angle=math::Vector3(K_PI/4.0f,0,0);
+		//m_Angle=math::Vector3(K_PI/4.0f,0,0);
 	}
 	kShotCamera::~kShotCamera(){}
 
@@ -46,6 +45,7 @@ namespace klib
 
 		//mlInput::setFlickSensitivity(50.0f);
 		kclampf(-1.5f,1.5f,&m_Angle.x);
+		m_Angle.y=kwrapf(-K_PI2,K_PI2,m_Angle.y);
 
 		//äpìxÇ…ÇÊÇ¡Çƒê≥ñ ÇâÒì]
 		math::Matrix rot;
@@ -58,7 +58,8 @@ namespace klib
 		rot.getRow(0,&side);
 		rot.getRow(1,&top);
 		rot.getRow(2,&front);
+		m_Pos=-front*4.0f+playerPos+top*2.0f+side*1.5f;
 
-		RenderLib::RenderState::Setting_ViewMatrix(-front*4.0f+playerPos+top*2.0f+side*1.5f,playerPos+top*2.0f+front*4.0f+side*1.5f,math::Vector3(0,1,0));
+		RenderLib::RenderState::Setting_ViewMatrix(m_Pos,playerPos+top*2.0f+front*4.0f+side*1.5f,math::Vector3(0,1,0));
 	}
 }

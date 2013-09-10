@@ -83,7 +83,7 @@ void rTestScene::threadFunc(rTestScene* obj)
 	obj->mMesh->getObj()->SetMotion(4);
 	obj->mMesh->getObj()->Update();
 
-	obj->m_Camera=new kPlayCamera(obj->mMesh);
+	obj->m_Camera=new kPlayCamera(obj->mMesh,Vector3(0,0,0),Vector3(0,0,0));
 
 	klib::kPlane::init();
 	klib::ActionMediate::init();

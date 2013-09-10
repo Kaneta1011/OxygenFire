@@ -13,9 +13,8 @@ namespace klib
 	{
 	protected:
 		ICharacter* m_Player;
-		math::Vector3 m_Angle;
 	public:
-		kPlayCamera2(ICharacter* player);
+		kPlayCamera2(ICharacter* player,const math::Vector3& pos,const math::Vector3& angle);
 		virtual ~kPlayCamera2();
 		void update();
 	};

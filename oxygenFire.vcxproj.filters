@@ -235,6 +235,9 @@
     <Filter Include="source\Game\Gimmick\Type\Goal">
       <UniqueIdentifier>{e395aab4-9a99-4fb6-8c97-28a790c7ebc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse">
+      <UniqueIdentifier>{1a43ee12-fa1b-47df-8559-d9d3d7f4c8e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -455,6 +458,15 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\Gimmick\GGoal.cpp">
       <Filter>source\Game\Gimmick\Type\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuse.cpp">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseIn.cpp">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.cpp">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -760,6 +772,15 @@
     </ClInclude>
     <ClInclude Include="CppSource\EffectLib\singleParticle.h">
       <Filter>source\EffectLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuse.h">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseIn.h">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.h">
+      <Filter>source\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

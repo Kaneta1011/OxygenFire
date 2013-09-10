@@ -4,6 +4,7 @@
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 #include "GraphicsLib\Class\kGraphicsPipline\kGraphicsPipline.h"
 #include "input\AnalogStick.h"
+#include "GraphicsLib\Class\kMesh\kMeshFireRender.h"
 
 namespace klib
 {

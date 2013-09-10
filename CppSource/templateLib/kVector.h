@@ -128,7 +128,11 @@ namespace klib
 			//[]演算子オペレータ
 			T& operator()(int index)
 			{
-				if(MaxSize<=index)resize(index*2);
+				if(MaxSize<=index)
+				{
+					resize(index*2);
+					Size=index+1;
+				}
 				return Data[index];
 			}
 

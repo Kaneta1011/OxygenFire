@@ -97,4 +97,45 @@ namespace klib
 		pipline->setPipline();
 		kDevice::drawIndexed(6);
 	}
+
+	void kPlane::render(kGraphicsPipline* pipline,rlib::r2DObj* tex,f32 sx,f32 sy,const Vector3& eye,const Vector3& start,const Vector3& end,f32 offsetx,f32 offsety,f32 width,f32 height)
+	{
+		//姿勢行列の作成
+		
+
+		Vector3 side,top,front;
+		side=end-start;
+		f32 sX=side.length();
+		Vector3 etos=start-eye;
+		side.normalize();
+		etos.normalize();
+		Vector3Cross(&top,etos,side);
+		top.normalize();
+		Vector3Cross(&front,top,side);
+		front.normalize();
+
+		Vector3 centerPos=(start+end)/2.0f;
+
+		Matrix mat=RenderLib::RenderState::getViewMatrix();
+		mat.identity();
+		mat._11=-side.x*sX;mat._12=-side.y*sX;mat._13=-side.z*sX;
+		mat._21=top.x*sy;mat._22=top.y*sy;mat._23=top.z*sy;
+		mat._31=front.x;mat._32=front.y;mat._33=front.z;
+		mat._41=centerPos.x;mat._42=centerPos.y;mat._43=centerPos.z;
+		//モデル行列作成(テスト用)
+		math::Matrix wvp = 
+			mat * 
+			RenderLib::RenderState::getViewMatrix() *
+			RenderLib::RenderState::getProjectionMatrix();
+		pipline->setTexture("colorTex",0,tex);
+		pipline->setShaderValue("WVP",wvp);
+		//頂点バッファをパイプラインにセットする
+		kDevice::IAsetVertexBuffer(m_VBO);
+		//インデックスバッファをパイプラインにセットする
+		kDevice::IAsetIndexBuffer(m_IBO);
+		//シェーダーをパイプラインにセットする
+		pipline->setPipline();
+		kDevice::drawIndexed(6);
+	}
+
 }

@@ -176,6 +176,7 @@ namespace klib
 				data->m_Info.Specular[i] = NULL;
 				//lpHeight[i] = NULL;
 				if( lpIem->Texture[i][0] == '\0' ) continue;
+				dprintf("Texture Load %s",path);
 				//	テクスチャ読み込み
 				char	temp[256];
 				sprintf( temp, "%s%s", path, lpIem->Texture[i] );

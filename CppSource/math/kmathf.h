@@ -201,6 +201,21 @@ namespace klib
 			l += 0x3F800000;
 			*_X=*(f32*)&l;
 		}
+		template<typename T>
+		inline T kquadin(T t)
+		{
+			return t*t;
+		}
+		template<typename T>
+		inline T kquadout(T t)
+		{
+			return t*(2.0f - t);
+		}
+		template<typename T>
+		inline T kcube(T t)
+		{
+			return  t * t * ( 3.0f - 2.0f * t );   
+		}
 		/**
 		* @brief min～maxの間を線形補間
 		* @param[int] _X スカラー
@@ -208,7 +223,15 @@ namespace klib
 		template<typename T,typename U>
 		inline T klerp(T min, T max, U t)
 		{
-			return min + t * (max - min);
+			return min + (max - min) * t;
+		}
+		template<typename T,typename U>
+		inline T kbezier(T p0,T p1,T p2,T p3,U t)
+		{
+			f32 minusT=1.0f-t;
+			f32 minusT2=minusT*minusT;
+			f32 t2=t*t;
+			return p0 * (minusT2) * (minusT)+ p1 * (3.0f * (minusT2) * t )+ p2* (3.0f * (minusT) * t2) + p3 * (t2* t);
 		}
 		/**
 		* @brief ラジアンを角度に変換します

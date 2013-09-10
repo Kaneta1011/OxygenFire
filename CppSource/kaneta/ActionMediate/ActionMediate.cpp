@@ -7,7 +7,7 @@
 #include <stdlib.h>
 using namespace rlib;
 
-int TEST_POS_NUM = 0;
+int TEST_POS_NUM;
 
 namespace klib
 {
@@ -35,6 +35,7 @@ namespace klib
 
 	void ActionMediate::init()
 	{
+
 		m_Font0=new r2DObj;
 		m_Font0->load("Font/font1.png");
 
@@ -98,7 +99,7 @@ namespace klib
 
 		//
 
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
 			f32 dist=testpos[i].distance(m_Player->getObj()->getPosition());
 			if(m_IndexList.find(i)==-1)
@@ -127,7 +128,7 @@ namespace klib
 		}
 
 		m_IndexList.clear();
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
 			if(0.0f<m_TimeTable(i).m_FontTime)
 			{
@@ -149,5 +150,6 @@ namespace klib
 			m_AddBord->setShaderValue("alpha",ringScale);
 			kPlane::render(m_AddBord,m_Ring,m_TimeTable[m_IndexList[i]].m_RingTime,(1.0f-ringScale)*4.0f+2.0f,(1.0f-ringScale)*4.0f+2.0f,testpos[m_IndexList[i]],0,0,0,0);
 		}
+
 	}
 }

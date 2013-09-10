@@ -64,7 +64,7 @@ namespace klib
 			for(int i=0;i<m_MeshData->m_Info.MaterialCount;i++)
 			{
 				if(!mp_IBO[i])continue;
-				shader->setTexture("colorTex",0,m_MeshData->m_Info.Diffuse[i]);
+				if(m_MeshData->m_Info.Diffuse[i])shader->setTexture("colorTex",0,m_MeshData->m_Info.Diffuse[i]);
 				//頂点バッファをパイプラインにセットする
 				kDevice::IAsetVertexBuffer(mp_VBO);
 				//インデックスバッファをパイプラインにセットする

@@ -29,5 +29,6 @@ namespace klib
 
 		static void render(kGraphicsPipline* pipline,rlib::r2DObj* tex,f32 angle,f32 sx,f32 sy,const math::Vector3& pos,f32 offsetx,f32 offsety,f32 width,f32 height);
 		static void render(kGraphicsPipline* pipline,rlib::r2DObj* tex,f32 angle,f32 sx,f32 sy,const math::Vector3& pos,const math::Vector3& norm,f32 offsetx,f32 offsety,f32 width,f32 height);
+		static void render(kGraphicsPipline* pipline,rlib::r2DObj* tex,f32 sx,f32 sy,const math::Vector3& eye,const math::Vector3& start,const math::Vector3& end,f32 offsetx,f32 offsety,f32 width,f32 height);
 	};
 }

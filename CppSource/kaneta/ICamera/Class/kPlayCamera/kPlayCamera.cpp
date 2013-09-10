@@ -5,9 +5,9 @@
 namespace klib
 {
 	using namespace math;
-	kPlayCamera::kPlayCamera(ICharacter* player):m_Player(player)
+	kPlayCamera::kPlayCamera(ICharacter* player,const math::Vector3& pos,const math::Vector3& angle):ICamera(pos,angle),m_Player(player)
 	{
-		m_Angle=math::Vector3(K_PI/4.0f,0,0);
+		//m_Angle=math::Vector3(K_PI/4.0f,0,0);
 	}
 	kPlayCamera::~kPlayCamera(){}
 
@@ -40,6 +40,7 @@ namespace klib
 		m_Angle.x-=flickMaxLength.y*0.09f;
 
 		kclampf(-1.5f,1.5f,&m_Angle.x);
+		m_Angle.y=kwrapf(-K_PI2,K_PI2,m_Angle.y);
 
 		//äpìxÇ…ÇÊÇ¡Çƒê≥ñ ÇâÒì]
 		math::Matrix rot;

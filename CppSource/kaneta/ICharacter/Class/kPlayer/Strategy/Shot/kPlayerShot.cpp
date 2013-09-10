@@ -15,7 +15,8 @@ namespace klib
 	using namespace math;
 	kPlayerShot::kPlayerShot(ICharacter* acter)
 	{
-		testScene::_getInstance().setCamera(new kShotCamera(acter));
+		ICamera* camera=testScene::_getInstance().getCamera();
+		testScene::_getInstance().setCamera(new kShotCamera(acter,camera->getPos(),camera->getAngle()));
 		m_PrevTouchTable.clear();
 		for(int i=0;i<mlInput::getMaxPoint();i++)
 		{

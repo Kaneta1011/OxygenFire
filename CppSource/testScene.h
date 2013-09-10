@@ -48,7 +48,21 @@ namespace klib
 {
 	using namespace rlib;
 
+			static kInputElementDesc desc[]=
+			{
+				{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+				{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
+				{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+				{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
+			};
+			static u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
 
+			static kInputElementDesc desc2[]=
+			{
+				{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
+				{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
+			};
+			static u32 descnum2=sizeof(desc2)/sizeof(kInputElementDesc);
 
 	class testScene:public IScene,public ktl::kSingleton<testScene>
 	{
@@ -63,9 +77,9 @@ namespace klib
 		kTechnique* tec;
 		r2DObj* obj;
 		CircleButton* m_Button;
-		//r2DObj* paper;
-		//r2DObj* mask;
-		//r2DObj* ring;
+		r2DObj* paper;
+		r2DObj* mask;
+		r2DObj* ring;
 		rlib::AnalogStick* mp_Stick;
 	public:
 		void setCamera(ICamera* camera)
@@ -96,24 +110,24 @@ namespace klib
 			obj->obj->setPos(0,0);
 			obj->obj->setSize(100,true);
 
-			//obj->paper=new r2DObj;
-			//obj->paper->load("Font/font1.png");
-			//obj->paper->setPos(0,0);
-			//obj->paper->setSize(200,true);
+			obj->paper=new r2DObj;
+			obj->paper->load("Font/font1.png");
+			obj->paper->setPos(0,0);
+			obj->paper->setSize(200,true);
 
-			//obj->mask=new r2DObj;
-			//obj->mask->load("kanetaPlace/mask.png");
-			//obj->mask->setPos(0,0);
-			//obj->mask->setSize(200,true);
+			obj->mask=new r2DObj;
+			obj->mask->load("kanetaPlace/mask.png");
+			obj->mask->setPos(0,0);
+			obj->mask->setSize(200,true);
 
-			//obj->ring=new r2DObj;
-			//obj->ring->load("kanetaPlace/ring.png");
-			//obj->ring->setPos(0,0);
-			//obj->ring->setSize(200,true);
+			obj->ring=new r2DObj;
+			obj->ring->load("kanetaPlace/ring.png");
+			obj->ring->setPos(0,0);
+			obj->ring->setSize(200,true);
 
+			obj->setCamera(new kPlayCamera(NULL,Vector3(0,0,0),Vector3(0,0,0)));
 
-
-			obj->mesh=new kPlayer("kanetaPlace/kman.IEM",obj->mp_Stick,obj->m_Button);
+			obj->mesh=new kPlayer("kanetaPlace/fireman.IEM",obj->mp_Stick,obj->m_Button);
 			obj->mesh->getObj()->setScale(0.01f);
 			obj->mesh->getObj()->setPosition(0,0,0);
 			obj->mesh->getObj()->setAngle(0);
@@ -125,21 +139,7 @@ namespace klib
 			obj->stage->setPosition(0,0,0);
 			obj->stage->Update();
 
-			kInputElementDesc desc[]=
-			{
-				{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-				{"COLOR",0,k_VF_R32G32B32A32_FLOAT,0,eVertex,0},
-				{"NORMAL",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-				{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
-			};
-			u32 descnum=sizeof(desc)/sizeof(kInputElementDesc);
 
-			kInputElementDesc desc2[]=
-			{
-				{"POSITION",0,k_VF_R32G32B32_FLOAT,0,eVertex,0},
-				{"TEXCOORD",0,k_VF_R32G32_FLOAT,0,eVertex,0}
-			};
-			u32 descnum2=sizeof(desc2)/sizeof(kInputElementDesc);
 
 			obj->pipline=new kGraphicsPipline();
 			//pipline->createVertexShader("a");
@@ -183,6 +183,7 @@ namespace klib
 			obj->tec->createRasterizerState(eSOLID,eNONE,false);
 			obj->tec->complete();
 
+			
 
 			//rlib::BulletManager::getInst().init();
 
@@ -192,11 +193,11 @@ namespace klib
 		//ÉGÉìÉgÉäÅ[èàóù
 		void entry()
 		{
-			wp<EffectLib::EmitterSet> week;
+			//wp<EffectLib::EmitterSet> week;
 
-			week = EffectLib::EffectManager_Singleton::getInstance()->Create(EffectLib::TEST,Vector3(0,0,0),1.0f);
+			//week = EffectLib::EffectManager_Singleton::getInstance()->Create(EffectLib::TEST,Vector3(0,0,0),1.0f);
 
-			if(week.IsExist())week->Loop();
+			//if(week.IsExist())week->Loop();
 
 			//week->Setting_Position(pos);
 
@@ -247,8 +248,11 @@ namespace klib
 			//bord->setTexture("maskTex",1,mask);
 			//static float a=0;
 			//a+=0.01f;
-			//bord->setShaderValue("alpha",(1+cosf(a))/2.0f);
-			//kPlane::render(addBord,ring,0.0f,math::Vector3(0,0,0),math::Vector3(0,0,1),0,0,0,0);
+			bord->setShaderValue("alpha",0.0f);
+			addBord->setShaderValue("alpha",1.0f);
+			kPlane::render(bord,mask,1.0f,1.0f,m_Camera->getPos(),math::Vector3(0,1,0),math::Vector3(0,4,4),0,0,0,0);
+			kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,1,0),0,0,0,0);
+			kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,4,4),0,0,0,0);
 			ActionMediate::render();
 			//tec->setTexture("maskTex",1,mask);
 			//paper->render(tec);

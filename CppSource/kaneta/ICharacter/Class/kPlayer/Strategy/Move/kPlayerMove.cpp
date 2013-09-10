@@ -10,7 +10,9 @@ namespace klib
 {
 	kPlayerMove::kPlayerMove(ICharacter* acter)
 	{
-		testScene::_getInstance().setCamera(new kPlayCamera2(acter));
+		ICamera* camera=testScene::_getInstance().getCamera();
+
+		testScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
 	}
 		void kPlayerMove::calcAngle(ICharacter* acter)
 		{
@@ -34,7 +36,6 @@ namespace klib
 
 		bool kPlayerMove::execute(ICharacter* acter)
 		{
-			acter->getObj()->setScale(0.01f);
 			acter->setMove(math::Vector3(0,0,0));
 			const rlib::AnalogStick* stick=acter->getAnalogStick();
 			kSkin* obj=acter->getObj();

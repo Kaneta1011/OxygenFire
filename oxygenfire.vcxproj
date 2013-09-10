@@ -53,6 +53,9 @@
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\ICharacter\ICharacter.cpp" />
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.cpp" />
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuse.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseIn.cpp" />
+    <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.cpp" />
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.cpp" />
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.cpp" />
     <ClCompile Include="CppSource\main.cpp" />
@@ -154,6 +157,9 @@
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\ICharacter\ICharacter.h" />
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\ICharaStrategy\ICharaStrategy.h" />
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\kPlayer.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuse.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseIn.h" />
+    <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.h" />
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.h" />
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h" />
     <ClInclude Include="CppSource\main.h" />

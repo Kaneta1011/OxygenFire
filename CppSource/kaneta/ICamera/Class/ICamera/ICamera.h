@@ -10,11 +10,13 @@ namespace klib
 	{
 	protected:
 		math::Vector3 m_Pos;
+		math::Vector3 m_Angle;
 	public:
-		ICamera():m_Pos(math::Vector3(.0f,.0f,.0f)){}
+		ICamera(const math::Vector3& pos,const math::Vector3& angle):m_Pos(pos),m_Angle(angle){}
 		virtual ~ICamera(){}
 		virtual void update()=0;
 		virtual math::Vector3 getPos()const{return m_Pos;}
+		virtual math::Vector3 getAngle()const{return m_Angle;}
 		virtual void setFov(f32 fov){RenderLib::RenderState::Setting_PerspectiveMatrix(fov,(f32)RenderLib::RenderState::getScreenWidth()/(f32)RenderLib::RenderState::getScreenHeight(),0.1f,100.0f);}
 	};
 

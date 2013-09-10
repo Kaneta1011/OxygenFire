@@ -5,9 +5,15 @@
 namespace klib
 {
 	using namespace math;
-	kPlayCamera2::kPlayCamera2(ICharacter* player):m_Player(player)
+	kPlayCamera2::kPlayCamera2(ICharacter* player,const math::Vector3& pos,const math::Vector3& angle):ICamera(pos,angle),m_Player(player)
 	{
-		m_Angle=math::Vector3(K_PI/4.0f,0,0);
+		math::Matrix rot;
+		rot.identity();
+		rot.setRXYZ(m_Angle);
+		math::Vector3 front;
+		rot.getRow(2,&front);
+		this->m_Pos=-front*10.0f+player->getObj()->getPosition()+Vector3(0,1,0);
+		//m_Angle=math::Vector3(K_PI/4.0f,0,0);
 	}
 	kPlayCamera2::~kPlayCamera2(){}
 
@@ -39,7 +45,7 @@ namespace klib
 		}
 		m_Angle.y+=flickMaxLength.x*0.16f;
 		m_Angle.x-=flickMaxLength.y*0.09f;
-		if(flickMaxLength.length()<0.0001f)
+		if(flickMaxLength.length()<0.01f)
 		{
 			Vector3 vec=m_Pos-(playerPos+Vector3(0,1,0));
 			f32 len=vec.length();
@@ -51,13 +57,14 @@ namespace klib
 
 		}
 		kclampf(-1.5f,1.5f,&m_Angle.x);
+		m_Angle.y=kwrapf(-K_PI2,K_PI2,m_Angle.y);
 
 		//Šp“x‚É‚æ‚Á‚Ä³–Ê‚ð‰ñ“]
 		math::Matrix rot;
 		rot.identity();
 		rot.setRXYZ(m_Angle);
-		math::Vector3 front(0,0,1);
-		front.trans3x3(rot);
+		math::Vector3 front;
+		rot.getRow(2,&front);
 		this->m_Pos=-front*cameraLength+playerPos+Vector3(0,1,0);
 
 		RenderLib::RenderState::Setting_ViewMatrix(m_Pos,playerPos+Vector3(0,1,0),math::Vector3(0,1,0));
