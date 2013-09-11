@@ -50,10 +50,12 @@ LOGI("---------------------------------------------------------\n");
 
 void EffectManager::Update()
 {
-	int use=0;
+	static int use=0;
+	use = 0;
 	for( int n=0; n<EMITTERSET_MAX; n++ )
 	{
 		if( use >= m_UseNum ){ break; }
+
 		if( m_spEffectEmitterSet[n].GetRefNum() == 0 ){ continue; }
 
 		if( m_spEffectEmitterSet[n]->Update() == true ){

@@ -37,15 +37,16 @@ struct Vertex
 	sp<Vector4>	color;
 	Vertex();
 };
+
+struct TexData
+{
+	int StartNum;
+	int	UseNum;
+	TexData():StartNum(0),UseNum(0){}
+};
+
 struct ParticleData
 {
-	struct TexData
-	{
-		int StartNum;
-		int	UseNum;
-		TexData():StartNum(0),UseNum(0){}
-	};
-
 	sp<int>				count;
 	sp<Vector3>		initPos;
 	sp<Vector3>		pos;
@@ -69,7 +70,6 @@ struct ParticleData
 	sp<COLOR>			colorStart;
 	sp<COLOR>			colorMiddle;
 	sp<COLOR>			colorEnd;
-	TexData	texData[TEXTURE_MAX];
 	int			useNum;
 
 	void Setting(sp<ParticleData> data);
@@ -160,7 +160,6 @@ public:
 		COLOR EndColor );
 	//========== 単体パーティクル用 =============
 
-
 	bool Setting_Texture( char* TextureName );
 	//	BasicSet
 	Particle(){Clear();}void Clear();
@@ -189,15 +188,21 @@ private:
 	GLuint m_VBO[VBO_MAX];
 	GLuint offset;
 
+	TexData	texData[TEXTURE_MAX];
+
 	//	Data
+	int UpdateNumber;
+
 	sp<ParticleTextrue>	m_spTexture[TEXTURE_MAX];
 	int									m_TextureUseNumber;
 	Matrix							m_Matrix;
 	sp<ParticleData>		m_spParticleData;
+	sp<ParticleData>		m_spParticleData2;
+
 	sp<Vertex>					m_spVertexBuf;
 	static Vector3			s_WindVec;
 
-	sp<ParticleData> work;
+	//sp<ParticleData> work;
 };
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

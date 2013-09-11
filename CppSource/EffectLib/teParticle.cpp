@@ -20,6 +20,7 @@ Vector3 Particle::s_WindVec = Vector3(0,0,0);
 //	シングルトン
 Particle_Singleton* Particle_Singleton::singleton = NULL;
 
+
 Vertex::Vertex()
 {
 	pos.SetPtr(new Vector3[PARTICLE_VERTEX_MAX],true);
@@ -67,24 +68,25 @@ void ParticleData::Clear()
 		life[n] = 0;
 		moveFlag[n] = false;
 	}
-	
-	for(int n=0;n<TEXTURE_MAX;n++)
-	{
-		texData[n].StartNum=0;
-		texData[n].UseNum=0;
-	}
 
 	useNum = 0;
 }
 
 void ParticleData::Setting(sp<ParticleData> data)
 {
+
+#if 0
+
 	useNum = data->useNum;
 
-	static int c = 0; c = 0;
+	memcpy(&count[0],&data->count[0],sizeof(ParticleData)*PARTICLE_MAX);
 
-	for(int n=0;n<PARTICLE_MAX;n++)
+#if 0
+	for(int n=0;n< (PARTICLE_MAX/10);n++)
 	{
+		memcpy(&initPos[n*10],&data->initPos[n*10],sizeof(ParticleData)*10);
+
+#if 0
 		initPos[n] = data->initPos[n];
 		pos[n] = data->pos[n];
 		tex[n] = data->tex[n];
@@ -114,13 +116,21 @@ void ParticleData::Setting(sp<ParticleData> data)
 		texNum[n] = data->texNum[n];
 		life[n] = data->life[n];
 		moveFlag[n] = data->moveFlag[n];
+#endif
+
+
 	}
 
+#if 0
 	for(int n=0;n<TEXTURE_MAX;n++)
 	{
 		texData[n].StartNum = data->texData[n].StartNum;
 		texData[n].UseNum = data->texData[n].UseNum;
 	}
+#endif
+#endif
+
+#endif
 }
 
 
@@ -140,7 +150,19 @@ void Particle::Clear()
 	offset = 0;
 
 	m_spParticleData.SetPtr(new ParticleData,false);
-	work.SetPtr(new ParticleData(),false);
+
+	m_spParticleData2.SetPtr(new ParticleData,false);
+
+	UpdateNumber = 0;
+
+	//work.SetPtr(new ParticleData(),false);
+
+
+	for(int n=0;n<TEXTURE_MAX;n++)
+	{
+		texData[n].StartNum=0;
+		texData[n].UseNum=0;
+	}
 }
 
 void Particle::Destroy()
@@ -151,6 +173,7 @@ void Particle::Destroy()
 bool Particle::Initialize()
 {
 	m_spParticleData.SetPtr(new ParticleData());
+	m_spParticleData2.SetPtr(new ParticleData());
 
 	ShaderLib::ShaderManager::Init();
 
@@ -277,6 +300,23 @@ void Particle::Update()
 	//sp<ParticleData> work;
 	//work.SetPtr( new ParticleData(), false );
 
+
+	sp<ParticleData> work;
+	sp<ParticleData> particle;
+
+	if( UpdateNumber == 0 )
+	{
+		work = m_spParticleData2;
+		particle = m_spParticleData;
+		UpdateNumber++;
+	}else{
+		work = m_spParticleData;
+		particle = m_spParticleData2;
+		UpdateNumber= 0;
+	}
+
+	
+
 	work->Clear();
 
 	static int useNum=0;
@@ -284,7 +324,7 @@ void Particle::Update()
 	static int saveNum=0;
 	saveNum = 0;
 
-	work->useNum = m_spParticleData->useNum;
+	work->useNum = particle->useNum;
 	
 	static float force = .0f; force = .0f;
 	static float fv = .0f; fv = .0f;
@@ -301,14 +341,15 @@ void Particle::Update()
 		for(int v=0;v<PARTICLE_MAX;v++)
 		{
 			//	コンティニュー条件
-			if(useNum >= m_spParticleData->useNum)break;
-			if(false == m_spParticleData->flag[v])continue;
-			if(n != m_spParticleData->texNum[v])continue;
+			if(useNum >= particle->useNum)break;
+
+			if(false == particle->flag[v])continue;
+			if(n != particle->texNum[v])continue;
 
 			//	死亡条件
-			if( m_spParticleData->count[v] >= m_spParticleData->life[v] ){
+			if( particle->count[v] >= particle->life[v] ){
 				work->flag[useNum] = false;
-				m_spParticleData->count[v] = 0;
+				particle->count[v] = 0;
 				work->useNum--;
 				continue;
 			}
@@ -316,131 +357,134 @@ void Particle::Update()
 			//======================================
 			//	データを更新
 			//======================================
-			m_spParticleData->count[v]++;
-			m_spParticleData->pos[v] += Vector3(0.0000000000001f,0,0);
+			particle->count[v]++;
+			particle->pos[v] += Vector3(0.0000000000001f,0,0);
 
 			//	速度
-			m_spParticleData->pos[v] += m_spParticleData->velocity[v];
+			particle->pos[v] += particle->velocity[v];
 
 			//	風の影響度
-			m_spParticleData->pos[v] += s_WindVec * m_spParticleData->windPower[v];
+			particle->pos[v] += s_WindVec * particle->windPower[v];
 
 			//	カウントによって不透明度の更新
-			rate = (float)m_spParticleData->count[v] / (float)m_spParticleData->life[v];
+			rate = (float)particle->count[v] / (float)particle->life[v];
 
 			//	アニメーション
-			if( m_spParticleData->moveFlag[v] == true ){
-				m_spParticleData->index[v] = (int)(15.9f * rate);
+			if( particle->moveFlag[v] == true ){
+				particle->index[v] = (int)(15.9f * rate);
 			}
 
 			//	スケールの計算
-			float sv = .0f;//scaleValue
-			float lf = (float)m_spParticleData->life[v] / 2; //life half
-			float next=0;
+			static float sv = .0f;//scaleValue
+			sv = .0f;
+			static float lf;
+			lf = (float)particle->life[v] / 2; //life half
+			static float next;
+			next = 0;
 
-			if( m_spParticleData->count[v] < lf )
+			if( particle->count[v] < lf )
 			{
-				next = m_spParticleData->scaleMiddle[v] - m_spParticleData->scaleStart[v];
-				sv = m_spParticleData->count[v] / lf ;
-				m_spParticleData->scale[v] = m_spParticleData->scaleStart[v] + (next*sv);
+				next = particle->scaleMiddle[v] - particle->scaleStart[v];
+				sv = particle->count[v] / lf ;
+				particle->scale[v] = particle->scaleStart[v] + (next*sv);
 			}else{
-				next = m_spParticleData->scaleEnd[v] - m_spParticleData->scaleMiddle[v];
-				sv = (m_spParticleData->count[v]-lf) / lf;
-				m_spParticleData->scale[v] = m_spParticleData->scaleMiddle[v] + (next*sv);
+				next = particle->scaleEnd[v] - particle->scaleMiddle[v];
+				sv = (particle->count[v]-lf) / lf;
+				particle->scale[v] = particle->scaleMiddle[v] + (next*sv);
 			}
 
 			//	色の計算
 			sv = .0f;//scaleValue
-			lf = (float)m_spParticleData->life[v] / 2; //life half
+			lf = (float)particle->life[v] / 2; //life half
 
-			if( m_spParticleData->count[v] < lf )
+			if( particle->count[v] < lf )
 			{
-				nextC.red = m_spParticleData->colorMiddle[v].red - 
-					m_spParticleData->colorStart[v].red;
-				nextC.green = m_spParticleData->colorMiddle[v].green - 
-					m_spParticleData->colorStart[v].green;
-				nextC.blue = m_spParticleData->colorMiddle[v].blue - 
-					m_spParticleData->colorStart[v].blue;
-				sv = m_spParticleData->count[v] / lf ;
-				m_spParticleData->color[v] = 
-					m_spParticleData->colorStart[v].red + (nextC.red*sv);
-				m_spParticleData->color[v] = 
-					m_spParticleData->colorStart[v].green + (nextC.green*sv);
-				m_spParticleData->color[v] = 
-					m_spParticleData->colorStart[v].blue + (nextC.blue*sv);
+				nextC.red = particle->colorMiddle[v].red - 
+					particle->colorStart[v].red;
+				nextC.green = particle->colorMiddle[v].green - 
+					particle->colorStart[v].green;
+				nextC.blue = particle->colorMiddle[v].blue - 
+					particle->colorStart[v].blue;
+				sv = particle->count[v] / lf ;
+				particle->color[v] = 
+					particle->colorStart[v].red + (nextC.red*sv);
+				particle->color[v] = 
+					particle->colorStart[v].green + (nextC.green*sv);
+				particle->color[v] = 
+					particle->colorStart[v].blue + (nextC.blue*sv);
 			}else{
-				nextC = m_spParticleData->colorEnd[v].red - 
-					m_spParticleData->colorMiddle[v].red;
-				nextC = m_spParticleData->colorEnd[v].green - 
-					m_spParticleData->colorMiddle[v].green;
-				nextC = m_spParticleData->colorEnd[v].blue - 
-					m_spParticleData->colorMiddle[v].blue;
-				sv = (m_spParticleData->count[v]-lf) / lf;
-				m_spParticleData->color[v].red = 
-					m_spParticleData->colorMiddle[v].red + (nextC.red*sv);
-				m_spParticleData->color[v].green = 
-					m_spParticleData->colorMiddle[v].green + (nextC.green*sv);
-				m_spParticleData->color[v].blue = 
-					m_spParticleData->colorMiddle[v].blue + (nextC.blue*sv);
+				nextC = particle->colorEnd[v].red - 
+					particle->colorMiddle[v].red;
+				nextC = particle->colorEnd[v].green - 
+					particle->colorMiddle[v].green;
+				nextC = particle->colorEnd[v].blue - 
+					particle->colorMiddle[v].blue;
+				sv = (particle->count[v]-lf) / lf;
+				particle->color[v].red = 
+					particle->colorMiddle[v].red + (nextC.red*sv);
+				particle->color[v].green = 
+					particle->colorMiddle[v].green + (nextC.green*sv);
+				particle->color[v].blue = 
+					particle->colorMiddle[v].blue + (nextC.blue*sv);
 			}
-			m_spParticleData->color[v].alpha = 255 * (1.0f - rate);
+			particle->color[v].alpha = 255 * (1.0f - rate);
 
 			//	中央力
-			vec = m_spParticleData->initPos[v] - m_spParticleData->pos[v];
+			vec = particle->initPos[v] - particle->pos[v];
 
 			//	原因発見；
 			vec.normalize();
 
-			if( m_spParticleData->count[v] < lf )
+			if( particle->count[v] < lf )
 			{
-				next = m_spParticleData->centerPowerMiddle[v] - 
-					m_spParticleData->centerPowerStart[v];
-				fv = m_spParticleData->count[v] / lf ;
-				force = m_spParticleData->centerPowerStart[v] + (next*fv);
+				next = particle->centerPowerMiddle[v] - 
+					particle->centerPowerStart[v];
+				fv = particle->count[v] / lf ;
+				force = particle->centerPowerStart[v] + (next*fv);
 			}else{
-				next = m_spParticleData->centerPowerEnd[v] - 
-					m_spParticleData->centerPowerMiddle[v];
-				fv = (m_spParticleData->count[v]-lf) / lf;
-				force = m_spParticleData->centerPowerMiddle[v] + (next*fv);
+				next = particle->centerPowerEnd[v] - 
+					particle->centerPowerMiddle[v];
+				fv = (particle->count[v]-lf) / lf;
+				force = particle->centerPowerMiddle[v] + (next*fv);
 			}
-			m_spParticleData->pos[v] += vec*force;
+			particle->pos[v] += vec*force;
 
 			//======================================
 			//	順番を入れ替える
 			//======================================
-			work->initPos[useNum] = m_spParticleData->initPos[v];
-			work->pos[useNum] = m_spParticleData->pos[v];
-			work->tex[useNum] = m_spParticleData->tex[v];
-			work->life[useNum] = m_spParticleData->life[v];
-			work->flag[useNum] = m_spParticleData->flag[v];
-			work->texNum[useNum] = m_spParticleData->texNum[v];
-			work->scale[useNum] = m_spParticleData->scale[v];
-			work->scaleStart[useNum] = m_spParticleData->scaleStart[v];
-			work->scaleMiddle[useNum] = m_spParticleData->scaleMiddle[v];
-			work->scaleEnd[useNum] = m_spParticleData->scaleEnd[v];
-			work->velocity[useNum] = m_spParticleData->velocity[v];
-			work->moveFlag[useNum] = m_spParticleData->moveFlag[v];
-			work->size[useNum] = m_spParticleData->size[v];
-			work->index[useNum] = m_spParticleData->index[v];
-			work->count[useNum] = m_spParticleData->count[v];
-			work->windPower[useNum] = m_spParticleData->windPower[v];
-			work->centerPowerStart[useNum] = m_spParticleData->centerPowerStart[v];
-			work->centerPowerMiddle[useNum] = m_spParticleData->centerPowerMiddle[v];
-			work->centerPowerEnd[useNum] = m_spParticleData->centerPowerEnd[v];
-			work->color[useNum] = m_spParticleData->color[v];
-			work->colorStart[useNum] = m_spParticleData->colorStart[v];
-			work->colorMiddle[useNum] = m_spParticleData->colorMiddle[v];
-			work->colorEnd[useNum] = m_spParticleData->colorEnd[v];
+			work->initPos[useNum] = particle->initPos[v];
+			work->pos[useNum] = particle->pos[v];
+			work->tex[useNum] = particle->tex[v];
+			work->life[useNum] = particle->life[v];
+			work->flag[useNum] = particle->flag[v];
+			work->texNum[useNum] = particle->texNum[v];
+			work->scale[useNum] = particle->scale[v];
+			work->scaleStart[useNum] = particle->scaleStart[v];
+			work->scaleMiddle[useNum] = particle->scaleMiddle[v];
+			work->scaleEnd[useNum] = particle->scaleEnd[v];
+			work->velocity[useNum] = particle->velocity[v];
+			work->moveFlag[useNum] = particle->moveFlag[v];
+			work->size[useNum] = particle->size[v];
+			work->index[useNum] = particle->index[v];
+			work->count[useNum] = particle->count[v];
+			work->windPower[useNum] = particle->windPower[v];
+			work->centerPowerStart[useNum] = particle->centerPowerStart[v];
+			work->centerPowerMiddle[useNum] = particle->centerPowerMiddle[v];
+			work->centerPowerEnd[useNum] = particle->centerPowerEnd[v];
+			work->color[useNum] = particle->color[v];
+			work->colorStart[useNum] = particle->colorStart[v];
+			work->colorMiddle[useNum] = particle->colorMiddle[v];
+			work->colorEnd[useNum] = particle->colorEnd[v];
 
 			useNum++;
 		}
-		work->texData[n].StartNum = saveNum;
-		work->texData[n].UseNum = useNum - saveNum;
+		texData[n].StartNum = saveNum;
+		texData[n].UseNum = useNum - saveNum;
 
 		saveNum = useNum;
 	}
 
-	m_spParticleData->Setting(work);
+	//m_spParticleData->Setting(work);
 }
 
 void Particle::Render()
@@ -462,6 +506,18 @@ void Particle::Render()
 
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
+		sp<ParticleData> particle;
+
+		if( UpdateNumber == 0 )
+		{
+			particle = m_spParticleData;
+		}else{
+			particle = m_spParticleData2;
+		}
+
+
+
+
 		//if( n > m_spParticleData->useNum-1 ) break;
 		//axisX = Vector3(m._11,m._12,m._13);
 		//axisY = Vector3(m._21,m._22,m._23);
@@ -469,10 +525,10 @@ void Particle::Render()
 		axisX = Vector3(m._11,m._21,m._31);
 		axisY = Vector3(m._12,m._22,m._32);
 
-		axisX *= m_spParticleData->scale[n];
-		axisY *= m_spParticleData->scale[n];
+		axisX *= particle->scale[n];
+		axisY *= particle->scale[n];
 
-		p=m_spParticleData->pos[n];
+		p=particle->pos[n];
 
 		//	左上
 		tl.x = p.x - axisX.x + axisY.x;
@@ -498,7 +554,7 @@ void Particle::Render()
 		m_spVertexBuf->pos[(n*ONE_PARTICLE_VERTEX_NUM)+4] = ul;
 		m_spVertexBuf->pos[(n*ONE_PARTICLE_VERTEX_NUM)+5] = ur;
 
-		switch( m_spParticleData->size[n] )
+		switch( particle->size[n] )
 		{
 		case TEXTURE_SIZE_1x1:
 			uv[0].x = 0;	uv[0].y = 0;
@@ -507,16 +563,16 @@ void Particle::Render()
 			uv[3].x = 1;	uv[3].y = 1;
 			break;
 		case TEXTURE_SIZE_2x2:
-			tu = ( m_spParticleData->index[n] % 2 ) * 0.5f;
-			tv = ( m_spParticleData->index[n] / 2 ) * 0.5f;
+			tu = ( particle->index[n] % 2 ) * 0.5f;
+			tv = ( particle->index[n] / 2 ) * 0.5f;
 			uv[0].x = tu;					uv[0].y = tv;
 			uv[1].x = tu+0.499f;	uv[1].y = tv;
 			uv[2].x = tu;					uv[2].y = tv+0.499f;
 			uv[3].x = tu+0.499f;	uv[3].y = tv+0.499f;
 			break;
 		case TEXTURE_SIZE_4x4:
-			tu = ( m_spParticleData->index[n] % 4 ) * 0.25f;
-			tv = ( m_spParticleData->index[n] / 4 ) * 0.25f;
+			tu = ( particle->index[n] % 4 ) * 0.25f;
+			tv = ( particle->index[n] / 4 ) * 0.25f;
 			uv[0].x = tu;					uv[0].y = tv;
 			uv[1].x = tu+0.249f;	uv[1].y = tv;
 			uv[2].x = tu;					uv[2].y = tv+0.249f;
@@ -543,7 +599,7 @@ void Particle::Render()
 			m_spVertexBuf->color[(n*ONE_PARTICLE_VERTEX_NUM)+3] =
 			m_spVertexBuf->color[(n*ONE_PARTICLE_VERTEX_NUM)+4] =
 			m_spVertexBuf->color[(n*ONE_PARTICLE_VERTEX_NUM)+5] = 
-			m_spParticleData->color[n].Value_0from1();
+			particle->color[n].Value_0from1();
 	}
 	//	Uniform送信
 	ShaderManager::getSprite()->Send_Matrix(m_Matrix);
@@ -561,7 +617,7 @@ ShaderManager::getSprite()->Begin();
 	{
 		//	無視用条件
 		if(m_spTexture[n].GetPtr() == 0)continue;
-		if(m_spParticleData->texData[n].UseNum == 0)continue;
+		if(texData[n].UseNum == 0)continue;
 
 		//	Position
 		glEnableVertexAttribArray(VBO_POS);
@@ -585,8 +641,8 @@ ShaderManager::getSprite()->Begin();
 
 		//	描画
 		glDrawArrays(GL_TRIANGLES,
-			m_spParticleData->texData[n].StartNum*ONE_PARTICLE_VERTEX_NUM,
-			m_spParticleData->texData[n].UseNum*ONE_PARTICLE_VERTEX_NUM);
+			texData[n].StartNum*ONE_PARTICLE_VERTEX_NUM,
+			texData[n].UseNum*ONE_PARTICLE_VERTEX_NUM);
 	}
 
 	glBindBuffer( GL_ARRAY_BUFFER, 0);
@@ -601,30 +657,39 @@ void Particle::Setting(const Vector3& Pos,char* File,float ScaleStart,
 	COLOR ColorStart,COLOR ColorMiddle,COLOR ColorEnd)
 {
 
+	sp<ParticleData> particle;
+
+	if( UpdateNumber == 0 )
+	{
+		particle = m_spParticleData;
+	}else{
+		particle = m_spParticleData2;
+	}
+
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
-		if(true == m_spParticleData->flag[n])continue;
+		if(true == particle->flag[n])continue;
 
 		//	Data格納
-		m_spParticleData->useNum++;
-		m_spParticleData->pos[n] = Pos;
-		m_spParticleData->initPos[n] = Pos;
-		m_spParticleData->flag[n] = true;
-		m_spParticleData->scaleStart[n] = ScaleStart;
-		m_spParticleData->scaleMiddle[n] = ScaleMiddle;
-		m_spParticleData->scaleEnd[n] = ScaleEnd;
-		m_spParticleData->life[n] = Life;
-		m_spParticleData->velocity[n] = Velocity;
-		m_spParticleData->moveFlag[n] = MoveFlag;
-		m_spParticleData->size[n] = Size;
-		m_spParticleData->index[n] = Index;
-		m_spParticleData->windPower[n] = WindPower;
-		m_spParticleData->centerPowerStart[n] = CenterPowerStart;
-		m_spParticleData->centerPowerMiddle[n] = CenterPowerMiddle;
-		m_spParticleData->centerPowerEnd[n] = CenterPowerEnd;
-		m_spParticleData->colorStart[n] = ColorStart;
-		m_spParticleData->colorMiddle[n] = ColorMiddle;
-		m_spParticleData->colorEnd[n] = ColorEnd;
+		particle->useNum++;
+		particle->pos[n] = Pos;
+		particle->initPos[n] = Pos;
+		particle->flag[n] = true;
+		particle->scaleStart[n] = ScaleStart;
+		particle->scaleMiddle[n] = ScaleMiddle;
+		particle->scaleEnd[n] = ScaleEnd;
+		particle->life[n] = Life;
+		particle->velocity[n] = Velocity;
+		particle->moveFlag[n] = MoveFlag;
+		particle->size[n] = Size;
+		particle->index[n] = Index;
+		particle->windPower[n] = WindPower;
+		particle->centerPowerStart[n] = CenterPowerStart;
+		particle->centerPowerMiddle[n] = CenterPowerMiddle;
+		particle->centerPowerEnd[n] = CenterPowerEnd;
+		particle->colorStart[n] = ColorStart;
+		particle->colorMiddle[n] = ColorMiddle;
+		particle->colorEnd[n] = ColorEnd;
 
 		//	どのテクスチャか探す
 		for(int t=0;t<m_TextureUseNumber;t++)
@@ -633,7 +698,7 @@ void Particle::Setting(const Vector3& Pos,char* File,float ScaleStart,
 
 			if(strcmp( m_spTexture[t]->TextureName, File ) == 0)
 			{
-				m_spParticleData->texNum[n] = m_spTexture[t]->texNum;
+				particle->texNum[n] = m_spTexture[t]->texNum;
 				return;
 			}
 		}
@@ -654,6 +719,17 @@ void Particle::Setting_Single(
 	COLOR EndColor
 		)
 {
+
+	sp<ParticleData> particle;
+
+	if( UpdateNumber == 0 )
+	{
+		particle = m_spParticleData;
+	}else{
+		particle = m_spParticleData2;
+	}
+
+
 	char* File;
 
 	switch( Type )
@@ -665,28 +741,28 @@ void Particle::Setting_Single(
 
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
-		if(true == m_spParticleData->flag[n])continue;
+		if(true == particle->flag[n])continue;
 
 		//	Data格納
-		m_spParticleData->useNum++;
-		m_spParticleData->pos[n] = Pos;
-		m_spParticleData->initPos[n] = Pos;
-		m_spParticleData->flag[n] = true;
-		m_spParticleData->scaleStart[n] = Scale;
-		m_spParticleData->scaleMiddle[n] = Scale;
-		m_spParticleData->scaleEnd[n] = Scale;
-		m_spParticleData->life[n] = Life;
-		m_spParticleData->velocity[n] = Move;
-		m_spParticleData->moveFlag[n] = false;
-		m_spParticleData->size[n] = 1;
-		m_spParticleData->index[n] = 0;
-		m_spParticleData->windPower[n] = 0;
-		m_spParticleData->centerPowerStart[n] = 0;
-		m_spParticleData->centerPowerMiddle[n] = 0;
-		m_spParticleData->centerPowerEnd[n] = 0;
-		m_spParticleData->colorStart[n] = StartColor;
-		m_spParticleData->colorMiddle[n] = MiddleColor;
-		m_spParticleData->colorEnd[n] = EndColor;
+		particle->useNum++;
+		particle->pos[n] = Pos;
+		particle->initPos[n] = Pos;
+		particle->flag[n] = true;
+		particle->scaleStart[n] = Scale;
+		particle->scaleMiddle[n] = Scale;
+		particle->scaleEnd[n] = Scale;
+		particle->life[n] = Life;
+		particle->velocity[n] = Move;
+		particle->moveFlag[n] = false;
+		particle->size[n] = 1;
+		particle->index[n] = 0;
+		particle->windPower[n] = 0;
+		particle->centerPowerStart[n] = 0;
+		particle->centerPowerMiddle[n] = 0;
+		particle->centerPowerEnd[n] = 0;
+		particle->colorStart[n] = StartColor;
+		particle->colorMiddle[n] = MiddleColor;
+		particle->colorEnd[n] = EndColor;
 
 		//	どのテクスチャか探す
 		for(int t=0;t<m_TextureUseNumber;t++)
@@ -695,7 +771,7 @@ void Particle::Setting_Single(
 
 			if(strcmp( m_spTexture[t]->TextureName, File ) == 0)
 			{
-				m_spParticleData->texNum[n] = m_spTexture[t]->texNum;
+				particle->texNum[n] = m_spTexture[t]->texNum;
 				return;
 			}
 		}
