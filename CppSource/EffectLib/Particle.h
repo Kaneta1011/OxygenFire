@@ -141,8 +141,6 @@ public:
 		float WindPower,float CenterPowerStart,float CenterPowerMiddle,
 		float CenterPowerEnd,COLOR ColorStart,COLOR ColorMiddle,COLOR ColorEnd);
 
-
-
 	//========== 単体パーティクル用 =============
 	enum eSINGLE_TYPE
 	{

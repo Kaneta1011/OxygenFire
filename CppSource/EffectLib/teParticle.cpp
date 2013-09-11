@@ -489,6 +489,15 @@ void Particle::Update()
 
 void Particle::Render()
 {
+	sp<ParticleData> particle;
+
+	if( UpdateNumber == 1 )
+	{
+		particle = m_spParticleData;
+	}else{
+		particle = m_spParticleData2;
+	}
+
 	glFrontFace(GL_CCW);
 
 	static Matrix m = RenderState::getViewMatrix();
@@ -506,18 +515,6 @@ void Particle::Render()
 
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
-		sp<ParticleData> particle;
-
-		if( UpdateNumber == 0 )
-		{
-			particle = m_spParticleData;
-		}else{
-			particle = m_spParticleData2;
-		}
-
-
-
-
 		//if( n > m_spParticleData->useNum-1 ) break;
 		//axisX = Vector3(m._11,m._12,m._13);
 		//axisY = Vector3(m._21,m._22,m._23);
@@ -636,8 +633,8 @@ ShaderManager::getSprite()->Begin();
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
 		//	テクスチャ情報設定
-		m_spTexture[n]->spTexture->Setting(rlib::Texture::ACTIVE_0);
-		ShaderManager::getSprite()->SetValue_No_BeginEnd( "uTex", 0 );
+		m_spTexture[n]->spTexture->Setting(rlib::Texture::ACTIVE_13);
+		ShaderManager::getSprite()->SetValue_No_BeginEnd( "uTex", 13 );
 
 		//	描画
 		glDrawArrays(GL_TRIANGLES,
@@ -719,7 +716,6 @@ void Particle::Setting_Single(
 	COLOR EndColor
 		)
 {
-
 	sp<ParticleData> particle;
 
 	if( UpdateNumber == 0 )
@@ -728,7 +724,6 @@ void Particle::Setting_Single(
 	}else{
 		particle = m_spParticleData2;
 	}
-
 
 	char* File;
 
