@@ -38,7 +38,9 @@ namespace rlib
 #endif
 	protected:
 		int mCount;
-
+#ifndef ANDROID_REDNER
+		wp<EffectLib::EmitterSet>	wpFire;
+#endif
 	};
 
 }

@@ -22,7 +22,11 @@
 #include "kaneta\ICharacter\Class\kPlayer\kPlayer.h"
 #include "kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h"
 
-#include "EffectLib\/Effect.h"
+#include "EffectLib/Effect.h"
+#include "Game\SaveManager.h"
+#include "kaneta\ActionMediate\ActionMediate.h"
+#include "GraphicsLib\Class\kPlane\kPlane.h"
+#include "testScene.h"
 
 using namespace RenderLib;
 using namespace klib::math;
@@ -42,16 +46,16 @@ rTestScene::rTestScene()
 	frameBuffer = NULL;
 	mButton = NULL;
 	mStick = NULL;
+	mPlayer = NULL;
+	m_Camera = NULL;
 }
-
-#include "Game\SaveManager.h"
-#include "kaneta\ActionMediate\ActionMediate.h"
-#include "GraphicsLib\Class\kPlane\kPlane.h"
 
 using namespace EffectLib;
 
 wp<EmitterSet> wpE;
 wp<EmitterSet> wpE2;
+
+#define USE_PLAYER
 
 void rTestScene::threadFunc(rTestScene* obj)
 {
@@ -72,24 +76,25 @@ void rTestScene::threadFunc(rTestScene* obj)
 	obj->mStick->loadImage("cursor.png","testImage.png");
 
 	GameCommonPipeline::init();
-	STAGE.init("Placement/stage1.IMO");
+	STAGE.init("stage/stage2.IMO");
 	sPlacementManager->Load("Placement/stage1.mqo");
 
 //プレイヤーの設定
-	obj->mMesh=new kPlayer("kanetaPlace/kman.IEM",obj->mStick,obj->mButton);
-	obj->mMesh->getObj()->setScale(0.01f);
-	obj->mMesh->getObj()->setPosition(0,0,-5);
-	obj->mMesh->getObj()->setAngle(0);
-	obj->mMesh->getObj()->SetMotion(4);
-	obj->mMesh->getObj()->Update();
+#ifdef USE_PLAYER
+	testScene::_getInstance().setCamera( new kPlayCamera(obj->mPlayer,Vector3(0,0,0),Vector3(0,0,0)) );
+	obj->mPlayer=new kPlayer("kanetaPlace/kman.IEM",obj->mStick,obj->mButton);
+	obj->mPlayer->getObj()->setScale(0.01f);
+	obj->mPlayer->getObj()->setPosition(0,0,-5);
+	obj->mPlayer->getObj()->setAngle(0);
+	obj->mPlayer->getObj()->SetMotion(4);
+	obj->mPlayer->getObj()->Update();
 
-	obj->m_Camera=new kPlayCamera(obj->mMesh,Vector3(0,0,0),Vector3(0,0,0));
-
+#endif
 	klib::kPlane::init();
 	klib::ActionMediate::init();
 
 	rlib::BulletManager::getInst().init();
-	GIMMICK_MNG.init("gimmick/stage1.gi");
+	GIMMICK_MNG.init("gimmick/stage2.gi");
 
 	LOGI(TAG,"Complete rTestScene init");
 
@@ -139,20 +144,22 @@ void rTestScene::update()
 //プレイヤーの移動
 	static float a=K_PI/4.0f;
 	mStick->update();
+#ifdef USE_PLAYER
+	math::kclampf(K_PI/8.0f,K_PI/1.5f,&a);
+	testScene::_getInstance().getCamera()->setFov(a);
+	testScene::_getInstance().getCamera()->update();
+	mPlayer->update();
+#else
 	if( this->mStick->enable() )
 	{
-		//a += mp_Stick->getX()*0.01f;
-	}	
-	if( mlInput::isPinch() )
-	{
-		//a -= mlInput::getPinchMoveLength() * 0.01f;
-	}
-	//a+=.001f;
+		static Vector3 cpos(0,2,10);
+		cpos.x += this->mStick->getX() * 0.1f;
+		cpos.z += this->mStick->getY() * 0.1f;
 
-	math::kclampf(K_PI/8.0f,K_PI/1.5f,&a);
-	m_Camera->setFov(a);
-	m_Camera->update();
-	mMesh->update();
+		RenderState::Setting_ViewMatrix(cpos, Vector3(0,0,0), Vector3(0,1,0));
+		//a += mp_Stick->getX()*0.01f;
+	}
+#endif
 
 	if( mlInput::getNowTouchCount() == 3 )
 	{
@@ -160,19 +167,20 @@ void rTestScene::update()
 	}
 	STAGE.update();
 	BULLET_MNG.update();
-	//GIMMICK_MNG.update();
-	//BULLET_MNG.collision( GIMMICK_MNG );
+	GIMMICK_MNG.update();
+	BULLET_MNG.collision( GIMMICK_MNG );
 
-	//{//プレイヤーのギミックとの当たり判定
-	//	Vector3 playerPos = mMesh->getObj()->getPosition();
-	//	playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
-	//	playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
+#ifdef USE_PLAYER
+	{//プレイヤーのギミックとの当たり判定
+		Vector3 playerPos = mPlayer->getObj()->getPosition();
+		playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
+		playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
 
-	//	mMesh->getObj()->setPosition(playerPos);
-	//	mMesh->getObj()->Update();
-	//}
-
-	klib::ActionMediate::update(mMesh);
+		mPlayer->getObj()->setPosition(playerPos);
+		mPlayer->getObj()->Update();
+	}
+	klib::ActionMediate::update(this->mPlayer);
+#endif
 
 	sEffectManager->Update();
 
@@ -186,10 +194,12 @@ void rTestScene::render()
 {
 	rlib::FrameBuffer::bindScreenBuffer();
 
-	mMesh->render(GameCommonPipeline::getPipeline());
+#ifdef USE_PLAYER
+	mPlayer->render(GameCommonPipeline::getPipeline());
+#endif
 	STAGE.render();
 	BULLET_MNG.render();
-	//GIMMICK_MNG.render();
+	GIMMICK_MNG.render();
 
 	klib::ActionMediate::render();
 
@@ -211,7 +221,7 @@ void rTestScene::exit()
 	GIMMICK_MNG.clear();
 	STAGE.clear();
 
-	if( this->mMesh){ delete this->mMesh; }
+	if( this->mPlayer){ delete this->mPlayer; }
 	if( this->m_Camera ){ delete this->m_Camera; }
 
 	GameCommonPipeline::clear();

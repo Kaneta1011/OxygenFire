@@ -5,15 +5,19 @@
 
 namespace rlib
 {
-	struct GCandleCheckerInfo : public GGimmickInfo
+	struct GCandleCheckerInfo : public GimmickInfoBase
 	{
-		Vector3 color;
+		std::string correctAnswer;	//正解の順序
 
 		virtual void forFile(textWriter& writer);
 		virtual bool loadParam(textLoader& loader);
 
 		virtual IGimmick* makeGimmick();
 
+		GCandleCheckerInfo():correctAnswer(""){}
+		virtual ~GCandleCheckerInfo(){}
+
+		static std::string NON_DATA;
 	};
 
 	//
@@ -22,7 +26,9 @@ namespace rlib
 	//	正しい順序にろうそくの火をつけたか見るクラス
 	//	成功したならflagOnイベントを発生させる
 	//
-	class GCandleChecker : public IGimmickObj
+	//	GCandleクラスからflagOnイベントが送られてきたら、正解の順序かチェックする
+	//
+	class GCandleChecker : public IGimmick
 	{
 	public:
 		GCandleChecker(GCandleCheckerInfo* info);
@@ -34,7 +40,13 @@ namespace rlib
 		virtual void flagOnListener(IGimmick* thiz);
 		virtual void flagOffListener(IGimmick* thiz);
 
+#ifndef ANDROID_REDNER
+		void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
+#endif
+
 	protected:
+		int mNowCheckIndex;			//間違えたらmCorrectAnswerの文字数以上の値になる
+		std::string mCorrectAnswer;
 	};
 }
 

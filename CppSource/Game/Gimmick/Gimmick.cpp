@@ -73,6 +73,7 @@ bool GimmickManager::isHitGimmick(GIMMICK_TYPE type)
 	{
 	case eGIMMICK_WIND:
 	case eGIMMICK_FUSE:
+	case eGIMMICK_CANDLE_CHECKER:
 	case eGIMMICK_UNKNOWN:
 		return false;
 	default:
@@ -226,7 +227,8 @@ void GimmickManager::loadMeshes()
 	this->mpMeshies[eMESH_GASOLINE] = new klib::kMesh("gimmick/gasoline/gaso.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mpMeshies[eMESH_WOOD_BOX] = new klib::kMesh("gimmick/wood_box/kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	//this->mpMeshies[eMESH_GABERAGE_BOX] = new klib::kMesh("Placement/gomibukuro.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	//this->mpMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mpMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mpMeshies[eMESH_RESET_CANDLE] = new klib::kMesh("gimmick/candle/resetCandleS2.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	LOGI(TAG, "Successed gimmick meshes | count = %d", eMESH_TYPE_NUM);
 }
 #endif
@@ -241,11 +243,13 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 	{
 	case eGIMMICK_DRUM:			*outUnitScale = 0.01f; index = eMESH_DRUM; break;//ドラム缶
 	case eGIMMICK_GASOLINE:		*outUnitScale = 0.01f; index = eMESH_GASOLINE; break;	//ガソリン
-	//case eGIMMICK_GARBAGE_BAG:	*outUnitScale = 1.f; index = eMESH_GABERAGE_BOX; break;	//ゴミ袋
+	case eGIMMICK_GARBAGE_BAG:	*outUnitScale = 0.01f; index = eMESH_CARD_BOARD; break;	//ゴミ袋
 	case eGIMMICK_WOOD_BOX:		*outUnitScale = 0.01f; index = eMESH_WOOD_BOX; break;	//木箱
-	case eGIMMICK_CARDBOARD:	*outUnitScale = 0.01f; index = eMESH_DRUM; break;	//ダンボール
+	case eGIMMICK_CARDBOARD:	*outUnitScale = 0.01f; index = eMESH_CARD_BOARD; break;	//ダンボール
 	//case eGIMMICK_FAN:			break;	//扇風機
-	//case eGIMMICK_CANDLE:		break;	//ろうそく
+	case eGIMMICK_RESET_CANDLE:	*outUnitScale = 1.f; index = eMESH_RESET_CANDLE; break;	//リセットろうそく
+	case eGIMMICK_CANDLE_CHECKER:	break;
+	case eGIMMICK_CANDLE:		*outUnitScale = 1.f;	break;	//ろうそく
 	case eGIMMICK_FUSE:			break;	//導火線
 	case eGIMMICK_FUSE_POINT:	*outUnitScale = 0.005f; index = eMESH_DRUM; break;	//導火線の両端
 	case eGIMMICK_WIND:			break;	//風
@@ -261,7 +265,7 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 
 int GimmickManager::update()
 {
-	LOGI(TAG,"gimmick update");
+	//LOGI(TAG,"gimmick update");
 	static int oldTouchCount = -1;
 #ifndef ANDROID_REDNER
 	if( mlInput::getNowTouchCount() == 3 && oldTouchCount != 3 ){
@@ -421,7 +425,15 @@ void GimmickManager::render()
 			float  scale = 0.01f;
 			klib::kMesh* mesh = getMesh((*it)->getType(), &scale);
 			if( mesh ){
-				(*it)->render( mesh, scale, GameCommonPipeline::getPipeline());
+				if( isDebugMesh ){
+					mesh->setPosition((*it)->getPos());
+					mesh->setAngle((*it)->getAngle());
+					mesh->setScale((*it)->getRange() * scale);
+					mesh->Update();
+					mesh->Render(GameCommonPipeline::getPipeline());
+				}else{
+					(*it)->render( mesh, scale, GameCommonPipeline::getPipeline());
+				}
 			}
 		}
 		it++;

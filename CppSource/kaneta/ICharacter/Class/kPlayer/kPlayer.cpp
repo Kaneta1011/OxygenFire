@@ -6,7 +6,8 @@
 namespace klib
 {
 	kPlayer::kPlayer(const char* filename):ICharacter(filename){setStrategy(new kPlayerFuseIn(this));}
-	kPlayer::kPlayer(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button):ICharacter(filename,stick,button){setStrategy(new kPlayerFuseIn(this));}
+	//kPlayer::kPlayer(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button):ICharacter(filename,stick,button){setStrategy(new kPlayerFuseIn(this));}
+	kPlayer::kPlayer(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button):ICharacter(filename,stick,button){setStrategy(new kPlayerMove(this));}
 	kPlayer::~kPlayer()
 	{
 		//delete m_Camera;

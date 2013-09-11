@@ -7,7 +7,6 @@ namespace rlib
 {
 	struct GCandleInfo : public GGimmickInfo
 	{
-		Vector3 color;
 
 		virtual void forFile(textWriter& writer);
 		virtual bool loadParam(textLoader& loader);
@@ -40,7 +39,18 @@ namespace rlib
 		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
 #endif
 
+		char	getID()const{return this->mID;}
+
 	protected:
+#ifndef ANDROID_REDNER
+	void loadMesh(char ID);
+#endif
+	protected:
+		char	mID;
+#ifndef ANDROID_REDNER
+		klib::kMesh* mpMesh;
+		wp<EffectLib::EmitterSet>	wpFire;
+#endif
 	};
 }
 

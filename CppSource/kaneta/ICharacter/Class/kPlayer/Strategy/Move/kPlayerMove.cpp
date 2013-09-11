@@ -12,7 +12,9 @@ namespace klib
 	{
 		ICamera* camera=testScene::_getInstance().getCamera();
 
+		dprintf("start kPlayerMove constructer");
 		testScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
+		dprintf("fin kPlayerMove constructer");
 	}
 		void kPlayerMove::calcAngle(ICharacter* acter)
 		{

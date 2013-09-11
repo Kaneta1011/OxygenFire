@@ -6,6 +6,7 @@
 #include "GGoal.h"
 #include "GCandle.h"
 #include "GResetCandle.h"
+#include "GCandleChecker.h"
 
 #include "PlacementLib/Placement.h"
 #include "utility\textWriter.h"
@@ -111,8 +112,14 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 			{
 				GResetCandleInfo* set = new GResetCandleInfo();
 				set->convert(spBox.GetPtr(), i);
-
 				info = set;
+			//リセットろうそくの場合はGCandleCheckerInfoもセットで作る
+				GCandleCheckerInfo* checkerInfo = new GCandleCheckerInfo();
+				std::string checkerName = spBox->spStr[i]+"_CHECKER";
+				checkerInfo->setNameAndType(checkerName, eGIMMICK_CANDLE_CHECKER);
+				checkerInfo->correctAnswer = GCandleCheckerInfo::NON_DATA;
+				checkerInfo->checkOn.push_back(set->name);
+				this->mData.push_back(checkerInfo);
 				break;
 			}
 		//エラー
@@ -211,7 +218,7 @@ void GimmickInfoManager::load(const char* giFilePath)
 			loader.LoadString(buf);
 			name = buf;
 		}else{
-			LOGE(TAG, "miss data... [no name]");
+			LOGE(TAG, "GimmickInfoManager::load() : miss data... [no name]\n");
 			return ;
 		}
 		loader.LoadString(buf);
@@ -220,7 +227,7 @@ void GimmickInfoManager::load(const char* giFilePath)
 			setInfo(loader, info, type, name);
 
 		}else{
-			LOGE(TAG, "miss data... [no type]");
+			LOGE(TAG, "GimmickInfoManager::load : miss data... [no type]\n");
 			return ;
 		}
 	}
@@ -243,6 +250,14 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 	case eGIMMICK_RESET_CANDLE:
 		setGimmickInfo(loader, out, type, name);
 		break;
+	case eGIMMICK_CANDLE_CHECKER:
+		{
+			GCandleCheckerInfo* info = new GCandleCheckerInfo();
+			info->setNameAndType(name, type);
+			info->load(loader);
+			*out = info;
+			break;
+		}
 	case eGIMMICK_FUSE:			//導火線
 		setLineInfo(loader, out, type, name);
 		break;
@@ -286,7 +301,7 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		{
 			GCandleInfo* info = new GCandleInfo();
 			info->setNameAndType(name, type);
-			info->loadParam(loader);
+			info->load(loader);
 			set = info;
 			break;
 		}
@@ -294,7 +309,7 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		{
 			GResetCandleInfo* info = new GResetCandleInfo();
 			info->setNameAndType(name, type);
-			info->loadParam(loader);
+			info->load(loader);
 			set = info;
 			break;
 		}

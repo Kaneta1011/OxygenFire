@@ -29,6 +29,7 @@ namespace rlib
 		eGIMMICK_2D,			//2D描画
 		eGIMMICK_GOAL,			//ゴール
 		eGIMMICK_RESET_CANDLE,	//リセットろうそく
+		eGIMMICK_CANDLE_CHECKER,	//ろうそくチェッカー
 		eGIMMICK_TYPE_NUM,
 		eGIMMICK_UNKNOWN
 	};
@@ -53,6 +54,8 @@ namespace rlib
 		virtual bool loadParam(textLoader& loader) = 0;
 
 		virtual IGimmick* makeGimmick()=0;
+
+		virtual ~GimmickInfoBase(){}
 	};
 
 	struct GGimmickInfo : public GimmickInfoBase

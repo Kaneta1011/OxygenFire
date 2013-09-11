@@ -87,7 +87,7 @@ void GimmickInfoBase::load(textLoader& loader)
 			if( strcmp("}",loader.tmpBuf) == 0 ){
 				break;
 			}else{
-				LOGE(TAG, "unknown type set at setGimmickInfo!! type=%d | name=\"%s\"\n", type, name.c_str());
+				LOGE(TAG, "GimmickInfoBase::load : unknown type set at setGimmickInfo!! type=%d | name=\"%s\"\n", type, name.c_str());
 				break;
 			}
 		}

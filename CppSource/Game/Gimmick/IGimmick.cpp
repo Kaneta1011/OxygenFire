@@ -42,6 +42,7 @@ void IGimmick::flagOff()
 		while( it != this->mOffListener.end() )
 		{
 			(*it)->flagOffListener(this);
+			it++;
 		}
 	}
 }

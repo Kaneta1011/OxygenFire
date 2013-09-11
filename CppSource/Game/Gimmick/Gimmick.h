@@ -122,6 +122,7 @@ namespace rlib
 			eMESH_WOOD_BOX,
 			eMESH_GABERAGE_BOX,
 			eMESH_CARD_BOARD,
+			eMESH_RESET_CANDLE,
 			eMESH_TYPE_NUM
 		};
 

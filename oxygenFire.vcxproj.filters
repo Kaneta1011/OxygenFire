@@ -483,6 +483,9 @@
     <ClCompile Include="CppSource\Game\Gimmick\GResetCandle.cpp">
       <Filter>source\Game\Gimmick\Type\ResetCandle</Filter>
     </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GCandleChecker.cpp">
+      <Filter>source\Game\Gimmick\Type\CandleChecker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CppSource\math\kmathf.h">
@@ -802,6 +805,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\Game\Gimmick\GResetCandle.h">
       <Filter>source\Game\Gimmick\Type\ResetCandle</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GCandleChecker.h">
+      <Filter>source\Game\Gimmick\Type\CandleChecker</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

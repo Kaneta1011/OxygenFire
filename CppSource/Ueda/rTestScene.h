@@ -37,7 +37,7 @@ private:
 	rlib::FrameBuffer			*frameBuffer;
 	rlib::CircleButton			*mButton;
 	rlib::AnalogStick			*mStick;
-	klib::kPlayer				*mMesh;
+	klib::kPlayer				*mPlayer;
 	klib::ICamera				*m_Camera;
 };
 

@@ -4,10 +4,13 @@
 #include "utility\utility.h"
 
 using namespace rlib;
+#ifndef ANDROID_REDNER
+using namespace EffectLib;
+#endif
 
 //=======================================================================
 //
-//		GFusePointInfoクラス
+//		GResetCandleInfoクラス
 //
 //=======================================================================
 void GResetCandleInfo::forFile(textWriter&  w)
@@ -43,6 +46,11 @@ GResetCandle::GResetCandle(GResetCandleInfo* info):
 
 GResetCandle::~GResetCandle()
 {
+#ifndef ANDROID_REDNER
+	if( wpFire.IsExist() ){
+		wpFire->End();
+	}
+#endif
 }
 
 int GResetCandle::update()
@@ -54,6 +62,19 @@ int GResetCandle::update()
 			this->mCount=0;
 		}
 	}
+#ifndef ANDROID_REDNER
+	if( isFlag() ){
+		if( !wpFire.IsExist() ){
+			wpFire = sEffectManager->Create(FIRE, this->mPos);
+			wpFire->Loop();
+		}
+	}else{
+		if( wpFire.IsExist() ){
+			wpFire->End();
+		}
+	}
+#endif
+
 	return MSG_NON;
 }
 

@@ -119,7 +119,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	RenderState::setScreenWidth(width);
 	RenderState::setScreenHeight(height);
 	RenderState::Setting_Viewport(.0f,.0f,width,height);
-	RenderState::Setting_ViewMatrix(Vector3(20,20,20),Vector3(0,10,0),Vector3(0,1,0));
+	RenderState::Setting_ViewMatrix(Vector3(5,2,-5),Vector3(0,0,0),Vector3(0,1,0));
 	RenderState::Setting_PerspectiveMatrix(K_PI/4,(float)width/(float)height,.1f,100.0f);
 
 	AssetsLoader::begin();
@@ -136,12 +136,12 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	AssetsLoader::end();
 	//glLineWidth(1.0f);
 
-	////シーン作成
+	//シーン作成
 	testScene::_create();
 	////シーン割り当て
-	framework.sceneChange(testScene::_getInstancePtr());
+	//framework.sceneChange(testScene::_getInstancePtr());
 
-	//framework.scenePush( rTestScene::_getInstancePtr() );
+	framework.scenePush( rTestScene::_getInstancePtr() );
 	
 	LOGI(TAG, "Complete graphic init");
 }
