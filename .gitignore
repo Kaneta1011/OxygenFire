@@ -1,3 +1,5 @@
 /Android/
 /*.sdf
 /*.suo
+
+/AndroidApk/libs/armeabi/liboxygenfire.so

@@ -7,6 +7,7 @@
 #include "GCandle.h"
 #include "GResetCandle.h"
 #include "GCandleChecker.h"
+#include "G2D.h"
 
 #include "PlacementLib/Placement.h"
 #include "utility\textWriter.h"
@@ -104,8 +105,9 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 		//2D
 		case PLACEMENT_2D:
 			{
-				LOGE(TAG, "2D‚Ì•ÏŠ·ˆ—‚ðì‚Á‚Ä‚Ë GimmickInfoManager::loadMqo()\n");
-				//info = ;
+				G2DInfo* set = new G2DInfo();
+				set->convert(spBox.GetPtr(), i);
+				info = set;
 				break;
 			}
 		case PLACEMENT_RESET_CANDLE:
@@ -324,8 +326,10 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		}
 	case eGIMMICK_2D:			//2D•`‰æ
 		{
-			LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Please create 2d gimmick!\n");
-			//set = ;
+			G2DInfo* info = new G2DInfo();
+			info->setNameAndType(name, type);
+			info->load(loader);
+			set = info;
 			break;
 		}
 	case eGIMMICK_GOAL:

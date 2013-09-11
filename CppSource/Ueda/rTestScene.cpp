@@ -26,7 +26,7 @@
 #include "Game\SaveManager.h"
 #include "kaneta\ActionMediate\ActionMediate.h"
 #include "GraphicsLib\Class\kPlane\kPlane.h"
-#include "testScene.h"
+#include "kaneta\Scene\GameScene\GameScene.h"
 
 using namespace RenderLib;
 using namespace klib::math;
@@ -81,7 +81,7 @@ void rTestScene::threadFunc(rTestScene* obj)
 
 //ƒvƒŒƒCƒ„[‚Ìİ’è
 #ifdef USE_PLAYER
-	testScene::_getInstance().setCamera( new kPlayCamera(obj->mPlayer,Vector3(0,0,0),Vector3(0,0,0)) );
+	GameScene::_getInstance().setCamera( new kPlayCamera(obj->mPlayer,Vector3(0,0,0),Vector3(0,0,0)) );
 	obj->mPlayer=new kPlayer("kanetaPlace/kman.IEM",obj->mStick,obj->mButton);
 	obj->mPlayer->getObj()->setScale(0.01f);
 	obj->mPlayer->getObj()->setPosition(0,0,-5);
@@ -146,8 +146,8 @@ void rTestScene::update()
 	mStick->update();
 #ifdef USE_PLAYER
 	math::kclampf(K_PI/8.0f,K_PI/1.5f,&a);
-	testScene::_getInstance().getCamera()->setFov(a);
-	testScene::_getInstance().getCamera()->update();
+	GameScene::_getInstance().getCamera()->setFov(a);
+	GameScene::_getInstance().getCamera()->update();
 	mPlayer->update();
 #else
 	if( this->mStick->enable() )
@@ -195,13 +195,13 @@ void rTestScene::render()
 	rlib::FrameBuffer::bindScreenBuffer();
 
 #ifdef USE_PLAYER
-	mPlayer->render(GameCommonPipeline::getPipeline());
+	//mPlayer->render(GameCommonPipeline::getPipeline());
 #endif
-	STAGE.render();
-	BULLET_MNG.render();
+	//STAGE.render();
+	//BULLET_MNG.render();
 	GIMMICK_MNG.render();
 
-	klib::ActionMediate::render();
+	//klib::ActionMediate::render();
 
 	mButton->render();
 	mStick->render();

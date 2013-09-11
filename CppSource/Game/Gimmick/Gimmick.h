@@ -135,6 +135,7 @@ namespace rlib
 		ListType mData;
 
 #ifndef ANDROID_REDNER
+		std::vector<float>	mMeshScales;
 		sp<klib::kMesh*> mpMeshies;
 #endif
 	private:
