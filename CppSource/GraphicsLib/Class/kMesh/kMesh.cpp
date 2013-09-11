@@ -98,7 +98,7 @@ namespace klib
 	{
 		int		ret = -1;
 
-		if( vec->x == .0f && vec->z == .0f ) return RayPickUD( out, pos, vec ,Dist);
+		//if( vec->x == .0f && vec->z == .0f ) return RayPickUD( out, pos, vec ,Dist);
 
 		Matrix inv=m_TransMatrix;
 		inv.inverse();
@@ -221,8 +221,16 @@ namespace klib
 
 		int		VertexSize;
 
-		Vector3	p = pos;
-		vy = vec->y;
+		Matrix inv=m_TransMatrix;
+		inv.inverse();
+
+		Vector3 p = pos;
+		Vector3 vv=*vec;
+
+		p.trans(inv);
+		//vv.trans3x3(inv);
+		//vy*=inv._22;
+		vy=vv.y;
 
 		neart = *Dist;
 
@@ -242,17 +250,17 @@ namespace klib
 		for( int j=0 ; j<NumFace ; j++ )
 		{
 			//	面頂点取得
-			int a = pIndices[j*3+0] * VertexSize;
-			int b = pIndices[j*3+1] * VertexSize;
-			int c = pIndices[j*3+2] * VertexSize;
+			int a = pIndices[j*3+0];
+			int b = pIndices[j*3+1];
+			int c = pIndices[j*3+2];
 
 			v[0].x = pVertices[a].m_Pos.x;	v[1].x = pVertices[b].m_Pos.x;	v[2].x = pVertices[c].m_Pos.x;
 			if( v[0].x > p.x && v[1].x > p.x && v[2].x > p.x ) continue;
 
-			v[0].z = pVertices[a+2].m_Pos.z;	v[1].z = pVertices[b+2].m_Pos.z;	v[2].z = pVertices[c+2].m_Pos.z;
+			v[0].z = pVertices[a].m_Pos.z;	v[1].z = pVertices[b].m_Pos.z;	v[2].z = pVertices[c].m_Pos.z;
 			if( v[0].z > p.z && v[1].z > p.z && v[2].z > p.z ) continue;
 
-			v[0].y = pVertices[a+1].m_Pos.y;	v[1].y = pVertices[b+1].m_Pos.y;	v[2].y = pVertices[c+1].m_Pos.y;
+			v[0].y = pVertices[a].m_Pos.y;	v[1].y = pVertices[b].m_Pos.y;	v[2].y = pVertices[c].m_Pos.y;
 
 
 			//	内点判定（全外積がマイナス）		
@@ -291,10 +299,16 @@ namespace klib
 			neart = t;
 		}
 
-		out->y = neart*vy + p.y;
-		out->x = p.x;
-		out->z = p.z;
+		//out->y = neart*vy + p.y;
+		//out->x = p.x;
+		//out->z = p.z;
+		out->x  = pos.x;
+		out->y  = p.x*m_TransMatrix._12+(neart*vy + p.y)*m_TransMatrix._22+p.z*m_TransMatrix._32+m_TransMatrix._42;
+		out->z  = pos.z;
 		*Dist = neart;
+
+		//out->trans(m_TransMatrix);
+		vec->trans3x3(m_TransMatrix);
 
 		return	ret;
 	}
