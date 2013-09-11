@@ -7,7 +7,7 @@
 #include <stdlib.h>
 using namespace rlib;
 
-int TEST_POS_NUM = 0;
+int TEST_POS_NUM;
 
 namespace klib
 {
@@ -99,7 +99,7 @@ namespace klib
 
 		//
 
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
 			f32 dist=testpos[i].distance(m_Player->getObj()->getPosition());
 			if(m_IndexList.find(i)==-1)
@@ -128,7 +128,7 @@ namespace klib
 		}
 
 		m_IndexList.clear();
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
 			if(0.0f<m_TimeTable(i).m_FontTime)
 			{

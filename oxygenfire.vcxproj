@@ -61,6 +61,11 @@
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.cpp" />
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.cpp" />
     <ClCompile Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.cpp" />
+    <ClCompile Include="CppSource\kaneta\Scene\GameScene\GameScene.cpp" />
+    <ClCompile Include="CppSource\kaneta\Scene\LoadingScene\LoadingScene.cpp" />
+    <ClCompile Include="CppSource\kaneta\Scene\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="CppSource\kaneta\Scene\TitleScene\TitleSceneStrategy.cpp" />
+    <ClCompile Include="CppSource\kaneta\Scene\YesOrNoScene\YesOrNoScene.cpp" />
     <ClCompile Include="CppSource\main.cpp" />
     <ClCompile Include="CppSource\math\Class\Matrix\Matrix.cpp" />
     <ClCompile Include="CppSource\math\Class\Quaternion\Quaternion.cpp" />
@@ -168,6 +173,10 @@
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Fuse\kPlayerFuseOut.h" />
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.h" />
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h" />
+    <ClInclude Include="CppSource\kaneta\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="CppSource\kaneta\Scene\LoadingScene\LoadingScene.h" />
+    <ClInclude Include="CppSource\kaneta\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="CppSource\kaneta\Scene\YesOrNoScene\YesOrNoScene.h" />
     <ClInclude Include="CppSource\main.h" />
     <ClInclude Include="CppSource\math\Class\Matrix\Matrix.h" />
     <ClInclude Include="CppSource\math\Class\Quaternion\Quaternion.h" />
@@ -190,7 +199,6 @@
     <ClInclude Include="CppSource\templateLib\kVector.h" />
     <ClInclude Include="CppSource\templateLib\pImpl.h" />
     <ClInclude Include="CppSource\templateLib\smartptr.h" />
-    <ClInclude Include="CppSource\testScene.h" />
     <ClInclude Include="CppSource\Thread\Class\kEvent\kEvent.h" />
     <ClInclude Include="CppSource\Thread\Class\kMutex\kMutex.h" />
     <ClInclude Include="CppSource\Thread\Class\kThreadPool\kThreadPool.h" />

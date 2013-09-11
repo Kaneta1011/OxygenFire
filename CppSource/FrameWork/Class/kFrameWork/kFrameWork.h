@@ -97,5 +97,6 @@ namespace klib
 			mp_Scene->render();
 			return true;
 		}
+		IScene* getPrevScene()const{return m_SceneStack.back();}
 	};
 }

@@ -23,6 +23,8 @@ namespace klib
 	{
 		m_Mutex.lock();
 		dprintf("kDevice begin");
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		//キューに溜まった頂点バッファを削除する
 		while(!m_LoadVertexBufferQueue.isEmpty())
 		{
@@ -117,6 +119,8 @@ namespace klib
 			}
 			delete p;
 		}
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		dprintf("kDevice end");
 		m_Mutex.unLock();
 	}

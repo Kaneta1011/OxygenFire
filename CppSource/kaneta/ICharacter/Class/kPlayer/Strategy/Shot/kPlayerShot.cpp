@@ -2,21 +2,23 @@
 #include "kaneta\ICharacter\Class\ICharacter\ICharacter.h"
 #include "input\AnalogStick.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
-#include "testScene.h"
+#include "kaneta\Scene\GameScene\GameScene.h"
 #include "kaneta\ICamera\Class\ICamera\ICamera.h"
 #include "GraphicsLib\Class\tRenderState\RenderState.h"
 #include "math\kmathf.h"
 #include "Game\Bullet\Bullet.h"
 #include "kaneta\ICharacter\Class\kPlayer\Strategy\Move\kPlayerMove.h"
 #include "kaneta\ICamera\Class\kShotCamera\kShotCamera.h"
+#include "Game\Bullet\Bullet.h"
 
 namespace klib
 {
 	using namespace math;
+	using namespace rlib;
 	kPlayerShot::kPlayerShot(ICharacter* acter)
 	{
-		ICamera* camera=testScene::_getInstance().getCamera();
-		testScene::_getInstance().setCamera(new kShotCamera(acter,camera->getPos(),camera->getAngle()));
+		ICamera* camera=GameScene::_getInstance().getCamera();
+		GameScene::_getInstance().setCamera(new kShotCamera(acter,camera->getPos(),camera->getAngle()));
 		m_PrevTouchTable.clear();
 		for(int i=0;i<mlInput::getMaxPoint();i++)
 		{
@@ -57,7 +59,7 @@ namespace klib
 	{
 
 
-		testScene& scene=testScene::_getInstance();
+		GameScene& scene=GameScene::_getInstance();
 		ICamera* camera=scene.getCamera();
 		Matrix view=RenderLib::RenderState::getViewMatrix();
 		Vector3 front;

@@ -3,18 +3,16 @@
 #include "input\AnalogStick.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
 #include "kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h"
-#include "testScene.h"
+#include "kaneta\Scene\GameScene\GameScene.h"
 #include "kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h"
 #include "kaneta\ICamera\Class\kPlayCamera2\kPlayCamera2.h"
 namespace klib
 {
 	kPlayerMove::kPlayerMove(ICharacter* acter)
 	{
-		ICamera* camera=testScene::_getInstance().getCamera();
+		ICamera* camera=GameScene::_getInstance().getCamera();
 
-		dprintf("start kPlayerMove constructer");
-		testScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
-		dprintf("fin kPlayerMove constructer");
+		GameScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
 	}
 		void kPlayerMove::calcAngle(ICharacter* acter)
 		{

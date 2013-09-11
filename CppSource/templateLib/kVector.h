@@ -27,17 +27,17 @@ namespace klib
 				delete[] Data;
 			}
 			//要素が空なら真を返す
-			bool empty()
+			bool empty()const
 			{
 				return (Size==0)?true:false;
 			}
 			//現在の要素数を返す
-			int size()
+			int size()const
 			{
 				return Size;
 			}
 			//配列に確保できる要素数を返す
-			int max_size()
+			int max_size()const
 			{
 				return MaxSize;
 			}
@@ -58,7 +58,7 @@ namespace klib
 
 			}
 			//要素を検索する見つければインデックスを返すなければ-1
-			int find(const T& e)
+			int find(const T& e)const
 			{
 				for(int i=0;i<Size;i++)
 				{
@@ -96,12 +96,12 @@ namespace klib
 				return true;
 			}
 			//一番先頭の要素を返す
-			T top()
+			T top()const
 			{
 				return Data[0];
 			}
 			//一番最後の要素を返す
-			T back()
+			T back()const
 			{
 				return Data[Size-1];
 			}

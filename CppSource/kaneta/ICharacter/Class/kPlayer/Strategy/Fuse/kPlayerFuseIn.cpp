@@ -1,18 +1,22 @@
+#include "math\kmathf.h"
+#include "GraphicsLib\Class\r2DObj\r2DObj.h"
 #include "kPlayerFuseIn.h"
 #include "kPlayerFuse.h"
 #include "kaneta\ICharacter\Class\ICharacter\ICharacter.h"
 #include "input\AnalogStick.h"
 #include "GraphicsLib\Class\kMesh\kMesh.h"
 #include "kaneta\ICamera\Class\kPlayCamera\kPlayCamera.h"
-#include "testScene.h"
+#include "kaneta/Scene/GameScene/GameScene.h"
 #include "kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h"
 #include "kaneta\ICamera\Class\kPlayCamera2\kPlayCamera2.h"
 namespace klib
 {
+	using namespace math;
+	using namespace rlib;
 	kPlayerFuseIn::kPlayerFuseIn(ICharacter* acter):m_Time(0.0f)
 	{
-		ICamera* camera=testScene::_getInstance().getCamera();
-		testScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
+		ICamera* camera=GameScene::_getInstance().getCamera();
+		GameScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
 		m_StartPos=acter->getObj()->getPosition();
 		m_EndPos=Vector3(0,0,10);
 	}
