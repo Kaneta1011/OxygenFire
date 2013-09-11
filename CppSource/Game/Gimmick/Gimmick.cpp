@@ -61,7 +61,6 @@ bool GimmickManager::isFusePoint(GIMMICK_TYPE type){ return type == eGIMMICK_FUS
 bool GimmickManager::isShowMessegeType(GIMMICK_TYPE type){
 	switch( type ){
 	case eGIMMICK_FUSE_POINT:
-	case eGIMMICK_2D:
 		return true;
 	default:
 		return false;
@@ -134,8 +133,6 @@ void GimmickManager::init(const char* giFilePath)
 {
 #ifndef ANDROID_REDNER
 	debugMesh = new klib::kMesh("gimmick/unitBox.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-//
-
 #endif
 
 	LOGI(TAG, "Execute GimmickManager init\n");
@@ -256,7 +253,7 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 	case eGIMMICK_FUSE:			break;	//ì±âŒê¸
 	case eGIMMICK_FUSE_POINT:	*outUnitScale = 0.005f; index = eMESH_DRUM; break;	//ì±âŒê¸ÇÃóºí[
 	case eGIMMICK_WIND:			break;	//ïó
-	case eGIMMICK_2D:			break;	//2Dï`âÊ
+	//case eGIMMICK_2D:			break;	//2Dï`âÊ
 	case eGIMMICK_GOAL:			break;	//ÉSÅ[ÉãÇÃî‡
 	default:
 		LOGE(TAG, "unknwon type = %d!! GimmickManager::getMesh()", type);

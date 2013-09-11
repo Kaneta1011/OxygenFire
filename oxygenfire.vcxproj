@@ -23,7 +23,6 @@
     <ClCompile Include="CppSource\Game\CommonPipeline\GameCommonPipeline.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Fuse.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\FusePoint.cpp" />
-    <ClCompile Include="CppSource\Game\Gimmick\G2D.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GCandle.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GCandleChecker.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp" />
@@ -123,7 +122,6 @@
     <ClInclude Include="CppSource\Game\CommonPipeline\GameCommonPipeline.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Fuse.h" />
     <ClInclude Include="CppSource\Game\Gimmick\FusePoint.h" />
-    <ClInclude Include="CppSource\Game\Gimmick\G2D.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GCandle.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GCandleChecker.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h" />
@@ -145,6 +143,7 @@
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshLoadDelegate.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\IMeshRenderDelegate.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMesh.h" />
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshFireRender.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshGLES20Render.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIEM.h" />
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshLoadIMO.h" />

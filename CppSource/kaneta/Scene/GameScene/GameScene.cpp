@@ -126,7 +126,16 @@ namespace klib
 			mesh->render(pipline);
 			stage->Render(pipline);
 
+			Vector3 out,vec(0,0,1);
+			float dist=50.0f;
+			stage->RayPick(&out,mesh->getObj()->getPosition()+(Vector3(0,1,0)),&vec,&dist);
+			
+			kPlane::render(bord,mask,0.5f,0.5f,m_Camera->getPos(),mesh->getObj()->getPosition()+(Vector3(0,1,0)),mesh->getObj()->getPosition()+(Vector3(0,1,0))+Vector3(0,0,50),0,0,0,0);
+			addBord->setShaderValue("alpha",1.0f);
+			kPlane::render(addBord,ring,0.0f,3,3,out,0,0,0,0);
+
 			kPlane::render(bord,mask,1.0f,1.0f,m_Camera->getPos(),math::Vector3(0,1,0),math::Vector3(0,4,4),0,0,0,0);
+			addBord->setShaderValue("alpha",1.0f);
 			kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,1,0),0,0,0,0);
 			kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,4,4),0,0,0,0);
 			ActionMediate::render();

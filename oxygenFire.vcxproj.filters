@@ -247,9 +247,6 @@
     <Filter Include="source\Game\Gimmick\Type\CandleChecker">
       <UniqueIdentifier>{464d4873-2cbc-4f8f-a29e-79c05810e04f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Game\Gimmick\Type\2D">
-      <UniqueIdentifier>{65648053-995c-4c65-9e07-bec900824cc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\kaneta\Scene">
       <UniqueIdentifier>{e0e40579-4a0a-4f00-8a65-40ebbf8fbb66}</UniqueIdentifier>
     </Filter>
@@ -503,9 +500,6 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\Gimmick\GCandleChecker.cpp">
       <Filter>source\Game\Gimmick\Type\CandleChecker</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\Game\Gimmick\G2D.cpp">
-      <Filter>source\Game\Gimmick\Type\2D</Filter>
     </ClCompile>
     <ClCompile Include="CppSource\kaneta\Scene\GameScene\GameScene.cpp">
       <Filter>source\kaneta\Scene\GameScene</Filter>
@@ -842,9 +836,6 @@
     <ClInclude Include="CppSource\Game\Gimmick\GCandleChecker.h">
       <Filter>source\Game\Gimmick\Type\CandleChecker</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\Game\Gimmick\G2D.h">
-      <Filter>source\Game\Gimmick\Type\2D</Filter>
-    </ClInclude>
     <ClInclude Include="CppSource\kaneta\Scene\GameScene\GameScene.h">
       <Filter>source\kaneta\Scene\GameScene</Filter>
     </ClInclude>
@@ -856,6 +847,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\kaneta\Scene\YesOrNoScene\YesOrNoScene.h">
       <Filter>source\kaneta\Scene\YesOrNoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshFireRender.h">
+      <Filter>source\GraphicsLib\Class\kMesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include "kMesh.h"
 #include "IMeshLoadDelegate.h"
 #include "IMeshRenderDelegate.h"
+#include "EffectLib\Effect.h"
 
 namespace klib
 {
@@ -83,6 +84,219 @@ namespace klib
 		m_TransMatrix = MatScale * m_TransMatrix;
 
 		m_bChanged=false;
+	}
+
+	//**************************************************************************************************
+	//
+	//		レイピック
+	//
+	//**************************************************************************************************
+	//------------------------------------------------------
+	//		レイピック
+	//------------------------------------------------------
+	int	kMesh::RayPick( math::Vector3* out, const math::Vector3& pos, math::Vector3* vec,float* Dist)
+	{
+		int		ret = -1;
+
+		if( vec->x == .0f && vec->z == .0f ) return RayPickUD( out, pos, vec ,Dist);
+
+		Matrix inv=m_TransMatrix;
+		inv.inverse();
+
+		Vector3 p = pos;
+		Vector3 vv = *vec;
+
+		p.trans(inv);
+		vv.trans3x3(inv);
+
+		float neart = *Dist;
+		float dist = *Dist;
+		*out = p;
+
+
+		//	頂点サイズ計算
+		int VertexSize = this->mp_MeshData->m_Info.NumVertex;
+
+		//	バッファロック
+		kMeshVertex	*pVertices=this->mp_MeshData->mp_Vertex;
+		u16		*pIndices=this->mp_MeshData->m_Info.Index;
+		u32 NumFace = this->mp_MeshData->m_Info.NumFace;
+
+		Vector3 v1, v2, v3;
+		Vector3	n;
+		Vector3	l1, l2, l3;
+		Vector3	temp;
+		Vector3	cp;
+
+		Vector3 p1, p2, p3;
+
+		//dprintf("%d %u",VertexSize,NumFace);
+		for( u32 j=0 ; j<NumFace ; j++ )
+		{
+			//dprintf("%d",j);
+			//	面頂点取得
+			int a = pIndices[j*3+0];
+			v1.x = pVertices[a].m_Pos.x;	v1.y = pVertices[a].m_Pos.y;	v1.z = pVertices[a].m_Pos.z;
+			//dprintf("v1 a=%u x=%f y=%f z=%f",a,v1.x,v1.y,v1.z);
+
+			int b = pIndices[j*3+1] ;
+			v2.x = pVertices[b].m_Pos.x;	v2.y = pVertices[b].m_Pos.y;	v2.z = pVertices[b].m_Pos.z;
+			//dprintf("v2 b=%u x=%f y=%f z=%f",b,v2.x,v2.y,v2.z);
+
+			int c = pIndices[j*3+2];
+			v3.x = pVertices[c].m_Pos.x;	v3.y = pVertices[c].m_Pos.y;	v3.z = pVertices[c].m_Pos.z;
+			//dprintf("v3 c=%u x=%f y=%f z=%f",c,v3.x,v3.y,v3.z);
+
+			//	距離判定
+			//Vector3	ss = (v1 + v2 + v3) / 3.0f - p;
+			//if( ss.LengthSq() > dist ) continue;
+			l1.x = v2.x - v1.x;
+			l1.y = v2.y - v1.y;
+			l1.z = v2.z - v1.z;
+			l2.x = v3.x - v2.x;
+			l2.y = v3.y - v2.y;
+			l2.z = v3.z - v2.z;
+
+			//	外積による法線算出		
+			Vector3Cross( &n, l1, l2 );
+			//	内積の結果がプラスならば裏向き
+			float dot = Vector3Dot( vv, n );
+			if( dot >= 0 ) continue;
+			//	交点算出
+			p1.x = v1.x - p.x;
+			p1.y = v1.y - p.y;
+			p1.z = v1.z - p.z;
+			float t = Vector3Dot( n, p1 ) / dot;
+			if( t < .0f || t > neart ) continue;
+
+			cp.x = vv.x*t + p.x;
+			cp.y = vv.y*t + p.y;
+			cp.z = vv.z*t + p.z;
+			//	内点判定
+			p1.x = v1.x - cp.x;
+			p1.y = v1.y - cp.y;
+			p1.z = v1.z - cp.z;
+
+			Vector3Cross( &temp, p1, l1 );
+			if( Vector3Dot(temp, n) < .0f ) continue;
+
+			p2.x = v2.x - cp.x;
+			p2.y = v2.y - cp.y;
+			p2.z = v2.z - cp.z;
+			Vector3Cross( &temp, p2, l2 );
+			if( Vector3Dot(temp, n) < .0f ) continue;
+
+			l3.x = v1.x - v3.x;
+			l3.y = v1.y - v3.y;
+			l3.z = v1.z - v3.z;
+			p3.x = v3.x - cp.x;
+			p3.y = v3.y - cp.y;
+			p3.z = v3.z - cp.z;
+			Vector3Cross( &temp, p3, l3 );
+			if( Vector3Dot(temp, n) < .0f ) continue;
+
+			*out = cp;
+			*vec = n;
+			ret = j;
+			neart = t;
+		}
+
+		*Dist = neart;
+
+		out->trans(m_TransMatrix);
+		vec->trans3x3(m_TransMatrix);
+
+		if(ret!=-1)eprintf("Hit!!!!!!%f %f %f",out->x,out->y,out->z);
+		return	ret;
+	}
+
+	//------------------------------------------------------
+	//		上下最適化
+	//------------------------------------------------------
+	int	kMesh::RayPickUD( math::Vector3* out, const math::Vector3& pos, math::Vector3* vec,float* Dist )
+	{
+		float	t, neart;
+		float	vy;
+		int		ret = -1;
+
+		int		VertexSize;
+
+		Vector3	p = pos;
+		vy = vec->y;
+
+		neart = *Dist;
+
+		//	頂点サイズ計算
+		VertexSize = this->mp_MeshData->m_Info.NumVertex;
+
+		//	バッファロック
+		kMeshVertex	*pVertices=this->mp_MeshData->mp_Vertex;
+		u16		*pIndices=this->mp_MeshData->m_Info.Index;
+		int NumFace = this->mp_MeshData->m_Info.NumFace;
+
+		Vector3	l1, l2, l3;
+		Vector3	p1, p2, p3;
+		Vector3 v[3];
+		Vector3 n;
+
+		for( int j=0 ; j<NumFace ; j++ )
+		{
+			//	面頂点取得
+			int a = pIndices[j*3+0] * VertexSize;
+			int b = pIndices[j*3+1] * VertexSize;
+			int c = pIndices[j*3+2] * VertexSize;
+
+			v[0].x = pVertices[a].m_Pos.x;	v[1].x = pVertices[b].m_Pos.x;	v[2].x = pVertices[c].m_Pos.x;
+			if( v[0].x > p.x && v[1].x > p.x && v[2].x > p.x ) continue;
+
+			v[0].z = pVertices[a+2].m_Pos.z;	v[1].z = pVertices[b+2].m_Pos.z;	v[2].z = pVertices[c+2].m_Pos.z;
+			if( v[0].z > p.z && v[1].z > p.z && v[2].z > p.z ) continue;
+
+			v[0].y = pVertices[a+1].m_Pos.y;	v[1].y = pVertices[b+1].m_Pos.y;	v[2].y = pVertices[c+1].m_Pos.y;
+
+
+			//	内点判定（全外積がマイナス）		
+			l1.x = v[1].x - v[0].x;
+			l1.z = v[1].z - v[0].z;
+			p1.x = v[0].x - p.x;
+			p1.z = v[0].z - p.z;
+			if( (p1.x*l1.z - p1.z*l1.x)*vy < 0 ) continue;
+
+			l2.x = v[2].x - v[1].x;
+			l2.z = v[2].z - v[1].z;
+			p2.x = v[1].x - p.x;
+			p2.z = v[1].z - p.z;
+			if( (p2.x*l2.z - p2.z*l2.x)*vy < 0 ) continue;
+
+			l3.x = v[0].x - v[2].x;
+			l3.z = v[0].z - v[2].z;
+			p3.x = v[2].x - p.x;
+			p3.z = v[2].z - p.z;
+			if( (p3.x*l3.z - p3.z*l3.x)*vy < 0 ) continue;
+
+			//	外積による法線算出		
+			l1.y = v[1].y - v[0].y;
+			l2.y = v[2].y - v[1].y;
+			Vector3Cross( &n, l1, l2 );
+			//	表裏判定
+			if( vy*n.y >= 0 ) continue;
+
+			//	交点算出
+			p1.y = v[0].y - p.y;
+			t = Vector3Dot( n, p1 ) / (n.y*vy);
+			if( t < .0f || t > neart ) continue;
+
+			*vec = n;
+			ret = j;
+			neart = t;
+		}
+
+		out->y = neart*vy + p.y;
+		out->x = p.x;
+		out->z = p.z;
+		*Dist = neart;
+
+		return	ret;
 	}
 
 	//**************************************************************************************************
@@ -317,6 +531,15 @@ namespace klib
 				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_TexCoord=mp_Original[m_Skin->mp_Bone[i].Index[j]].m_TexCoord;
 			}
 		}
+
+			for(int i=0;i<20;i++)
+			{
+				s32 index=(s32)(math::kcube(drand48())*(mp_MeshData->m_Info.NumVertex-177));
+				//s32 index = lrand48()%(m_MeshData->m_Info.NumVertex-177);
+				Vector3 birthPos=mp_MeshData->mp_Vertex[index].m_Pos;
+				birthPos.trans(m_TransMatrix);
+				EffectLib::Particle_Singleton::getInstance()->Setting_Single(EffectLib::Particle::SINGLE_NORMAL,30,birthPos,Vector3(0,0,0),drand48()*0.15f+0.1f,COLOR(255,128,64,255),COLOR(255,128,64,255),COLOR(255,128,64,255));
+			}
 
 	}
 

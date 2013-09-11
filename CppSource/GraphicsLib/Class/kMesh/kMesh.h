@@ -197,8 +197,8 @@ namespace klib
 		//------------------------------------------------------
 		//	ƒŒƒC”»’è
 		//------------------------------------------------------
-		//int	RayPick( math::Vector3* out, const math::Vector3& pos, math::Vector3* vec, float* Dist );
-		//int	RayPickUD( math::Vector3* out, const math::Vector3& pos, math::Vector3* vec, float* Dist );
+		int	RayPick( math::Vector3* out, const math::Vector3& pos, math::Vector3* vec,float* Dist);
+		int	RayPickUD( math::Vector3* out, const math::Vector3& pos, math::Vector3* vec,float* Dist);
 
 		inline s32 getUseCount()const{return *mp_UseCount;}
 		inline const kMeshData* getMeshPtr()const{return mp_MeshData;}

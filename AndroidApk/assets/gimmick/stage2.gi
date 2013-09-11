@@ -1,4 +1,4 @@
-count 10
+count 9
 index 0 {
  name	CANDLE_B
  type	6
@@ -77,14 +77,4 @@ index 8 {
  pos	1.41964 0 1.85466
  angle	-0 0 0
  scale	1.46838 1.46838 1.46838
-}
-index 9 {
- name	2D_0
- type	10
- checkOn	END@
- checkOff	END@
- pos	-4.4983 1.23 0.128383
- angle	-0 0 0
- scale	1.46838 1.46838 1.46838
- imagePath	gimmick/2D/BYWRPG.png
 }

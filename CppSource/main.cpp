@@ -146,7 +146,7 @@ JNIEXPORT void JNICALL Java_jp_ac_ecc_oxygenfire_GL2JNILib_init(JNIEnv * env, jo
 	////ƒV[ƒ“Š„‚è“–‚Ä
 	framework.sceneChange(TitleScene::_getInstancePtr());
 
-	framework.scenePush( rTestScene::_getInstancePtr() );
+	//framework.scenePush( rTestScene::_getInstancePtr() );
 	
 	LOGI(TAG, "Complete graphic init");
 }

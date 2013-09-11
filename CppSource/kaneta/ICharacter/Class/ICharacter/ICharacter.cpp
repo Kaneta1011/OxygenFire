@@ -9,8 +9,8 @@
 namespace klib
 {
 
-	ICharacter::ICharacter(const char* filename):m_NextStrategy(NULL),mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshGLES20Render)){}
-	ICharacter::ICharacter(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button):m_NextStrategy(NULL),mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshGLES20Render)),m_Stick(stick),m_Button(button){}
+	ICharacter::ICharacter(const char* filename):m_NextStrategy(NULL),mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshFireRender)){}
+	ICharacter::ICharacter(const char* filename,const rlib::AnalogStick* stick,const rlib::IButton* button):m_NextStrategy(NULL),mp_Mesh(new kSkin(filename,new kMeshLoadIEM,new kMeshFireRender)),m_Stick(stick),m_Button(button){}
 
 	void ICharacter::setStrategy(ICharaStrategy* strategy)
 	{
