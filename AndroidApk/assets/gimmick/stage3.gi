@@ -2,8 +2,8 @@ count 3
 index 0 {
  name	FAN_0
  type	5
- checkOn	FAN_0 END@
- checkOff	FAN_0 END@
+ checkOn	END@
+ checkOff	END@
  pos	-0 2.57215 0.392824
  angle	0 0 0
  scale	1.58245 1.58245 1.58245
@@ -22,11 +22,11 @@ index 1 {
 index 2 {
  name	WIND_FAN_0
  type	9
- checkOn	END@
- checkOff	END@
+ checkOn	FAN_0 END@
+ checkOff	FAN_0 END@
  pos	-0 2.36207 5.28004
  dir	0.0174649 0 0.999847
- power	4
+ power	10
  scale	2.19933 2.19933 4.14363
  isRender	1
 }
