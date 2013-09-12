@@ -363,7 +363,7 @@ namespace klib
 			//頂点、インデックスバッファを作成
 			//ついでにマテリアルごとに分ける
 			//CreateBuffer();
-			dprintf("kSkin Load End");
+			dprintf("kSkin Load End hoge");
 			mp_RenderDelegate->CreateBuffer(this);
 			*mp_UseCount = 0;
 		}
@@ -545,16 +545,6 @@ namespace klib
 				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_TexCoord=mp_Original[m_Skin->mp_Bone[i].Index[j]].m_TexCoord;
 			}
 		}
-
-			for(int i=0;i<20;i++)
-			{
-				s32 index=(s32)(math::kcube(drand48())*(mp_MeshData->m_Info.NumVertex-177));
-				//s32 index = lrand48()%(m_MeshData->m_Info.NumVertex-177);
-				Vector3 birthPos=mp_MeshData->mp_Vertex[index].m_Pos;
-				birthPos.trans(m_TransMatrix);
-				EffectLib::Particle_Singleton::getInstance()->Setting_Single(EffectLib::Particle::SINGLE_NORMAL,30,birthPos,Vector3(0,0,0),drand48()*0.15f+0.1f,COLOR(255,128,64,255),COLOR(255,128,64,255),COLOR(255,128,64,255));
-			}
-
 	}
 
 	//**************************************************************************************************

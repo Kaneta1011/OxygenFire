@@ -20,8 +20,8 @@ Bullet::Bullet():
 
 Bullet::~Bullet()
 {
-	if( this->mEmitter.IsExist() )
-		this->mEmitter->End();
+	//if( this->mEmitter.IsExist() )
+	//	this->mEmitter->End();
 }
 
 void Bullet::init(BulletInfo& info)
@@ -31,12 +31,12 @@ void Bullet::init(BulletInfo& info)
 	this->mVelocity = info.velocity;
 	this->mTemperature = info.temperature;
 
-	this->mEmitter.Clear();
-	this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
-	this->mEmitter->Setting_Position( this->mPos );
-	this->mEmitter->Setting_Velocity(this->mVelocity);
-	this->mEmitter->Setting_Scale( this->mRange.x );
-	this->mEmitter->Loop();
+	//this->mEmitter.Clear();
+	//this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::FIRE_BALL );
+	//this->mEmitter->Setting_Position( this->mPos );
+	//this->mEmitter->Setting_Velocity(this->mVelocity);
+	//this->mEmitter->Setting_Scale( this->mRange.x );
+	//this->mEmitter->Loop();
 }
 
 int Bullet::update()
@@ -49,13 +49,13 @@ int Bullet::update()
 	   fabs( this->mPos.z ) > 20.f ||
 	   !mIsAlive )
 	{
-		if( this->mEmitter.IsExist() )
-			this->mEmitter->End();
+		//if( this->mEmitter.IsExist() )
+		//	this->mEmitter->End();
 		return MSG_DEAD;
 	}
-	if( this->mEmitter.IsExist() ){
-		this->mEmitter->Setting_Position( this->mPos );
-	}
+	//if( this->mEmitter.IsExist() ){
+	//	this->mEmitter->Setting_Position( this->mPos );
+	//}
 	mCount ++;
 
 	return MSG_NON;
@@ -78,7 +78,7 @@ void Bullet::render()
 #include "Game\CommonPipeline\GameCommonPipeline.h"
 
 using namespace klib;
-klib::kMesh					*mpMesh;
+klib::kMesh					*mpMesh = NULL;
 
 static const char* TAG_M = "BulletManager";
 
@@ -94,7 +94,7 @@ void BulletManager::clear()
 {
 	LOGI(TAG_M,"Execute bullet Manager clear");
 	clearData();
-	delete mpMesh;
+	if( mpMesh ){ delete mpMesh; mpMesh = NULL; }
 	LOGI(TAG_M,"Complete bullet Manager clear");
 }
 
@@ -168,7 +168,7 @@ void BulletManager::render()
 	Iterator it = this->mData.begin();
 	while( !it.isEnd() )
 	{
-		//it->render();
+		it->render();
 		mpMesh->setPosition(it->getPos());
 		mpMesh->Update();
 		mpMesh->Render(GameCommonPipeline::getPipeline());

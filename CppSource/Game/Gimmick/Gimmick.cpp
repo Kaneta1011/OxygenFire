@@ -10,6 +10,7 @@
 #include "Ueda\rTestScene.h"
 
 #include "utility\debugMessageMng.h"
+#include "utility/textLoader.h"
 
 #include "kaneta\ActionMediate\ActionMediate.h"
 #include "input\Input.h"
@@ -96,7 +97,8 @@ static klib::kMesh* debugMesh = NULL;
 static bool isDebugMesh = false;
 #endif
 
-GimmickManager::GimmickManager()
+GimmickManager::GimmickManager():
+	mppMeshies(NULL)
 {
 }
 
@@ -109,10 +111,14 @@ void GimmickManager::clear()
 	LOGI(TAG, "Execute GimmickManager::clear\n");
 	clearData();
 #ifndef ANDROID_REDNER
-	delete debugMesh;
-	for( int i=0; i<eMESH_TYPE_NUM; i++ )
-	{
-		if( this->mpMeshies[i] ){ delete this->mpMeshies[i]; this->mpMeshies[i] = NULL; }
+	if( debugMesh ){ delete debugMesh; debugMesh = NULL; }
+	if( this->mppMeshies ){
+		for( int i=0; i<eMESH_TYPE_NUM; i++ )
+		{
+			if( this->mppMeshies[i] ){ delete this->mppMeshies[i]; this->mppMeshies[i] = NULL; }
+		}
+		delete [] this->mppMeshies;
+		this->mppMeshies = NULL;
 	}
 #endif
 	LOGI(TAG, "Complete GimmickManager::clear\n");
@@ -144,8 +150,9 @@ void GimmickManager::init(const char* giFilePath)
 #ifndef ANDROID_REDNER
 	TEST_POS_NUM = 0;
 #endif
-	this->mData.resize(infos.size());
-	for( size_t i=0; i<infos.size(); i++ )
+	size_t makeNum = infos.size();
+	this->mData.resize(makeNum);
+	for( size_t i=0; i<makeNum; i++ )
 	{
 		if( infos[i] ){
 			this->mData[i] = infos[i]->makeGimmick();
@@ -157,9 +164,10 @@ void GimmickManager::init(const char* giFilePath)
 #endif
 		}
 	}
+	LOGI(TAG, "start listener set!\n");
 
 //リスナーの登録
-	for( size_t i=0; i<infos.size(); i++ )
+	for( size_t i=0; i<makeNum; i++ )
 	{
 		IGimmick* g = this->mData[i];
 		GimmickInfoBase* info = infos[i];
@@ -211,6 +219,16 @@ void GimmickManager::init(const char* giFilePath)
 #endif
 
 #ifndef ANDROID_REDNER
+	LOGI(TAG, "start mesh scale file!\n");
+	textLoader loader("gimmick/meshScale.txt");
+	mMeshScales.resize(eGIMMICK_TYPE_NUM);
+	for( int i=0; i<eGIMMICK_TYPE_NUM; i++ )
+	{
+		loader.LoadString(loader.tmpBuf);
+		mMeshScales[i] = loader.LoadFloat();
+		LOGI(TAG, "%d | scale = %,5f", i, mMeshScales[i] );
+	}
+	LOGI(TAG, "finish mesh scale file!\n");
 	loadMeshes();
 #endif
 
@@ -222,13 +240,17 @@ void GimmickManager::init(const char* giFilePath)
 #ifndef ANDROID_REDNER
 void GimmickManager::loadMeshes()
 {
-	this->mpMeshies.SetPtr(new klib::kMesh*, true, eMESH_TYPE_NUM);
-	this->mpMeshies[eMESH_DRUM] = new klib::kMesh("gimmick/drum/ittokan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mpMeshies[eMESH_GASOLINE] = new klib::kMesh("gimmick/gasoline/gaso.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mpMeshies[eMESH_WOOD_BOX] = new klib::kMesh("gimmick/wood_box/kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies = new klib::kMesh*[eMESH_TYPE_NUM];
+	for( int i=0; i<eMESH_TYPE_NUM; i++ ){
+		this->mppMeshies[i] = NULL;
+	}
+
+	this->mppMeshies[eMESH_DRUM] = new klib::kMesh("gimmick/drum/ittokan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies[eMESH_GASOLINE] = new klib::kMesh("gimmick/gasoline/gaso.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies[eMESH_WOOD_BOX] = new klib::kMesh("gimmick/wood_box/kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	//this->mpMeshies[eMESH_GABERAGE_BOX] = new klib::kMesh("Placement/gomibukuro.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mpMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mpMeshies[eMESH_RESET_CANDLE] = new klib::kMesh("gimmick/candle/resetCandleS2.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies[eMESH_RESET_CANDLE] = new klib::kMesh("gimmick/candle/resetCandleS2.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	LOGI(TAG, "Successed gimmick meshes | count = %d", eMESH_TYPE_NUM);
 }
 #endif
@@ -238,27 +260,28 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 {
 	if( isDebugMesh ){ *outUnitScale = 0.02f; return debugMesh; }
 
+	*outUnitScale =  mMeshScales[type];
 	int index = 0;
 	switch(type)
 	{
-	case eGIMMICK_DRUM:			*outUnitScale = 0.01f; index = eMESH_DRUM; break;//ドラム缶
-	case eGIMMICK_GASOLINE:		*outUnitScale = 0.01f; index = eMESH_GASOLINE; break;	//ガソリン
-	case eGIMMICK_GARBAGE_BAG:	*outUnitScale = 0.01f; index = eMESH_CARD_BOARD; break;	//ゴミ袋
-	case eGIMMICK_WOOD_BOX:		*outUnitScale = 0.01f; index = eMESH_WOOD_BOX; break;	//木箱
-	case eGIMMICK_CARDBOARD:	*outUnitScale = 0.01f; index = eMESH_CARD_BOARD; break;	//ダンボール
+	case eGIMMICK_DRUM:			index = eMESH_DRUM; break;//ドラム缶
+	case eGIMMICK_GASOLINE:		index = eMESH_GASOLINE; break;	//ガソリン
+	case eGIMMICK_GARBAGE_BAG:	index = eMESH_CARD_BOARD; break;	//ゴミ袋
+	case eGIMMICK_WOOD_BOX:		index = eMESH_WOOD_BOX; break;	//木箱
+	case eGIMMICK_CARDBOARD:	index = eMESH_CARD_BOARD; break;	//ダンボール
 	//case eGIMMICK_FAN:			break;	//扇風機
-	case eGIMMICK_RESET_CANDLE:	*outUnitScale = 1.f; index = eMESH_RESET_CANDLE; break;	//リセットろうそく
+	case eGIMMICK_RESET_CANDLE:	index = eMESH_RESET_CANDLE; break;	//リセットろうそく
 	case eGIMMICK_CANDLE_CHECKER:	break;
-	case eGIMMICK_CANDLE:		*outUnitScale = 1.f;	break;	//ろうそく
+	case eGIMMICK_CANDLE:		break;	//ろうそく
 	case eGIMMICK_FUSE:			break;	//導火線
-	case eGIMMICK_FUSE_POINT:	*outUnitScale = 0.005f; index = eMESH_DRUM; break;	//導火線の両端
+	case eGIMMICK_FUSE_POINT:	index = eMESH_DRUM; break;	//導火線の両端
 	case eGIMMICK_WIND:			break;	//風
-	//case eGIMMICK_2D:			break;	//2D描画
+	case eGIMMICK_2D:			break;	//2D描画
 	case eGIMMICK_GOAL:			break;	//ゴールの扉
 	default:
 		LOGE(TAG, "unknwon type = %d!! GimmickManager::getMesh()", type);
 	}
-	return this->mpMeshies[index];
+	return this->mppMeshies[index];
 }
 #endif
 
@@ -266,14 +289,13 @@ klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 int GimmickManager::update()
 {
 	//LOGI(TAG,"gimmick update");
-	static int oldTouchCount = -1;
 #ifndef ANDROID_REDNER
+	static int oldTouchCount = -1;
 	if( mlInput::getNowTouchCount() == 3 && oldTouchCount != 3 ){
 		isDebugMesh = !isDebugMesh;
 	}
 	oldTouchCount = mlInput::getNowTouchCount();
 #endif
-
 	for( unsigned int i=0; i<this->mData.size(); i++ )
 	{
 		IGimmick* g = this->mData[i];

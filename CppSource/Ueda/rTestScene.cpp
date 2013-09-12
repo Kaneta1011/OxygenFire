@@ -26,7 +26,7 @@
 #include "Game\SaveManager.h"
 #include "kaneta\ActionMediate\ActionMediate.h"
 #include "GraphicsLib\Class\kPlane\kPlane.h"
-#include "testScene.h"
+#include "kaneta\Scene\GameScene\GameScene.h"
 
 using namespace RenderLib;
 using namespace klib::math;
@@ -76,13 +76,12 @@ void rTestScene::threadFunc(rTestScene* obj)
 	obj->mStick->loadImage("cursor.png","testImage.png");
 
 	GameCommonPipeline::init();
-	STAGE.init("stage/stage2.IMO");
 	sPlacementManager->Load("Placement/stage1.mqo");
 
 //プレイヤーの設定
 #ifdef USE_PLAYER
-	testScene::_getInstance().setCamera( new kPlayCamera(obj->mPlayer,Vector3(0,0,0),Vector3(0,0,0)) );
-	obj->mPlayer=new kPlayer("kanetaPlace/kman.IEM",obj->mStick,obj->mButton);
+	GameScene::_getInstance().setCamera( new kPlayCamera(obj->mPlayer,Vector3(0,0,0),Vector3(0,0,0)) );
+	obj->mPlayer=new kPlayer("kanetaPlace/fireman.IEM",obj->mStick,obj->mButton);
 	obj->mPlayer->getObj()->setScale(0.01f);
 	obj->mPlayer->getObj()->setPosition(0,0,-5);
 	obj->mPlayer->getObj()->setAngle(0);
@@ -94,7 +93,7 @@ void rTestScene::threadFunc(rTestScene* obj)
 	klib::ActionMediate::init();
 
 	rlib::BulletManager::getInst().init();
-	GIMMICK_MNG.init("gimmick/stage2.gi");
+	STAGE.init("stageInfo.txt");
 
 	LOGI(TAG,"Complete rTestScene init");
 
@@ -146,8 +145,8 @@ void rTestScene::update()
 	mStick->update();
 #ifdef USE_PLAYER
 	math::kclampf(K_PI/8.0f,K_PI/1.5f,&a);
-	testScene::_getInstance().getCamera()->setFov(a);
-	testScene::_getInstance().getCamera()->update();
+	GameScene::_getInstance().getCamera()->setFov(a);
+	GameScene::_getInstance().getCamera()->update();
 	mPlayer->update();
 #else
 	if( this->mStick->enable() )
@@ -168,7 +167,7 @@ void rTestScene::update()
 	STAGE.update();
 	BULLET_MNG.update();
 	GIMMICK_MNG.update();
-	BULLET_MNG.collision( GIMMICK_MNG );
+	//BULLET_MNG.collision( GIMMICK_MNG );
 
 #ifdef USE_PLAYER
 	{//プレイヤーのギミックとの当たり判定
@@ -218,7 +217,6 @@ void rTestScene::exit()
 	LOGI(TAG,"delete mStick");
 
 	rlib::BulletManager::getInst().clear();
-	GIMMICK_MNG.clear();
 	STAGE.clear();
 
 	if( this->mPlayer){ delete this->mPlayer; }

@@ -173,3 +173,36 @@ bool GGimmickInfo::loadParam(textLoader& loader)
 	}
 	return true;
 }
+
+#ifdef ANDROID_REDNER
+const char* TYPE_NAMES[]={
+		"Drum",				//eGIMMICK_DRUM,			//ドラム缶
+		"Gasoline",			//eGIMMICK_GASOLINE,		//ガソリン
+		"GarbageBag",		//eGIMMICK_GARBAGE_BAG,	//ゴミ袋
+		"WoodBox",			//eGIMMICK_WOOD_BOX,		//木箱
+		"CardBoad",			//eGIMMICK_CARDBOARD,		//ダンボール
+		"Fan",				//eGIMMICK_FAN,			//扇風機
+		"Candle",			//eGIMMICK_CANDLE,		//ろうそく
+		"Fuse",				//eGIMMICK_FUSE,			//導火線
+		"FusePoint",		//eGIMMICK_FUSE_POINT,	//導火線の両端
+		"Wind",				//eGIMMICK_WIND,			//風
+		"2D",				//eGIMMICK_2D,			//2D描画
+		"Goal",				//eGIMMICK_GOAL,			//ゴール
+		"ResetCandle",		//eGIMMICK_RESET_CANDLE,	//リセットろうそく
+		"CandleChecker",	//eGIMMICK_CANDLE_CHECKER,	//ろうそくチェッカー
+};
+
+void rlib::writeGimmickMeshScale(const char* filePath)
+{
+	int num = sizeof(TYPE_NAMES)/sizeof(TYPE_NAMES[0]);
+	if( num < eGIMMICK_TYPE_NUM ){
+		LOGE("GimmickInfo.h","writeGimmickMeshScale() : Please add TYPE_NAMES element!!");
+		return;
+	}
+	std::ofstream stream(filePath);
+	for( int i=0; i<num; i++ )
+	{
+		stream << TYPE_NAMES[i] << " " << 0.f << endl;
+	}
+}
+#endif

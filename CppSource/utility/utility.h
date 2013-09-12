@@ -13,7 +13,7 @@
 
 #define checkGlError(TAG, op) \
     for (GLint error = glGetError(); error; error = glGetError()) {\
-        LOGI(TAG, "after %s() glError (0x%x)\n", op, error);\
+        LOGE(TAG, "after %s() glError (0x%x)\n", op, error);\
     }
 
 jint getJNIEnv(JNIEnv** env);

@@ -9,7 +9,6 @@ namespace rlib
 		static bool save();
 		static bool load();
 
-
 	};
 }
 

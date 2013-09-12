@@ -39,13 +39,15 @@ IGimmick* GGoalInfo::makeGimmick()
 GGoal::GGoal(GGoalInfo& info):
 	IGimmickObj(&info)
 #ifndef ANDROID_REDNER
-	,mpSkin(new klib::kSkin("gimmick/door/door_animation.IEM", new klib::kMeshLoadIEM, new klib::kMeshGLES20Render()))
+	,mpSkin(NULL)
 #endif
 {
 #ifndef ANDROID_REDNER
+	LOGI("GGoal"," in constructer\n");
+	mpSkin = new klib::kSkin( "gimmick/door/door_animation.IEM", new klib::kMeshLoadIEM, new klib::kMeshGLES20Render() );
 	this->mpSkin->setPosition(this->mPos);
 	this->mpSkin->setAngle(this->mAngle);
-	this->mpSkin->setScale(this->mRange*1.f);
+	this->mpSkin->setScale(this->mRange);
 	this->mpSkin->SetMotion(0);
 #endif
 }
@@ -93,6 +95,8 @@ void GGoal::flagOffListener(IGimmick* thiz)
 #ifndef ANDROID_REDNER
 void GGoal::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
+	this->mpSkin->setScale(this->mRange*scale);
+	this->mpSkin->Update();
 	this->mpSkin->Render(pipeline);
 }
 #endif

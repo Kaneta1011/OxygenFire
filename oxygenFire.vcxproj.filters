@@ -262,6 +262,9 @@
     <Filter Include="source\kaneta\Scene\YesOrNoScene">
       <UniqueIdentifier>{0e190072-71c9-495b-9262-b362e5aa8f7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Game\Gimmick\Type\2D">
+      <UniqueIdentifier>{a49d3147-00fc-4f8a-93b5-35f74a512d3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -515,6 +518,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\kaneta\Scene\YesOrNoScene\YesOrNoScene.cpp">
       <Filter>source\kaneta\Scene\YesOrNoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\G2D.cpp">
+      <Filter>source\Game\Gimmick\Type\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -850,6 +856,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\GraphicsLib\Class\kMesh\kMeshFireRender.h">
       <Filter>source\GraphicsLib\Class\kMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\G2D.h">
+      <Filter>source\Game\Gimmick\Type\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

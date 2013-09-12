@@ -45,7 +45,6 @@ namespace klib
 		friend class ktl::kSingleton<GameScene>;
 	private:
 		ktl::sp<ICamera> m_Camera;
-		kMesh* stage;
 		kPlayer* mesh;
 		kGraphicsPipline* pipline;
 		kGraphicsPipline* bord;

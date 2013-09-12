@@ -10,9 +10,10 @@ namespace klib
 {
 	kPlayerMove::kPlayerMove(ICharacter* acter)
 	{
+		dprintf("start kPlayerMove");
 		ICamera* camera=GameScene::_getInstance().getCamera();
-
 		GameScene::_getInstance().setCamera(new kPlayCamera2(acter,camera->getPos(),camera->getAngle()));
+		dprintf("end kPlayerMove");
 	}
 		void kPlayerMove::calcAngle(ICharacter* acter)
 		{

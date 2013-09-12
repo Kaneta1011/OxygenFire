@@ -137,7 +137,7 @@ bool IGExplosion::updateTemperature()
 
 #ifndef ANDROID_REDNER
 		if( this->mIsExplosion ){
-			sEffectManager->Create(EXPRO, this->mPos);
+			sEffectManager->Create(EXPRO, this->mPos, this->getRadius());
 		}
 
 		if( !this->wpBurning.IsExist() ){
@@ -236,7 +236,7 @@ bool GDrum::vs(Bullet* op)
 	{
 		if( isOverTemperature() )
 		{//’e‚Å‚Í”š”­‚³‚¹‚È‚¢
-			//this->mTemperature = this->mLimitTemperature-1;
+			this->mTemperature = this->mLimitTemperature-1;
 		}
 		return true;
 	}

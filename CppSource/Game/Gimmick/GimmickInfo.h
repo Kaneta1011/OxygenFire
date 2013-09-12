@@ -33,6 +33,9 @@ namespace rlib
 		eGIMMICK_TYPE_NUM,
 		eGIMMICK_UNKNOWN
 	};
+#ifdef ANDROID_REDNER
+	void writeGimmickMeshScale(const char* filePath);
+#endif
 	GIMMICK_TYPE getGimmickType(PlacementLib::ePLACEMENT_TYPE type);
 
 	struct GimmickInfoBase{

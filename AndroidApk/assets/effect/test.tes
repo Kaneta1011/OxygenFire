@@ -1,4 +1,4 @@
-EmitterMax 2 
+EmitterMax 1
 
 Emitter { 
 	EmitterName "[P]_NewEmitter0" 
@@ -71,74 +71,4 @@ Emitter {
 	} 
 } 
 
-Emitter { 
-	EmitterName "[P]_NewEmitter1" 
-	EmitterType "particle" 
-
-	EmitterParameters { 
-		Common { 
-			StartFrame 0 
-			Life 111 0 0 
-			Velocity { 
-				Value 0.000000 0.000000 0.000000 
-				RandMin 0.000000 0.000000 0.000000 
-				RandMax 0.000000 0.000000 0.000000 
-			} 
-			InitPos { 
-				Value 0.000000 0.000000 0.000000 
-				RandMin 0.000000 0.000000 0.000000 
-				RandMax 0.000000 0.000000 0.000000 
-			} 
-			Force { 
-				Value 0.000000 0.000000 0.000000 
-				RandMin 0.000000 0.000000 0.000000 
-				RandMax 0.000000 0.000000 0.000000 
-			} 
-			AddVec { 
-				Start 0.000000 0.000000 0.000000 
-				Middle 0.000000 0.000000 0.000000 
-				End 0.000000 0.000000 0.000000 
-			} 
-		} 
-	}
-	Parameters { 
-		TextureName "light.png" 
-		TextureMoveFlag 0 
-		TextureSize 1 
-		ParticleIndex 0 
-		Life 40 0 0 
-		WindPower 0.000000 
-		CenterPower 0.000000 0.000000 0.000000 
-		Color { 
-			Start 0 255 0 
-			Middle 0 255 0 
-			End 0 255 0 
-		} 
-		RandColor { 
-			Start 0 0 0 
-			Middle 0 0 0 
-			End 0 0 0 
-		} 
-		Scale { 
-			Value 1.000000 1.000000 1.000000 
-			RandMin 0.000000 0.000000 0.000000 
-			RandMax 0.000000 0.000000 0.000000 
-		} 
-		Velocity { 
-			Value 0.000000 0.000000 0.000000 
-			RandMin -0.100000 -0.100000 -0.100000 
-			RandMax 0.100000 0.100000 0.100000 
-		} 
-		InitPos { 
-			Value 0.000000 0.000000 0.000000 
-			RandMin 0.000000 0.000000 0.000000 
-			RandMax 0.000000 0.000000 0.000000 
-		} 
-		Force { 
-			Value 0.000000 0.000000 0.000000 
-			RandMin 0.000000 0.000000 0.000000 
-			RandMax 0.000000 0.000000 0.000000 
-		} 
-	} 
-} 
 

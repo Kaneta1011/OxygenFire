@@ -18,6 +18,12 @@
 #include "GraphicsLib\Class\kMesh\kMeshGLES20Render.h"
 #include "GraphicsLib\Class\r2DObj\r2DObj.h"
 
+//ステージ系
+#include "utility\debugMessageMng.h"
+#include "Game\Stage\Stage.h"
+#include "Game\Gimmick\Gimmick.h"
+#include "Game\CommonPipeline\GameCommonPipeline.h"
+
 namespace klib
 {
 	using namespace rlib;
@@ -56,19 +62,17 @@ namespace klib
 
 			obj->setCamera(new kPlayCamera(NULL,Vector3(0,0,0),Vector3(0,0,0)));
 
+		//ステージ初期化
+			GameCommonPipeline::init();
+			STAGE.init("stageInfo.txt");
+			BULLET_MNG.init();
+
 			obj->mesh=new kPlayer("kanetaPlace/fireman.IEM",obj->mp_Stick,obj->m_Button);
 			obj->mesh->getObj()->setScale(0.01f);
-			obj->mesh->getObj()->setPosition(0,0,0);
+			obj->mesh->getObj()->setPosition(STAGE.getPlayerStartPos());
 			obj->mesh->getObj()->setAngle(0);
 			obj->mesh->getObj()->SetMotion(4);
 			obj->mesh->getObj()->Update();
-
-			obj->stage=new kMesh("testStage/Stage2.imo",new kMeshLoadIMO,new kMeshGLES20Render);
-			obj->stage->setScale(1.0f);
-			obj->stage->setPosition(0,0,0);
-			obj->stage->Update();
-
-
 
 			obj->pipline=new kGraphicsPipline();
 			obj->pipline->createShader("kanetaPlace/shader/vertex.txt","kanetaPlace/shader/pixel.txt");
@@ -91,11 +95,6 @@ namespace klib
 			obj->addBord->createRasterizerState(eSOLID,eNONE,false);
 			obj->addBord->complete(desc2,descnum2);
 
-
-
-			rlib::BulletManager::getInst().init();
-
-
 			g_VM->DetachCurrentThread();
 		}
 		//エントリー処理
@@ -116,20 +115,40 @@ namespace klib
 			m_Button->update();
 			m_Camera->setFov(a);
 			ActionMediate::update(mesh);
+
+		//ステージと弾とギミックの更新
+			STAGE.update();
+			BULLET_MNG.update();
+			GIMMICK_MNG.update();
+			BULLET_MNG.collision(GIMMICK_MNG);
+			{//プレイヤーのギミックとの当たり判定＋風の影響
+				Vector3 playerPos = mesh->getObj()->getPosition();
+				playerPos += GIMMICK_MNG.calWindPower(playerPos, 0.25f);
+				playerPos = GIMMICK_MNG.collision(playerPos, 0.25f);
+
+				mesh->getObj()->setPosition(playerPos);
+				mesh->getObj()->Update();
+			}
+
 			EffectLib::EffectManager_Singleton::getInstance()->Update();
-			//rlib::BulletManager::getInst().update();
+
+			//クリアー判定
+			if( STAGE.isClear() ){
+				DEBUG_MSG_NON_ARAG("Stage Clear!!");
+			}
 		}
 		//描画処理
 		void GameScene::render()
 		{
-			//rlib::BulletManager::getInst().render(pipline);
 			mesh->render(pipline);
-			stage->Render(pipline);
+			STAGE.render();
+			BULLET_MNG.render();
+			GIMMICK_MNG.render();
 
 			Vector3 out,vec(0,-1,0);
 			float dist=10.0f;
-			stage->RayPickUD(&out,mesh->getObj()->getPosition()+(Vector3(0,10,0)),&vec,&dist);
-			
+			STAGE.rayPickUD(&out, mesh->getObj()->getPosition()+(Vector3(0,10,0)),&vec,&dist);
+
 			kPlane::render(bord,mask,0.5f,0.5f,m_Camera->getPos(),mesh->getObj()->getPosition()+(Vector3(0,10,0)),mesh->getObj()->getPosition()+(Vector3(0,10,0))+Vector3(0,-10,0),0,0,0,0);
 			addBord->setShaderValue("alpha",1.0f);
 			kPlane::render(addBord,ring,0.0f,3,3,out,0,0,0,0);
@@ -150,12 +169,13 @@ namespace klib
 		{
 			dprintf("testScene exit");
 			delete bord;
-			delete stage;
 			delete mesh;
 			delete pipline;
 			delete mp_Stick;
 
 			kPlane::release();
-			//rlib::BulletManager::getInst().clear();
+			STAGE.clear();
+			BULLET_MNG.clear();
+			GameCommonPipeline::clear();
 		}
 }
