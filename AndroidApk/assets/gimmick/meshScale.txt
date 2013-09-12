@@ -1,14 +1,14 @@
-Drum 0.01
-Gasoline 0.01
-GarbageBag 0.01
-WoodBox 0.01
-CardBoad 0.01
-Fan 0.01
-Candle 1
-Fuse 0
-FusePoint 0.01
-Wind 0
-2D 0
-Goal 1
-ResetCandle 1
-CandleChecker 0
+Drum 0.1 0.1 0.1
+Gasoline 0.1 0.1 0.1
+GarbageBag 0.1 0.1 0.1
+WoodBox 0.1 0.1 0.1
+CardBoad 0.1 0.1 0.1
+Fan 0.1 0.1 0.1
+Candle 0.1 0.1 0.1
+Fuse 0.1 0.1 0.1
+FusePoint 0.1 0.1 0.1
+Wind 0.1 0.1 0.1
+2D 0.1 0.1 0.1
+Goal 0.1 0.1 0.1
+ResetCandle 0.1 0.1 0.1
+CandleChecker 0.1 0.1 0.1

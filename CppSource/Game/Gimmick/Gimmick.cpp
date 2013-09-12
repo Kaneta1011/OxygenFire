@@ -97,8 +97,10 @@ static klib::kMesh* debugMesh = NULL;
 static bool isDebugMesh = false;
 #endif
 
-GimmickManager::GimmickManager():
-	mppMeshies(NULL)
+GimmickManager::GimmickManager()
+#ifndef ANDROID_REDNER
+	:mppMeshies(NULL)
+#endif
 {
 }
 
@@ -225,8 +227,9 @@ void GimmickManager::init(const char* giFilePath)
 	for( int i=0; i<eGIMMICK_TYPE_NUM; i++ )
 	{
 		loader.LoadString(loader.tmpBuf);
-		mMeshScales[i] = loader.LoadFloat();
-		LOGI(TAG, "%d | scale = %,5f", i, mMeshScales[i] );
+		mMeshScales[i].x = loader.LoadFloat();
+		mMeshScales[i].y = loader.LoadFloat();
+		mMeshScales[i].z = loader.LoadFloat();
 	}
 	LOGI(TAG, "finish mesh scale file!\n");
 	loadMeshes();
@@ -256,9 +259,9 @@ void GimmickManager::loadMeshes()
 #endif
 
 #ifndef ANDROID_REDNER
-klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
+klib::kMesh* GimmickManager::getMesh( int type, klib::math::Vector3* outUnitScale )
 {
-	if( isDebugMesh ){ *outUnitScale = 0.02f; return debugMesh; }
+	if( isDebugMesh ){ outUnitScale->x = outUnitScale->y = outUnitScale->z = 0.02f; return debugMesh; }
 
 	*outUnitScale =  mMeshScales[type];
 	int index = 0;
@@ -444,13 +447,17 @@ void GimmickManager::render()
 	while( it != end() )
 	{
 		if( *it ){
-			float  scale = 0.01f;
+			klib::math::Vector3 scale;
 			klib::kMesh* mesh = getMesh((*it)->getType(), &scale);
 			if( mesh ){
 				if( isDebugMesh ){
 					mesh->setPosition((*it)->getPos());
 					mesh->setAngle((*it)->getAngle());
-					mesh->setScale((*it)->getRange() * scale);
+					Vector3 s = (*it)->getRange();
+					s.x *= scale.x;
+					s.y *= scale.y;
+					s.z *= scale.z;
+					mesh->setScale(s);
 					mesh->Update();
 					mesh->Render(GameCommonPipeline::getPipeline());
 				}else{

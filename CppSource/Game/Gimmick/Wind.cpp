@@ -23,6 +23,8 @@ void GWindInfo::convert(WindData* data, int index)
 	this->type = eGIMMICK_WIND;
 	this->pos = data->spPos[index];
 	this->dir = data->spWindVec[index];
+	this->power = this->dir.length();
+	this->dir.normalize();
 	this->scale = data->spScale[index];
 }
 
@@ -35,6 +37,7 @@ void GWindInfo::forFile(textWriter&  w)
 	writeVec3(pos, w);
 	w.br().write("dir\t");
 	writeVec3(dir, w);
+	w.br().write("power\t").write(this->power);
 	w.br().write("scale\t");
 	writeVec3(scale, w);
 	w.br().write("isRender\t");
@@ -57,6 +60,9 @@ bool GWindInfo::loadParam(textLoader& loader)
 			this->dir.x = loader.LoadFloat();
 			this->dir.y = loader.LoadFloat();
 			this->dir.z = loader.LoadFloat();
+			return true;
+		}else if( strcmp("power",loader.tmpBuf) == 0 ){
+			this->power = loader.LoadFloat();
 			return true;
 		}else if( strcmp("scale",loader.tmpBuf) == 0 ){
 			this->scale.x = loader.LoadFloat();
@@ -89,7 +95,10 @@ IGimmick(&info)
 {
 	this->mPos = info.pos;
 	this->mRate = 1.f;
-	this->mVelocity = this->mMaxVelocity = info.dir;
+	this->mMaxPower = info.power;
+	this->mDirection = info.dir;
+	this->mVelocity = this->mDirection * this->mMaxPower;
+
 	this->mRange = info.scale*0.5f;
 	this->mIsRender = info.isRender;
 
@@ -132,7 +141,7 @@ int GWind::update()
 	if( this->mRate > 1.f ) this->mRate = 1.f;
 	else if( this->mRate < 0.3f ) this->mRate = 0.3f;
 
-	this->mVelocity = this->mMaxVelocity * this->mRate;
+	this->mVelocity = this->mDirection * this->mMaxPower * this->mRate;
 
 #ifndef ANDROID_REDNER
 	if( this->mEmitter.IsExist() )
@@ -162,7 +171,7 @@ void GWind::flagOffListener(IGimmick* thiz)
 }
 
 #ifndef ANDROID_REDNER
-void GWind::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+void GWind::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
 {
 }
 #endif

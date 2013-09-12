@@ -46,7 +46,7 @@ namespace rlib
 		virtual float getRadius(){return this->mRange.x;}
 
 #ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)=0;
+		virtual void render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)=0;
 #else
 		void debugMessage();
 #endif
@@ -93,7 +93,7 @@ namespace rlib
 		virtual float getRadius(){return this->mRadius;}
 
 #ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)=0;
+		virtual void render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)=0;
 #endif
 	protected:
 		float mRadius;

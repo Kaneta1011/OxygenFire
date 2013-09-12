@@ -202,7 +202,7 @@ void rlib::writeGimmickMeshScale(const char* filePath)
 	std::ofstream stream(filePath);
 	for( int i=0; i<num; i++ )
 	{
-		stream << TYPE_NAMES[i] << " " << 0.f << endl;
+		stream << TYPE_NAMES[i] << " " << 0.1f << " " << 0.1f << " " << 0.1f << endl;
 	}
 }
 #endif

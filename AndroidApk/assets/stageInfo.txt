@@ -1,3 +1,4 @@
 stageMeshPath stage/stage1.IMO
 gimmickInfo gimmick/stage1.gi
 startPos 0 0 4
+startOxygen 

@@ -111,6 +111,13 @@ namespace rlib
 
 		unsigned int size(){return this->mData.size();}
 
+		IGimmick*	get(size_t index){
+			if( index >= this->mData.size() ){
+				LOGE("GimmickManager","GimmickManager::get() : Invalid index... | index=%u | maxSize=%u", index, this->mData.size());
+				exit(0);
+			}
+			return this->mData[index];
+		}
 	private:
 		void remove(unsigned int index);
 
@@ -129,13 +136,13 @@ namespace rlib
 	private:
 #ifndef ANDROID_REDNER
 		void loadMeshes();
-		klib::kMesh* getMesh( int type, float* outUnitScale );
+		klib::kMesh* getMesh( int type, klib::math::Vector3* outUnitScale );
 #endif
 	private:
 		ListType mData;
 
 #ifndef ANDROID_REDNER
-		std::vector<float> mMeshScales;
+		std::vector<klib::math::Vector3> mMeshScales;
 
 		klib::kMesh** mppMeshies;
 #endif

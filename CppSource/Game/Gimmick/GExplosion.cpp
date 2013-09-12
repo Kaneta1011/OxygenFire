@@ -189,7 +189,7 @@ bool IGExplosion::updateExplosionCount()
 }
 
 #ifndef ANDROID_REDNER
-void IGExplosion::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+void IGExplosion::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
 {
 	float rate = 1.f;
 	if( this->isFlag() ){

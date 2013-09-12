@@ -36,12 +36,16 @@ namespace rlib
 		void offClearFlag(){this->mIsClear = false; }
 
 		bool isClear()const{ return this->mIsClear; }
+		bool isDead()const{ return this->mOxygen < 0; }
 
 		klib::math::Vector3 getPlayerStartPos()const{return this->mPlayerStartPos; }
+		int					getOxyge()const{ return this->mOxygen; }
+
 	private:
 		bool mIsClear;
 		klib::kMesh *mpMesh;
 		klib::math::Vector3		mPlayerStartPos;
+		int		mOxygen;
 
 	public:
 		static Stage& getInst(){

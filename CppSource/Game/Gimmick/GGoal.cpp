@@ -93,9 +93,13 @@ void GGoal::flagOffListener(IGimmick* thiz)
 }
 
 #ifndef ANDROID_REDNER
-void GGoal::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+void GGoal::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
 {
-	this->mpSkin->setScale(this->mRange*scale);
+	Vector3 s = this->mRange;
+	s.x *= scale.x;
+	s.y *= scale.y;
+	s.z *= scale.z;
+	this->mpSkin->setScale(s);
 	this->mpSkin->Update();
 	this->mpSkin->Render(pipeline);
 }

@@ -8,6 +8,7 @@
 #include "GResetCandle.h"
 #include "GCandleChecker.h"
 #include "G2D.h"
+#include "GFan.h"
 
 #include "PlacementLib/Placement.h"
 #include "utility\textWriter.h"
@@ -88,8 +89,9 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 		//î•—‹@
 		case PLACEMENT_FAN:
 			{
-				LOGE(TAG, "î•—‹@‚Ì•ÏŠ·ˆ—‚ðì‚Á‚Ä‚Ë GimmickInfoManager::loadMqo()\n");
-				//info = ;
+				GFanInfo* fanInfo = new GFanInfo();
+				fanInfo->convert(spBox.GetPtr(),i);
+				info = fanInfo;
 				break;
 			}
 		//‚ë‚¤‚»‚­
@@ -296,8 +298,12 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 		}
 	case eGIMMICK_FAN:			//î•—‹@
 		{
-			LOGE(TAG, "GimmickInfoManager::setGimmickInfo() : Please create a fan!\n");
-			//set = ;
+			GFanInfo* info = new GFanInfo();
+			info->setNameAndType(name, type);
+
+			info->load(loader);
+
+			set =  info;
 			break;
 		}
 	case eGIMMICK_CANDLE:		//‚ë‚¤‚»‚­

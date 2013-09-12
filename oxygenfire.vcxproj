@@ -27,6 +27,7 @@
     <ClCompile Include="CppSource\Game\Gimmick\GCandle.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GCandleChecker.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp" />
+    <ClCompile Include="CppSource\Game\Gimmick\GFan.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GGoal.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="CppSource\Game\Gimmick\GCandle.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GCandleChecker.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h" />
+    <ClInclude Include="CppSource\Game\Gimmick\GFan.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GGoal.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h" />

@@ -120,13 +120,20 @@ void IGimmick::debugMessage()
 }
 #endif
 
+inline float toRadius(float degree){
+	static float DtoR = K_PI / 180.f;
+	return degree * DtoR;
+}
+
 IGimmickObj::IGimmickObj(GGimmickInfo* info):
 	IGimmick(info)
 {
 	mPos = info->pos;
 	mAngle = info->angle;
 	mRange = info->scale;
-
+	mAngle.x = toRadius(mAngle.x);
+	mAngle.y = toRadius(mAngle.y);
+	mAngle.z = toRadius(mAngle.z);
 //”¼Œa‚ð‹‚ß‚é
 	float max = info->scale.x;
 	if( max < info->scale.y ) max = info->scale.y;
@@ -135,11 +142,15 @@ IGimmickObj::IGimmickObj(GGimmickInfo* info):
 }
 
 #ifndef ANDROID_REDNER
-void IGimmickObj::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
+void IGimmickObj::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
 {
 	mesh->setPosition(this->mPos);
 	mesh->setAngle(this->mAngle);
-	mesh->setScale(this->mRange * scale);
+	Vector3 s = this->mRange;
+	s.x *= scale.x;
+	s.y *= scale.y;
+	s.z *= scale.z;
+	mesh->setScale(s);
 	mesh->Update();
 	mesh->Render(pipeline);
 }

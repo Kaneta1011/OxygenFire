@@ -265,6 +265,9 @@
     <Filter Include="source\Game\Gimmick\Type\2D">
       <UniqueIdentifier>{a49d3147-00fc-4f8a-93b5-35f74a512d3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Game\Gimmick\Type\Fan">
+      <UniqueIdentifier>{b16290f9-8a7a-4cea-8cb3-32d723c970d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppSource\main.cpp">
@@ -521,6 +524,9 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\Gimmick\G2D.cpp">
       <Filter>source\Game\Gimmick\Type\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSource\Game\Gimmick\GFan.cpp">
+      <Filter>source\Game\Gimmick\Type\Fan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -859,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="CppSource\Game\Gimmick\G2D.h">
       <Filter>source\Game\Gimmick\Type\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\Game\Gimmick\GFan.h">
+      <Filter>source\Game\Gimmick\Type\Fan</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
