@@ -9,6 +9,8 @@
 
 #include "Ueda\rTestScene.h"
 
+#include "Game\Stage\Stage.h"
+
 using namespace rlib;
 
 Bullet::Bullet():

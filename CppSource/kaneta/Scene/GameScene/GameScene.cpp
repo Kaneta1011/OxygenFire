@@ -153,15 +153,15 @@ namespace klib
 			addBord->setShaderValue("alpha",1.0f);
 			kPlane::render(addBord,ring,0.0f,3,3,out,0,0,0,0);
 
-			kPlane::render(bord,mask,1.0f,1.0f,m_Camera->getPos(),math::Vector3(0,1,0),math::Vector3(0,4,4),0,0,0,0);
-			addBord->setShaderValue("alpha",1.0f);
-			kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,1,0),0,0,0,0);
-			kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,4,4),0,0,0,0);
+			//kPlane::render(bord,mask,1.0f,1.0f,m_Camera->getPos(),math::Vector3(0,1,0),math::Vector3(0,4,4),0,0,0,0);
+			//addBord->setShaderValue("alpha",1.0f);
+			//kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,1,0),0,0,0,0);
+			//kPlane::render(addBord,ring,0.0f,1,1,math::Vector3(0,4,4),0,0,0,0);
 			ActionMediate::render();
 
 			mp_Stick->render();
 			m_Button->render();
-			EffectLib::EffectManager_Singleton::getInstance()->Render();
+			//EffectLib::EffectManager_Singleton::getInstance()->Render();
 
 		}
 		//I—¹ˆ—

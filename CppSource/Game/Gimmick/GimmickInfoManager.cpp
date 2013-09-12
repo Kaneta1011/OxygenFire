@@ -192,13 +192,13 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 		if( info->type == eGIMMICK_FAN ){
 			for( size_t n=0; n<this->mData.size(); n++ ){
 				GimmickInfoBase* windInfo = this->mData[n];
-				if( windInfo->type != eGIMMICK_WIND ){
-					if( std::string::npos != windInfo->name.find( info->name ) ){
-					//発見したら風のイベントチェッカーに扇風機を登録
-						windInfo->checkOn.push_back(info->name);
-						windInfo->checkOff.push_back(info->name);
-						LOGI(TAG, "GimmickManager::loadMqo : find the wind paired with fan! | name=\"%s\"\n", windInfo->name.c_str());
-					}
+				if( windInfo->type != eGIMMICK_WIND ) continue;
+
+				if( std::string::npos != windInfo->name.find( info->name ) ){
+				//発見したら風のイベントチェッカーに扇風機を登録
+					windInfo->checkOn.push_back(info->name);
+					windInfo->checkOff.push_back(info->name);
+					LOGI(TAG, "GimmickManager::loadMqo : find the wind paired with fan! | name=\"%s\"\n", windInfo->name.c_str());
 				}
 			}
 		}

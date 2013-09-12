@@ -160,7 +160,10 @@ void EffectManager::Create_EmitterSet(eEFFECT_TYPE Type,int n)
 	m_spEffectEmitterSet[n].SetPtr(new EmitterSet);
 
 	m_UseNum++;
-
+//-----------------------------------------------------
+//¼ŠCŒN‚Ì‚Å“®‚©‚·‚½‚ß‚É’Ç‰Á(9/12A“c)
+	return ;
+//-----------------------------------------------------
 	switch( Type )
 	{
 	case BODY:

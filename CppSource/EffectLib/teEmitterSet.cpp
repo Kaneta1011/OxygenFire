@@ -123,7 +123,6 @@ void EmitterSet::Load_TES( char* Filename )
 		m_spTextLoader->Search( "Emitter" );
 		m_spTextLoader->In();
 
-
 		//
 		//	使われていない配列を探して、そこにデータを格納
 		//

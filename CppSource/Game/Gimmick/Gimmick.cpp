@@ -256,7 +256,7 @@ void GimmickManager::loadMeshes()
 	//this->mpMeshies[eMESH_GABERAGE_BOX] = new klib::kMesh("Placement/gomibukuro.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_RESET_CANDLE] = new klib::kMesh("gimmick/candle/resetCandleS2.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mppMeshies[eMESH_FAN] = new klib::kMesh("gimmick/fan/fan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies[eMESH_FAN] = new klib::kMesh("gimmick/fan/Sfan001.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_ITTOKAN] = new klib::kMesh("gimmick/ittokan/ittokan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	LOGI(TAG, "Successed gimmick meshes | count = %d", eMESH_TYPE_NUM);
 }

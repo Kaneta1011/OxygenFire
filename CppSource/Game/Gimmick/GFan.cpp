@@ -68,15 +68,19 @@ int GFan::update()
 {
 	if( isFlag() ){
 		this->mRotaDelta += 0.01f;
-		const float MAX_DELTA = 0.2f;
+		const float MAX_DELTA = 0.3f;
 		if( this->mRotaDelta > MAX_DELTA ) this->mRotaDelta = MAX_DELTA;
-
-		this->mNowRota += this->mRotaDelta;
-
-		this->mRota.identity();
-		this->mRota.setRY(this->mNowRota);
-		//this->mRota = this->mOrientation * this->mRota;
+	}else{
+	//off1‚È‚ç‰ñ“]‚ðŽ~‚ß‚é
+		this->mRotaDelta -= 0.01f;
+		const float MIN_DELTA = 0.f;
+		if( this->mRotaDelta < MIN_DELTA ) this->mRotaDelta = MIN_DELTA;
 	}
+	this->mNowRota -= this->mRotaDelta;
+
+	this->mRota.identity();
+	this->mRota.setRZ(this->mNowRota);
+	this->mRota *= this->mOrientation;
 
 	return MSG_NON;
 }
@@ -97,18 +101,14 @@ void GFan::flagOffListener(IGimmick* thiz)
 #ifndef ANDROID_REDNER
 void GFan::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
 {
-	mesh->setTransMatrix(this->mRota);
+	Vector3 s = scale;
+	s.x *= this->mRange.x;
+	s.y *= this->mRange.y;
+	s.z *= this->mRange.z;
+	Matrix S;
+	S.identity();
+	S.mulS(s);
+	mesh->setTransMatrix(S*this->mRota);
 	mesh->Render(pipeline);
-	//IGimmickObj::render(mesh, scale, pipeline);
-	//Matrix MatScale;
-	//MatScale.identity();
-	//Vector3 s = scale;
-	//s.x *= this->mRange.x;
-	//s.y *= this->mRange.y;
-	//s.z *= this->mRange.z;
-	//MatScale.mulS(s);
-	////mesh->setTransMatrix( MatScale * this->mRota );
-	//mesh->setTransMatrix( mOrientation );
-	//mesh->Render(pipeline);
 }
 #endif

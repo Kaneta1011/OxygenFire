@@ -109,7 +109,7 @@ IGimmick(&info)
 		this->mEmitter = EffectLib::EffectManager_Singleton::getInstance()->Create( EffectLib::WIND );
 		this->mEmitter->Setting_Position( getEmitterPos() );
 		this->mEmitter->Setting_Velocity(this->mVelocity);
-		this->mEmitter->Setting_Scale( 0.5f );
+		this->mEmitter->Setting_Scale( 2.f );
 		this->mEmitter->Loop();
 	}
 #endif
@@ -147,7 +147,7 @@ int GWind::update()
 	if( this->mEmitter.IsExist() )
 	{
 		Vector3 vec = this->mVelocity * this->mRate;
-		float scale = vec.lengthSq() / 25.f;
+		float scale = vec.lengthSq() / 10.f;
 		this->mEmitter->Setting_Scale(scale);
 	}
 #endif
