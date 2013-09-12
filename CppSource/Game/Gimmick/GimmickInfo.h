@@ -30,6 +30,7 @@ namespace rlib
 		eGIMMICK_GOAL,			//ゴール
 		eGIMMICK_RESET_CANDLE,	//リセットろうそく
 		eGIMMICK_CANDLE_CHECKER,	//ろうそくチェッカー
+		eGIMMICK_ITTOKAN,		//一斗缶
 		eGIMMICK_TYPE_NUM,
 		eGIMMICK_UNKNOWN
 	};

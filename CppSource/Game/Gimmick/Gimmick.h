@@ -130,6 +130,8 @@ namespace rlib
 			eMESH_GABERAGE_BOX,
 			eMESH_CARD_BOARD,
 			eMESH_RESET_CANDLE,
+			eMESH_FAN,
+			eMESH_ITTOKAN,
 			eMESH_TYPE_NUM
 		};
 

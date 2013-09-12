@@ -72,6 +72,7 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 		case PLACEMENT_GarbageBag:
 		case PLACEMENT_WoodenBox:
 		case PLACEMENT_CARDBOARD:
+		case PLACEMENT_ITTOKAN:
 			{
 				GExplosionInfo* expInfo = new GExplosionInfo();
 				expInfo->convert(spBox.GetPtr(), i);
@@ -183,6 +184,25 @@ void GimmickInfoManager::loadMqo(char* mqoFilePath)
 	}
 	sPlacementManager->Destroy();
 	PlacementManager_Singleton::deleteInstance();
+
+//扇風機と対応している風を探す
+	for( size_t i=0; i<this->mData.size(); i++ )
+	{
+		GimmickInfoBase* info = this->mData[i];
+		if( info->type == eGIMMICK_FAN ){
+			for( size_t n=0; n<this->mData.size(); n++ ){
+				GimmickInfoBase* windInfo = this->mData[n];
+				if( windInfo->type != eGIMMICK_WIND ){
+					if( std::string::npos != windInfo->name.find( info->name ) ){
+					//発見したら風のイベントチェッカーに扇風機を登録
+						windInfo->checkOn.push_back(info->name);
+						windInfo->checkOff.push_back(info->name);
+						LOGI(TAG, "GimmickManager::loadMqo : find the wind paired with fan! | name=\"%s\"\n", windInfo->name.c_str());
+					}
+				}
+			}
+		}
+	}
 }
 
 void GimmickInfoManager::setFusePoint(GGimmickInfo* out, std::string& name, const klib::math::Vector3& pos)
@@ -251,8 +271,9 @@ void GimmickInfoManager::setInfo(textLoader& loader, GimmickInfoBase** out, int 
 	case eGIMMICK_CANDLE:		//ろうそく
 	case eGIMMICK_FUSE_POINT:	//導火線の両端
 	case eGIMMICK_2D:			//2D描画
-	case eGIMMICK_GOAL:
-	case eGIMMICK_RESET_CANDLE:
+	case eGIMMICK_GOAL:			//ゴール
+	case eGIMMICK_RESET_CANDLE:	//リセットろうそく	
+	case eGIMMICK_ITTOKAN:		//一斗缶
 		setGimmickInfo(loader, out, type, name);
 		break;
 	case eGIMMICK_CANDLE_CHECKER:
@@ -287,6 +308,7 @@ void GimmickInfoManager::setGimmickInfo(textLoader& loader, GimmickInfoBase** ou
 	case eGIMMICK_GARBAGE_BAG:	//ゴミ袋
 	case eGIMMICK_WOOD_BOX:		//木箱
 	case eGIMMICK_CARDBOARD:	//ダンボール
+	case eGIMMICK_ITTOKAN:		//一斗缶
 		{
 			GExplosionInfo* info = new GExplosionInfo();
 			info->setNameAndType(name, type);

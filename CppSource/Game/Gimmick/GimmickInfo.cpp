@@ -45,6 +45,7 @@ GIMMICK_TYPE rlib::getGimmickType(PlacementLib::ePLACEMENT_TYPE type)
 		eGIMMICK_2D,			//PLACEMENT_2D,					//	2D画像
 		eGIMMICK_GOAL,			//PLACEMENT_GOAL,				//	ゴール
 		eGIMMICK_RESET_CANDLE,	//PLACEMENT_RESET_CANDLE		//リセットろうそく
+		eGIMMICK_ITTOKAN,		//PLACEMENT_ITTOKAN,			//一斗缶
 	};
 	static const int tableNum = sizeof(table)/sizeof(table[0]);
 
@@ -190,6 +191,7 @@ const char* TYPE_NAMES[]={
 		"Goal",				//eGIMMICK_GOAL,			//ゴール
 		"ResetCandle",		//eGIMMICK_RESET_CANDLE,	//リセットろうそく
 		"CandleChecker",	//eGIMMICK_CANDLE_CHECKER,	//ろうそくチェッカー
+		"Ittokan",			//eGIMMICK_ITTOKAN,			//一斗缶チェッカー
 };
 
 void rlib::writeGimmickMeshScale(const char* filePath)
@@ -202,7 +204,7 @@ void rlib::writeGimmickMeshScale(const char* filePath)
 	std::ofstream stream(filePath);
 	for( int i=0; i<num; i++ )
 	{
-		stream << TYPE_NAMES[i] << " " << 0.1f << " " << 0.1f << " " << 0.1f << endl;
+		stream << TYPE_NAMES[i] << " " << 0.01f << " " << 0.01f << " " << 0.01f << endl;
 	}
 }
 #endif

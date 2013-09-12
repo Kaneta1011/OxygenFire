@@ -113,6 +113,22 @@ namespace rlib
 	};
 
 	//===============================================
+	//	ˆê“lŠÊ
+	//		’e‚Å”R‚¦‚é
+	//===============================================
+	class GIttokan : public IGExplosion
+	{
+	public:
+		GIttokan(GExplosionInfo& info);
+		virtual ~GIttokan();
+
+		virtual int update();
+		virtual bool vs(Bullet* op);
+
+	private:
+	};
+
+	//===============================================
 	//	–Ø” 
 	//		’e‚Å”R‚¦‚é
 	//===============================================

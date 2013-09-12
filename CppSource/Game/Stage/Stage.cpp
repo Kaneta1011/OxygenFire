@@ -37,6 +37,10 @@ bool Stage::init(const char* stageInfoPath)
 	mPlayerStartPos.y= loader.LoadFloat();
 	mPlayerStartPos.z = loader.LoadFloat();
 	LOGI(TAG, "player startPos(%.2f,%.2f,%.2f)", mPlayerStartPos.x, mPlayerStartPos.y, mPlayerStartPos.z);
+//開始時の酸素ケージの読み込み
+	loader.LoadString(loader.tmpBuf);
+	this->mOxygen = loader.LoadInt();
+	LOGI(TAG, "oxygen=%d", this->mOxygen);
 
 	LOGI(TAG, "Complete stage init");
 }

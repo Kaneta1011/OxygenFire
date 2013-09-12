@@ -37,7 +37,10 @@ namespace rlib
 #endif
 
 	protected:
-
+		klib::math::Matrix mOrientation;
+		klib::math::Matrix mRota;
+		float mRotaDelta;
+		float mNowRota;
 	protected:
 	};
 }

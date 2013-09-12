@@ -136,7 +136,7 @@ IGimmickObj::IGimmickObj(GGimmickInfo* info):
 	mAngle.z = toRadius(mAngle.z);
 //”¼Œa‚ð‹‚ß‚é
 	float max = info->scale.x;
-	if( max < info->scale.y ) max = info->scale.y;
+	//if( max < info->scale.y ) max = info->scale.y;
 	if( max < info->scale.z ) max = info->scale.z;
 	this->mRadius = max;
 }
