@@ -44,7 +44,7 @@ namespace rlib
 		virtual void flagOffListener(IGimmick* thiz);
 
 #ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline);
+		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
 #endif
 
 	protected:
@@ -105,22 +105,6 @@ namespace rlib
 	public:
 		GGasoline(GExplosionInfo& info);
 		virtual ~GGasoline();
-
-		virtual int update();
-		virtual bool vs(Bullet* op);
-
-	private:
-	};
-
-	//===============================================
-	//	ˆê“lŠÊ
-	//		’e‚Å”R‚¦‚é
-	//===============================================
-	class GIttokan : public IGExplosion
-	{
-	public:
-		GIttokan(GExplosionInfo& info);
-		virtual ~GIttokan();
 
 		virtual int update();
 		virtual bool vs(Bullet* op);

@@ -25,6 +25,8 @@ namespace klib
 	{
 		dprintf("Start Render");
 		scene->m_BackGraphics->render();
+		scene->m_FirePaperTec->setShaderValue("alpha",0.0f);
+		scene->m_TitleGraphics->render();
 	}
 
 	TitleSceneStartTouch::TitleSceneStartTouch()
@@ -39,15 +41,19 @@ namespace klib
 	void TitleSceneStartTouch::update(TitleScene* scene)
 	{
 		dprintf("%f",m_Time);
-		m_Time+=1.0f;
-		scene->m_BackGraphics->setSize(200.0f-m_Time,true);
+		m_Time+=0.01f;
+		//scene->m_BackGraphics->setSize(200.0f-m_Time,true);
+		
 		//if(200.0f<m_Time)framework.sceneChange(testScene::_getInstancePtr());
-		if(200.0f<m_Time)TitleScene::_getInstance().setStrategy(new TitleSceneStartMenu);
+		if(1.0f<m_Time)TitleScene::_getInstance().setStrategy(new TitleSceneStartMenu);
 	}
 
 	void TitleSceneStartTouch::render(TitleScene* scene)
 	{
 		scene->m_BackGraphics->render();
+		scene->m_FirePaperTec->setShaderValue("alpha",m_Time);
+		scene->m_FirePaperTec->setTexture("maskTex",1,scene->m_MaskTex);
+		scene->m_TitleGraphics->render(scene->m_FirePaperTec);
 	}
 
 	TitleSceneStartMenu::TitleSceneStartMenu()

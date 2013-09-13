@@ -44,6 +44,69 @@ private:
 
 }//RenderState
 
+	// スクリーン座標をワールド座標に変換
+	static klib::math::Vector3* screenToWorld(klib::math::Vector3* out,
+		int Sx,  // スクリーンX座標
+		int Sy,  // スクリーンY座標
+		float fZ  // 射影空間でのZ値（0～1）
+		) {
+			using namespace klib;
+			using namespace math;
+			// 各行列の逆行列を算出
+			Matrix InvView, InvPrj, VP, InvViewport;
+			MatrixInverse(&InvView,RenderLib::RenderState::getViewMatrix());
+			MatrixInverse(&InvPrj,RenderLib::RenderState::getProjectionMatrix());
+			VP.identity();
+			VP._11 = RenderLib::RenderState::getScreenWidth()/2.0f; VP._22 = -RenderLib::RenderState::getScreenHeight()/2.0f;
+			VP._41 = RenderLib::RenderState::getScreenWidth()/2.0f; VP._42 = RenderLib::RenderState::getScreenHeight()/2.0f;
+			MatrixInverse(&InvViewport,VP);
+
+			// 逆変換
+			Matrix tmp = InvViewport * InvPrj * InvView;
+			Vector3 work=Vector3((f32)Sx,(f32)Sy,fZ);
+			work.trans(InvViewport);
+			*out=Vector3((f32)Sx,(f32)Sy,fZ);
+			//変換後wで射影している
+			out->trans(tmp);
+
+			return out;
+	}
+
+	static void worldToScreen(const klib::math::Vector3& wpos,int* sx,int* sy)
+	{
+		using namespace klib;
+		using namespace math;
+		// 各行列の逆行列を算出
+		Matrix WVP,VP;
+		VP.identity();
+		VP._11 = RenderLib::RenderState::getScreenWidth()/2.0f; VP._22 = -RenderLib::RenderState::getScreenHeight()/2.0f;
+		VP._41 = RenderLib::RenderState::getScreenWidth()/2.0f; VP._42 = RenderLib::RenderState::getScreenHeight()/2.0f;
+
+		WVP=RenderLib::RenderState::getViewMatrix()*RenderLib::RenderState::getProjectionMatrix();
+
+		Vector3 ret=wpos;
+		ret.trans(WVP);
+		ret.trans(VP);
+
+		*sx=ret.x;
+		*sy=ret.y;
+	}
+
+	static klib::f32 scaleParse(klib::f32 scale,const klib::math::Vector3& pos)
+	{
+		using namespace klib;
+		using namespace math;
+
+		Vector3 viewpos=pos;
+		viewpos.trans(RenderLib::RenderState::getViewMatrix());
+		viewpos.x=0.0f;
+		viewpos.y=scale*0.5f;
+
+		viewpos.trans(RenderLib::RenderState::getProjectionMatrix());
+		f32 ret=viewpos.y*(RenderLib::RenderState::getScreenWidth()/2.0f);
+		//dprintf("%f",ret);
+		return ret;
+	}
 
 
 #endif

@@ -49,7 +49,7 @@ namespace klib
 			m_YesButton=new rlib::CircleButton();
 			m_NoButton=new rlib::CircleButton();
 
-			m_YesButton->init("kanetaPlace/YES.png",-50,-50,50);
+			m_YesButton->init("kanetaPlace/Yesf.png",-50,-50,50);
 			m_NoButton->init("kanetaPlace/No.png",50,-50,50);
 
 			kDevice::end();

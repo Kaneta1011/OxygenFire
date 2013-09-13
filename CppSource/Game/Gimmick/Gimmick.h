@@ -111,13 +111,6 @@ namespace rlib
 
 		unsigned int size(){return this->mData.size();}
 
-		IGimmick*	get(size_t index){
-			if( index >= this->mData.size() ){
-				LOGE("GimmickManager","GimmickManager::get() : Invalid index... | index=%u | maxSize=%u", index, this->mData.size());
-				exit(0);
-			}
-			return this->mData[index];
-		}
 	private:
 		void remove(unsigned int index);
 
@@ -130,21 +123,19 @@ namespace rlib
 			eMESH_GABERAGE_BOX,
 			eMESH_CARD_BOARD,
 			eMESH_RESET_CANDLE,
-			eMESH_FAN,
-			eMESH_ITTOKAN,
 			eMESH_TYPE_NUM
 		};
 
 	private:
 #ifndef ANDROID_REDNER
 		void loadMeshes();
-		klib::kMesh* getMesh( int type, klib::math::Vector3* outUnitScale );
+		klib::kMesh* getMesh( int type, float* outUnitScale );
 #endif
 	private:
 		ListType mData;
 
 #ifndef ANDROID_REDNER
-		std::vector<klib::math::Vector3> mMeshScales;
+		std::vector<float> mMeshScales;
 
 		klib::kMesh** mppMeshies;
 #endif

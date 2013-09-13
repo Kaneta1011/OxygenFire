@@ -52,9 +52,8 @@ IGimmick* GExplosionInfo::makeGimmick()
 	case eGIMMICK_GARBAGE_BAG:	make = new GGaberageBox(*this); break;
 	case eGIMMICK_WOOD_BOX:		make = new GWoodBox(*this);		break;
 	case eGIMMICK_CARDBOARD:	make = new GCardBoard(*this);	break;
-	case eGIMMICK_ITTOKAN:		make = new GIttokan(*this);		break;
 	default:
-		LOGE("GExplosionInfo", "GExplosionInfo::makeGimmick() : 爆発物以外のギミックをGExplosionInfoで作ろうとしてます\n");
+		LOGE("GExplosionInfo", "爆発物以外のギミックをGExplosionInfoで作ろうとしてます\n");
 	}
 	return make;
 }
@@ -73,7 +72,6 @@ bool IGExplosion::isExplosion(GIMMICK_TYPE type)
 	case eGIMMICK_GARBAGE_BAG:
 	case eGIMMICK_WOOD_BOX:
 	case eGIMMICK_CARDBOARD:
-	case eGIMMICK_ITTOKAN:
 		return true;
 	default:
 		return false;
@@ -191,7 +189,7 @@ bool IGExplosion::updateExplosionCount()
 }
 
 #ifndef ANDROID_REDNER
-void IGExplosion::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
+void IGExplosion::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
 	float rate = 1.f;
 	if( this->isFlag() ){
@@ -274,37 +272,6 @@ bool GGasoline::vs(Bullet* op)
 {
 	return IGExplosion::vs(op);
 }
-
-//================================================================
-//
-//		GIttokanクラス
-//
-//================================================================
-GIttokan::GIttokan(GExplosionInfo& info):
-IGExplosion(&info)
-{
-	this->mIsExplosion = true;
-}
-
-GIttokan::~GIttokan()
-{
-}
-
-int GIttokan::update()
-{
-	int msg = udateExplosion();
-	if( msg == UPDATE_MSG_EXPLOSION ){
-		return MSG_DEAD;
-	}
-	
-	return 0;
-}
-
-bool GIttokan::vs(Bullet* op)
-{
-	return IGExplosion::vs(op);
-}
-
 
 //================================================================
 //

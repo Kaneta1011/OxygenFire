@@ -15,7 +15,6 @@ namespace klib
 		class kHash
 		{
 		public:
-
 			//ハッシュノード構造体(リスト構造)
 			class Node
 			{
@@ -72,7 +71,6 @@ namespace klib
 					if(next)next->_NodePrev=prev;
 					//前の要素が存在すれば前の要素の次を次の要素に
 					if(prev)prev->_NodeNext=next;
-
 				}
 			};
 			class iterator
@@ -290,7 +288,7 @@ namespace klib
 				printf("ハッシュテーブルに格納されているデータ\n");
 				for(u32 i=0;i<KHashTable_TableSIZE;i++)
 				{
-					if(HashTable[i]==nullptr)printf("NULL\n");
+					if(HashTable[i]==NULL)printf("NULL\n");
 					else
 					{
 						printf("%u\n",i);

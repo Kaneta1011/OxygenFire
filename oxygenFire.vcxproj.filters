@@ -265,8 +265,8 @@
     <Filter Include="source\Game\Gimmick\Type\2D">
       <UniqueIdentifier>{a49d3147-00fc-4f8a-93b5-35f74a512d3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Game\Gimmick\Type\Fan">
-      <UniqueIdentifier>{b16290f9-8a7a-4cea-8cb3-32d723c970d8}</UniqueIdentifier>
+    <Filter Include="source\kaneta\Scene\MessageScene">
+      <UniqueIdentifier>{7e6c9371-5327-4d99-b8ec-145a28afde6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -524,9 +524,6 @@
     </ClCompile>
     <ClCompile Include="CppSource\Game\Gimmick\G2D.cpp">
       <Filter>source\Game\Gimmick\Type\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSource\Game\Gimmick\GFan.cpp">
-      <Filter>source\Game\Gimmick\Type\Fan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -866,8 +863,14 @@
     <ClInclude Include="CppSource\Game\Gimmick\G2D.h">
       <Filter>source\Game\Gimmick\Type\2D</Filter>
     </ClInclude>
-    <ClInclude Include="CppSource\Game\Gimmick\GFan.h">
-      <Filter>source\Game\Gimmick\Type\Fan</Filter>
+    <ClInclude Include="CppSource\templateLib\kIAssociative.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\templateLib\kList.h">
+      <Filter>source\templateLib</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSource\kaneta\Scene\MessageScene\MessageScene.h">
+      <Filter>source\kaneta\Scene\MessageScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,18 +23,33 @@ namespace klib
 			AssetsLoader::begin();
 			kDevice::begin();
 
+			m_FirePaperTec=new kTechnique;
+			m_FirePaperTec->createShader("kanetaPlace/shader/fire.vs","kanetaPlace/shader/fire.fs");
+			m_FirePaperTec->createBlendState(k_BLEND_ALPHA);
+			m_FirePaperTec->createDepthStencilState(true,true,eLESS_EQUAL);
+			m_FirePaperTec->createRasterizerState(eSOLID,eNONE,false);
+			m_FirePaperTec->complete();
 
+			m_MaskTex=new rlib::r2DObj();
+			m_MaskTex->load("kanetaPlace/mask.png");
+			m_MaskTex->setPos(0,0);
+			m_MaskTex->setSize(200,true);
 
 			m_BackGraphics=new rlib::r2DObj();
-			m_BackGraphics->load("kanetaPlace/oldpaper.png");
+			m_BackGraphics->load("kanetaPlace/backscreen.png");
 			m_BackGraphics->setPos(0,0);
 			m_BackGraphics->setSize(200,true);
+
+			m_TitleGraphics=new rlib::r2DObj();
+			m_TitleGraphics->load("kanetaPlace/oxygenlogo.png");
+			m_TitleGraphics->setPos(0,0);
+			m_TitleGraphics->setSize(200,true);
 
 			m_StartButton=new rlib::CircleButton();
 			m_NewGameButton=new rlib::CircleButton();
 			m_LoadGameButton=new rlib::CircleButton();
-			m_NewGameButton->init("kanetaPlace/stick.png",0,0,50);
-			m_LoadGameButton->init("kanetaPlace/stick.png",0,-50,50);
+			m_NewGameButton->init("kanetaPlace/Newgame.png",0,0,50);
+			m_LoadGameButton->init("kanetaPlace/LoadGame.png",0,-50,50);
 
 			kDevice::end();
 			AssetsLoader::end();
@@ -54,7 +69,7 @@ namespace klib
 		void TitleScene::render()
 		{
 			//eprintf("TitleScene render");
-			m_BackGraphics->render();
+			//m_BackGraphics->render();
 			m_Strategy->render(this);
 		}
 		//I—¹ˆ—

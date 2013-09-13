@@ -97,10 +97,8 @@ static klib::kMesh* debugMesh = NULL;
 static bool isDebugMesh = false;
 #endif
 
-GimmickManager::GimmickManager()
-#ifndef ANDROID_REDNER
-	:mppMeshies(NULL)
-#endif
+GimmickManager::GimmickManager():
+	mppMeshies(NULL)
 {
 }
 
@@ -199,8 +197,6 @@ void GimmickManager::init(const char* giFilePath)
 			for( size_t n=0; n<this->mData.size(); n++ )
 			{//データの中から検索
 				IGimmick* check = this->mData[n];
-				if( check == NULL ) continue;
-
 				if( (*offIt) == check->getName() )
 				{
 					check->addOffListener( g );
@@ -229,9 +225,8 @@ void GimmickManager::init(const char* giFilePath)
 	for( int i=0; i<eGIMMICK_TYPE_NUM; i++ )
 	{
 		loader.LoadString(loader.tmpBuf);
-		mMeshScales[i].x = loader.LoadFloat();
-		mMeshScales[i].y = loader.LoadFloat();
-		mMeshScales[i].z = loader.LoadFloat();
+		mMeshScales[i] = loader.LoadFloat();
+		LOGI(TAG, "%d | scale = %,5f", i, mMeshScales[i] );
 	}
 	LOGI(TAG, "finish mesh scale file!\n");
 	loadMeshes();
@@ -250,22 +245,20 @@ void GimmickManager::loadMeshes()
 		this->mppMeshies[i] = NULL;
 	}
 
-	this->mppMeshies[eMESH_DRUM] = new klib::kMesh("gimmick/drum/drum.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
+	this->mppMeshies[eMESH_DRUM] = new klib::kMesh("gimmick/drum/ittokan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_GASOLINE] = new klib::kMesh("gimmick/gasoline/gaso.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_WOOD_BOX] = new klib::kMesh("gimmick/wood_box/kibako128.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	//this->mpMeshies[eMESH_GABERAGE_BOX] = new klib::kMesh("Placement/gomibukuro.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_CARD_BOARD] = new klib::kMesh("gimmick/danbo/danbo.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	this->mppMeshies[eMESH_RESET_CANDLE] = new klib::kMesh("gimmick/candle/resetCandleS2.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mppMeshies[eMESH_FAN] = new klib::kMesh("gimmick/fan/Sfan001.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
-	this->mppMeshies[eMESH_ITTOKAN] = new klib::kMesh("gimmick/ittokan/ittokan.IMO", new klib::kMeshLoadIMO, new klib::kMeshGLES20Render() );
 	LOGI(TAG, "Successed gimmick meshes | count = %d", eMESH_TYPE_NUM);
 }
 #endif
 
 #ifndef ANDROID_REDNER
-klib::kMesh* GimmickManager::getMesh( int type, klib::math::Vector3* outUnitScale )
+klib::kMesh* GimmickManager::getMesh( int type, float* outUnitScale )
 {
-	if( isDebugMesh ){ outUnitScale->x = outUnitScale->y = outUnitScale->z = 0.02f; return debugMesh; }
+	if( isDebugMesh ){ *outUnitScale = 0.02f; return debugMesh; }
 
 	*outUnitScale =  mMeshScales[type];
 	int index = 0;
@@ -276,8 +269,7 @@ klib::kMesh* GimmickManager::getMesh( int type, klib::math::Vector3* outUnitScal
 	case eGIMMICK_GARBAGE_BAG:	index = eMESH_CARD_BOARD; break;	//ゴミ袋
 	case eGIMMICK_WOOD_BOX:		index = eMESH_WOOD_BOX; break;	//木箱
 	case eGIMMICK_CARDBOARD:	index = eMESH_CARD_BOARD; break;	//ダンボール
-	case eGIMMICK_ITTOKAN:		index = eMESH_ITTOKAN;		break;
-	case eGIMMICK_FAN:			index = eMESH_FAN; break;	//扇風機
+	//case eGIMMICK_FAN:			break;	//扇風機
 	case eGIMMICK_RESET_CANDLE:	index = eMESH_RESET_CANDLE; break;	//リセットろうそく
 	case eGIMMICK_CANDLE_CHECKER:	break;
 	case eGIMMICK_CANDLE:		break;	//ろうそく
@@ -452,17 +444,13 @@ void GimmickManager::render()
 	while( it != end() )
 	{
 		if( *it ){
-			klib::math::Vector3 scale;
+			float  scale = 0.01f;
 			klib::kMesh* mesh = getMesh((*it)->getType(), &scale);
 			if( mesh ){
 				if( isDebugMesh ){
 					mesh->setPosition((*it)->getPos());
 					mesh->setAngle((*it)->getAngle());
-					Vector3 s = (*it)->getRange();
-					s.x *= scale.x;
-					s.y *= scale.y;
-					s.z *= scale.z;
-					mesh->setScale(s);
+					mesh->setScale((*it)->getRange() * scale);
 					mesh->Update();
 					mesh->Render(GameCommonPipeline::getPipeline());
 				}else{

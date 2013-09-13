@@ -99,7 +99,7 @@ void G2D::flagOffListener(IGimmick* thiz)
 }
 
 #ifndef ANDROID_REDNER
-void G2D::render(klib::kMesh* mesh,const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
+void G2D::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
 }
 #endif

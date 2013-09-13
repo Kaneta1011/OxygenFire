@@ -363,7 +363,7 @@ namespace klib
 			//頂点、インデックスバッファを作成
 			//ついでにマテリアルごとに分ける
 			//CreateBuffer();
-			dprintf("kSkin Load End hoge");
+			dprintf("kSkin Load End");
 			mp_RenderDelegate->CreateBuffer(this);
 			*mp_UseCount = 0;
 		}
@@ -545,6 +545,7 @@ namespace klib
 				mp_MeshData->mp_Vertex[m_Skin->mp_Bone[i].Index[j]].m_TexCoord=mp_Original[m_Skin->mp_Bone[i].Index[j]].m_TexCoord;
 			}
 		}
+
 	}
 
 	//**************************************************************************************************

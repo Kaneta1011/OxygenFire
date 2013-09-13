@@ -13,7 +13,6 @@ namespace rlib
 	{
 		klib::math::Vector3 pos;
 		klib::math::Vector3 dir;
-		float				power;
 		klib::math::Vector3 scale;
 		bool				isRender;
 
@@ -45,7 +44,7 @@ namespace rlib
 		virtual void flagOffListener(IGimmick* thiz);
 
 #ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline);
+		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
 #endif
 
 	protected:
@@ -54,8 +53,7 @@ namespace rlib
 	protected:
 		bool mIsRender;
 		float mRate;
-		float mMaxPower;
-		Vector3	mDirection;
+		Vector3	mMaxVelocity;
 #ifndef ANDROID_REDNER
 		wp<EffectLib::EmitterSet> mEmitter;
 #endif

@@ -14,6 +14,11 @@ namespace rlib
 
 namespace klib
 {
+	class kTechnique;
+}
+
+namespace klib
+{
 	class TitleScene;
 	class ITitleSceneStrategy
 	{
@@ -72,7 +77,10 @@ namespace klib
 	private:
 		ktl::sp<ITitleSceneStrategy> m_Strategy;
 		ITitleSceneStrategy* m_NextStrategy;
+		kTechnique* m_FirePaperTec;
+		rlib::r2DObj* m_MaskTex;
 		rlib::r2DObj* m_BackGraphics;
+		rlib::r2DObj* m_TitleGraphics;
 		rlib::CircleButton* m_StartButton;
 		rlib::CircleButton* m_NewGameButton;
 		rlib::CircleButton* m_LoadGameButton;

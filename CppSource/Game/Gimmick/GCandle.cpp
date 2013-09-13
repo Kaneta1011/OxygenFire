@@ -120,7 +120,7 @@ void GCandle::flagOffListener(IGimmick* thiz)
 }
 
 #ifndef ANDROID_REDNER
-void GCandle::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
+void GCandle::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
 	IGimmickObj::render(this->mpMesh, scale, pipeline);
 }

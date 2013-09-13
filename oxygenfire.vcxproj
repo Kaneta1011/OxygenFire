@@ -27,7 +27,6 @@
     <ClCompile Include="CppSource\Game\Gimmick\GCandle.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GCandleChecker.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GExplosion.cpp" />
-    <ClCompile Include="CppSource\Game\Gimmick\GFan.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GGoal.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\Gimmick.cpp" />
     <ClCompile Include="CppSource\Game\Gimmick\GimmickInfo.cpp" />
@@ -128,7 +127,6 @@
     <ClInclude Include="CppSource\Game\Gimmick\GCandle.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GCandleChecker.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GExplosion.h" />
-    <ClInclude Include="CppSource\Game\Gimmick\GFan.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GGoal.h" />
     <ClInclude Include="CppSource\Game\Gimmick\Gimmick.h" />
     <ClInclude Include="CppSource\Game\Gimmick\GimmickInfo.h" />
@@ -180,6 +178,7 @@
     <ClInclude Include="CppSource\kaneta\ICharacter\Class\kPlayer\Strategy\Shot\kPlayerShot.h" />
     <ClInclude Include="CppSource\kaneta\Scene\GameScene\GameScene.h" />
     <ClInclude Include="CppSource\kaneta\Scene\LoadingScene\LoadingScene.h" />
+    <ClInclude Include="CppSource\kaneta\Scene\MessageScene\MessageScene.h" />
     <ClInclude Include="CppSource\kaneta\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="CppSource\kaneta\Scene\YesOrNoScene\YesOrNoScene.h" />
     <ClInclude Include="CppSource\main.h" />
@@ -199,6 +198,8 @@
     <ClInclude Include="CppSource\templateLib\kFuncHolder.h" />
     <ClInclude Include="CppSource\templateLib\kFuncHolderDecl.h" />
     <ClInclude Include="CppSource\templateLib\kHash.h" />
+    <ClInclude Include="CppSource\templateLib\kIAssociative.h" />
+    <ClInclude Include="CppSource\templateLib\kList.h" />
     <ClInclude Include="CppSource\templateLib\kQueue.h" />
     <ClInclude Include="CppSource\templateLib\kSingleton.h" />
     <ClInclude Include="CppSource\templateLib\kVector.h" />

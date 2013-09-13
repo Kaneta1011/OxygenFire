@@ -91,7 +91,6 @@ void PlacementManager::Setting_CreateObjectName(sp<char> name,sp<char> load)
 		{"2D",			PLACEMENT_2D},
 		{"GOAL",		PLACEMENT_GOAL},
 		{"RESETCANDLE",	PLACEMENT_RESET_CANDLE},
-		{"ITTOKAN",		PLACEMENT_ITTOKAN},
 		{"",			PLACEMENT_WoodenBox},//不明データ　一番最後にしてください
 	};
 	static int tableNum = sizeof( table ) / sizeof(table[0]);

@@ -89,6 +89,39 @@ struct ParticleTextrue
 	ParticleTextrue();
 };
 
+
+class particle 
+{
+public:
+	void create( const Vector3& pos , const Vector3& vec , int life, sp<Texture> tex )
+	{
+		this->pos = pos;
+		this->vec = vec;
+		this->life = life;
+
+	}
+
+	void setting_vec(const Vector3& vec)
+	{
+		this->vec = vec;
+	}
+
+	void update()
+	{
+		pos += vec;
+	}
+
+	static void render()
+	{
+
+	}
+	particle():pos(Vector3(0,0,0)),vec(Vector3(0,0,0)),life(0){}
+private:
+	Vector3 pos;
+	Vector3 vec;
+	int life;
+};
+
 //-------------------------------------------------------------------------
 //	Particle
 //-------------------------------------------------------------------------
@@ -111,8 +144,7 @@ public:
 	//========== 単体パーティクル用 =============
 	enum eSINGLE_TYPE
 	{
-		SINGLE_NORMAL,	//	ノーマル
-		SINGLE_FLAME,		//	炎メラメラ
+		SINGLE_NORMAL,
 	};
 	void Setting_Single(
 		eSINGLE_TYPE Type,

@@ -42,9 +42,6 @@ namespace rlib
 		int getTemperature()const{return mTemperature;}
 
 		void kill(){ this->mIsAlive = false; }
-	protected:
-		bool isDead();
-
 	private:
 		bool mIsAlive;
 		int mCount;

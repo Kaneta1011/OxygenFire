@@ -139,7 +139,7 @@ void GFuse::flagOffListener(IGimmick* thiz)
 }
 
 #ifndef ANDROID_REDNER
-void GFuse::render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline)
+void GFuse::render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline)
 {
 }
 #endif

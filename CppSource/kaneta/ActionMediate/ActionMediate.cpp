@@ -4,6 +4,10 @@
 #include "GraphicsLib\Class\kPlane\kPlane.h"
 #include "kaneta\ICharacter\Class\kPlayer\kPlayer.h"
 #include "GraphicsLib\Class\r2DObj\r2DObj.h"
+#include "Game\Gimmick\Gimmick.h"
+#include "Game\Gimmick\G2D.h"
+#include "input\Input.h"
+#include "kaneta\Scene\MessageScene\MessageScene.h"
 #include <stdlib.h>
 using namespace rlib;
 
@@ -14,8 +18,10 @@ namespace klib
 	using namespace math;
 	using namespace ktl;
 
-	ActionMediate::IndexList ActionMediate::m_IndexList;
-	ActionMediate::TimeTable ActionMediate::m_TimeTable;
+	ktl::kIAssociative<IGimmick*,TouchEvent> ActionMediate::m_Table;
+
+	ActionMediate::PointerList ActionMediate::m_PointerList;
+
 
 	r2DObj* ActionMediate::m_Font0;
 	r2DObj* ActionMediate::m_FireMask;
@@ -66,8 +72,8 @@ namespace klib
 		m_AddBord->complete(billBordDesc,billBordDescNum);
 
 		//m_Player=player;
-		m_IndexList.clear();
-		m_TimeTable.clear();
+		m_Table.clear();
+		m_PointerList.clear();
 
 		for(int i=0;i<TEST_ACTION_POS;i++)
 		{
@@ -90,65 +96,105 @@ namespace klib
 
 	bool ActionMediate::update(kPlayer* m_Player)
 	{
-		//前回のプレイヤー周囲のイベントに登録されていないイベントのタイマーを０にする
-		//for(int i=0;i<TEST_ACTION_POS;i++)
-		//{
-		//	if(m_IndexList.find(i)!=-1)continue;
-		//	m_TimeTable(i)=0.0f;
-		//}
 
-		//
+		std::list<IGimmick*> list=rlib::GimmickManager::getInst().getNearGimmick(m_Player->getObj()->getPosition(),3.0f);
+		std::list<IGimmick*>::iterator it = list.begin();
 
-		for(int i=0;i<TEST_POS_NUM;i++)
+		int i=0;
+		while( it != list.end() )
 		{
-			f32 dist=testpos[i].distance(m_Player->getObj()->getPosition());
-			if(m_IndexList.find(i)==-1)
+			i++;
+			
+			int index=-1;
+			if(index=m_PointerList.find((*it))==-1)
 			{
-				m_TimeTable(i).m_FontTime=0.0f;
-				m_TimeTable(i).m_RingTime=0.0f;
-			}
-			if(dist<3.0f)
-			{
-				m_TimeTable(i).m_FontTime+=0.025f;
-				m_TimeTable(i).m_RingTime+=0.1f;
-
-				if(1.0f<m_TimeTable(i).m_FontTime)m_TimeTable(i).m_FontTime=1.0f;
+				m_PointerList.push_back((*it));
+				index=m_PointerList.size()-1;
+				m_Table[m_PointerList[index]].m_FontTime=0.0f;
+				m_Table[m_PointerList[index]].m_RingTime=0.0f;
+				m_Table[m_PointerList[index]].m_Pos=(*it)->getPos();
 			}
 			else
 			{
 
-
-				m_TimeTable(i).m_FontTime-=0.025f;
-				m_TimeTable(i).m_RingTime-=0.1f;
-
-				if(m_TimeTable(i).m_FontTime<0.0f)m_TimeTable(i).m_FontTime=0.0f;
-				if(m_TimeTable(i).m_RingTime<0.0f)m_TimeTable(i).m_RingTime=0.0f;
-
 			}
+			it++;
 		}
-
-		m_IndexList.clear();
-		for(int i=0;i<TEST_POS_NUM;i++)
+		for(int i=0;i<m_PointerList.size();i++)
 		{
-			if(0.0f<m_TimeTable(i).m_FontTime)
+			f32 dist=m_Table[m_PointerList[i]].m_Pos.distance(m_Player->getObj()->getPosition());
+			if(dist<3.0f)
 			{
-				m_IndexList.push_back(i);
+				m_Table[m_PointerList[i]].m_FontTime+=0.025f;
+				m_Table[m_PointerList[i]].m_RingTime+=0.1f;
+
+				if(1.0f<m_Table[m_PointerList[i]].m_FontTime)m_Table[m_PointerList[i]].m_FontTime=1.0f;
+			}
+			else
+			{
+				m_Table[m_PointerList[i]].m_FontTime-=0.025f;
+				m_Table[m_PointerList[i]].m_RingTime-=0.1f;
+
+
+				if(m_Table[m_PointerList[i]].m_RingTime<0.0f)m_Table[m_PointerList[i]].m_RingTime=0.0f;
+				if(m_Table[m_PointerList[i]].m_FontTime<0.0f)
+				{
+					m_Table[m_PointerList[i]].m_FontTime=0.0f;
+					m_PointerList.erase(i);
+				}
+
 			}
 		}
 	}
 
 	void ActionMediate::render()
 	{
-		for(int i=0;i<m_IndexList.size();i++)
+			int touchIndex;
+			int sx,sy;
+			touchIndex=getTouch(&sx,&sy);
+
+		for(int i=0;i<m_PointerList.size();i++)
 		{
 			m_AlphaBord->setTexture("maskTex",1,m_FireMask);
-			m_AlphaBord->setShaderValue("alpha",1.0f-m_TimeTable[m_IndexList[i]].m_FontTime);
-			f32 ringScale=m_TimeTable[m_IndexList[i]].m_FontTime*4.0f;
+			m_AlphaBord->setShaderValue("alpha",1.0f-m_Table[m_PointerList[i]].m_FontTime);
+			f32 ringScale=m_Table[m_PointerList[i]].m_FontTime*4.0f;
 			kclampf(0,1,&ringScale);
 			
-			kPlane::render(m_AlphaBord,m_Font0,0.0f,1.0f,1.0f,math::Vector3(testpos[m_IndexList[i]].x,testpos[m_IndexList[i]].y+2.0f,testpos[m_IndexList[i]].z),0,0,0,0);
+			kPlane::render(m_AlphaBord,m_Font0,0.0f,1.0f,1.0f,math::Vector3(m_Table[m_PointerList[i]].m_Pos.x,m_Table[m_PointerList[i]].m_Pos.y+2.0f,m_Table[m_PointerList[i]].m_Pos.z),0,0,0,0);
 			m_AddBord->setShaderValue("alpha",ringScale);
-			kPlane::render(m_AddBord,m_Ring,m_TimeTable[m_IndexList[i]].m_RingTime,(1.0f-ringScale)*4.0f+2.0f,(1.0f-ringScale)*4.0f+2.0f,testpos[m_IndexList[i]],0,0,0,0);
+			kPlane::render(m_AddBord,m_Ring,m_Table[m_PointerList[i]].m_RingTime,(1.0f-ringScale)*4.0f+2.0f,(1.0f-ringScale)*4.0f+2.0f,m_Table[m_PointerList[i]].m_Pos,0,0,0,0);
+
+			if(touchIndex!=-1)
+			{
+				int touchPosX=((sx+100.0f)/200.0f)*RenderLib::RenderState::getScreenWidth();
+				int touchPosY=(1.0f-((sy+100.0f)/200.0f))*RenderLib::RenderState::getScreenHeight();
+				float r=scaleParse((1.0f-ringScale)*4.0f+2.0f,m_Table[m_PointerList[i]].m_Pos);
+				int gimicksx,gimicksy;
+				worldToScreen(m_Table[m_PointerList[i]].m_Pos,&gimicksx,&gimicksy);
+				// 円内か？
+				// 公式　(x -a)^2 + (y-b)^2 = r^2
+				float point_val = (gimicksx - touchPosX) * (gimicksx - touchPosX) + (gimicksy - touchPosY) * (gimicksy - touchPosY);
+				float r2 = r * r; 
+				dprintf("(%d - %d)^2 + (%d - %d) ^2 < %f^2",gimicksx,touchPosX,gimicksy,touchPosY,r);
+				//園内
+				if (point_val < r2)
+				{
+					eprintf("touchGimick!!!!!!!!!!!!!!!!!!!!");
+					GIMMICK_TYPE type=m_PointerList[i]->getType();
+					if(type==eGIMMICK_2D)
+					{
+						G2D* gimick=(G2D*)m_PointerList[i];
+						MessageScene::_getInstance().setTexture(gimick->getImage());
+						framework.scenePush(MessageScene::_getInstancePtr());
+					}
+				}
+
+			}
+
+
+			
+
 		}
+
 	}
 }

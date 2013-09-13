@@ -4,18 +4,19 @@
 #include <jni.h>
 #include <assert.h>
 #include "GraphicsLib\Class\r2DObj\r2DRenderer.h"
+#include "templateLib\kVector.h"
 
 /*
-	・画面タッチと仮想ボタンを管理するクラス
-	・画面タッチの機能として
-		----複数タッチの管理	->	getNowTouchCount()
-		----座標と前フレームからの移動量	-> getX() getY() getMoveX() getMoveY()
-		----押した時間		->　getTime()
-		----圧力			->	getPressure()
-		----フリック関連	->	isFlick() (フリック方向がほしいときはgetMove?()を利用してください)
-		----ピンチ関連		->	isPinch() getPinchLength() getPinchMoveLength()
-	などを用意しています
-	・仮想ボタンはまだです
+・画面タッチと仮想ボタンを管理するクラス
+・画面タッチの機能として
+----複数タッチの管理	->	getNowTouchCount()
+----座標と前フレームからの移動量	-> getX() getY() getMoveX() getMoveY()
+----押した時間		->　getTime()
+----圧力			->	getPressure()
+----フリック関連	->	isFlick() (フリック方向がほしいときはgetMove?()を利用してください)
+----ピンチ関連		->	isPinch() getPinchLength() getPinchMoveLength()
+などを用意しています
+・仮想ボタンはまだです
 */
 class mlInput
 {
@@ -30,7 +31,7 @@ public:
 public:
 	/*
 	引数：
-		maxPoint : タッチを検出する最大数. ハード側の最大検出個数は大体4個超えるぐらいなのでそれを超える値を渡してもメモリの無駄になります.
+	maxPoint : タッチを検出する最大数. ハード側の最大検出個数は大体4個超えるぐらいなのでそれを超える値を渡してもメモリの無駄になります.
 	*/
 	static void init(int maxPoint);
 	/*
@@ -187,5 +188,38 @@ private:
 	void operator=(mlInput&){}
 
 };
+
+struct PrevTouch
+{
+	klib::f32 time;
+	int sx,sy;
+	PrevTouch():time(0.0f),sx(0),sy(0){}
+};
+
+typedef klib::ktl::kVector<PrevTouch> PrevTouchTable;
+static PrevTouchTable m_PrevTouchTable;
+
+static int getTouch(int* sx,int* sy)
+{
+	//タッチ検出8フレーム以内に離せばタッチとみなす
+
+	int touchIndex=-1;
+	for(int i=0;i<mlInput::getMaxPoint();i++)
+	{
+		if(mlInput::getTime(i)<FEQ_EPS)
+		{
+			if(0.0f<m_PrevTouchTable(i).time && m_PrevTouchTable(i).time<8.0f*16.666666f)
+			{
+				touchIndex=i;
+				*sx=m_PrevTouchTable(i).sx;
+				*sy=m_PrevTouchTable(i).sy;
+			}
+		}
+		m_PrevTouchTable(i).time=mlInput::getTime(i);
+		m_PrevTouchTable(i).sx=mlInput::getX(i);
+		m_PrevTouchTable(i).sy=mlInput::getY(i);
+	}
+	return touchIndex;
+}
 
 #endif

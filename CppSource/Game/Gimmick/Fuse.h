@@ -63,7 +63,7 @@ namespace rlib
 		void setPos(Vector3& pos){ this->mPos = pos; }
 
 #ifndef ANDROID_REDNER
-		virtual void render(klib::kMesh* mesh, const klib::math::Vector3& scale, klib::kGraphicsPipline* pipeline);
+		virtual void render(klib::kMesh* mesh, float scale, klib::kGraphicsPipline* pipeline);
 #endif
 	private:
 		bool	mIsBurnOut;		//”R‚¦s‚«‚½‚©H
