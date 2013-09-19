@@ -536,8 +536,8 @@ void Particle::Render()
 		axisX = Vector3(m._11,m._21,m._31);
 		axisY = Vector3(m._12,m._22,m._32);
 
-		axisX *= 0.1f;
-		axisY *= 0.1f;
+		axisX *= particle->scale[n];
+		axisY *= particle->scale[n];
 
 		p=particle->pos[n];
 

@@ -28,7 +28,7 @@ void Emitter::Clear()
 	m_Count = 0;
 	m_LoopFlag = false;
 	m_spData.SetPtr(new EmitterData);
-	m_spData->Scale=1.0f;
+	m_spData->Scale=0.1f;
 	m_Angle=Vector3(0,0,0);
 
 	m_Velocity = Vector3(0,0,0);
