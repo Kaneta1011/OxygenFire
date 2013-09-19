@@ -67,7 +67,7 @@ private:
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//	Particle_Singleton
+//	EffectManager_Singleton
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class EffectManager_Singleton : public EffectManager
 {

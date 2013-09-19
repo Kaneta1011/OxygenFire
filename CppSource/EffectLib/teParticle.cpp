@@ -397,37 +397,43 @@ void Particle::Update()
 			sv = .0f;//scaleValue
 			lf = (float)particle->life[v] / 2; //life half
 
+
+
+			static COLOR colorSave;
+			static float hl;
+
 			if( particle->count[v] < lf )
 			{
-				nextC.red = particle->colorMiddle[v].red - 
-					particle->colorStart[v].red;
-				nextC.green = particle->colorMiddle[v].green - 
-					particle->colorStart[v].green;
-				nextC.blue = particle->colorMiddle[v].blue - 
-					particle->colorStart[v].blue;
+				//red
+				next = particle->colorMiddle[v].red - particle->colorStart[v].red;
 				sv = particle->count[v] / lf ;
-				particle->color[v] = 
-					particle->colorStart[v].red + (nextC.red*sv);
-				particle->color[v] = 
-					particle->colorStart[v].green + (nextC.green*sv);
-				particle->color[v] = 
-					particle->colorStart[v].blue + (nextC.blue*sv);
+				particle->color[v].red = particle->colorStart[v].red + (next*sv);
+				//green
+				next = particle->colorMiddle[v].green - particle->colorStart[v].green;
+				sv = particle->count[v] / lf ;
+				particle->color[v].green = particle->colorStart[v].green + (next*sv);
+				//blue
+				next = particle->colorMiddle[v].blue - particle->colorStart[v].blue;
+				sv = particle->count[v] / lf ;
+				particle->color[v].blue = particle->colorStart[v].blue + (next*sv);
 			}else{
-				nextC = particle->colorEnd[v].red - 
-					particle->colorMiddle[v].red;
-				nextC = particle->colorEnd[v].green - 
-					particle->colorMiddle[v].green;
-				nextC = particle->colorEnd[v].blue - 
-					particle->colorMiddle[v].blue;
+				//red
+				next = particle->colorEnd[v].red - particle->colorMiddle[v].red;
 				sv = (particle->count[v]-lf) / lf;
-				particle->color[v].red = 
-					particle->colorMiddle[v].red + (nextC.red*sv);
-				particle->color[v].green = 
-					particle->colorMiddle[v].green + (nextC.green*sv);
-				particle->color[v].blue = 
-					particle->colorMiddle[v].blue + (nextC.blue*sv);
+				particle->color[v].red = particle->colorMiddle[v].red + (next*sv);
+				//green
+				next = particle->colorEnd[v].green - particle->colorMiddle[v].green;
+				sv = (particle->count[v]-lf) / lf;
+				particle->color[v].green = particle->colorMiddle[v].green + (next*sv);
+				//red
+				next = particle->colorEnd[v].blue - particle->colorMiddle[v].blue;
+				sv = (particle->count[v]-lf) / lf;
+				particle->color[v].blue = particle->colorMiddle[v].blue + (next*sv);
 			}
+
 			particle->color[v].alpha = 255 * (1.0f - rate);
+
+			//particle->color[v].red = 255;
 
 			//	’†‰›—Í
 			vec = particle->initPos[v] - particle->pos[v];
@@ -487,9 +493,10 @@ void Particle::Update()
 	//m_spParticleData->Setting(work);
 }
 
+
 void Particle::Render()
 {
-	sp<ParticleData> particle;
+	static sp<ParticleData> particle;
 
 	if( UpdateNumber == 1 )
 	{
@@ -498,7 +505,7 @@ void Particle::Render()
 		particle = m_spParticleData2;
 	}
 
-	glFrontFace(GL_CCW);
+	//glFrontFace(GL_CCW);
 
 	static Matrix m = RenderState::getViewMatrix();
 	m = RenderState::getViewMatrix();
@@ -513,8 +520,15 @@ void Particle::Render()
 
 	static Vector2 uv[4];float tu,tv;
 
+
+
+	static int useNum=0;
+	useNum = 0;
+
 	for(int n=0;n<PARTICLE_MAX;n++)
 	{
+		if(useNum >= particle->useNum)break;
+
 		//if( n > m_spParticleData->useNum-1 ) break;
 		//axisX = Vector3(m._11,m._12,m._13);
 		//axisY = Vector3(m._21,m._22,m._23);
@@ -522,8 +536,8 @@ void Particle::Render()
 		axisX = Vector3(m._11,m._21,m._31);
 		axisY = Vector3(m._12,m._22,m._32);
 
-		axisX *= particle->scale[n];
-		axisY *= particle->scale[n];
+		axisX *= 0.1f;
+		axisY *= 0.1f;
 
 		p=particle->pos[n];
 
@@ -576,6 +590,7 @@ void Particle::Render()
 			uv[3].x = tu+0.249f;	uv[3].y = tv+0.249f;
 			break;
 		}
+
 		m_spVertexBuf->tex[(n*ONE_PARTICLE_VERTEX_NUM)+0].x = uv[0].x;
 		m_spVertexBuf->tex[(n*ONE_PARTICLE_VERTEX_NUM)+0].y = uv[0].y;
 		m_spVertexBuf->tex[(n*ONE_PARTICLE_VERTEX_NUM)+1].x = uv[2].x;
@@ -597,6 +612,8 @@ void Particle::Render()
 			m_spVertexBuf->color[(n*ONE_PARTICLE_VERTEX_NUM)+4] =
 			m_spVertexBuf->color[(n*ONE_PARTICLE_VERTEX_NUM)+5] = 
 			particle->color[n].Value_0from1();
+
+		useNum++;
 	}
 	//	Uniform‘—M
 	ShaderManager::getSprite()->Send_Matrix(m_Matrix);
@@ -633,8 +650,8 @@ ShaderManager::getSprite()->Begin();
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
 		//	ƒeƒNƒXƒ`ƒƒî•ñÝ’è
-		m_spTexture[n]->spTexture->Setting(rlib::Texture::ACTIVE_13);
-		ShaderManager::getSprite()->SetValue_No_BeginEnd( "uTex", 13 );
+		m_spTexture[n]->spTexture->Setting(rlib::Texture::ACTIVE_6);
+		ShaderManager::getSprite()->SetValue_No_BeginEnd( "uTex", 6 );
 
 		//	•`‰æ
 		glDrawArrays(GL_TRIANGLES,
@@ -653,7 +670,6 @@ void Particle::Setting(const Vector3& Pos,char* File,float ScaleStart,
 	float CenterPowerStart,float CenterPowerMiddle,float CenterPowerEnd,
 	COLOR ColorStart,COLOR ColorMiddle,COLOR ColorEnd)
 {
-
 	sp<ParticleData> particle;
 
 	if( UpdateNumber == 0 )
@@ -731,44 +747,88 @@ void Particle::Setting_Single(
 	{
 	case SINGLE_NORMAL:
 		File = "light.png";
-		break;
-	}
 
-	for(int n=0;n<PARTICLE_MAX;n++)
-	{
-		if(true == particle->flag[n])continue;
-
-		//	DataŠi”[
-		particle->useNum++;
-		particle->pos[n] = Pos;
-		particle->initPos[n] = Pos;
-		particle->flag[n] = true;
-		particle->scaleStart[n] = Scale;
-		particle->scaleMiddle[n] = Scale;
-		particle->scaleEnd[n] = Scale;
-		particle->life[n] = Life;
-		particle->velocity[n] = Move;
-		particle->moveFlag[n] = false;
-		particle->size[n] = 1;
-		particle->index[n] = 0;
-		particle->windPower[n] = 0;
-		particle->centerPowerStart[n] = 0;
-		particle->centerPowerMiddle[n] = 0;
-		particle->centerPowerEnd[n] = 0;
-		particle->colorStart[n] = StartColor;
-		particle->colorMiddle[n] = MiddleColor;
-		particle->colorEnd[n] = EndColor;
-
-		//	‚Ç‚ÌƒeƒNƒXƒ`ƒƒ‚©’T‚·
-		for(int t=0;t<m_TextureUseNumber;t++)
+		for(int n=0;n<PARTICLE_MAX;n++)
 		{
-			if(m_spTexture[t].GetRefNum() == 0)continue;
+			if(true == particle->flag[n])continue;
 
-			if(strcmp( m_spTexture[t]->TextureName, File ) == 0)
+			//	DataŠi”[
+			particle->useNum++;
+			particle->pos[n] = Pos;
+			particle->initPos[n] = Pos;
+			particle->flag[n] = true;
+			particle->scaleStart[n] = Scale;
+			particle->scaleMiddle[n] = Scale;
+			particle->scaleEnd[n] = Scale;
+			particle->life[n] = Life;
+			particle->velocity[n] = Move;
+			particle->moveFlag[n] = false;
+			particle->size[n] = 1;
+			particle->index[n] = 0;
+			particle->windPower[n] = 0;
+			particle->centerPowerStart[n] = 0;
+			particle->centerPowerMiddle[n] = 0;
+			particle->centerPowerEnd[n] = 0;
+			particle->colorStart[n] = StartColor;
+			particle->colorMiddle[n] = MiddleColor;
+			particle->colorEnd[n] = EndColor;
+
+			//	‚Ç‚ÌƒeƒNƒXƒ`ƒƒ‚©’T‚·
+			for(int t=0;t<m_TextureUseNumber;t++)
 			{
-				particle->texNum[n] = m_spTexture[t]->texNum;
-				return;
+				if(m_spTexture[t].GetRefNum() == 0)continue;
+
+				if(strcmp( m_spTexture[t]->TextureName, File ) == 0)
+				{
+					particle->texNum[n] = m_spTexture[t]->texNum;
+					return;
+				}
 			}
+			break;
+		}
+		break;
+
+	case SINGLE_FLAME:
+
+		File = "flame.png";
+
+		for(int n=0;n<PARTICLE_MAX;n++)
+		{
+			if(true == particle->flag[n])continue;
+
+			//	DataŠi”[
+			particle->useNum++;
+			particle->pos[n] = Pos;
+			particle->initPos[n] = Pos;
+			particle->flag[n] = true;
+			particle->scaleStart[n] = Scale;
+			particle->scaleMiddle[n] = Scale;
+			particle->scaleEnd[n] = Scale;
+			particle->life[n] = Life;
+			particle->velocity[n] = Move;
+			particle->moveFlag[n] = true;
+			particle->size[n] = TEXTURE_SIZE_4x4;
+			particle->index[n] = 0;
+			particle->windPower[n] = 0;
+			particle->centerPowerStart[n] = 0;
+			particle->centerPowerMiddle[n] = 0;
+			particle->centerPowerEnd[n] = 0;
+			particle->colorStart[n] = StartColor;
+			particle->colorMiddle[n] = MiddleColor;
+			particle->colorEnd[n] = EndColor;
+
+			//	‚Ç‚ÌƒeƒNƒXƒ`ƒƒ‚©’T‚·
+			for(int t=0;t<m_TextureUseNumber;t++)
+			{
+				if(m_spTexture[t].GetRefNum() == 0)continue;
+
+				if(strcmp( m_spTexture[t]->TextureName, File ) == 0)
+				{
+					particle->texNum[n] = m_spTexture[t]->texNum;
+					return;
+				}
+			}
+			break;
 		}
 		break;
 	}
